@@ -72,5 +72,5 @@ crashlytics-build.properties
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 
 # Added
-/[Pp]roject[Ss]ettings/
+# /[Pp]roject[Ss]ettings/
 # /[Pp]ackages/
