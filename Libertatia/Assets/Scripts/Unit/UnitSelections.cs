@@ -86,7 +86,14 @@ public class UnitSelections : MonoBehaviour
         //sets the first child to be active: an indicator showing that the unit is selected
         unitToAdd.transform.GetChild(0).gameObject.SetActive(true);
 
-        unitToAdd.GetComponent<UnitMovement>().enabled = true;
+        //Debug.Log(unitToAdd.tag);
+
+        //prevents the player from moving enemy units
+        if(unitToAdd.tag != "Enemy")
+        {
+            unitToAdd.GetComponent<UnitMovement>().enabled = true;
+        }
+
     }
 
     /// <summary>
