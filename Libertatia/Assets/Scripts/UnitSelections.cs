@@ -25,40 +25,81 @@ public class UnitSelections : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Selects a single clicked unit
+    /// </summary>
+    /// <param name="unitToAdd"></param>
     public void ClickSelect(GameObject unitToAdd)
     {
         DeselectAll();
-        unitsSelected.Add(unitToAdd);
-
-        unitToAdd.transform.GetChild(0).gameObject.SetActive(true);
+        addSelection(unitToAdd);
     }
 
+    /// <summary>
+    /// Selects multiple units while holding shift
+    /// </summary>
+    /// <param name="unitToAdd"></param>
     public void ShiftClickSelect(GameObject unitToAdd)
     {
         if(!unitsSelected.Contains(unitToAdd))
         {
-            unitsSelected.Add(unitToAdd);
-            unitToAdd.transform.GetChild(0).gameObject.SetActive(true);
+            removeSelection(unitToAdd);
         }
         else
         {
-            unitToAdd.transform.GetChild(0).gameObject.SetActive(false);
-            unitsSelected.Remove(unitToAdd);
+            addSelection(unitToAdd);
         }
     }
 
+    /// <summary>
+    /// Selects multiple units when dragging a box
+    /// </summary>
+    /// <param name="unitToAdd"></param>
+    public void DragSelect(GameObject unitToAdd)
+    {
+        if(!unitsSelected.Contains(unitToAdd))
+        {
+            addSelection(unitToAdd);
+        }
+    }
+
+    /// <summary>
+    /// Deselects every unit in the selected list
+    /// </summary>
     public void DeselectAll()
     {
         foreach(var unit in unitsSelected)
         {
+            unit.GetComponent<UnitMovement>().enabled = false;
             unit.transform.GetChild(0).gameObject.SetActive(false);
         }
         unitsSelected.Clear();
     }
 
-    public void Deselect(GameObject unitToDeselect)
+    /// <summary>
+    /// Adds the selected units into a list
+    /// </summary>
+    /// <param name="unitToAdd"></param>
+    private void addSelection(GameObject unitToAdd)
     {
+        unitsSelected.Add(unitToAdd);
+        //sets the first child to be active: an indicator showing that the unit is selected
+        unitToAdd.transform.GetChild(0).gameObject.SetActive(true);
 
+        unitToAdd.GetComponent<UnitMovement>().enabled = true;
+    }
+
+    /// <summary>
+    /// Removes the units from the selected units list
+    /// </summary>
+    /// <param name="unitToRemove"></param>
+    private void removeSelection(GameObject unitToRemove)
+    {
+        unitsSelected.Remove(unitToRemove);
+        //sets the first child to be active: an indicator showing that the unit is selected
+        unitToRemove.transform.GetChild(0).gameObject.SetActive(false);
+
+        unitToRemove.GetComponent<UnitMovement>().enabled = false;
     }
 
 }

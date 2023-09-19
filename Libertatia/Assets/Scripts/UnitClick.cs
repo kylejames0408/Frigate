@@ -5,6 +5,7 @@ using UnityEngine;
 public class UnitClick : MonoBehaviour
 {
     private Camera myCam;
+    public GameObject groundMarker;
 
     public LayerMask clickable;
     public LayerMask ground;
@@ -23,10 +24,9 @@ public class UnitClick : MonoBehaviour
             RaycastHit hit;
             Ray ray = myCam.ScreenPointToRay(Input.mousePosition);
 
-            if(Physics.Raycast(ray, out hit, Mathf.Infinity, clickable))
+            //if we hit a clickable object
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity, clickable))
             {
-                //if we hit a clickable object
-
                 //normal click and shift click
 
                 if(Input.GetKey(KeyCode.LeftShift))
@@ -48,6 +48,21 @@ public class UnitClick : MonoBehaviour
                 {
                     UnitSelections.Instance.DeselectAll();
                 }
+            }
+        }
+
+        if (Input.GetMouseButtonDown(1))
+        {
+            RaycastHit hit;
+            Ray ray = myCam.ScreenPointToRay(Input.mousePosition);
+
+            //Creates a ground marker at the mouse position when clicked to show a visual indicator
+            //of where the units are moving to
+            if(Physics.Raycast(ray, out hit, Mathf.Infinity, ground))
+            {
+                groundMarker.transform.position = hit.point;
+                groundMarker.SetActive(false);
+                groundMarker.SetActive(true);
             }
         }
     }
