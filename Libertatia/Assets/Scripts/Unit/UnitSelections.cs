@@ -72,6 +72,7 @@ public class UnitSelections : MonoBehaviour
         {
             unit.GetComponent<UnitMovement>().enabled = false;
             unit.transform.GetChild(0).gameObject.SetActive(false);
+            unit.transform.GetChild(1).gameObject.SetActive(false);
         }
         unitsSelected.Clear();
     }
@@ -86,10 +87,13 @@ public class UnitSelections : MonoBehaviour
         //sets the first child to be active: an indicator showing that the unit is selected
         unitToAdd.transform.GetChild(0).gameObject.SetActive(true);
 
+        //sets the second child to be active: a sphere showing detection range
+        unitToAdd.transform.GetChild(1).gameObject.SetActive(true);
+
         //Debug.Log(unitToAdd.tag);
 
         //prevents the player from moving enemy units
-        if(unitToAdd.tag != "Enemy")
+        if (unitToAdd.tag != "Enemy")
         {
             unitToAdd.GetComponent<UnitMovement>().enabled = true;
         }
@@ -105,6 +109,9 @@ public class UnitSelections : MonoBehaviour
         unitsSelected.Remove(unitToRemove);
         //sets the first child to be active: an indicator showing that the unit is selected
         unitToRemove.transform.GetChild(0).gameObject.SetActive(false);
+
+        //sets the second child to be active: a sphere showing detection range
+        unitToRemove.transform.GetChild(1).gameObject.SetActive(false);
 
         unitToRemove.GetComponent<UnitMovement>().enabled = false;
     }
