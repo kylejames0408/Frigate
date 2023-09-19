@@ -72,7 +72,7 @@ public class UnitSelections : MonoBehaviour
         {
             unit.GetComponent<UnitMovement>().enabled = false;
             unit.transform.GetChild(0).gameObject.SetActive(false);
-            unit.transform.GetChild(1).gameObject.SetActive(false);
+            //unit.transform.GetChild(1).gameObject.SetActive(false);
         }
         unitsSelected.Clear();
     }
@@ -88,7 +88,7 @@ public class UnitSelections : MonoBehaviour
         unitToAdd.transform.GetChild(0).gameObject.SetActive(true);
 
         //sets the second child to be active: a sphere showing detection range
-        unitToAdd.transform.GetChild(1).gameObject.SetActive(true);
+        //unitToAdd.transform.GetChild(1).gameObject.SetActive(true);
 
         //Debug.Log(unitToAdd.tag);
 
@@ -111,7 +111,7 @@ public class UnitSelections : MonoBehaviour
         unitToRemove.transform.GetChild(0).gameObject.SetActive(false);
 
         //sets the second child to be active: a sphere showing detection range
-        unitToRemove.transform.GetChild(1).gameObject.SetActive(false);
+        //unitToRemove.transform.GetChild(1).gameObject.SetActive(false);
 
         unitToRemove.GetComponent<UnitMovement>().enabled = false;
     }
