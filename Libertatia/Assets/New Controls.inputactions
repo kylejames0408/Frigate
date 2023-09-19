@@ -1,0 +1,54 @@
+{
+    "name": "New Controls",
+    "maps": [
+        {
+            "name": "Camera Controls",
+            "id": "4372f4f8-b86a-4e74-a33c-c3550a398bd3",
+            "actions": [
+                {
+                    "name": "Move Camera",
+                    "type": "Button",
+                    "id": "25d1d992-ffa4-4d8c-af8c-25fdf94a7618",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Zoom Camera",
+                    "type": "Button",
+                    "id": "164ce801-5925-49ad-b1e7-e14f3d55c6ce",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "782e3296-32e9-417a-98bd-69f5c77545b7",
+                    "path": "<Mouse>/middleButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move Camera",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1367f42a-2c2b-4c7f-99b5-190774e78a5f",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Zoom Camera",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
