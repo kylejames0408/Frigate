@@ -133,9 +133,9 @@ GameObject:
   m_Component:
   - component: {fileID: 55693932}
   - component: {fileID: 55693931}
+  - component: {fileID: 55693934}
   - component: {fileID: 55693930}
   - component: {fileID: 55693933}
-  - component: {fileID: 55693934}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -273,6 +273,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bfda8c6a915f0a040afb661f79c93822, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  movementState: 1
+  aspectRatio: 0
+  mouseSensitivity: 1
+  previousPos: {x: 0, y: 0}
+  previousPos3: {x: 0, y: 0, z: 0}
+  zoomStep: 1
+  zoomPercentage: 0
 --- !u!1 &350414961
 GameObject:
   m_ObjectHideFlags: 0
