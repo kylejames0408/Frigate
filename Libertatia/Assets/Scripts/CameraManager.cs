@@ -1,13 +1,17 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class CameraManager : MonoBehaviour
 {
-    private bool isMoving = false;
+    private bool isMouseMove = false;
     private float aspectRatio;
+    private Vector2 maxWorldBounds; // could be set with size
+    private Vector2 minWorldBounds;
 
     //[Range(0.01f, 10.0f)] [SerializeField] // (IS Pet Peave #1) Input system has issues with serializing fields
     private float mouseSensitivity = 1.85f; // Calced to 1920x1080
+    private float keyboardSensitivity = 0.2f;
     private Vector2 previousPos;
 
     private const float MINIMUM_ZOOM = 1;
@@ -15,7 +19,7 @@ public class CameraManager : MonoBehaviour
     private float zoomStep = 1.0f;
     private float zoomPercentage;
 
-    private Camera camera;
+    private Camera cameraScript;
     private Controls controls;
 
     private float movementHorizontalScale;
@@ -23,30 +27,37 @@ public class CameraManager : MonoBehaviour
 
     private void Awake()
     {
+        maxWorldBounds = new Vector2(8,-20);
+        minWorldBounds = new Vector2(-8,-30);
         aspectRatio = (float)Screen.width / Screen.height;
         // Tried to scale sensitivity depending on screen size, but doen't seem to be enough
         movementHorizontalScale = (float)Screen.currentResolution.height/Screen.height;
         movementVerticalScale = (float)Screen.currentResolution.width/Screen.width;
 
-        camera = GetComponent<Camera>();
-        camera.orthographicSize = MAXIMUM_ZOOM;
-        zoomPercentage = camera.orthographicSize / MAXIMUM_ZOOM;
+        cameraScript = GetComponent<Camera>();
+        cameraScript.orthographicSize = MAXIMUM_ZOOM;
+        zoomPercentage = cameraScript.orthographicSize / MAXIMUM_ZOOM;
 
         controls = new Controls();
-        controls.Camera.Move.Enable();
-        controls.Camera.Move.performed += Move;
+        controls.Camera.MouseMove.Enable();
+        controls.Camera.MouseMove.performed += MouseMove;
         controls.Camera.Zoom.Enable();
         controls.Camera.Zoom.performed += Zoom;
     }
-
     private void Update()
     {
-        UpdateMovement();
+        UpdateMouseMovement();
+        CheckBounds();
+    }
+    private void FixedUpdate()
+    {
+        UpdateKeyboardMovement();
     }
 
-    private void UpdateMovement()
+    // Update Functions
+    private void UpdateMouseMovement()
     {
-        if (isMoving)
+        if (isMouseMove)
         {
             // 2D solution
             Vector2 currentPos = Mouse.current.position.value;
@@ -62,20 +73,42 @@ public class CameraManager : MonoBehaviour
             previousPos = currentPos;
         }
     }
+    private void UpdateKeyboardMovement()
+    {
+        Vector3 keyboardMovement = Vector3.zero;
+
+        if (Input.GetKey(KeyCode.W))
+        {
+            keyboardMovement += Vector3.forward * keyboardSensitivity * zoomPercentage * aspectRatio;
+        }
+        if (Input.GetKey(KeyCode.A))
+        {
+            keyboardMovement += Vector3.left * keyboardSensitivity * zoomPercentage;
+        }
+        if (Input.GetKey(KeyCode.S))
+        {
+            keyboardMovement += Vector3.back * keyboardSensitivity * zoomPercentage * aspectRatio;
+        }
+        if (Input.GetKey(KeyCode.D))
+        {
+            keyboardMovement += Vector3.right * keyboardSensitivity * zoomPercentage;
+        }
+        transform.position += keyboardMovement;
+    }
 
     // Input Callback Functions
-    private void Move(InputAction.CallbackContext context)
+    private void MouseMove(InputAction.CallbackContext context)
     {
         // Pressed
         if (context.ReadValue<float>() == 1)
         {
-            isMoving = true;
+            isMouseMove = true;
             previousPos = Mouse.current.position.value;
         }
         // Release
         else
         {
-            isMoving = false;
+            isMouseMove = false;
         }
     }
     private void Zoom(InputAction.CallbackContext context)
@@ -85,18 +118,42 @@ public class CameraManager : MonoBehaviour
         float zoomSpeed = zoomInput * zoomStep;
 
         // Update camera zoom
-        camera.orthographicSize += zoomSpeed;
+        cameraScript.orthographicSize += zoomSpeed;
 
         // Clamp
-        if(camera.orthographicSize > MAXIMUM_ZOOM)
+        if(cameraScript.orthographicSize > MAXIMUM_ZOOM)
         {
-            camera.orthographicSize = MAXIMUM_ZOOM;
+            cameraScript.orthographicSize = MAXIMUM_ZOOM;
         }
-        else if(camera.orthographicSize < MINIMUM_ZOOM)
+        else if(cameraScript.orthographicSize < MINIMUM_ZOOM)
         {
-            camera.orthographicSize = MINIMUM_ZOOM;
+            cameraScript.orthographicSize = MINIMUM_ZOOM;
         }
         // Mathf.Clamp(camera.orthographicSize, MINIMUM_ZOOM, MAXIMUM_ZOOM); // why is this not working
-        zoomPercentage = camera.orthographicSize / MAXIMUM_ZOOM;
+        zoomPercentage = cameraScript.orthographicSize / MAXIMUM_ZOOM;
+    }
+
+    // Utility Functions
+    private void CheckBounds()
+    {
+        Vector3 cameraPos = transform.position;
+        if (cameraPos.x > maxWorldBounds.x)
+        {
+            cameraPos.x = maxWorldBounds.x;
+        }
+        else if (cameraPos.x < minWorldBounds.x)
+        {
+            cameraPos.x = minWorldBounds.x;
+        }
+
+        if (cameraPos.z > maxWorldBounds.y)
+        {
+            cameraPos.z = maxWorldBounds.y;
+        }
+        else if (cameraPos.z < minWorldBounds.y)
+        {
+            cameraPos.z = minWorldBounds.y;
+        }
+        transform.position = cameraPos;
     }
 }
