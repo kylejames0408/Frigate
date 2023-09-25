@@ -10,6 +10,8 @@ public class UnitSelections : MonoBehaviour
     private static UnitSelections _instance;
     public static UnitSelections Instance { get { return _instance; } }
 
+    public GameObject[] enemies;
+
     private void Awake()
     {
         //if an instance of this already exists and it isn't this one
@@ -23,6 +25,19 @@ public class UnitSelections : MonoBehaviour
             //make this the instance
             _instance = this;
         }
+
+        enemies = GameObject.FindGameObjectsWithTag("Enemy");
+    }
+
+    public void Update()
+    {
+        foreach(GameObject enemy in enemies)
+        {
+            if(enemy != null)
+            {
+                AttackEnemy(enemy);
+            }
+        }
     }
 
     /// <summary>
@@ -32,7 +47,7 @@ public class UnitSelections : MonoBehaviour
     public void ClickSelect(GameObject unitToAdd)
     {
         DeselectAll();
-        addSelection(unitToAdd);
+        AddSelection(unitToAdd);
     }
 
     /// <summary>
@@ -43,11 +58,11 @@ public class UnitSelections : MonoBehaviour
     {
         if(!unitsSelected.Contains(unitToAdd))
         {
-            removeSelection(unitToAdd);
+            RemoveSelection(unitToAdd);
         }
         else
         {
-            addSelection(unitToAdd);
+            AddSelection(unitToAdd);
         }
     }
 
@@ -59,7 +74,7 @@ public class UnitSelections : MonoBehaviour
     {
         if(!unitsSelected.Contains(unitToAdd))
         {
-            addSelection(unitToAdd);
+            AddSelection(unitToAdd);
         }
     }
 
@@ -81,7 +96,7 @@ public class UnitSelections : MonoBehaviour
     /// Adds the selected units into a list
     /// </summary>
     /// <param name="unitToAdd"></param>
-    private void addSelection(GameObject unitToAdd)
+    private void AddSelection(GameObject unitToAdd)
     {
         unitsSelected.Add(unitToAdd);
         //sets the first child to be active: an indicator showing that the unit is selected
@@ -104,7 +119,7 @@ public class UnitSelections : MonoBehaviour
     /// Removes the units from the selected units list
     /// </summary>
     /// <param name="unitToRemove"></param>
-    private void removeSelection(GameObject unitToRemove)
+    private void RemoveSelection(GameObject unitToRemove)
     {
         unitsSelected.Remove(unitToRemove);
         //sets the first child to be active: an indicator showing that the unit is selected
@@ -116,4 +131,32 @@ public class UnitSelections : MonoBehaviour
         unitToRemove.GetComponent<UnitMovement>().enabled = false;
     }
 
+
+
+    /// <summary>
+    /// Attack enemy units upon coming into range
+    /// </summary>
+    /// <param name="enemy"></param>
+    /// 
+    //TO BE UPDATED
+    public void AttackEnemy(GameObject enemy)
+    {
+        //Debug.Log(enemy.tag);
+
+        //enemy.transform.GetChild(0).gameObject.SetActive(true);
+
+        for(int i = 0; i < unitList.Count; i++)
+        {
+            if (Vector3.Distance(unitList[i].transform.position, enemy.transform.position) < 2)
+            {
+                if(enemy.tag == "Enemy")
+                {
+                    Destroy(enemy);
+                }
+              
+            }
+        }
+  
+
+    }
 }

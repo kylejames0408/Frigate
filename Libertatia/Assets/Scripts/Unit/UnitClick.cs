@@ -64,6 +64,14 @@ public class UnitClick : MonoBehaviour
                 groundMarker.SetActive(false);
                 groundMarker.SetActive(true);
             }
+
+
+
+            ////Enemy interaction when right clicking on an enemy
+            //if (Physics.Raycast(ray, out hit, Mathf.Infinity, clickable))
+            //{
+            //    UnitSelections.Instance.AttackEnemy(hit.collider.gameObject);
+            //}
         }
     }
 }
