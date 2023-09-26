@@ -151,7 +151,8 @@ public class UnitSelections : MonoBehaviour
             {
                 if(enemy.tag == "Enemy")
                 {
-                    Destroy(enemy);
+                    //Destroy(enemy);
+                    enemy.SetActive(false);
                 }
               
             }
