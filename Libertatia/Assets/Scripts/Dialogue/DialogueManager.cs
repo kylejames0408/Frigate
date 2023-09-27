@@ -118,6 +118,8 @@ public class DialogueManager : MonoBehaviour
         // trigger closing dialogue box animation
         animator.SetBool("IsOpen", false);
 
+        StopAllCoroutines();
+
         //StartCoroutine(WaitUntilTransition());
 
         // clear the dialogue box text

@@ -133,7 +133,7 @@ public class BuildingUI : MonoBehaviour
         //}
 
         //return "<size=23><b>" + buildingName + "</b></size>" + resourceString;
-        return "<size=23><b>" + buildingName + "</b></size>";
+        return "<size=50><b>" + buildingName + "</b></size>";
     }
 
     /// <summary>
