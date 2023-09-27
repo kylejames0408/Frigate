@@ -4,29 +4,59 @@ using UnityEngine.InputSystem;
 
 public class CameraManager : MonoBehaviour
 {
+    private static CameraManager instance;
     private bool isMouseMove = false;
     private float aspectRatio;
-    private Vector2 maxWorldBounds; // could be set with size
-    private Vector2 minWorldBounds;
+    public bool useBounds = true;
+    [SerializeField] private Vector2 maxWorldBounds; // could be set with size
+    [SerializeField] private Vector2 minWorldBounds;
 
-    //[Range(0.01f, 10.0f)] [SerializeField] // (IS Pet Peave #1) Input system has issues with serializing fields
-    private float mouseSensitivity = 1.85f; // Calced to 1920x1080
+    [Range(0.01f, 10.0f)] // (IS Pet Peave #1) Input system has issues with serializing fields
+    [SerializeField] private float mouseSensitivity = 1.85f; // Calced to 1920x1080
     private float keyboardSensitivity = 0.2f;
     private Vector2 previousPos;
 
-    private const float MINIMUM_ZOOM = 1;
-    private const float MAXIMUM_ZOOM = 10;
-    private float zoomStep = 1.0f;
+    [SerializeField] private const float MINIMUM_ZOOM = 4;
+    [SerializeField] private const float MAXIMUM_ZOOM = 20;
+    [SerializeField] private float zoomStep = 1.0f;
     private float zoomPercentage;
 
     private Camera cameraScript;
     private Controls controls;
 
-    private float movementHorizontalScale;
-    private float movementVerticalScale;
+    [SerializeField] private float movementHorizontalScale;
+    [SerializeField] private float movementVerticalScale;
+
+    public static CameraManager Instance
+    {
+        get
+        {
+            return instance;
+        }
+    }
+    public bool IsMouseMove
+    {
+        get
+        {
+            return isMouseMove;
+        }
+    }
+    public Camera Camera
+    {
+        get
+        {
+            return cameraScript;
+        }
+    }
 
     private void Awake()
     {
+        if (instance == null)
+        {
+            instance = this;
+        }
+
+        isMouseMove = false;
         maxWorldBounds = new Vector2(8,-20);
         minWorldBounds = new Vector2(-8,-30);
         aspectRatio = (float)Screen.width / Screen.height;
@@ -35,7 +65,7 @@ public class CameraManager : MonoBehaviour
         movementVerticalScale = (float)Screen.currentResolution.width/Screen.width;
 
         cameraScript = GetComponent<Camera>();
-        cameraScript.orthographicSize = MAXIMUM_ZOOM;
+        cameraScript.orthographicSize = 14;
         zoomPercentage = cameraScript.orthographicSize / MAXIMUM_ZOOM;
 
         controls = new Controls();
@@ -47,7 +77,10 @@ public class CameraManager : MonoBehaviour
     private void Update()
     {
         UpdateMouseMovement();
-        CheckBounds();
+        if(useBounds)
+        {
+            CheckBounds();
+        }
     }
     private void FixedUpdate()
     {
