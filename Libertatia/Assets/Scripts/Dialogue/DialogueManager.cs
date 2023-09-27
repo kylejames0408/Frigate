@@ -16,7 +16,7 @@ public class DialogueManager : MonoBehaviour
     private TextMeshProUGUI continueButtonText;  // the reference to the continue button (to swap between continue and skip)
 
     private Image panel;                        // the reference to the panel used to block input to other elements during active dialogue
-    
+
     private Queue<string> sentences;            // a Queue to hold all the sentences in the dialogue. It's like a list, but better for our use case
 
     private string currentSentence;             // a string used to hold the currently displayed sentence. This is for skipping character typing
@@ -54,7 +54,7 @@ public class DialogueManager : MonoBehaviour
         {
             sentences.Enqueue(sentence);
         }
-   
+
         DisplayNextSentence();
     }
 

@@ -118,6 +118,7 @@ public class BuildingUI : MonoBehaviour
         buildingMesh = prefab.GetComponentInChildren<MeshFilter>().sharedMesh;
         buildingRotation = prefab.transform.rotation;
         placingBuilding = Instantiate(BuildingManager.Instance.GetBuildingPrefab(buildingIndex), Vector3.zero, buildingRotation);
+        placingBuilding.Placing();
     }
 
     private string GetButtonText(Building b)

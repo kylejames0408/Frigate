@@ -53,6 +53,7 @@ public class BuildingManager : MonoBehaviour
 
         // Create Building
         Building building = Instantiate(buildingPrefab, position, buildingPrefab.transform.rotation, buildingParent);
+        building.Place();
         buildings.Add(building);
         if(building.isAttackable)
         {
@@ -108,7 +109,9 @@ public class BuildingManager : MonoBehaviour
         foreach (Building building in buildings)
         {
             building.Build(work);
+            building.FreeBuilders();
         }
+
     }
 
     // Utility Functions

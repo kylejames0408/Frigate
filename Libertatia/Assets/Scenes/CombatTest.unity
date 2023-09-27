@@ -838,9 +838,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e779c153c996b4c4ca6a71ccb8ea1aaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ground:
+  mask:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 0
 --- !u!114 &217854471
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1105,9 +1105,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e779c153c996b4c4ca6a71ccb8ea1aaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ground:
+  mask:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 0
 --- !u!114 &228254975
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1595,9 +1595,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e779c153c996b4c4ca6a71ccb8ea1aaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ground:
+  mask:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 0
 --- !u!114 &348037771
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1862,9 +1862,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e779c153c996b4c4ca6a71ccb8ea1aaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ground:
+  mask:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 0
 --- !u!114 &388982654
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2233,9 +2233,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e779c153c996b4c4ca6a71ccb8ea1aaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ground:
+  mask:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 0
 --- !u!114 &443887577
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2709,9 +2709,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e779c153c996b4c4ca6a71ccb8ea1aaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ground:
+  mask:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 0
 --- !u!114 &575436579
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2871,9 +2871,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e779c153c996b4c4ca6a71ccb8ea1aaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ground:
+  mask:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 0
 --- !u!114 &641981752
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3804,9 +3804,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e779c153c996b4c4ca6a71ccb8ea1aaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ground:
+  mask:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 0
 --- !u!114 &867616223
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4259,9 +4259,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e779c153c996b4c4ca6a71ccb8ea1aaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ground:
+  mask:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 0
 --- !u!114 &931446525
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4420,9 +4420,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e779c153c996b4c4ca6a71ccb8ea1aaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ground:
+  mask:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 0
 --- !u!114 &941200569
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4689,9 +4689,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e779c153c996b4c4ca6a71ccb8ea1aaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ground:
+  mask:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 0
 --- !u!1 &1038859841
 GameObject:
   m_ObjectHideFlags: 0
@@ -5249,9 +5249,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e779c153c996b4c4ca6a71ccb8ea1aaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ground:
+  mask:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 0
 --- !u!1 &1123326329
 GameObject:
   m_ObjectHideFlags: 0
@@ -5409,9 +5409,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e779c153c996b4c4ca6a71ccb8ea1aaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ground:
+  mask:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 0
 --- !u!114 &1138835294
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5823,9 +5823,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e779c153c996b4c4ca6a71ccb8ea1aaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ground:
+  mask:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 0
 --- !u!114 &1252722866
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6452,9 +6452,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e779c153c996b4c4ca6a71ccb8ea1aaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ground:
+  mask:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 0
 --- !u!114 &1467598182
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7201,9 +7201,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e779c153c996b4c4ca6a71ccb8ea1aaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ground:
+  mask:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 0
 --- !u!114 &1632069292
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7362,9 +7362,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e779c153c996b4c4ca6a71ccb8ea1aaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ground:
+  mask:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 0
 --- !u!114 &1636327039
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8486,9 +8486,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e779c153c996b4c4ca6a71ccb8ea1aaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ground:
+  mask:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 0
 --- !u!1 &1779332741
 GameObject:
   m_ObjectHideFlags: 0
@@ -8856,9 +8856,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e779c153c996b4c4ca6a71ccb8ea1aaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ground:
+  mask:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 0
 --- !u!114 &1823225482
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8978,7 +8978,8 @@ GameObject:
   - component: {fileID: 1869201190}
   - component: {fileID: 1869201189}
   - component: {fileID: 1869201188}
-  m_Layer: 7
+  - component: {fileID: 1869201192}
+  m_Layer: 3
   m_Name: Ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9071,6 +9072,37 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1869201192
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1869201187}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_AgentTypeID: 0
+  m_CollectObjects: 0
+  m_Size: {x: 10, y: 10, z: 10}
+  m_Center: {x: 0, y: 2, z: 0}
+  m_LayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_UseGeometry: 0
+  m_DefaultArea: 0
+  m_GenerateLinks: 0
+  m_IgnoreNavMeshAgent: 1
+  m_IgnoreNavMeshObstacle: 1
+  m_OverrideTileSize: 0
+  m_TileSize: 256
+  m_OverrideVoxelSize: 0
+  m_VoxelSize: 0.16666667
+  m_MinRegionArea: 2
+  m_NavMeshData: {fileID: 23800000, guid: 88e606e735c4eb043a158651e1ce189b, type: 2}
+  m_BuildHeightMesh: 0
 --- !u!1 &1889300005
 GameObject:
   m_ObjectHideFlags: 0
@@ -9692,9 +9724,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e779c153c996b4c4ca6a71ccb8ea1aaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ground:
+  mask:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 0
 --- !u!114 &1967424713
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10150,9 +10182,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e779c153c996b4c4ca6a71ccb8ea1aaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ground:
+  mask:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 0
 --- !u!1 &2010857610
 GameObject:
   m_ObjectHideFlags: 0
@@ -10519,9 +10551,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e779c153c996b4c4ca6a71ccb8ea1aaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ground:
+  mask:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 0
 --- !u!114 &2046984435
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10788,9 +10820,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e779c153c996b4c4ca6a71ccb8ea1aaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ground:
+  mask:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 0
 --- !u!1 &2091154265
 GameObject:
   m_ObjectHideFlags: 0

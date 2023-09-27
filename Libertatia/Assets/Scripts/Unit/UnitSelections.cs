@@ -8,7 +8,13 @@ public class UnitSelections : MonoBehaviour
     public List<GameObject> unitsSelected = new List<GameObject>();
 
     private static UnitSelections _instance;
-    public static UnitSelections Instance { get { return _instance; } }
+    public static UnitSelections Instance
+    {
+        get
+        {
+            return _instance;
+        }
+    }
 
     public GameObject[] enemies;
 
@@ -98,6 +104,11 @@ public class UnitSelections : MonoBehaviour
     /// <param name="unitToAdd"></param>
     private void AddSelection(GameObject unitToAdd)
     {
+        if(unitToAdd.GetComponent<Builder>().IsBuilding)
+        {
+            return;
+        }
+
         unitsSelected.Add(unitToAdd);
         //sets the first child to be active: an indicator showing that the unit is selected
         unitToAdd.transform.GetChild(0).gameObject.SetActive(true);
@@ -119,7 +130,7 @@ public class UnitSelections : MonoBehaviour
     /// Removes the units from the selected units list
     /// </summary>
     /// <param name="unitToRemove"></param>
-    private void RemoveSelection(GameObject unitToRemove)
+    public void RemoveSelection(GameObject unitToRemove)
     {
         unitsSelected.Remove(unitToRemove);
         //sets the first child to be active: an indicator showing that the unit is selected
@@ -137,7 +148,7 @@ public class UnitSelections : MonoBehaviour
     /// Attack enemy units upon coming into range
     /// </summary>
     /// <param name="enemy"></param>
-    /// 
+    ///
     //TO BE UPDATED
     public void AttackEnemy(GameObject enemy)
     {
@@ -154,10 +165,10 @@ public class UnitSelections : MonoBehaviour
                     //Destroy(enemy);
                     enemy.SetActive(false);
                 }
-              
+
             }
         }
-  
+
 
     }
 }

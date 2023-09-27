@@ -1,4 +1,5 @@
-﻿using UnityEditor.UIElements;
+﻿using System.Collections.Generic;
+using UnityEditor.UIElements;
 using UnityEngine;
 //using DG.Tweening;
 
@@ -16,6 +17,7 @@ public class Building : MonoBehaviour
     [SerializeField] private Color[] stateColors; // Not sure how this is used yet
     // Identifiers
     public bool isHovered = false;
+    public bool isPlacing = false;
     public bool isAttackable = false;
     // Placement
     public bool isColliding = false;
@@ -27,6 +29,7 @@ public class Building : MonoBehaviour
     private bool isComplete = false;
     private int builderAmount = 0; // could make this a list of builders if we wanted to improve UI
     private int builderCapacity = 1;
+    private List<Builder> builders;
     // Building animation
     private Vector3 startPos;
     private Vector3 endPos;
@@ -64,7 +67,6 @@ public class Building : MonoBehaviour
     {
         damageScript = GetComponent<Damageable>();
         buildingRender = transform.GetComponentInChildren<MeshRenderer>();
-        buildingRender.material = buildingMaterial;
     }
     void Start()
     {
@@ -74,6 +76,7 @@ public class Building : MonoBehaviour
         }
         isHovered = false;
         isAttackable = false;
+        isPlacing = true;
         isComplete = false;
         workProgress = 0;
         percentComplete = 0.0f;
@@ -85,8 +88,25 @@ public class Building : MonoBehaviour
         Vector3 startingOffset = Vector3.down * height;
         startPos = endPos + startingOffset;
         //transform.localPosition = startPos; // show
+        builders = new List<Builder>();
     }
 
+    public void Placing()
+    {
+        buildingRender.material = placingMaterial;
+    }
+    public void Place()
+    {
+        buildingRender.material = buildingMaterial;
+    }
+    public void FreeBuilders()
+    {
+        foreach(Builder builder in builders)
+        {
+            builder.Free();
+        }
+        builders.Clear();
+    }
     public void Build(int work)
     {
         if(isComplete)
@@ -122,13 +142,14 @@ public class Building : MonoBehaviour
         }
         return canBuild;
     }
-    public bool AssignBuilder()
+    public bool AssignBuilder(Builder builder)
     {
         if(isComplete || builderAmount >= builderCapacity)
         {
             return false;
         }
         builderAmount++;
+        builders.Add(builder);
         return true;
     }
     private void CompleteBuild()
