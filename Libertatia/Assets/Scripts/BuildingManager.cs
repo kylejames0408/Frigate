@@ -19,6 +19,9 @@ public class BuildingManager : MonoBehaviour
     private BuildingUI ui;
     public GameObject buildingDir;
 
+    [Header("Events")]
+    public GameEvent onBuildingPlaced;
+
     public static BuildingManager Instance
     {
         get
@@ -59,6 +62,8 @@ public class BuildingManager : MonoBehaviour
         {
             building.DamageScript.onDestroy.AddListener(() => RemoveBuilding(building));
         }
+       
+        onBuildingPlaced.Raise(this, index);
 
         // Give builders build task if they are free
         // TODO: Make external call and feed in building, return bool: bool AssignBuilder(Building bdg)

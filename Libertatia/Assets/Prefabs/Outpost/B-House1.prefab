@@ -138,6 +138,7 @@ MonoBehaviour:
   - {r: 0.003921569, g: 0.003921569, b: 0.003921569, a: 1}
   - {r: 0.93333334, g: 0.93333334, b: 0.93333334, a: 1}
   isHovered: 0
+  isPlacing: 0
   isAttackable: 0
   isColliding: 0
   resourceCost: 6400000032000000
@@ -147,6 +148,7 @@ MonoBehaviour:
   buildingMaterial: {fileID: 2100000, guid: 9b6c03d6f347f544fae42a85b3d0e502, type: 2}
   builtMaterial: {fileID: 2100000, guid: 2ed85a5525951e145ab57bc5eb35b5ba, type: 2}
   collisionMaterial: {fileID: 2100000, guid: 233ebadc30a9dc04180a21274295cfeb, type: 2}
+  onCrewmateAssigned: {fileID: 11400000, guid: 8c002ad9b29a8304d866301b28d5b0b9, type: 2}
 --- !u!114 &4420659338917275431
 MonoBehaviour:
   m_ObjectHideFlags: 0

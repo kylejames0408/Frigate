@@ -26,6 +26,11 @@ public class DialogueManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        
+    }
+
+    private void Awake()
+    {
         sentences = new Queue<string>();
         currentSentence = string.Empty;
         currentDialogue = null;
@@ -39,12 +44,12 @@ public class DialogueManager : MonoBehaviour
     // Starts the dialogue display. Brings up the box, queues up all the sentences for this dialogue, sets up the speaker name and displays the first sentence
     public void StartDialogue(Dialogue dialogue)
     {
+        currentDialogue = null;
+
         panel.raycastTarget = true;
         animator.SetBool("IsOpen", true);
 
         currentDialogue = dialogue;
-
-        //StartCoroutine(WaitUntilTransition());
 
         speakerNameText.text = currentDialogue.speakerName;
 
@@ -120,8 +125,6 @@ public class DialogueManager : MonoBehaviour
 
         StopAllCoroutines();
 
-        //StartCoroutine(WaitUntilTransition());
-
         // clear the dialogue box text
         speakerNameText.text = string.Empty;
         dialogueBoxText.text = string.Empty;
@@ -133,15 +136,10 @@ public class DialogueManager : MonoBehaviour
             Debug.Log("No callback here!");
 
         currentDialogue = null;
+        currentSentence = string.Empty;
 
         panel.raycastTarget = false;
 
-    }
-
-    // a simple coroutine you can use to wait for the dialogue box to fully open or close before making changes
-    IEnumerator WaitUntilTransition()
-    {
-        yield return new WaitForSeconds(5f);
     }
 
 }

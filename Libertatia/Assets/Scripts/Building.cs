@@ -46,6 +46,9 @@ public class Building : MonoBehaviour
     [SerializeField] private Material builtMaterial;
     [SerializeField] private Material collisionMaterial;
 
+    [Header("Events")]
+    public GameEvent onCrewmateAssigned;
+
     public bool IsComplete
     {
         get { return isComplete; }
@@ -150,6 +153,7 @@ public class Building : MonoBehaviour
         }
         builderAmount++;
         builders.Add(builder);
+        onCrewmateAssigned.Raise(this, builder);
         return true;
     }
     private void CompleteBuild()
