@@ -12,7 +12,7 @@ PlayerSettings:
   targetDevice: 2
   useOnDemandResources: 0
   accelerometerFrequency: 60
-  companyName: DefaultCompany
+  companyName: 5 Sheets to the Wind
   productName: Libertatia
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
@@ -153,7 +153,8 @@ PlayerSettings:
   resetResolutionOnWindowResize: 0
   androidSupportedAspectRatio: 1
   androidMaxAspectRatio: 2.1
-  applicationIdentifier: {}
+  applicationIdentifier:
+    Standalone: com.5-Sheets-to-the-Wind.Libertatia
   buildNumber:
     Bratwurst: 0
     Standalone: 0
@@ -839,11 +840,11 @@ PlayerSettings:
   apiCompatibilityLevel: 6
   activeInputHandler: 2
   windowsGamepadBackendHint: 0
-  cloudProjectId: 
+  cloudProjectId: 3ea698b4-b792-4281-bf90-215e4c168402
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: 
-  organizationId: 
+  projectName: Libertatia
+  organizationId: zaffyduck
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
   hmiLoadingImage: {fileID: 0}
