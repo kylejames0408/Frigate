@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Libertatia/Assets/Scenes/Outpost/NavMesh-Terrain.asset.meta
 guid: 09cb7b10b5e54fd4b8439875dea8cb76
+========
+guid: 45e0ae2f790d9e24bb7e483d7d15e60d
+>>>>>>>> 654d579d15859f2f4bca3a15f9edf370774d27ee:Libertatia/Assets/Scenes/CombatTest/CombatTest/NavMesh-Terrain.asset.meta
 NativeFormatImporter:
   externalObjects: {}
   mainObjectFileID: 23800000
