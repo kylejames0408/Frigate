@@ -57,8 +57,8 @@ public class CameraManager : MonoBehaviour
         }
 
         isMouseMove = false;
-        maxWorldBounds = new Vector2(8,-20);
-        minWorldBounds = new Vector2(-8,-30);
+        //maxWorldBounds = new Vector2(8,-20);
+        //minWorldBounds = new Vector2(-8,-30);
         aspectRatio = (float)Screen.width / Screen.height;
         // Tried to scale sensitivity depending on screen size, but doen't seem to be enough
         movementHorizontalScale = (float)Screen.currentResolution.height/Screen.height;
