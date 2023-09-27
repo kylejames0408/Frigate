@@ -1,39 +1,56 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
+using System;
 
 public class DialogueManager : MonoBehaviour
 {
-    public TextMeshProUGUI speakerNameText;     // the public reference to the dialogue box name text (who the speaker is)
-    public TextMeshProUGUI dialogueBoxText;     // the public reference to the dialogue box text (what the speaker is saying)
-    public TextMeshProUGUI continueButtonText;  // the public reference to the continue button (to swap between continue and skip)
-
     public Animator animator;                   // the public reference to the dialogue box's animator (so it can animate on and off screen)
 
     public float textWriteSpeed;                // a public float so you can set how fast characters in a sentence populate the dialogue box
+
+    private TextMeshProUGUI speakerNameText;     // the reference to the dialogue box name text (who the speaker is)
+    private TextMeshProUGUI dialogueBoxText;     // the reference to the dialogue box text (what the speaker is saying)
+    private TextMeshProUGUI continueButtonText;  // the reference to the continue button (to swap between continue and skip)
+
+    private Image panel;                        // the reference to the panel used to block input to other elements during active dialogue
     
     private Queue<string> sentences;            // a Queue to hold all the sentences in the dialogue. It's like a list, but better for our use case
 
-    private string currentSentence;             // a private string used to hold the currently displayed sentence. This is for skipping character typing
+    private string currentSentence;             // a string used to hold the currently displayed sentence. This is for skipping character typing
+
+    private Dialogue currentDialogue;           // a field used to store the currently active dialogue
 
     // Start is called before the first frame update
     void Start()
     {
         sentences = new Queue<string>();
         currentSentence = string.Empty;
+        currentDialogue = null;
+
+        speakerNameText = GameObject.Find("Speaker Name").GetComponent<TextMeshProUGUI>();
+        dialogueBoxText = GameObject.Find("Dialogue Text").GetComponent<TextMeshProUGUI>();
+        continueButtonText = GameObject.Find("Dialogue Continue Button").GetComponentInChildren<TextMeshProUGUI>();
+        panel = GameObject.Find("Dialogue Panel").GetComponent<Image>();
     }
 
     // Starts the dialogue display. Brings up the box, queues up all the sentences for this dialogue, sets up the speaker name and displays the first sentence
     public void StartDialogue(Dialogue dialogue)
     {
+        panel.raycastTarget = true;
         animator.SetBool("IsOpen", true);
 
-        speakerNameText.text = dialogue.speakerName;
+        currentDialogue = dialogue;
+
+        //StartCoroutine(WaitUntilTransition());
+
+        speakerNameText.text = currentDialogue.speakerName;
 
         sentences.Clear();
 
-        foreach(string sentence in dialogue.sentences)
+        foreach(string sentence in currentDialogue.sentences)
         {
             sentences.Enqueue(sentence);
         }
@@ -98,7 +115,31 @@ public class DialogueManager : MonoBehaviour
     // A simple method to end the dialogue event and close the dialogue box.
     void EndDialogue()
     {
+        // trigger closing dialogue box animation
         animator.SetBool("IsOpen", false);
+
+        //StartCoroutine(WaitUntilTransition());
+
+        // clear the dialogue box text
+        speakerNameText.text = string.Empty;
+        dialogueBoxText.text = string.Empty;
+
+        // invoke the callback method of a given dialogue event if it has one
+        if (currentDialogue.callback.GetPersistentEventCount() != 0)
+            currentDialogue.callback.Invoke();
+        else
+            Debug.Log("No callback here!");
+
+        currentDialogue = null;
+
+        panel.raycastTarget = false;
+
+    }
+
+    // a simple coroutine you can use to wait for the dialogue box to fully open or close before making changes
+    IEnumerator WaitUntilTransition()
+    {
+        yield return new WaitForSeconds(5f);
     }
 
 }
