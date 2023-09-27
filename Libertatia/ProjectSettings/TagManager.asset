@@ -4,16 +4,17 @@
 TagManager:
   serializedVersion: 2
   tags:
+  - Building
   - PlayerCharacter
   - Enemy
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Terrain
   - Water
   - UI
-  - 
+  - Building
   - Ground
   - Clickable
   - 
