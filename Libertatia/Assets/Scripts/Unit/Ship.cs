@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Ship : MonoBehaviour
 {
@@ -9,11 +10,13 @@ public class Ship : MonoBehaviour
     public int enemyCount;
 
     public int detectionRange;
+    private bool inRange;
 
     // Start is called before the first frame update
     void Start()
     {
-        detectionRange = 10;
+        detectionRange = 60;
+        inRange = false;
     }
 
     // Update is called once per frame
@@ -23,16 +26,30 @@ public class Ship : MonoBehaviour
 
         foreach (GameObject unit in unitList)
         {
-            if(Vector3.Distance(transform.position, unit.transform.position) <= 40)
+            if(Vector3.Distance(transform.position, unit.transform.position) <= detectionRange)
             {
                 //Debug.Log("Go home");
+                inRange = true;
       
             }
         }
+
+        if(inRange)
+        {
+            if(Input.GetKeyDown(KeyCode.E))
+            {
+                SceneManager.LoadScene("Outpost");
+            }
+        }
+
     }
 
-    //private void OnGUI()
-    //{
-    //    GUI.Box(new Rect(40, 130, 250, 80), "Go home");
-    //}
+    private void OnGUI()
+    {
+        if(inRange)
+        {
+            GUI.Box(new Rect(40, 150, 250, 20), "Press E to return to base.");
+        }
+
+    }
 }
