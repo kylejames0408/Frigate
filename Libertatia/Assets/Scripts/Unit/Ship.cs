@@ -12,6 +12,8 @@ public class Ship : MonoBehaviour
     public int detectionRange;
     private bool inRange;
 
+    
+
     // Start is called before the first frame update
     void Start()
     {
@@ -46,9 +48,19 @@ public class Ship : MonoBehaviour
 
     private void OnGUI()
     {
-        if(inRange)
+        // the rect that is the canvas
+        GameObject canvas = GameObject.Find("BoxSelectCanvas");
+        RectTransform canvasRect = canvas.GetComponent<RectTransform>();
+
+        // the style used to set the text size and 
+        GUIStyle GUIBoxStyle = new GUIStyle(GUI.skin.box);
+        GUIBoxStyle.fontSize = (int)(canvasRect.rect.height * 0.023f);
+        GUIBoxStyle.alignment = TextAnchor.MiddleCenter;
+
+        if (inRange)
         {
-            GUI.Box(new Rect(40, 150, 250, 20), "Press E to return to base.");
+            GUI.Box(new Rect(canvasRect.rect.width * 0.35f, canvasRect.rect.height * 0.05f, canvasRect.rect.width * 0.21f, canvasRect.rect.height * 0.05f),
+                "Press E to return to outpost.", GUIBoxStyle);
         }
 
     }

@@ -1,17 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class TutorialManager : MonoBehaviour
 {
 
     private static TutorialManager instance;
 
-    public DialogueTrigger firstDialogue;
-    public DialogueTrigger secondDialogue;
-    public DialogueTrigger thirdDialogue;
-    public DialogueTrigger fourthDialogue;
-    public DialogueTrigger fifthDialogue;
+    public List<DialogueTrigger> outpostDialogues;
+
+    public List<DialogueTrigger> combatDialogues;
+
+    enum Scene
+    {
+        Oupost,
+        Combat
+    }
+
+    Scene currentScene;
 
     int buildingsPlaced = 0;
     int crewmatesAssigned = 0;
@@ -30,7 +37,19 @@ public class TutorialManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        firstDialogue.TriggerDialogue();
+        if(SceneManager.GetActiveScene().name == "Outpost - Playtest")
+        {
+            //check to see if this is the first time, or if its when they're coming back from combat
+            currentScene = Scene.Oupost;
+            outpostDialogues[0].TriggerDialogue();
+        }
+        else if (SceneManager.GetActiveScene().name == "CombatTest - Playtest")
+        {
+            currentScene = Scene.Combat;
+            combatDialogues[0].TriggerDialogue();
+        }
+        
+        
     }
 
     // Update is called once per frame
@@ -47,10 +66,10 @@ public class TutorialManager : MonoBehaviour
         switch (buildingsPlaced)
         {
             case 1:
-                secondDialogue.TriggerDialogue();
+                outpostDialogues[1].TriggerDialogue();
                 break;
             case 2:
-                thirdDialogue.TriggerDialogue();
+                outpostDialogues[2].TriggerDialogue();
                 break;
             default:
                 return;
@@ -62,7 +81,13 @@ public class TutorialManager : MonoBehaviour
         crewmatesAssigned++;
         if(crewmatesAssigned == 2)
         {
-            fourthDialogue.TriggerDialogue();
+            outpostDialogues[3].TriggerDialogue();
         }
+    }
+
+    public void AllEnemiesDeadEvent(Component sender, object data)
+    {
+        combatDialogues[1].TriggerDialogue();
+        GameObject.Find("Ship").GetComponent<Ship>().detectionRange = 60;
     }
 }

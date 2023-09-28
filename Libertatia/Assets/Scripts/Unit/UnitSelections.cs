@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class UnitSelections : MonoBehaviour
 {
@@ -16,7 +17,9 @@ public class UnitSelections : MonoBehaviour
         }
     }
 
-    public GameObject[] enemies;
+    public List<GameObject> enemies;
+
+    public GameEvent allEnemiesDead;
 
     private void Awake()
     {
@@ -32,16 +35,17 @@ public class UnitSelections : MonoBehaviour
             _instance = this;
         }
 
-        enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        enemies = GameObject.FindGameObjectsWithTag("Enemy").ToList<GameObject>();
+
     }
 
     public void Update()
     {
-        foreach(GameObject enemy in enemies)
+        for(int i = 0; i<enemies.Count; i++)
         {
-            if(enemy != null)
+            if(enemies[i] != null)
             {
-                AttackEnemy(enemy);
+                AttackEnemy(enemies[i]);
             }
         }
     }
@@ -164,11 +168,15 @@ public class UnitSelections : MonoBehaviour
                 {
                     //Destroy(enemy);
                     enemy.SetActive(false);
+                    enemies.Remove(enemy);
                 }
 
             }
         }
-
+        if(enemies.Count == 0)
+        {
+            allEnemiesDead.Raise(this, enemies);
+        }
 
     }
 }
