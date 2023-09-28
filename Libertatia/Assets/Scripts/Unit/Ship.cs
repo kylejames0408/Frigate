@@ -17,7 +17,7 @@ public class Ship : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        detectionRange = 60;
+        //detectionRange = 0;
         inRange = false;
     }
 
@@ -28,12 +28,14 @@ public class Ship : MonoBehaviour
 
         foreach (GameObject unit in unitList)
         {
-            if(Vector3.Distance(transform.position, unit.transform.position) <= detectionRange)
+            if (Vector3.Distance(transform.position, unit.transform.position) <= detectionRange)
             {
                 //Debug.Log("Go home");
                 inRange = true;
-      
+
             }
+            else
+                inRange = false;
         }
 
         if(inRange)

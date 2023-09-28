@@ -12,6 +12,8 @@ public class TutorialManager : MonoBehaviour
 
     public List<DialogueTrigger> combatDialogues;
 
+    private GameObject AttackButton;
+
     enum Scene
     {
         Oupost,
@@ -22,9 +24,6 @@ public class TutorialManager : MonoBehaviour
 
     int buildingsPlaced = 0;
     int crewmatesAssigned = 0;
-
-    bool firstFlag = false;
-    bool secondFlag = false;
 
     public static TutorialManager Instance
     {
@@ -37,19 +36,23 @@ public class TutorialManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if(SceneManager.GetActiveScene().name == "Outpost - Playtest")
+        if(SceneManager.GetActiveScene().name == "Outpost - Playtest" || SceneManager.GetActiveScene().name == "Outpost")
         {
             //check to see if this is the first time, or if its when they're coming back from combat
             currentScene = Scene.Oupost;
             outpostDialogues[0].TriggerDialogue();
+            AttackButton = GameObject.Find("Btn-Attack");
+            AttackButton.SetActive(false);
         }
-        else if (SceneManager.GetActiveScene().name == "CombatTest - Playtest")
+        else if (SceneManager.GetActiveScene().name == "CombatTest - Playtest" || SceneManager.GetActiveScene().name == "CombatTest")
         {
             currentScene = Scene.Combat;
             combatDialogues[0].TriggerDialogue();
         }
-        
-        
+        else
+        {
+            Debug.Log("Something went wrong");
+        }
     }
 
     // Update is called once per frame
@@ -82,6 +85,7 @@ public class TutorialManager : MonoBehaviour
         if(crewmatesAssigned == 2)
         {
             outpostDialogues[3].TriggerDialogue();
+            AttackButton.SetActive(true);
         }
     }
 

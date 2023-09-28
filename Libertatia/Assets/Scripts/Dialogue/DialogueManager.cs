@@ -35,10 +35,10 @@ public class DialogueManager : MonoBehaviour
         currentSentence = string.Empty;
         currentDialogue = null;
 
-        //speakerNameText = GameObject.Find("Speaker Name").GetComponent<TextMeshProUGUI>();
-        //dialogueBoxText = GameObject.Find("Dialogue Text").GetComponent<TextMeshProUGUI>();
-        //continueButtonText = GameObject.Find("Dialogue Continue Button").GetComponentInChildren<TextMeshProUGUI>();
-        //panel = GameObject.Find("Dialogue Panel").GetComponent<Image>();
+        speakerNameText = GameObject.Find("Speaker Name").GetComponent<TextMeshProUGUI>();
+        dialogueBoxText = GameObject.Find("Dialogue Text").GetComponent<TextMeshProUGUI>();
+        continueButtonText = GameObject.Find("Dialogue Continue Button").GetComponentInChildren<TextMeshProUGUI>();
+        panel = GameObject.Find("Dialogue Panel").GetComponent<Image>();
     }
 
     // Starts the dialogue display. Brings up the box, queues up all the sentences for this dialogue, sets up the speaker name and displays the first sentence
