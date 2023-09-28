@@ -29,6 +29,7 @@ public class GameManager : MonoBehaviour
     // Player Data // THOUGHT: player data can just be stored in a scriptable object and the GM interacts with it
     private Resources resources;
     private int buildingAmount = 0;
+    public bool outpostVisited = false;
 
     public static GameManager Instance
     {
@@ -66,6 +67,7 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
         buildings = new List<Building>();
+        outpostVisited = false;
     }
 
     private void Start()

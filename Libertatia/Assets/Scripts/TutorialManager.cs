@@ -14,6 +14,8 @@ public class TutorialManager : MonoBehaviour
 
     private GameObject AttackButton;
 
+    private bool secondVisit = false;
+
     enum Scene
     {
         Oupost,
@@ -40,7 +42,18 @@ public class TutorialManager : MonoBehaviour
         {
             //check to see if this is the first time, or if its when they're coming back from combat
             currentScene = Scene.Oupost;
-            outpostDialogues[0].TriggerDialogue();
+            if (!GameManager.Instance.outpostVisited)
+            {
+                outpostDialogues[0].TriggerDialogue();
+                GameManager.Instance.outpostVisited = true;
+            }    
+            else
+            {
+                outpostDialogues[5].TriggerDialogue();
+                secondVisit = true;
+            }
+                
+
             AttackButton = GameObject.Find("Btn-Attack");
             AttackButton.SetActive(false);
         }
@@ -63,7 +76,7 @@ public class TutorialManager : MonoBehaviour
 
     public void BuildingPlacedEvent(Component sender, object data)
     {
-        if(sender is BuildingManager)
+        if(sender is BuildingManager && !secondVisit)
             buildingsPlaced++;
 
         switch (buildingsPlaced)
@@ -82,7 +95,7 @@ public class TutorialManager : MonoBehaviour
     public void CrewmateAssignedEvent(Component sender, object data)
     {
         crewmatesAssigned++;
-        if(crewmatesAssigned == 2)
+        if(crewmatesAssigned == 2 && !secondVisit)
         {
             outpostDialogues[3].TriggerDialogue();
             AttackButton.SetActive(true);
