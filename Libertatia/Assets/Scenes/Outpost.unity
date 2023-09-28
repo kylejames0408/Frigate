@@ -582,7 +582,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 1193668177}
-  textWriteSpeed: 0.1
+  textWriteSpeed: 0.03
 --- !u!4 &213566942
 Transform:
   m_ObjectHideFlags: 0
