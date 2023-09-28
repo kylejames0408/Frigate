@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public enum ResourceType
 {
@@ -33,11 +34,21 @@ public class BuildingManager : MonoBehaviour
     private void Awake()
     {
         instance = this;
-        buildings = new List<Building>();
     }
     private void Start()
     {
         currentResources = new int[] { 1000, 1000 };
+
+        buildings = new List<Building>();
+        if (GameManager.Instance.Buildings.Count > 0)
+        {
+            foreach (Building b in GameManager.Instance.Buildings)
+            {
+                buildings.Add(b);
+                b.Build(100);
+            }
+        }
+
         //ui = FindObjectOfType<BuildingUI>();
         //if (ui)
         //{
@@ -71,10 +82,10 @@ public class BuildingManager : MonoBehaviour
         }
 
         // Create Building
-        Building building = Instantiate(buildingPrefab, position, buildingPrefab.transform.rotation, buildingParent);
+        Building building = Instantiate(buildingPrefab, position, buildingPrefab.transform.rotation); //buildingParent
         building.Place();
-        buildings.Add(building);
-        if(building.isAttackable)
+        AddBuilding(building);
+        if (building.isAttackable)
         {
             building.DamageScript.onDestroy.AddListener(() => RemoveBuilding(building));
         }
@@ -109,6 +120,8 @@ public class BuildingManager : MonoBehaviour
     public void AddBuilding(Building building)
     {
         buildings.Add(building);
+        DontDestroyOnLoad(building.gameObject);
+        GameManager.Instance.Buildings.Add(building);
     }
     public void RemoveBuilding(Building building)
     {

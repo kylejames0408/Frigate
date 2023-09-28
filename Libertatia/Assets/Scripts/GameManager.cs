@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Globalization;
 using UnityEngine;
 
 public enum GameState
@@ -26,6 +28,7 @@ public class GameManager : MonoBehaviour
     private float gameTimer = 0.0f;
     // Player Data // THOUGHT: player data can just be stored in a scriptable object and the GM interacts with it
     private Resources resources;
+    private int buildingAmount = 0;
 
     public static GameManager Instance
     {
@@ -44,6 +47,12 @@ public class GameManager : MonoBehaviour
             return instance;
         }
     }
+    private List<Building> buildings;
+
+    public List<Building> Buildings
+    {
+        get { return buildings; }
+    }
 
     public virtual void Awake()
     {
@@ -56,6 +65,7 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        buildings = new List<Building>();
     }
 
     private void Start()
@@ -84,4 +94,5 @@ public class GameManager : MonoBehaviour
                 break;
         }
     }
+
 }

@@ -1,12 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
-using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.Bindings;
-using UnityEngine.Events;
-using UnityEngine.Internal;
-using UnityEngine.Scripting;
 
 public class CeneManager : MonoBehaviour
 {
