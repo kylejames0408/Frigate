@@ -49,6 +49,13 @@ public class Building : MonoBehaviour
     [Header("Events")]
     public GameEvent onCrewmateAssigned;
 
+    public bool IsAssigned
+    {
+        get
+        {
+            return builderAmount == builderCapacity;
+        }
+    }
     public bool IsComplete
     {
         get { return isComplete; }

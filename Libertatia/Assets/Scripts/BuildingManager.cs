@@ -45,6 +45,22 @@ public class BuildingManager : MonoBehaviour
         //}
     }
 
+    private void Update()
+    {
+        int assigned = 0;
+        foreach (Building building in buildings)
+        {
+            if(building.IsAssigned)
+            {
+                assigned++;
+            }
+        }
+        if(assigned >=2)
+        {
+            BuildingUI.Instance.attackBtn.SetActive(true);
+        }
+    }
+
     public void SpawnBuilding(int index, Vector3 position)
     {
         Building buildingPrefab = buildingPrefabs[index];
@@ -62,7 +78,7 @@ public class BuildingManager : MonoBehaviour
         {
             building.DamageScript.onDestroy.AddListener(() => RemoveBuilding(building));
         }
-       
+
         onBuildingPlaced.Raise(this, index);
 
         // Give builders build task if they are free
@@ -124,17 +140,7 @@ public class BuildingManager : MonoBehaviour
     {
         return buildingPrefabs[index];
     }
-    public Building GetRandomBuilding()
-    {
-        if (buildings.Count > 0)
-        {
-            return buildings[Random.Range(0, buildings.Count)];
-        }
-        else
-        {
-            return null;
-        }
-    }
+
     public void PlayParticle(Vector3 position)
     {
         if (buildParticle)

@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public enum GameState
 {
@@ -24,10 +21,11 @@ public struct Resources
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
+    // Game Data
     private GameState state;
-    private Resources resources;
     private float gameTimer = 0.0f;
-    public float buildInterval = 3.0f;
+    // Player Data // THOUGHT: player data can just be stored in a scriptable object and the GM interacts with it
+    private Resources resources;
 
     public static GameManager Instance
     {
@@ -59,6 +57,7 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
     private void Start()
     {
         gameTimer = 0.0f;
@@ -75,12 +74,12 @@ public class GameManager : MonoBehaviour
         {
             case GameState.PLAY:
                 {
-
+                    // Gameplay
                 }
                 break;
             case GameState.PAUSE:
                 {
-
+                    // Bypass gameplay
                 }
                 break;
         }
