@@ -12,7 +12,7 @@ public class ActorVisualHandler : MonoBehaviour
     private void Start()
     {
         actor = GetComponent<Actor>();
-        actor.animationEvent.attackEvent.AddListener(Attack);
+        //actor.animationEvent.attackEvent.AddListener(Attack);
     }
     public void Select()
     {
@@ -27,8 +27,8 @@ public class ActorVisualHandler : MonoBehaviour
 
     void Attack()
     {
-        if(actor.damageableTarget)
-            Instantiate(destroyParticle, actor.damageableTarget.transform.position, Quaternion.identity);
+        //if(actor.damageableTarget)
+            //Instantiate(destroyParticle, actor.damageableTarget.transform.position, Quaternion.identity);
     }
 
     private void OnDestroy()

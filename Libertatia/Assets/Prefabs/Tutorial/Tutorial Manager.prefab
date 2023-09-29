@@ -1,0 +1,332 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7845774388746979147
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6231409215963263180}
+  - component: {fileID: 834794479261776291}
+  - component: {fileID: 8631642408441138930}
+  - component: {fileID: 1178404447809937563}
+  - component: {fileID: 4808645720649311270}
+  - component: {fileID: 4829848524955143945}
+  - component: {fileID: 4137988272570579665}
+  - component: {fileID: 6769618784424622894}
+  - component: {fileID: 7317531967827180226}
+  - component: {fileID: 6785737645530700138}
+  - component: {fileID: 6483838458676575870}
+  - component: {fileID: 4051391971717010772}
+  - component: {fileID: -759242478486736209}
+  m_Layer: 0
+  m_Name: Tutorial Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6231409215963263180
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7845774388746979147}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 69.489845, y: -102.65123, z: 1655.8683}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &834794479261776291
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7845774388746979147}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b72d40269b683e840bad6cd4ae512354, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outpostDialogues:
+  - {fileID: 4829848524955143945}
+  - {fileID: 4137988272570579665}
+  - {fileID: 6769618784424622894}
+  - {fileID: 7317531967827180226}
+  - {fileID: 6785737645530700138}
+  - {fileID: 6483838458676575870}
+  combatDialogues:
+  - {fileID: 4051391971717010772}
+  - {fileID: -759242478486736209}
+--- !u!114 &8631642408441138930
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7845774388746979147}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a31e198f64db7c41adcee9c90a2dded, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: 4ae36f9fe3f9160488e2f40b8ca0c348, type: 2}
+  response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 834794479261776291}
+        m_TargetAssemblyTypeName: TutorialManager, Assembly-CSharp
+        m_MethodName: BuildingPlacedEvent
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1178404447809937563
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7845774388746979147}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a31e198f64db7c41adcee9c90a2dded, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: 8c002ad9b29a8304d866301b28d5b0b9, type: 2}
+  response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 834794479261776291}
+        m_TargetAssemblyTypeName: TutorialManager, Assembly-CSharp
+        m_MethodName: CrewmateAssignedEvent
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &4808645720649311270
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7845774388746979147}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a31e198f64db7c41adcee9c90a2dded, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: 652c65e12d9ed954ea0fb51627342b58, type: 2}
+  response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 834794479261776291}
+        m_TargetAssemblyTypeName: TutorialManager, Assembly-CSharp
+        m_MethodName: AllEnemiesDeadEvent
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &4829848524955143945
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7845774388746979147}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b44771653170d494ab52e19b50c4bfd7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogue:
+    speakerName: Tutorial Pirate
+    sentences:
+    - 'Yargh! Ye''ve caught me crew at a bad time, we jus'' escaped from a ghastly
+      battle ''n thought this island be deserted.
+
+'
+    - 'Our crew needs a place t'' recover from thar wounds.
+
+      All we ''ave are
+      enough resources t'' build a shack ''n a tavern. If ye''d help us we''d be
+      mighty grateful.'
+    - Click a buildin' on the bottom left 'n then place it on an empty space t' set
+      its build spot!
+    callback:
+      m_PersistentCalls:
+        m_Calls: []
+--- !u!114 &4137988272570579665
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7845774388746979147}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b44771653170d494ab52e19b50c4bfd7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogue:
+    speakerName: Tutorial Pirate
+    sentences:
+    - Yarr! Now place the other buildin'
+    callback:
+      m_PersistentCalls:
+        m_Calls: []
+--- !u!114 &6769618784424622894
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7845774388746979147}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b44771653170d494ab52e19b50c4bfd7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogue:
+    speakerName: Tutorial Pirate
+    sentences:
+    - These two structures best be good t' support our crew now, but they won't be
+      built by themselves.
+    - Assign one o' yer crew t' each o' the buildings t' build 'em.
+    callback:
+      m_PersistentCalls:
+        m_Calls: []
+--- !u!114 &7317531967827180226
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7845774388746979147}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b44771653170d494ab52e19b50c4bfd7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogue:
+    speakerName: Tutorial Pirate
+    sentences:
+    - We don't 'ave many resources left on the island. We shall go find some more.
+    - Select the remainder o' the crew that ain't assigned t' a buildin', 'n assign
+      'em t' the ship t' prep fer travel!
+    callback:
+      m_PersistentCalls:
+        m_Calls: []
+--- !u!114 &6785737645530700138
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7845774388746979147}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b44771653170d494ab52e19b50c4bfd7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogue:
+    speakerName: Tutorial Pirate
+    sentences:
+    - Arrr! It's always good t' make sure ye 'ave as many crewmates busy as possible
+      afore a trip.
+    - If they be nah buildin' structures, they best be comin' on the next trip!
+    - Now, hit the [button] so we can travel t' a nearby island fer resources!
+    callback:
+      m_PersistentCalls:
+        m_Calls: []
+--- !u!114 &6483838458676575870
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7845774388746979147}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b44771653170d494ab52e19b50c4bfd7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogue:
+    speakerName: Tutorial Pirate
+    sentences:
+    - Good job! Ye jus' finished the first cycle. See how the buildings ye placed
+      afore leavin' got built while ye we be gone? When ye travel, things get done
+      back at the outpost!
+    - That's all fer now, but in the full game ye can keep buildin' yer outpost,
+      explorin' new islands 'n writin' yer owns legend.
+    callback:
+      m_PersistentCalls:
+        m_Calls: []
+--- !u!114 &4051391971717010772
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7845774388746979147}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b44771653170d494ab52e19b50c4bfd7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogue:
+    speakerName: Tutorial Pirate
+    sentences:
+    - Yarr! It looks like this island wasn't deserted either!
+    - We be goin' t' 'ave t' defeat this enemy pirate crew if we wants t' make it
+      out o' here alive wit' the resources.
+    - Select yer crewmates the same way ye did back at the outpost! Ye can move 'em
+      one by one, or click 'n drag t' select a group!
+    - Move 'em t' those red pirates 'n they'll cut 'em down!
+    callback:
+      m_PersistentCalls:
+        m_Calls: []
+--- !u!114 &-759242478486736209
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7845774388746979147}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b44771653170d494ab52e19b50c4bfd7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogue:
+    speakerName: Tutorial Pirate
+    sentences:
+    - Yarr! Ye rallied yer crew splendidly! That enemy crew didn' know wha' hit 'em!
+    - Wit' the island clear, it's time t' head back t' the outpost.
+    - Gather yer crew 'n move 'em t' the ship at the back. Once they get close enough
+      ye can hit the E key t' sail back!
+    callback:
+      m_PersistentCalls:
+        m_Calls: []

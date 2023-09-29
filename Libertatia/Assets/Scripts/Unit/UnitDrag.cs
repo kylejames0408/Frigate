@@ -57,14 +57,13 @@ public class UnitDrag : MonoBehaviour
     /// </summary>
     void DrawVisual()
     {
-        Vector2 boxStart = startPosition;
         Vector2 boxEnd = endPosition;
+        Vector2 boxStart = startPosition;
 
-        Vector2 boxCenter = (boxStart + boxEnd) / 2;
+        Vector2 boxCenter = (boxStart + boxEnd) * 0.5f;
         boxVisual.position = boxCenter;
 
         Vector2 boxSize = new Vector2(Mathf.Abs(boxStart.x - boxEnd.x), Mathf.Abs(boxStart.y - boxEnd.y));
-
         boxVisual.sizeDelta = boxSize;
     }
 

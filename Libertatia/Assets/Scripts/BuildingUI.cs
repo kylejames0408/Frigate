@@ -18,13 +18,14 @@ public class BuildingUI : MonoBehaviour
     private Mesh buildingMesh;
     private Quaternion buildingRotation;
     // Ghost Building Attributes
-    [SerializeField] private Material placingBuildingMat;
+    //[SerializeField] private Material placingBuildingMat; // not used - should replace mats in building
     // UI
     //private CanvasGroup canvasGroup;
     //public Transform resourceGroup;
     private Button[] buttons;
     private Button[] devButtons;
     [SerializeField] private GameObject devMenu; // could move this into DevUI class/file
+    public GameObject attackBtn;
 
     public static BuildingUI Instance
     {
@@ -60,8 +61,10 @@ public class BuildingUI : MonoBehaviour
         buildingRotation = Quaternion.identity;
 
         // Dev tools
-        devButtons = devMenu.GetComponentsInChildren<Button>();
-        devButtons[0].onClick.AddListener(() => BuildingManager.Instance.BuildAll(100));
+        //devButtons = devMenu.GetComponentsInChildren<Button>();
+        //devButtons[0].onClick.AddListener(() => BuildingManager.Instance.BuildAll(100));
+        attackBtn.GetComponent<Button>().onClick.AddListener(() => CeneManager.NextScene());
+        attackBtn.SetActive(false);
     }
 
     private void Update()
@@ -75,7 +78,6 @@ public class BuildingUI : MonoBehaviour
             {
                 position = info.point;
             }
-
 
             placingBuilding.transform.position = position;
 
@@ -118,6 +120,7 @@ public class BuildingUI : MonoBehaviour
         buildingMesh = prefab.GetComponentInChildren<MeshFilter>().sharedMesh;
         buildingRotation = prefab.transform.rotation;
         placingBuilding = Instantiate(BuildingManager.Instance.GetBuildingPrefab(buildingIndex), Vector3.zero, buildingRotation);
+        placingBuilding.Placing();
     }
 
     private string GetButtonText(Building b)
@@ -132,7 +135,7 @@ public class BuildingUI : MonoBehaviour
         //}
 
         //return "<size=23><b>" + buildingName + "</b></size>" + resourceString;
-        return "<size=23><b>" + buildingName + "</b></size>";
+        return "<size=50><b>" + buildingName + "</b></size>";
     }
 
     /// <summary>

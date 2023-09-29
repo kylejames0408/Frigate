@@ -7,7 +7,7 @@ public class UnitMovement : MonoBehaviour
 {
     Camera myCam;
     NavMeshAgent myAgent;
-    public LayerMask ground;
+    public LayerMask mask;
 
     // Start is called before the first frame update
     void Start()
@@ -29,13 +29,24 @@ public class UnitMovement : MonoBehaviour
             //Debug.Log(randNum);
 
 
-            RaycastHit hit;
             //Ray ray = myCam.ScreenPointToRay(targetPositionList[randNum]);
             Ray ray = myCam.ScreenPointToRay(Input.mousePosition);
 
-            if (Physics.Raycast(ray, out hit, Mathf.Infinity,ground))
+            if (Physics.Raycast(ray, out RaycastHit hit, 500f, mask))
             {
-                myAgent.SetDestination(hit.point);
+                if (hit.collider.tag == "Building")
+                {
+                    Building building = hit.rigidbody.GetComponent<Building>();
+                    Builder builder = myAgent.GetComponent<Builder>();
+                    if (building.AssignBuilder(builder))
+                    {
+                        builder.GiveJob(building);
+                    }
+                }
+                else
+                {
+                    myAgent.SetDestination(hit.point);
+                }
             }
         }
     }

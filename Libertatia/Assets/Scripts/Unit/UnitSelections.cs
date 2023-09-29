@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class UnitSelections : MonoBehaviour
 {
@@ -8,9 +9,17 @@ public class UnitSelections : MonoBehaviour
     public List<GameObject> unitsSelected = new List<GameObject>();
 
     private static UnitSelections _instance;
-    public static UnitSelections Instance { get { return _instance; } }
+    public static UnitSelections Instance
+    {
+        get
+        {
+            return _instance;
+        }
+    }
 
-    public GameObject[] enemies;
+    public List<GameObject> enemies;
+
+    public GameEvent allEnemiesDead;
 
     private void Awake()
     {
@@ -18,7 +27,7 @@ public class UnitSelections : MonoBehaviour
         if(_instance != null && _instance != this)
         {
             //destroy this instance
-            Destroy(this.gameObject);
+            Destroy(gameObject);
         }
         else
         {
@@ -26,16 +35,17 @@ public class UnitSelections : MonoBehaviour
             _instance = this;
         }
 
-        enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        enemies = GameObject.FindGameObjectsWithTag("Enemy").ToList<GameObject>();
+
     }
 
     public void Update()
     {
-        foreach(GameObject enemy in enemies)
+        for(int i = 0; i<enemies.Count; i++)
         {
-            if(enemy != null)
+            if(enemies[i] != null)
             {
-                AttackEnemy(enemy);
+                AttackEnemy(enemies[i]);
             }
         }
     }
@@ -98,6 +108,11 @@ public class UnitSelections : MonoBehaviour
     /// <param name="unitToAdd"></param>
     private void AddSelection(GameObject unitToAdd)
     {
+        if(unitToAdd.GetComponent<Builder>().IsBuilding)
+        {
+            return;
+        }
+
         unitsSelected.Add(unitToAdd);
         //sets the first child to be active: an indicator showing that the unit is selected
         unitToAdd.transform.GetChild(0).gameObject.SetActive(true);
@@ -119,7 +134,7 @@ public class UnitSelections : MonoBehaviour
     /// Removes the units from the selected units list
     /// </summary>
     /// <param name="unitToRemove"></param>
-    private void RemoveSelection(GameObject unitToRemove)
+    public void RemoveSelection(GameObject unitToRemove)
     {
         unitsSelected.Remove(unitToRemove);
         //sets the first child to be active: an indicator showing that the unit is selected
@@ -137,7 +152,7 @@ public class UnitSelections : MonoBehaviour
     /// Attack enemy units upon coming into range
     /// </summary>
     /// <param name="enemy"></param>
-    /// 
+    ///
     //TO BE UPDATED
     public void AttackEnemy(GameObject enemy)
     {
@@ -153,11 +168,15 @@ public class UnitSelections : MonoBehaviour
                 {
                     //Destroy(enemy);
                     enemy.SetActive(false);
+                    enemies.Remove(enemy);
                 }
-              
+
             }
         }
-  
+        if(enemies.Count == 0)
+        {
+            allEnemiesDead.Raise(this, enemies);
+        }
 
     }
 }

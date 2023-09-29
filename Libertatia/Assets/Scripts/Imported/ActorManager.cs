@@ -120,14 +120,14 @@ public class ActorManager : MonoBehaviour
             if (hit.collider.TryGetComponent(out Actor actor))
             {
                 selectedActors.Add(actor);
-                actor.visualHandler.Select();
+                //actor.visualHandler.Select();
             }
         }
     }
     public void DeselectActors()
     {
         foreach (Actor actor in selectedActors)
-            actor.visualHandler.Deselect();
+            //actor.visualHandler.Deselect();
 
         selectedActors.Clear();
     }

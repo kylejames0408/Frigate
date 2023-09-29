@@ -1,7 +1,6 @@
-using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public enum GameState
 {
@@ -24,10 +23,13 @@ public struct Resources
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
+    // Game Data
     private GameState state;
-    private Resources resources;
     private float gameTimer = 0.0f;
-    public float buildInterval = 3.0f;
+    // Player Data // THOUGHT: player data can just be stored in a scriptable object and the GM interacts with it
+    private Resources resources;
+    private int buildingAmount = 0;
+    public bool outpostVisited = false;
 
     public static GameManager Instance
     {
@@ -46,6 +48,12 @@ public class GameManager : MonoBehaviour
             return instance;
         }
     }
+    private List<Building> buildings;
+
+    public List<Building> Buildings
+    {
+        get { return buildings; }
+    }
 
     public virtual void Awake()
     {
@@ -58,7 +66,10 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        buildings = new List<Building>();
+        outpostVisited = false;
     }
+
     private void Start()
     {
         gameTimer = 0.0f;
@@ -75,14 +86,15 @@ public class GameManager : MonoBehaviour
         {
             case GameState.PLAY:
                 {
-
+                    // Gameplay
                 }
                 break;
             case GameState.PAUSE:
                 {
-
+                    // Bypass gameplay
                 }
                 break;
         }
     }
+
 }
