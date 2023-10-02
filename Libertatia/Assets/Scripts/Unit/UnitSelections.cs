@@ -41,13 +41,13 @@ public class UnitSelections : MonoBehaviour
 
     public void Update()
     {
-        for(int i = 0; i<enemies.Count; i++)
-        {
-            if(enemies[i] != null)
-            {
-                AttackEnemy(enemies[i]);
-            }
-        }
+        //for(int i = 0; i<enemies.Count; i++)
+        //{
+        //    if(enemies[i] != null)
+        //    {
+        //        AttackEnemy(enemies[i]);
+        //    }
+        //}
     }
 
     /// <summary>
@@ -148,12 +148,18 @@ public class UnitSelections : MonoBehaviour
 
 
 
+
+
+
+
+
+
     /// <summary>
     /// Attack enemy units upon coming into range
     /// </summary>
     /// <param name="enemy"></param>
     ///
-    //TO BE UPDATED
+    //TO BE REMOVED
     public void AttackEnemy(GameObject enemy)
     {
         //Debug.Log(enemy.tag);
@@ -179,4 +185,10 @@ public class UnitSelections : MonoBehaviour
         }
 
     }
+
+    public void MoveToEnemy(GameObject enemy)
+    {
+        enemy.transform.GetChild(0).gameObject.SetActive(true);
+    }
+
 }
