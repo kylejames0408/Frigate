@@ -2,12 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Character : MonoBehaviour
+public abstract class Character : MonoBehaviour
 {
     public int health;
 
     //public List<Character> crewMembers;
-    public List<Character> enemies;
+    //public List<Character> enemies;
 
     public int attackRange;
     public float attackRate;
@@ -25,28 +25,28 @@ public class Character : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Attack();
-        Death();
+        //Attack();
+        //Death();
     }
 
     /// <summary>
     /// Attacks opposing unit when in range
     /// </summary>
-    public void Attack()
+    public void Attack(List<Character> characterList)
     {
-        foreach (Character enemy in enemies)
+        foreach (Character unit in characterList)
         {
             //if opposing unit is within attack range
-            if (Vector3.Distance(transform.position, enemy.transform.position) < attackRange)
+            if (Vector3.Distance(transform.position, unit.transform.position) < attackRange)
             {
-                if(enemy.health > 0)
+                if(unit.health > 0)
                 {
                     //attacks and decreases their health based on attack rate
                     attackRate -= Time.deltaTime;
                     if (attackRate <= 0)
                     {
-                        enemy.health -= damage;
-                        Debug.Log("Attack " + enemy.name + " " + enemy.health);
+                        unit.health -= damage;
+                        Debug.Log("Attack " + unit.name + " " + unit.health);
                         attackRate = 2;
                     }
                 }

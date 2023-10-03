@@ -188,6 +188,10 @@ public class UnitSelections : MonoBehaviour
 
     public void MoveToEnemy(GameObject enemy)
     {
+        foreach(GameObject e in enemies)
+        {
+            e.transform.GetChild(0).gameObject.SetActive(false);
+        }
         enemy.transform.GetChild(0).gameObject.SetActive(true);
     }
 
