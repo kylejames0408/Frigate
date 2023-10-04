@@ -1,30 +1,61 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class CeneManager : MonoBehaviour
+public class CeneManager
 {
-    private static Scene scene;
-    private static LoadSceneParameters mode;
 
-    private void Awake()
+    /// <summary>
+    /// Gets usable build index by "clearning" it. Parses the index into our possible indexes.
+    /// </summary>
+    /// <param name="buildIndex">An unsafe build index</param>
+    /// <returns>A safe build index</returns>
+    private static int GetBuildIndex(int buildIndex)
     {
-        scene = SceneManager.GetActiveScene();
-        mode = new LoadSceneParameters(LoadSceneMode.Single); // Unloads current scene
+        return buildIndex % SceneManager.sceneCountInBuildSettings;
+    }
+    /// <summary>
+    /// Gets a safe build index that is offset from current build index
+    /// </summary>
+    /// <param name="buildIndexOffset">Offset from current build index</param>
+    /// <returns>New safe build index</returns>
+    private static int GetRelativeBuildIndex(int buildIndexOffset = 0)
+    {
+        return GetBuildIndex(SceneManager.GetActiveScene().buildIndex + buildIndexOffset);
+    }
+    /// <summary>
+    /// Loads scene from build index. Does not unload other scenes
+    /// </summary>
+    /// <param name="buildIndex">Build index of the scene to load</param>
+    public static void LoadScene(int buildIndex)
+    {
+        SceneManager.LoadScene(buildIndex, LoadSceneMode.Additive);
+    }
+    public static void LoadSceneAndActivate(int buildIndex)
+    {
+        SceneManager.LoadScene(buildIndex, LoadSceneMode.Additive);
+        SetSceneActive();
+    }
+    private static void SetSceneActive()
+    {
+        SceneManager.sceneLoaded += SceneLoadedCallback;
+    }
+    private static void SceneLoadedCallback(Scene scene, LoadSceneMode mode)
+    {
+        SceneManager.SetActiveScene(scene);
     }
 
+    public static void UnloadScene(int index)
+    {
+        SceneManager.UnloadSceneAsync(index, UnloadSceneOptions.None);
+    }
     public static void NextScene()
     {
-        int buildIndex = (SceneManager.GetActiveScene().buildIndex + 1) % SceneManager.sceneCountInBuildSettings;
-        SceneManager.LoadScene(buildIndex, mode);
+        LoadSceneAndActivate(GetRelativeBuildIndex(1));
     }
     public static void PreviousScene()
     {
-        int buildIndex = (scene.buildIndex - 1) % SceneManager.sceneCountInBuildSettings;
-        SceneManager.LoadScene(buildIndex, mode);
-    }
-
-    public void Quit()
-    {
-        Application.Quit(0);
+        LoadSceneAndActivate(GetRelativeBuildIndex(-1));
     }
 }

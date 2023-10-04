@@ -11,7 +11,7 @@ public class Resource : MonoBehaviour
     public bool isHover;
 
     //HoverVisual
-    private Renderer renderer;
+    //private Renderer renderer;
     private Color emissionColor;
 
     void Awake()
@@ -20,9 +20,9 @@ public class Resource : MonoBehaviour
         damageable.onDestroy.AddListener(GiveResource);
         damageable.onHit.AddListener(HitResource);
 
-        renderer = GetComponent<Renderer>();
-        if (renderer)
-            emissionColor = renderer.material.GetColor("_EmissionColor");
+        //renderer = GetComponent<Renderer>();
+        //if (renderer)
+        //    emissionColor = renderer.material.GetColor("_EmissionColor");
     }
 
     void GiveResource()
@@ -39,14 +39,14 @@ public class Resource : MonoBehaviour
 
     private void OnMouseEnter()
     {
-        isHover = true;
-        if (renderer)
-            renderer.material.SetColor("_EmissionColor", Color.grey);
+        //isHover = true;
+        //if (renderer)
+        //    renderer.material.SetColor("_EmissionColor", Color.grey);
     }
     private void OnMouseExit()
     {
-        isHover = false;
-        if (renderer)
-            renderer.material.SetColor("_EmissionColor", emissionColor);
+        //isHover = false;
+        //if (renderer)
+        //    renderer.material.SetColor("_EmissionColor", emissionColor);
     }
 }
