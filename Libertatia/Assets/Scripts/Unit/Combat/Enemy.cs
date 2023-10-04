@@ -46,6 +46,9 @@ public class Enemy : Character
 
     }
 
+    /// <summary>
+    /// Moves to crew members if they are within the detection range
+    /// </summary>
     public void DetectCrewMember()
     {
         foreach(Character crewMember in crewMembers)
