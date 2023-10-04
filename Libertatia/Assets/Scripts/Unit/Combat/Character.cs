@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public abstract class Character : MonoBehaviour
 {
@@ -13,6 +14,8 @@ public abstract class Character : MonoBehaviour
     public float attackRate;
     public int damage;
 
+    public NavMeshAgent charAgent;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -20,6 +23,7 @@ public abstract class Character : MonoBehaviour
         attackRange = 2;
         attackRate = 2;
         damage = 50;
+
     }
 
     // Update is called once per frame

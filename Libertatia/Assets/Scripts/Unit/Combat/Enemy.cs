@@ -1,11 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
+using static UnityEngine.UI.CanvasScaler;
 
 public class Enemy : Character
 {
     public List<Character> crewMembers;
     public List<GameObject> crewMemberGameObjects;
+
+    public float detectionRange;
 
     // Start is called before the first frame update
     void Start()
@@ -14,6 +18,9 @@ public class Enemy : Character
         attackRange = 2;
         attackRate = 4;
         damage = 25;
+        detectionRange = 10;
+
+        charAgent = GetComponent<NavMeshAgent>();
 
         //Finds all crew members in the scene and adds them into the gameobject list
         crewMemberGameObjects.AddRange(GameObject.FindGameObjectsWithTag("PlayerCharacter"));
@@ -31,5 +38,23 @@ public class Enemy : Character
     {
         Attack(crewMembers);
         Death();
+
+        if(gameObject.active != false)
+        {
+            DetectCrewMember();
+        }
+
+    }
+
+    public void DetectCrewMember()
+    {
+        foreach(Character crewMember in crewMembers)
+        {
+            if (Vector3.Distance(transform.position, crewMember.transform.position) < detectionRange)
+            {
+                //Debug.Log("IN RANGE");
+                charAgent.SetDestination(crewMember.transform.position);
+            }
+        }
     }
 }
