@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using UnityEngine.SceneManagement;
 
 public class UnitSelections : MonoBehaviour
 {
@@ -23,10 +24,13 @@ public class UnitSelections : MonoBehaviour
 
     private bool eventTriggered;
 
+    private string sceneName;
 
     private void Start()
     {
         eventTriggered = false;
+
+        sceneName = SceneManager.GetActiveScene().name;
     }
 
     private void Awake()
@@ -57,7 +61,11 @@ public class UnitSelections : MonoBehaviour
         //    }
         //}
 
-     //   TriggerEvent();
+        if (sceneName == "CombatTest") 
+        {
+            TriggerEvent();
+        }
+  
     }
 
     /// <summary>
