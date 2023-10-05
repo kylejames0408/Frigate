@@ -42,16 +42,16 @@ public class TutorialManager : MonoBehaviour
         {
             //check to see if this is the first time, or if its when they're coming back from combat
             currentScene = Scene.Oupost;
-            if (!GameManager.Instance.outpostVisited)
-            {
-                outpostDialogues[0].TriggerDialogue();
-                GameManager.Instance.outpostVisited = true;
-            }    
-            else
-            {
-                outpostDialogues[5].TriggerDialogue();
-                secondVisit = true;
-            }
+            //if (!GameManager.Instance.outpostVisited)
+            //{
+            //    outpostDialogues[0].TriggerDialogue();
+            //    GameManager.Instance.outpostVisited = true;
+            //}    
+            //else
+            //{
+            //    outpostDialogues[5].TriggerDialogue();
+            //    secondVisit = true;
+            //}
                 
 
             AttackButton = GameObject.Find("Btn-Attack");

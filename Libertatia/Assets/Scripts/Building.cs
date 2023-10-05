@@ -138,17 +138,17 @@ public class Building : MonoBehaviour
         //buildingTransform.DOShakeScale(.5f, .2f, 10, 90, true);
         //BuildingManager.Instance.PlayParticle(transform.position);
     }
-    public bool CanBuild(int[] resources)
+    public bool CanBuild(Resources resources)
     {
         bool canBuild = true;
-        for (int i = 0; i < resourceCost.Length; i++)
-        {
-            if (resources[i] < resourceCost[i])
-            {
-                canBuild = false;
-                break;
-            }
-        }
+        //for (int i = 0; i < resourceCost.Length; i++)
+        //{
+        //    if (resources[i] < resourceCost[i])
+        //    {
+        //        canBuild = false;
+        //        break;
+        //    }
+        //}
         return canBuild;
     }
     public bool AssignBuilder(Builder builder)

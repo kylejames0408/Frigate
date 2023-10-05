@@ -55,15 +55,15 @@ public class BuildingUI : MonoBehaviour
             int index = i;
             buttons[index].onClick.AddListener(() => SelectBuilding(index));
 
-            Building b = BuildingManager.Instance.GetBuildingPrefab(index);
-            buttons[index].GetComponentInChildren<TextMeshProUGUI>().text = GetButtonText(b);
+            //Building b = BuildingManager.Instance.GetBuildingPrefab(index);
+            //buttons[index].GetComponentInChildren<TextMeshProUGUI>().text = GetButtonText(b);
         }
         buildingRotation = Quaternion.identity;
 
         // Dev tools
         //devButtons = devMenu.GetComponentsInChildren<Button>();
         //devButtons[0].onClick.AddListener(() => BuildingManager.Instance.BuildAll(100));
-        attackBtn.GetComponent<Button>().onClick.AddListener(() => CeneManager.NextScene());
+        //attackBtn.GetComponent<Button>().onClick.AddListener(() => CeneManager.NextScene());
         attackBtn.SetActive(false);
     }
 
@@ -96,7 +96,7 @@ public class BuildingUI : MonoBehaviour
                 Destroy(placingBuilding.gameObject);
                 isPlacing = false;
                 buildingAmount++;
-                BuildingManager.Instance.SpawnBuilding(buildingIndex, position);
+                //BuildingManager.Instance.SpawnBuilding(buildingIndex, position);
                 //canvasGroup.alpha = 1;
             }
         }
@@ -116,10 +116,10 @@ public class BuildingUI : MonoBehaviour
         //ActorManager.instance.DeselectActors();
         //canvasGroup.alpha = 0;
         isPlacing = true;
-        Building prefab = BuildingManager.Instance.GetBuildingPrefab(index);
-        buildingMesh = prefab.GetComponentInChildren<MeshFilter>().sharedMesh;
-        buildingRotation = prefab.transform.rotation;
-        placingBuilding = Instantiate(BuildingManager.Instance.GetBuildingPrefab(buildingIndex), Vector3.zero, buildingRotation);
+        //Building prefab = BuildingManager.Instance.GetBuildingPrefab(index);
+        //buildingMesh = prefab.GetComponentInChildren<MeshFilter>().sharedMesh;
+        //buildingRotation = prefab.transform.rotation;
+        //placingBuilding = Instantiate(BuildingManager.Instance.GetBuildingPrefab(buildingIndex), Vector3.zero, buildingRotation);
         placingBuilding.Placing();
     }
 

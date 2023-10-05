@@ -1,81 +1,50 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
-public enum ResourceType
-{
-    Resource1,
-    Resource2
-}
 public class BuildingManager : MonoBehaviour
 {
-    private static BuildingManager instance;
-    private List<Building> buildings;
-    public Building[] buildingPrefabs = default;
-    public int[] currentResources = default; // this will be replaced
+    // Game/Player Data
+    private List<Building> buildings; // might need building transform info for loading
+    private Resources resources;
+    // Building Data
+    public Building[] buildingPrefabs;
     public Transform buildingParent;
-
+    // - Building Triggerables
     [SerializeField] private ParticleSystem buildParticle;
     [SerializeField] private ParticleSystem finishParticle;
-    private BuildingUI ui;
-    public GameObject buildingDir;
-
+    // - Building Events
     [Header("Events")]
     public GameEvent onBuildingPlaced;
+    // Components
+    private BuildingUI ui;
 
-    public static BuildingManager Instance
-    {
-        get
-        {
-            return instance;
-        }
-    }
-
-    private void Awake()
-    {
-        instance = this;
-    }
     private void Start()
     {
-        currentResources = new int[] { 1000, 1000 };
-
-        buildings = new List<Building>();
-        if (GameManager.Instance.Buildings.Count > 0)
+        resources = GameManager.Instance.Resources;
+        if(buildings == null) // GameManager would fill buildings if any, unless we just stick to the scene
         {
-            foreach (Building b in GameManager.Instance.Buildings)
+            buildings = new List<Building>();
+        }
+        else if (buildings.Count > 0)
+        {
+            foreach (Building b in buildings)
             {
                 buildings.Add(b);
                 b.Build(100);
             }
         }
 
-        //ui = FindObjectOfType<BuildingUI>();
-        //if (ui)
-        //{
-        //    ui.RefreshResources();
-        //}
+        ui = FindObjectOfType<BuildingUI>();
     }
 
     private void Update()
     {
-        int assigned = 0;
-        foreach (Building building in buildings)
-        {
-            if(building.IsAssigned)
-            {
-                assigned++;
-            }
-        }
-        if(assigned >=2)
-        {
-            BuildingUI.Instance.attackBtn.SetActive(true);
-        }
     }
 
     public void SpawnBuilding(int index, Vector3 position)
     {
         Building buildingPrefab = buildingPrefabs[index];
-        if (!buildingPrefab.CanBuild(currentResources))
+        if (!buildingPrefab.CanBuild(resources))
         {
             Debug.Log("Insufficient resources; cannot build");
             return;
@@ -121,23 +90,13 @@ public class BuildingManager : MonoBehaviour
     {
         buildings.Add(building);
         DontDestroyOnLoad(building.gameObject);
-        GameManager.Instance.Buildings.Add(building);
+        //GameManager.Instance.Buildings.Add(building);
     }
     public void RemoveBuilding(Building building)
     {
         buildings.Remove(building);
     }
-    public void AddResource(ResourceType resourceType, int amount)
-    {
-        currentResources[(int)resourceType] += amount;
 
-        //if(ui)
-        //{
-        //    ui.RefreshResources();
-        //}
-    }
-
-    // Temp
     public void BuildAll(int work)
     {
         foreach (Building building in buildings)
@@ -161,5 +120,10 @@ public class BuildingManager : MonoBehaviour
             buildParticle.transform.position = position;
             buildParticle.Play();
         }
+    }
+
+    private void OnDestroy()
+    {
+        GameManager.Instance.SavePlayerData(resources);
     }
 }

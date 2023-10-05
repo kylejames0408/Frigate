@@ -2,34 +2,52 @@ using System.Collections.Generic;
 using System.Globalization;
 using UnityEngine;
 
+public enum GameMode
+{
+    TUTORIAL,
+    REGULAR
+}
 public enum GameState
 {
-    PLAY,
-    PAUSE
+    PLAYING,
+    PAUSED
+}
+public enum GamePhase
+{
+    OUTPOST,
+    ENEMY_TERRITORY
 }
 
 public struct Resources
 {
     public int wood;
-    public int stone;
-
-    public Resources(int wood, int stone) : this()
-    {
-        this.wood = wood;
-        this.stone = stone;
-    }
+    public int food;
+    public int gold;
+    public int loyalty;
+}
+public class PlayerData : ScriptableObject
+{
+    public GameState gameState;
+    public GamePhase gamePhase;
+    public GameMode gameMode;
+    public float gameTimer;
+    public Resources resources;
 }
 
 public class GameManager : MonoBehaviour
 {
+    // Class references
     public static GameManager instance;
-    // Game Data
-    private GameState state;
-    private float gameTimer = 0.0f;
-    // Player Data // THOUGHT: player data can just be stored in a scriptable object and the GM interacts with it
-    private Resources resources;
-    private int buildingAmount = 0;
-    public bool outpostVisited = false;
+    [SerializeField] private CeneManager sm;
+    [SerializeField] private BuildingManager bm;
+    // Game & Player Data
+    [SerializeField] private GameState state = GameState.PLAYING;
+    [SerializeField] private GamePhase phase = GamePhase.OUTPOST;
+    [SerializeField] private GameMode mode = GameMode.TUTORIAL;
+    [SerializeField] private float gameTimer = 0.0f;
+    [SerializeField] private Resources resources;
+    // Player Data Storage
+    [SerializeField] private PlayerData data; // look into making this public to the inspector
 
     public static GameManager Instance
     {
@@ -48,11 +66,10 @@ public class GameManager : MonoBehaviour
             return instance;
         }
     }
-    private List<Building> buildings;
 
-    public List<Building> Buildings
+    public Resources Resources
     {
-        get { return buildings; }
+        get { return resources; }
     }
 
     public virtual void Awake()
@@ -60,20 +77,17 @@ public class GameManager : MonoBehaviour
         if (instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(gameObject);
         }
-        else
-        {
-            Destroy(gameObject);
-        }
-        buildings = new List<Building>();
-        outpostVisited = false;
-    }
-
-    private void Start()
-    {
+        // Game init
+        data = new PlayerData(); // would use this data if loading a game
+        state = GameState.PLAYING;
+        phase = GamePhase.OUTPOST;
+        mode = GameMode.TUTORIAL;
         gameTimer = 0.0f;
-        resources = new Resources(0,0);
+        // Scene
+        sm = new CeneManager();
+        //sm.LoadMainMenu();
+        // Load building man
     }
 
     private void Update()
@@ -84,17 +98,22 @@ public class GameManager : MonoBehaviour
 
         switch (state)
         {
-            case GameState.PLAY:
+            case GameState.PLAYING:
                 {
                     // Gameplay
                 }
                 break;
-            case GameState.PAUSE:
+            case GameState.PAUSED:
                 {
                     // Bypass gameplay
                 }
                 break;
         }
+    }
+
+    public void SavePlayerData(Resources resources)
+    {
+        this.resources = resources;
     }
 
     public void Quit()
