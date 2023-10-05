@@ -11,6 +11,11 @@ public class Enemy : Character
 
     public float detectionRange;
 
+    public GameObject unitSelection;
+    public UnitSelections unitSelectionList;
+
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -31,6 +36,9 @@ public class Enemy : Character
             Character crewMember = crewMemberGameObjects[i].GetComponent<Character>();
             crewMembers.Add(crewMember);
         }
+
+        unitSelection = GameObject.FindGameObjectWithTag("Unit Selections");
+        unitSelectionList = unitSelection.GetComponent<UnitSelections>();
     }
 
     // Update is called once per frame
@@ -59,5 +67,19 @@ public class Enemy : Character
                 charAgent.SetDestination(crewMember.transform.position);
             }
         }
+    }
+
+    public override void Death()
+    {
+        base.Death();
+
+        if(health <= 0)
+        {
+            unitSelectionList.enemies.Remove(gameObject);
+        }
+
+        
+
+
     }
 }

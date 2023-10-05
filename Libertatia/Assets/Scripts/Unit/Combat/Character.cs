@@ -16,6 +16,8 @@ public abstract class Character : MonoBehaviour
 
     public NavMeshAgent charAgent;
 
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -23,7 +25,6 @@ public abstract class Character : MonoBehaviour
         attackRange = 2;
         attackRate = 2;
         damage = 50;
-
     }
 
     // Update is called once per frame
@@ -61,7 +62,7 @@ public abstract class Character : MonoBehaviour
     /// <summary>
     /// Removes unit when health reaches 0
     /// </summary>
-    public void Death()
+    public virtual void Death()
     {
         if(health <= 0)
         {
