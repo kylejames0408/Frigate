@@ -78,8 +78,5 @@ public class Enemy : Character
             unitSelectionList.enemies.Remove(gameObject);
         }
 
-        
-
-
     }
 }

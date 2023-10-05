@@ -21,6 +21,13 @@ public class UnitSelections : MonoBehaviour
 
     public GameEvent allEnemiesDead;
 
+    private bool eventTriggered;
+
+    private void Start()
+    {
+        eventTriggered = false;
+    }
+
     private void Awake()
     {
         //if an instance of this already exists and it isn't this one
@@ -49,6 +56,7 @@ public class UnitSelections : MonoBehaviour
         //    }
         //}
 
+        TriggerEvent();
     }
 
     /// <summary>
@@ -164,33 +172,21 @@ public class UnitSelections : MonoBehaviour
 
 
     /// <summary>
-    /// Attack enemy units upon coming into range
+    /// Triggers tutorial event once enemies are all dead
     /// </summary>
     /// <param name="enemy"></param>
     ///
     //TO BE REMOVED
-    public void AttackEnemy(GameObject enemy)
+    public void TriggerEvent()
     {
-        //Debug.Log(enemy.tag);
 
-        //enemy.transform.GetChild(0).gameObject.SetActive(true);
-
-        for(int i = 0; i < unitList.Count; i++)
+        if(eventTriggered == false)
         {
-            if (Vector3.Distance(unitList[i].transform.position, enemy.transform.position) < 2)
+            if (enemies.Count == 0)
             {
-                if(enemy.tag == "Enemy")
-                {
-                    //Destroy(enemy);
-                    enemy.SetActive(false);
-                    enemies.Remove(enemy);
-                }
-
+                allEnemiesDead.Raise(this, enemies);
+                eventTriggered = true;
             }
-        }
-        if(enemies.Count == 0)
-        {
-            allEnemiesDead.Raise(this, enemies);
         }
 
     }
