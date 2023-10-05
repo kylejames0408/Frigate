@@ -23,6 +23,7 @@ public class UnitSelections : MonoBehaviour
 
     private bool eventTriggered;
 
+
     private void Start()
     {
         eventTriggered = false;
@@ -56,7 +57,7 @@ public class UnitSelections : MonoBehaviour
         //    }
         //}
 
-        TriggerEvent();
+     //   TriggerEvent();
     }
 
     /// <summary>
