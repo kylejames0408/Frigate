@@ -6,13 +6,8 @@ using UnityEngine.EventSystems;
 
 public class BuildingUI : MonoBehaviour
 {
-    // tutorial
-    private const int MAX_BUILDINGS = 2;
-    private int buildingAmount = 0;
     // General
     public static BuildingUI instance;
-    private bool isPlacing = false;
-    private int buildingIndex = 0;
     // Ghost Building
     private Button[] buttons;
     private Button[] devButtons;

@@ -20,16 +20,6 @@ public class PlayerData : ScriptableObject
     public GamePhase gamePhase; // likely wont need
     public GameMode gameMode;
     public Resources resources;
-
-    public PlayerData(PlayerData data)
-    {
-        gamePhase = data.gamePhase;
-        gameMode = data.gameMode;
-        gameTimer = data.gameTimer;
-        resources = data.resources;
-        buildingAmount = data.buildingAmount;
-        crewmateAmount = data.crewmateAmount;
-    }
 }
 
 public class PlayerDataManager
@@ -40,6 +30,8 @@ public class PlayerDataManager
     private const string SAVED_REL_PATH = DIR_PATH + SAVED_FILE_NAME + FILE_EXT;
     private const string STARTING_FILE_NAME = "StartingPlayerData";
     private const string STARTING_REL_PATH = DIR_PATH + STARTING_FILE_NAME + FILE_EXT;
+    private const string TESTING_FILE_NAME = "PlayerDataTest";
+    private const string TESTING_REL_PATH = DIR_PATH + TESTING_FILE_NAME + FILE_EXT;
     private PlayerData data;
 
     public PlayerData Data
@@ -51,13 +43,15 @@ public class PlayerDataManager
     {
         if (!Fetch())
         {
-            CreateNew(startingCrewSize);
-            Save();
+            CreateNewData(startingCrewSize);
         }
     }
 
-    // use this and not "StartingPlayerData"
-    public void CreateNew(int startingCrewSize)
+    /// <summary>
+    /// Creates new player data file and saves it to folder
+    /// </summary>
+    /// <param name="startingCrewSize"></param>
+    public void CreateNewData(int startingCrewSize)
     {
         // Research difference b/w instance and default contructor
         data = ScriptableObject.CreateInstance<PlayerData>();
@@ -65,18 +59,15 @@ public class PlayerDataManager
         data.gameMode = GameMode.TUTORIAL;
         data.gameTimer = 0.0f;
         data.buildingAmount = 0;
-        data.crewmateAmount = startingCrewSize;
+        data.crewmateAmount = startingCrewSize; // determine this too
+        //data.resources = initResources; // Determine starting resources
+        AssetDatabase.CreateAsset(data, TESTING_REL_PATH);
     }
     public bool Fetch()
     {
         //data = UnityEngine.Resources.Load<PlayerData>(FILE_NAME + FILE_EXT); // backup method
-        data = AssetDatabase.LoadAssetAtPath<PlayerData>(STARTING_REL_PATH);
+        data = AssetDatabase.LoadAssetAtPath<PlayerData>(TESTING_REL_PATH); //STARTING_REL_PATH
         return data != null;
-    }
-    public void Save()
-    {
-        EditorUtility.SetDirty(data);
-        AssetDatabase.SaveAssets();
     }
     public void Update(PlayerData data)
     {

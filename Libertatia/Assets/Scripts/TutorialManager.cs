@@ -46,13 +46,13 @@ public class TutorialManager : MonoBehaviour
             //{
             //    outpostDialogues[0].TriggerDialogue();
             //    GameManager.Instance.outpostVisited = true;
-            //}    
+            //}
             //else
             //{
             //    outpostDialogues[5].TriggerDialogue();
             //    secondVisit = true;
             //}
-                
+
 
             AttackButton = GameObject.Find("Btn-Attack");
             AttackButton.SetActive(false);
@@ -71,7 +71,7 @@ public class TutorialManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public void BuildingPlacedEvent(Component sender, object data)

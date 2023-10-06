@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9d0fa28b70578fc469eca66768dd1bb7, type: 3}
-  m_Name: StartingPlayerData
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerData
+  m_Name: PlayerDataTest
+  m_EditorClassIdentifier: 
   gameTimer: 0
-  buildingAmount: 1
-  crewmateAmount: 0
+  buildingAmount: 0
+  crewmateAmount: 3
   gamePhase: 0
-  gameMode: 1
+  gameMode: 0
   resources:
-    wood: 1000
-    food: 1000
-    gold: 1000
-    loyalty: 100
+    wood: 0
+    food: 0
+    gold: 0
+    loyalty: 0

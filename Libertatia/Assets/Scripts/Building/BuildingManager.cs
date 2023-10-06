@@ -74,13 +74,13 @@ public class BuildingManager : MonoBehaviour
     // figure out this function
     public void SpawnBuilding(Building building, Vector3 position)
     {
-        Destroy(building.gameObject);
         isPlacing = false;
 
         // Check if there are enough resources - possible move
         //Building buildingPrefab = buildingPrefabs[index];
         if (!building.CanBuild(resources))
         {
+            Destroy(building.gameObject);
             Debug.Log("Cannot build; Insufficient resources"); // UI
             return;
         }
@@ -96,7 +96,7 @@ public class BuildingManager : MonoBehaviour
         buildings.Add(building);
     }
     // Dev functions
-    public void BuildAll(int work)
+    public void BuildAll()
     {
         foreach (Building building in buildings)
         {
