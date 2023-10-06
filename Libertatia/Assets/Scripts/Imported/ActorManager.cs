@@ -96,18 +96,6 @@ public class ActorManager : MonoBehaviour
                 actor.SetDestination(Utility.MouseToTerrainPosition());
             }
         }
-        else if (!collider.CompareTag("Player"))
-        {
-            if (collider.TryGetComponent(out Damageable damageable))
-            {
-                foreach (Actor actor in selectedActors)
-                {
-                    actor.AttackTarget(damageable);
-                }
-            }
-        }
-
-
     }
 
     void SelectActors()

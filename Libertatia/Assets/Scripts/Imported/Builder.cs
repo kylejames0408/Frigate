@@ -16,10 +16,6 @@ public class Builder : Actor
         }
     }
 
-    private void Start()
-    {
-        //animationEvent.attackEvent.AddListener(DoWork);
-    }
     public void GiveJob(Building job)
     {
         currentBuilding = job;
@@ -61,23 +57,5 @@ public class Builder : Actor
     {
         currentBuilding = null;
         isBuilding = false;
-    }
-    public bool HasTask()
-    {
-        //return currentTask != null;
-        return false;
-    }
-    override public void StopTask()
-    {
-        base.StopTask();
-        currentBuilding = null;
-    }
-
-    void DoWork()
-    {
-        if (currentBuilding)
-        {
-            currentBuilding.Build(10);
-        }
     }
 }

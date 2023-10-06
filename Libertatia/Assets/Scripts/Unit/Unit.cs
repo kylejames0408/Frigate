@@ -12,6 +12,10 @@ public class Unit : MonoBehaviour
 
     private void OnDestroy()
     {
-        UnitSelections.Instance.enemies.Remove(gameObject);
+        UnitSelections selection = UnitSelections.Instance;
+        if(selection != null)
+        {
+            selection.enemies.Remove(gameObject);
+        }
     }
 }

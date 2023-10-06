@@ -14,113 +14,33 @@ public class BuildingUI : MonoBehaviour
     private bool isPlacing = false;
     private int buildingIndex = 0;
     // Ghost Building
-    private Building placingBuilding;
-    private Mesh buildingMesh;
-    private Quaternion buildingRotation;
-    // Ghost Building Attributes
-    //[SerializeField] private Material placingBuildingMat; // not used - should replace mats in building
-    // UI
-    //private CanvasGroup canvasGroup;
-    //public Transform resourceGroup;
     private Button[] buttons;
     private Button[] devButtons;
     [SerializeField] private GameObject devMenu; // could move this into DevUI class/file
     public GameObject attackBtn;
-
-    public static BuildingUI Instance
-    {
-        get
-        {
-            return instance;
-        }
-    }
-    public bool IsPlacing
-    {
-        get
-        {
-            return isPlacing;
-        }
-    }
+    // Components
+    private BuildingManager bm;
 
     private void Awake()
     {
-        instance = this;
         //canvasGroup = GetComponent<CanvasGroup>();
+        bm = FindAnyObjectByType<BuildingManager>();
     }
+
     void Start()
     {
         buttons = GetComponentsInChildren<Button>();
         for (int i = 0; i < buttons.Length; i++)
         {
             int index = i;
-            buttons[index].onClick.AddListener(() => SelectBuilding(index));
-
-            //Building b = BuildingManager.Instance.GetBuildingPrefab(index);
-            //buttons[index].GetComponentInChildren<TextMeshProUGUI>().text = GetButtonText(b);
+            buttons[index].onClick.AddListener(() => bm.SelectBuilding(index));
         }
-        buildingRotation = Quaternion.identity;
 
         // Dev tools
         //devButtons = devMenu.GetComponentsInChildren<Button>();
         //devButtons[0].onClick.AddListener(() => BuildingManager.Instance.BuildAll(100));
         //attackBtn.GetComponent<Button>().onClick.AddListener(() => CeneManager.NextScene());
         attackBtn.SetActive(false);
-    }
-
-    private void Update()
-    {
-        if (isPlacing)
-        {
-            Vector3 position = Vector3.zero;
-            if (Physics.Raycast(
-                CameraManager.Instance.Camera.ScreenPointToRay(Input.mousePosition), // Camera.main?
-                out RaycastHit info, 300, LayerMask.GetMask("Terrain")))
-            {
-                position = info.point;
-            }
-
-            placingBuilding.transform.position = position;
-
-            // Different method
-            //if (buildingAmount >= MAX_BUILDINGS)
-            //{
-            //    isPlacing = false;
-            //    return;
-            //}
-            //Graphics.DrawMesh(buildingMesh, position, buildingRotation, placingBuildingMat, 0);
-            //Vector3 position = CameraManager.Instance.Camera.ScreenToWorldPoint(Input.mousePosition); // this clips objects
-
-            // check collision
-            if (Input.GetMouseButtonDown(0) && !IsPointerOverUIObject() && !placingBuilding.IsColliding)
-            {
-                Destroy(placingBuilding.gameObject);
-                isPlacing = false;
-                buildingAmount++;
-                //BuildingManager.Instance.SpawnBuilding(buildingIndex, position);
-                //canvasGroup.alpha = 1;
-            }
-        }
-    }
-
-    private void SelectBuilding(int index)
-    {
-        if (buildingAmount >= MAX_BUILDINGS)
-        {
-            return;
-        }
-        else if (placingBuilding)
-        {
-            Destroy(placingBuilding.gameObject);
-        }
-        buildingIndex = index;
-        //ActorManager.instance.DeselectActors();
-        //canvasGroup.alpha = 0;
-        isPlacing = true;
-        //Building prefab = BuildingManager.Instance.GetBuildingPrefab(index);
-        //buildingMesh = prefab.GetComponentInChildren<MeshFilter>().sharedMesh;
-        //buildingRotation = prefab.transform.rotation;
-        //placingBuilding = Instantiate(BuildingManager.Instance.GetBuildingPrefab(buildingIndex), Vector3.zero, buildingRotation);
-        placingBuilding.Placing();
     }
 
     private string GetButtonText(Building b)
@@ -154,10 +74,4 @@ public class BuildingUI : MonoBehaviour
         EventSystem.current.RaycastAll(eventDataCurrentPosition, results);
         return results.Count > 0;
     }
-
-    //public void RefreshResources()
-    //{
-    //    for (int i = 0; i < resourceGroup.childCount; i++)
-    //        resourceGroup.GetChild(i).GetComponentInChildren<TextMeshProUGUI>().text = BuildingManager.Instance.currentResources[i].ToString();
-    //}
 }

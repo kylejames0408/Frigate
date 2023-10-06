@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 1527881455}
   - component: {fileID: 1527881456}
   m_Layer: 0
-  m_Name: Game Manager
+  m_Name: Manager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -167,4 +167,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6a9faac7fc866d4583c9654a2f48cdf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  outpostVisited: 0
+  pd: {fileID: 11400000, guid: 4bbf3e308db6d054fbe075972f8cdc09, type: 2}

@@ -93,7 +93,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5049502192637516786}
   - component: {fileID: 8928841551790308315}
-  - component: {fileID: 4420659338917275431}
   - component: {fileID: 5325732173246362283}
   - component: {fileID: 4812420771042176284}
   - component: {fileID: 2696198647923945720}
@@ -138,37 +137,15 @@ MonoBehaviour:
   - {r: 0.003921569, g: 0.003921569, b: 0.003921569, a: 1}
   - {r: 0.93333334, g: 0.93333334, b: 0.93333334, a: 1}
   isHovered: 0
-  isPlacing: 0
-  isAttackable: 0
   isColliding: 0
   resourceCost: 6400000032000000
   totalWorkToComplete: 100
-  height: 10
+  builtMaterial: {fileID: 2100000, guid: 2ed85a5525951e145ab57bc5eb35b5ba, type: 2}
   placingMaterial: {fileID: 2100000, guid: d3e5e1b3c116ea947b4250ca7c8746b2, type: 2}
   buildingMaterial: {fileID: 2100000, guid: 9b6c03d6f347f544fae42a85b3d0e502, type: 2}
-  builtMaterial: {fileID: 2100000, guid: 2ed85a5525951e145ab57bc5eb35b5ba, type: 2}
+  assignedMaterial: {fileID: 0}
   collisionMaterial: {fileID: 2100000, guid: 233ebadc30a9dc04180a21274295cfeb, type: 2}
   onCrewmateAssigned: {fileID: 11400000, guid: 8c002ad9b29a8304d866301b28d5b0b9, type: 2}
---- !u!114 &4420659338917275431
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2749064344383835933}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b5908ff85b8124645a26f839e3e6a646, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  onDestroy:
-    m_PersistentCalls:
-      m_Calls: []
-  onHit:
-    m_PersistentCalls:
-      m_Calls: []
-  totalHealth: 100
-  currentHealth: 0
 --- !u!208 &5325732173246362283
 NavMeshObstacle:
   m_ObjectHideFlags: 0
