@@ -25,23 +25,22 @@ public class Building : MonoBehaviour
     public bool isColliding = false;
     // Building
     public int[] resourceCost;
-    private int workProgress = 0;
-    [SerializeField] private int totalWorkToComplete = 100;
-    private float percentComplete = 0.0f;
-    private int builderAmount = 0; // could make this a list of builders if we wanted to improve UI
-    private int builderCapacity = 1;
+    public int builderCapacity = 1;
     private List<Builder> builders;
     // Components
     private MeshRenderer buildingRender;
-    // Colors
-    private Color normalEmmision;
-    private Color hoveredEmmision;
+    // Emissions
+    private Color normalEmission;
+    private Color hoveredEmission;
     // Materials
-    [SerializeField] private Material builtMaterial;
     [SerializeField] private Material placingMaterial;
+    [SerializeField] private Material collisionMaterial;
     [SerializeField] private Material buildingMaterial;
     [SerializeField] private Material assignedMaterial;
-    [SerializeField] private Material collisionMaterial;
+    [SerializeField] private Material builtMaterial;
+    // Triggerables
+    [SerializeField] private ParticleSystem buildParticle;
+    [SerializeField] private ParticleSystem finishParticle;
 
     [Header("Events")]
     public GameEvent onCrewmateAssigned;
@@ -50,7 +49,14 @@ public class Building : MonoBehaviour
     {
         get
         {
-            return state == BuildingState.PLACING;
+            return state == BuildingState.BUILDING;
+        }
+    }
+    public bool IsFullyAssigned
+    {
+        get
+        {
+            return builders.Count == builders.Capacity;
         }
     }
     public bool IsPlacing
@@ -77,53 +83,42 @@ public class Building : MonoBehaviour
     {
         buildingRender = transform.GetComponentInChildren<MeshRenderer>();
     }
-    void Start()
+    private void Start()
     {
+        isHovered = false;
+        normalEmission = Color.black;
+        hoveredEmission = new Color(0.3f, 0.3f, 0.3f);
+        // Init state
         state = BuildingState.PLACING;
         buildingRender.material = placingMaterial;
-        isHovered = false;
-        workProgress = 0;
-        percentComplete = 0.0f;
-        // Colors
-        normalEmmision = Color.black;
-        hoveredEmmision = new Color(0.3f, 0.3f, 0.3f);
-        builders = new List<Builder>();
     }
+
     public bool CanBuild(Resources resources)
     {
         return resources.wood >= resourceCost[0] && resources.gold >= resourceCost[1];
     }
+    public void Place()
+    {
+        state = BuildingState.WAITING_FOR_ASSIGNMENT;
+        builders = new List<Builder>(builderCapacity);
+        buildingRender.material = buildingMaterial;
+    }
     public bool AssignBuilder(Builder builder)
     {
-        if (IsComplete || builderAmount >= builderCapacity)
+        if (IsComplete || builders.Count >= builderCapacity)
         {
             return false;
         }
-        builderAmount++;
         builders.Add(builder);
         onCrewmateAssigned.Raise(this, builder);
         state = BuildingState.BUILDING;
         return true;
     }
-    public void Build(int work)
-    {
-        workProgress += work; // Add progress
-        percentComplete = (float)workProgress / totalWorkToComplete; // Update percentage
-
-        // Check if completed
-        if(percentComplete >= 1.0f)
-        {
-            CompleteBuild();
-        }
-    }
-    private void CompleteBuild()
+    public void CompleteBuild()
     {
         state = BuildingState.COMPLETE;
         buildingRender.material = builtMaterial;
-        builderAmount = 0;
-    }
-    public void FreeBuilders()
-    {
+        // Free builders
         foreach (Builder builder in builders)
         {
             builder.Free();
@@ -136,24 +131,22 @@ public class Building : MonoBehaviour
         isHovered = true;
         if (buildingRender && IsPlacing && !CameraManager.Instance.IsMouseMove)
         {
-            buildingRender.material.SetColor("_EmissionColor", hoveredEmmision);
+            buildingRender.material.SetColor("_EmissionColor", hoveredEmission);
         }
     }
     private void OnMouseExit()
     {
         if (buildingRender && isHovered)
         {
-            buildingRender.material.SetColor("_EmissionColor", normalEmmision);
+            buildingRender.material.SetColor("_EmissionColor", normalEmission);
         }
         isHovered = false;
     }
-
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, radius); // offset: collider.center? wont work in inspector
     }
-
     private void OnTriggerEnter(Collider collision)
     {
         if (collision.transform.tag == "Building")

@@ -2,6 +2,7 @@
 using UnityEditor;
 using UnityEngine;
 
+[Serializable]
 public struct Resources
 {
     public int wood;
@@ -13,17 +14,15 @@ public struct Resources
 [CreateAssetMenu(fileName = "PlayerData", menuName = "Libertatia/PlayerData", order = 1)]
 public class PlayerData : ScriptableObject
 {
-    public GameState gameState; // likely wont need
-    public GamePhase gamePhase; // likely wont need
-    public GameMode gameMode;
     public float gameTimer;
-    public Resources resources;
     public int buildingAmount;  // amount of buildings; will be replaced idealy
     public int crewmateAmount;  // crew size; will be replaced with a list idealy
+    public GamePhase gamePhase; // likely wont need
+    public GameMode gameMode;
+    public Resources resources;
 
     public PlayerData(PlayerData data)
     {
-        gameState = data.gameState;
         gamePhase = data.gamePhase;
         gameMode = data.gameMode;
         gameTimer = data.gameTimer;
@@ -36,9 +35,11 @@ public class PlayerData : ScriptableObject
 public class PlayerDataManager
 {
     private const string DIR_PATH = "Assets\\Scripts\\ScriptableObjects\\";
-    private const string FILE_NAME = "PlayerData";
     private const string FILE_EXT = ".asset";
-    private const string ABS_PATH = DIR_PATH + FILE_NAME + FILE_EXT;
+    private const string SAVED_FILE_NAME = "PlayerData";
+    private const string SAVED_REL_PATH = DIR_PATH + SAVED_FILE_NAME + FILE_EXT;
+    private const string STARTING_FILE_NAME = "StartingPlayerData";
+    private const string STARTING_REL_PATH = DIR_PATH + STARTING_FILE_NAME + FILE_EXT;
     private PlayerData data;
 
     public PlayerData Data
@@ -55,6 +56,7 @@ public class PlayerDataManager
         }
     }
 
+    // use this and not "StartingPlayerData"
     public void CreateNew(int startingCrewSize)
     {
         // Research difference b/w instance and default contructor
@@ -68,7 +70,7 @@ public class PlayerDataManager
     public bool Fetch()
     {
         //data = UnityEngine.Resources.Load<PlayerData>(FILE_NAME + FILE_EXT); // backup method
-        data = AssetDatabase.LoadAssetAtPath<PlayerData>(ABS_PATH);
+        data = AssetDatabase.LoadAssetAtPath<PlayerData>(STARTING_REL_PATH);
         return data != null;
     }
     public void Save()

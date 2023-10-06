@@ -26,8 +26,8 @@ public class GameManager : MonoBehaviour
     // Class references
     public static GameManager instance;
     [SerializeField] private CeneManager sm;
-    // Player Data Storage
     [SerializeField] private PlayerDataManager pdm; // look into making this public to the inspector // also is linked through inspector
+    // Game Data
     private float gameTimer = 0.0f;
     private GameState state = GameState.PLAYING;
 
@@ -71,9 +71,7 @@ public class GameManager : MonoBehaviour
     }
     private void Update()
     {
-        // Update game time
         gameTimer += Time.deltaTime;
-        gameTimer %= 60;
 
         switch (state)
         {

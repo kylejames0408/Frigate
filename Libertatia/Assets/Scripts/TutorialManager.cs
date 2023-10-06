@@ -64,7 +64,7 @@ public class TutorialManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("Something went wrong");
+            //Debug.Log("Something went wrong");
         }
     }
 

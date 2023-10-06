@@ -13,9 +13,6 @@ public class BuildingManager : MonoBehaviour
     // Building Data
     public Building[] buildingPrefabs;
     public Transform buildingParent; // happens to be the object it is on
-    // - Building Triggerables
-    [SerializeField] private ParticleSystem buildParticle;
-    [SerializeField] private ParticleSystem finishParticle;
     // - Building Events
     [Header("Events")]
     public GameEvent onBuildingPlaced;
@@ -28,7 +25,9 @@ public class BuildingManager : MonoBehaviour
     {
         // should check building folder for buildings
         realtimeData = GameManager.Instance.DataManager.Data;
-        if(buildings == null) // GameManager would fill buildings if any, unless we just stick to the scene
+        resources = realtimeData.resources;
+
+        if (buildings == null) // GameManager would fill buildings if any, unless we just stick to the scene
         {
             buildings = new List<Building>();
         }
@@ -37,7 +36,7 @@ public class BuildingManager : MonoBehaviour
             foreach (Building b in buildings)
             {
                 buildings.Add(b);
-                b.Build(100);
+                b.CompleteBuild();
             }
         }
         ui = FindObjectOfType<BuildingUI>();
@@ -68,19 +67,9 @@ public class BuildingManager : MonoBehaviour
         }
         isPlacing = true;
 
-        activeBuilding = CreateBuilding(index, Vector3.zero);
-        Rigidbody rb = activeBuilding.GetComponent<Rigidbody>();
-    }
-    private Building CreateBuilding(int index, Vector3 position)
-    {
         Building prefab = buildingPrefabs[index];
-        return Instantiate(prefab, position, prefab.transform.rotation, buildingParent);
-    }
-    private void PurchaseBuilding(Building building)
-    {
-        int[] cost = building.Cost;
-        resources.wood -= cost[0];
-        resources.gold -= cost[1];
+        activeBuilding = Instantiate(prefab, Vector3.zero, prefab.transform.rotation, buildingParent);
+        Rigidbody rb = activeBuilding.GetComponent<Rigidbody>();
     }
     // figure out this function
     public void SpawnBuilding(Building building, Vector3 position)
@@ -96,31 +85,29 @@ public class BuildingManager : MonoBehaviour
             return;
         }
 
-        // Create Building
-        //Building building = CreateBuilding(buildingPrefab, position);
-        buildings.Add(building);
-
         // Subtract resources
-        PurchaseBuilding(building);
-    }
-    public Building GetBuildingPrefab(int index)
-    {
-        return buildingPrefabs[index];
+        int[] cost = building.Cost;
+        resources.wood -= cost[0];
+        resources.gold -= cost[1];
+
+        // Create Building
+        //CreateBuilding(buildingPrefab, position);
+        building.Place();
+        buildings.Add(building);
     }
     // Dev functions
     public void BuildAll(int work)
     {
         foreach (Building building in buildings)
         {
-            building.Build(work);
+            building.CompleteBuild();
         }
-
     }
 
     // Update player data when scene is unloaded
     private void OnDestroy()
     {
-        realtimeData.resources = resources;
+        //realtimeData.resources = resources; // disable for now
         realtimeData.buildingAmount = buildings.Count;
         //GameManager.Instance.DataManager.Update(realtimeData);
     }
