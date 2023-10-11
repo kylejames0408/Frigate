@@ -9,7 +9,8 @@ public class CrewMember : Character
     // Start is called before the first frame update
     void Start()
     {
-        health = 100;
+        maxHealth = 100;
+        currentHealth = 100;
         attackRange = 2;
         attackRate = 2;
         damage = 50;
@@ -19,6 +20,7 @@ public class CrewMember : Character
     void Update()
     {
         Attack(enemies);
+        healthbar.UpdateHealthBar(maxHealth, currentHealth);
         Death();
     }
 }

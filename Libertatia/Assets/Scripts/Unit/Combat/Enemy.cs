@@ -19,7 +19,8 @@ public class Enemy : Character
     // Start is called before the first frame update
     void Start()
     {
-        health = 100;
+        maxHealth = 100;
+        currentHealth = 100;
         attackRange = 2;
         attackRate = 4;
         damage = 25;
@@ -45,6 +46,8 @@ public class Enemy : Character
     void Update()
     {
         Attack(crewMembers);
+
+        healthbar.UpdateHealthBar(maxHealth, currentHealth);
         Death();
 
         if(gameObject.active != false)
@@ -73,7 +76,7 @@ public class Enemy : Character
     {
         base.Death();
 
-        if(health <= 0)
+        if(currentHealth <= 0)
         {
             unitSelectionList.enemies.Remove(gameObject);
         }
