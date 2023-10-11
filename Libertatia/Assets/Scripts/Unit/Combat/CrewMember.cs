@@ -13,7 +13,7 @@ public class CrewMember : Character
         currentHealth = 100;
         attackRange = 2;
         attackRate = 2;
-        damage = 50;
+        damage = 25;
     }
 
     // Update is called once per frame

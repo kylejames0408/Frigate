@@ -23,7 +23,7 @@ public class Enemy : Character
         currentHealth = 100;
         attackRange = 2;
         attackRate = 4;
-        damage = 25;
+        damage = 20;
         detectionRange = 10;
 
         charAgent = GetComponent<NavMeshAgent>();
@@ -64,6 +64,7 @@ public class Enemy : Character
     {
         foreach(Character crewMember in crewMembers)
         {
+            //Moves towards crew members if they are within range
             if (Vector3.Distance(transform.position, crewMember.transform.position) < detectionRange)
             {
                 //Debug.Log("IN RANGE");

@@ -56,7 +56,6 @@ public abstract class Character : MonoBehaviour
                     {
                         unit.currentHealth -= damage;
                         Debug.Log("Attack " + unit.name + " " + unit.currentHealth);
-                        //unit.healthbar.UpdateHealthBar(unit.maxHealth, unit.currentHealth);
 
                         attackRate = 2;
                     }
