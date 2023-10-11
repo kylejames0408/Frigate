@@ -28,8 +28,6 @@ public class PlayerDataManager
     private const string FILE_EXT = ".asset";
     private const string SAVED_FILE_NAME = "PlayerData";
     private const string SAVED_REL_PATH = DIR_PATH + SAVED_FILE_NAME + FILE_EXT;
-    private const string STARTING_FILE_NAME = "StartingPlayerData";
-    private const string STARTING_REL_PATH = DIR_PATH + STARTING_FILE_NAME + FILE_EXT;
     private const string TESTING_FILE_NAME = "PlayerDataTest";
     private const string TESTING_REL_PATH = DIR_PATH + TESTING_FILE_NAME + FILE_EXT;
     private PlayerData data;
@@ -65,8 +63,7 @@ public class PlayerDataManager
     }
     public bool Fetch()
     {
-        //data = UnityEngine.Resources.Load<PlayerData>(FILE_NAME + FILE_EXT); // backup method
-        data = AssetDatabase.LoadAssetAtPath<PlayerData>(TESTING_REL_PATH); //STARTING_REL_PATH
+        data = AssetDatabase.LoadAssetAtPath<PlayerData>(TESTING_REL_PATH);
         return data != null;
     }
     public void Update(PlayerData data)
@@ -78,4 +75,17 @@ public class PlayerDataManager
     {
         data.gameTimer = gameTimer;
     }
+}
+
+[CreateAssetMenu(fileName = "BuildingComponents", menuName = "Libertatia/BuildingComponents", order = 2)]
+public class BuildingComponents : ScriptableObject
+{
+    // Materials
+    public Material placingMaterial;
+    public Material collisionMaterial;
+    public Material needsAssignmentMaterial;
+    public Material buildingMaterial;
+    // Triggerables
+    public ParticleSystem buildParticle;
+    public ParticleSystem finishParticle;
 }

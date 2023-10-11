@@ -139,12 +139,9 @@ MonoBehaviour:
   isHovered: 0
   isColliding: 0
   resourceCost: 6400000032000000
-  totalWorkToComplete: 100
+  builderCapacity: 1
+  components: {fileID: 11400000, guid: dce72b56bac855e46b065e2c0dc62d3f, type: 2}
   builtMaterial: {fileID: 2100000, guid: 2ed85a5525951e145ab57bc5eb35b5ba, type: 2}
-  placingMaterial: {fileID: 2100000, guid: d3e5e1b3c116ea947b4250ca7c8746b2, type: 2}
-  buildingMaterial: {fileID: 2100000, guid: 9b6c03d6f347f544fae42a85b3d0e502, type: 2}
-  assignedMaterial: {fileID: 0}
-  collisionMaterial: {fileID: 2100000, guid: 233ebadc30a9dc04180a21274295cfeb, type: 2}
   onCrewmateAssigned: {fileID: 11400000, guid: 8c002ad9b29a8304d866301b28d5b0b9, type: 2}
 --- !u!208 &5325732173246362283
 NavMeshObstacle:

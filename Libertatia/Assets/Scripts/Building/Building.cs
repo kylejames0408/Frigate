@@ -33,14 +33,8 @@ public class Building : MonoBehaviour
     private Color normalEmission;
     private Color hoveredEmission;
     // Materials
-    [SerializeField] private Material placingMaterial;
-    [SerializeField] private Material collisionMaterial;
-    [SerializeField] private Material buildingMaterial;
-    [SerializeField] private Material assignedMaterial;
+    [SerializeField] private BuildingComponents components;
     [SerializeField] private Material builtMaterial;
-    // Triggerables
-    [SerializeField] private ParticleSystem buildParticle;
-    [SerializeField] private ParticleSystem finishParticle;
 
     [Header("Events")]
     public GameEvent onCrewmateAssigned;
@@ -90,7 +84,7 @@ public class Building : MonoBehaviour
         hoveredEmission = new Color(0.3f, 0.3f, 0.3f);
         // Init state
         state = BuildingState.PLACING;
-        buildingRender.material = placingMaterial;
+        buildingRender.material = components.placingMaterial;
     }
 
     public bool CanBuild(Resources resources)
@@ -99,9 +93,9 @@ public class Building : MonoBehaviour
     }
     public void Place()
     {
-        state = BuildingState.WAITING_FOR_ASSIGNMENT;
         builders = new List<Builder>(builderCapacity);
-        buildingRender.material = buildingMaterial;
+        buildingRender.material = components.needsAssignmentMaterial;
+        state = BuildingState.WAITING_FOR_ASSIGNMENT;
     }
     public bool AssignBuilder(Builder builder)
     {
@@ -109,8 +103,9 @@ public class Building : MonoBehaviour
         {
             return false;
         }
-        builders.Add(builder);
         onCrewmateAssigned.Raise(this, builder);
+        builders.Add(builder);
+        buildingRender.material = components.buildingMaterial;
         state = BuildingState.BUILDING;
         return true;
     }
@@ -151,8 +146,7 @@ public class Building : MonoBehaviour
     {
         if (collision.transform.tag == "Building")
         {
-            placingMaterial = buildingRender.material;
-            buildingRender.material = collisionMaterial;
+            buildingRender.material = components.collisionMaterial;
             isColliding = true;
         }
     }
@@ -160,7 +154,7 @@ public class Building : MonoBehaviour
     {
         if (collision.transform.tag == "Building")
         {
-            buildingRender.material = placingMaterial;
+            buildingRender.material = components.placingMaterial;
             isColliding = false;
         }
     }

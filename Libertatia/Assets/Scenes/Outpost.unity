@@ -1163,8 +1163,6 @@ MonoBehaviour:
   - {fileID: 8928841551790308315, guid: b1b3bb510e388d446ba20affc2247851, type: 3}
   - {fileID: 4471357269373654606, guid: 6b41e766cc41cce4dbc9c7679dd7a05f, type: 3}
   buildingParent: {fileID: 745434447}
-  buildParticle: {fileID: 7851518830807879698, guid: 8716510566006ba4089d287be4ec6d76, type: 3}
-  finishParticle: {fileID: 7851518830807879698, guid: 8716510566006ba4089d287be4ec6d76, type: 3}
   onBuildingPlaced: {fileID: 11400000, guid: 4ae36f9fe3f9160488e2f40b8ca0c348, type: 2}
 --- !u!1 &746340825
 GameObject:
