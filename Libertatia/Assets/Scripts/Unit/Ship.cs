@@ -17,7 +17,7 @@ public class Ship : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        detectionRange = 30;
+        //detectionRange = 0;
         inRange = false;
     }
 
@@ -28,7 +28,6 @@ public class Ship : MonoBehaviour
 
         foreach (GameObject unit in unitList)
         {
-            //If a unit is within range of the ship, the player can return to the outpost
             if (Vector3.Distance(transform.position, unit.transform.position) <= detectionRange)
             {
                 //Debug.Log("Go home");

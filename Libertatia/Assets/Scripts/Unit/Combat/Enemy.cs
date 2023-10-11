@@ -19,11 +19,10 @@ public class Enemy : Character
     // Start is called before the first frame update
     void Start()
     {
-        maxHealth = 100;
-        currentHealth = 100;
+        health = 100;
         attackRange = 2;
         attackRate = 4;
-        damage = 20;
+        damage = 25;
         detectionRange = 10;
 
         charAgent = GetComponent<NavMeshAgent>();
@@ -46,8 +45,6 @@ public class Enemy : Character
     void Update()
     {
         Attack(crewMembers);
-
-        healthbar.UpdateHealthBar(maxHealth, currentHealth);
         Death();
 
         if(gameObject.active != false)
@@ -64,7 +61,6 @@ public class Enemy : Character
     {
         foreach(Character crewMember in crewMembers)
         {
-            //Moves towards crew members if they are within range
             if (Vector3.Distance(transform.position, crewMember.transform.position) < detectionRange)
             {
                 //Debug.Log("IN RANGE");
@@ -77,7 +73,7 @@ public class Enemy : Character
     {
         base.Death();
 
-        if(currentHealth <= 0)
+        if(health <= 0)
         {
             unitSelectionList.enemies.Remove(gameObject);
         }

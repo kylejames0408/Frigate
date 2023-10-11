@@ -9,18 +9,16 @@ public class CrewMember : Character
     // Start is called before the first frame update
     void Start()
     {
-        maxHealth = 100;
-        currentHealth = 100;
+        health = 100;
         attackRange = 2;
         attackRate = 2;
-        damage = 25;
+        damage = 50;
     }
 
     // Update is called once per frame
     void Update()
     {
         Attack(enemies);
-        healthbar.UpdateHealthBar(maxHealth, currentHealth);
         Death();
     }
 }

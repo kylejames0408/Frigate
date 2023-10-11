@@ -5,8 +5,7 @@ using UnityEngine.AI;
 
 public abstract class Character : MonoBehaviour
 {
-    public int maxHealth;
-    public int currentHealth;
+    public int health;
 
     //public List<Character> crewMembers;
     //public List<Character> enemies;
@@ -17,18 +16,15 @@ public abstract class Character : MonoBehaviour
 
     public NavMeshAgent charAgent;
 
-    public HealthBar healthbar;
+
 
     // Start is called before the first frame update
     void Start()
     {
-        maxHealth = 100;
-        currentHealth = 100;
+        health = 100;
         attackRange = 2;
         attackRate = 2;
         damage = 50;
-
-        healthbar.UpdateHealthBar(maxHealth, currentHealth); 
     }
 
     // Update is called once per frame
@@ -48,15 +44,14 @@ public abstract class Character : MonoBehaviour
             //if opposing unit is within attack range
             if (Vector3.Distance(transform.position, unit.transform.position) < attackRange)
             {
-                if(unit.currentHealth > 0)
+                if(unit.health > 0)
                 {
                     //attacks and decreases their health based on attack rate
                     attackRate -= Time.deltaTime;
                     if (attackRate <= 0)
                     {
-                        unit.currentHealth -= damage;
-                        Debug.Log("Attack " + unit.name + " " + unit.currentHealth);
-
+                        unit.health -= damage;
+                        Debug.Log("Attack " + unit.name + " " + unit.health);
                         attackRate = 2;
                     }
                 }
@@ -69,7 +64,7 @@ public abstract class Character : MonoBehaviour
     /// </summary>
     public virtual void Death()
     {
-        if(currentHealth <= 0)
+        if(health <= 0)
         {
             gameObject.SetActive(false);
         }
