@@ -1,14 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UIElements;
 
+[Serializable]
+public struct BuildingResources
+{
+    public int wood;
+    public int gold;
+}
 
 public class BuildingManager : MonoBehaviour
 {
     // Game/Player Data
     private List<Building> buildings;
-    private Resources resources;
+    private PlayerResources resources;
     private PlayerData realtimeData;
     // Building Data
     public Building[] buildingPrefabs;
@@ -59,6 +66,8 @@ public class BuildingManager : MonoBehaviour
             }
         }
     }
+
+    // selecting building UI
     public void SelectBuilding(int index)
     {
         if (isPlacing)
@@ -69,32 +78,31 @@ public class BuildingManager : MonoBehaviour
 
         Building prefab = buildingPrefabs[index];
         activeBuilding = Instantiate(prefab, Vector3.zero, prefab.transform.rotation, buildingParent);
-        Rigidbody rb = activeBuilding.GetComponent<Rigidbody>();
     }
-    // figure out this function
+    // placing a building
     public void SpawnBuilding(Building building, Vector3 position)
     {
         isPlacing = false;
 
         // Check if there are enough resources - possible move
-        //Building buildingPrefab = buildingPrefabs[index];
-        if (!building.CanBuild(resources))
+        BuildingResources cost = building.Cost;
+        if (resources.wood < cost.wood || resources.gold < cost.gold)
         {
             Destroy(building.gameObject);
             Debug.Log("Cannot build; Insufficient resources"); // UI
             return;
         }
 
-        // Subtract resources
-        int[] cost = building.Cost;
-        resources.wood -= cost[0];
-        resources.gold -= cost[1];
+        // Subtract resources - move to Building or bring CanBuild in here
+        resources.wood -= cost.wood;
+        resources.gold -= cost.gold;
+        //resources.Print();
 
         // Create Building
-        //CreateBuilding(buildingPrefab, position);
         building.Place();
         buildings.Add(building);
     }
+    
     // Dev functions
     public void BuildAll()
     {
@@ -102,6 +110,20 @@ public class BuildingManager : MonoBehaviour
         {
             building.CompleteBuild();
         }
+    }
+
+    // Checks if mouse is over any UI - might not need with canvasgroup
+    private bool IsPointerOverUIObject()
+    {
+        // https://stackoverflow.com/questions/52064801/unity-raycasts-going-through-ui
+        // Referencing this code for GraphicRaycaster https://gist.github.com/stramit/ead7ca1f432f3c0f181f
+        // the ray cast appears to require only eventData.position.
+        PointerEventData eventDataCurrentPosition = new PointerEventData(EventSystem.current);
+        eventDataCurrentPosition.position = (Vector2)Input.mousePosition;
+
+        List<RaycastResult> results = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(eventDataCurrentPosition, results);
+        return results.Count > 0;
     }
 
     // Update player data when scene is unloaded

@@ -3,12 +3,19 @@ using UnityEditor;
 using UnityEngine;
 
 [Serializable]
-public struct Resources
+public struct PlayerResources
 {
+    //public BuildingResources buildingResources; // maybe?
     public int wood;
     public int food;
     public int gold;
     public int loyalty;
+
+    public void Print()
+    {
+        Debug.LogFormat("Wood: {0}\nFood: {1}\nGold: {2}\nLoyalty: {3}",
+            wood, food, gold, loyalty);
+    }
 }
 
 [CreateAssetMenu(fileName = "PlayerData", menuName = "Libertatia/PlayerData", order = 1)]
@@ -19,7 +26,7 @@ public class PlayerData : ScriptableObject
     public int crewmateAmount;  // crew size; will be replaced with a list idealy
     public GamePhase gamePhase; // likely wont need
     public GameMode gameMode;
-    public Resources resources;
+    public PlayerResources resources;
 }
 
 public class PlayerDataManager

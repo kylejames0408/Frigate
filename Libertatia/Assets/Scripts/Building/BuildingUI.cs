@@ -33,7 +33,7 @@ public class BuildingUI : MonoBehaviour
 
         // Dev tools
         //devButtons = devMenu.GetComponentsInChildren<Button>();
-        //devButtons[0].onClick.AddListener(() => BuildingManager.Instance.BuildAll(100));
+        //devButtons[0].onClick.AddListener(() => BuildingManager.Instance.BuildAll());
         //attackBtn.GetComponent<Button>().onClick.AddListener(() => CeneManager.NextScene());
         attackBtn.SetActive(false);
     }
@@ -51,22 +51,5 @@ public class BuildingUI : MonoBehaviour
 
         //return "<size=23><b>" + buildingName + "</b></size>" + resourceString;
         return "<size=50><b>" + buildingName + "</b></size>";
-    }
-
-    /// <summary>
-    /// Cast a ray to test if Input.mousePosition is over any UI object in EventSystem.current. This is a replacement
-    /// for IsPointerOverGameObject() which does not work on Android in 4.6.0f3
-    /// </summary>
-    private bool IsPointerOverUIObject()
-    {
-        // https://stackoverflow.com/questions/52064801/unity-raycasts-going-through-ui
-        // Referencing this code for GraphicRaycaster https://gist.github.com/stramit/ead7ca1f432f3c0f181f
-        // the ray cast appears to require only eventData.position.
-        PointerEventData eventDataCurrentPosition = new PointerEventData(EventSystem.current);
-        eventDataCurrentPosition.position = (Vector2)Input.mousePosition;
-
-        List<RaycastResult> results = new List<RaycastResult>();
-        EventSystem.current.RaycastAll(eventDataCurrentPosition, results);
-        return results.Count > 0;
     }
 }

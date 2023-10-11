@@ -24,7 +24,7 @@ public class Building : MonoBehaviour
     public bool isHovered = false;
     public bool isColliding = false;
     // Building
-    public int[] resourceCost;
+    public BuildingResources resourceCost;
     public int builderCapacity = 1;
     private List<Builder> builders;
     // Components
@@ -68,7 +68,7 @@ public class Building : MonoBehaviour
     {
         get { return isColliding; }
     }
-    public int[] Cost
+    public BuildingResources Cost
     {
         get { return resourceCost; }
     }
@@ -87,10 +87,6 @@ public class Building : MonoBehaviour
         buildingRender.material = components.placingMaterial;
     }
 
-    public bool CanBuild(Resources resources)
-    {
-        return resources.wood >= resourceCost[0] && resources.gold >= resourceCost[1];
-    }
     public void Place()
     {
         builders = new List<Builder>(builderCapacity);
