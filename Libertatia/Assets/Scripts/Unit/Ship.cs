@@ -48,7 +48,11 @@ public class Ship : MonoBehaviour
         }
 
     }
-
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, detectionRange);
+    }
     private void OnGUI()
     {
         // the rect that is the canvas
