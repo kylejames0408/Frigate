@@ -69,7 +69,9 @@ public abstract class Character : MonoBehaviour
     /// </summary>
     public virtual void Death()
     {
-        if(currentHealth <= 0)
+        //Removes unit if the healthbar reaches 0
+        //if(currentHealth <= 0)
+        if(healthbar.healthBarSprite.fillAmount <= 0)
         {
             gameObject.SetActive(false);
         }
