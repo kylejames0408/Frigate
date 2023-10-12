@@ -17,6 +17,7 @@ public class Building : MonoBehaviour
     // General Data
     [SerializeField] private string buildingName;
     [SerializeField] private Sprite icon;
+    [SerializeField] private int level;
     [SerializeField] private float radius = 5.0f; // for construction
     private BuildingState state = BuildingState.PLACING;
     [ColorUsage(true, true)]
