@@ -17,7 +17,7 @@ public class Ship : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        detectionRange = 75;
+        detectionRange = 30;
         inRange = false;
     }
 

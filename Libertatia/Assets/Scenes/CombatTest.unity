@@ -3262,7 +3262,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.3
-  far clip plane: 200
+  far clip plane: 300
   field of view: 60
   orthographic: 1
   orthographic size: 14
@@ -3289,7 +3289,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 274630020}
   m_LocalRotation: {x: 0.2588191, y: 0, z: 0, w: 0.9659258}
-  m_LocalPosition: {x: 2.49, y: 6.17, z: -9.816668}
+  m_LocalPosition: {x: 2.49, y: 34, z: -50.87}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3354,7 +3354,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   useBounds: 1
   maxWorldBounds: {x: 20, y: 20}
-  minWorldBounds: {x: -20, y: -20}
+  minWorldBounds: {x: -20, y: -60}
   mouseSensitivity: 1.85
   zoomStep: 1
   movementHorizontalScale: 0
