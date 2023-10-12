@@ -2,8 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using UnityEngine.EventSystems;
-using System;
+using DG.Tweening;
 
 public class BuildingUI : MonoBehaviour
 {
@@ -11,6 +10,7 @@ public class BuildingUI : MonoBehaviour
     public Transform buildingUIParent;
     private List<GameObject> buildingCards;
     public GameObject attackBtn;
+    [SerializeField] private Button arrow;
     // Ghost Building
     [SerializeField] private GameObject devMenu; // could move this into DevUI class/file
     private Button[] devButtons;
@@ -22,18 +22,23 @@ public class BuildingUI : MonoBehaviour
         //devButtons[0].onClick.AddListener(() => BuildingManager.Instance.BuildAll());
         //attackBtn.GetComponent<Button>().onClick.AddListener(() => CeneManager.NextScene());
         attackBtn.SetActive(false);
+        arrow.onClick.AddListener(() => OpenMenu());
     }
 
     private void OpenMenu()
     {
-        // raise
-        // flip arrow
+        transform.DOMoveY(91.515f, 0.6f);
+        arrow.onClick.RemoveAllListeners();
+        arrow.onClick.AddListener(() => CloseMenu());
+        arrow.transform.GetChild(0).DORotate(new Vector3(0, 0, 180), 0.5f);
     }
 
     private void CloseMenu()
     {
-        // lower
-        // flip arrow
+        transform.DOMoveY(-31, 0.6f);
+        arrow.onClick.RemoveAllListeners();
+        arrow.onClick.AddListener(() => OpenMenu());
+        arrow.transform.GetChild(0).DORotate(new Vector3(0, 0, 0), 0.5f);
     }
 
     public void FillUI(BuildingManager bm, Building[] buildings)
@@ -42,7 +47,8 @@ public class BuildingUI : MonoBehaviour
         for (int i = 0; i < buildings.Length; i++)
         {
             GameObject card = Instantiate(buildingCardPrefab, buildingUIParent);
-            card.GetComponent<Button>().onClick.AddListener(() => { bm.SelectBuilding(i); });
+            int index = i; // needs to be destroyed after setting listener
+            card.GetComponent<Button>().onClick.AddListener(() => { bm.SelectBuilding(index); });
             card.GetComponentsInChildren<Image>()[1].sprite = buildings[i].Icon;
             card.GetComponentInChildren<TextMeshProUGUI>().text = buildings[i].Name;
             buildingCards.Add(card);

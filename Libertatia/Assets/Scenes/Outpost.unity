@@ -3857,6 +3857,7 @@ MonoBehaviour:
   buildingCardPrefab: {fileID: 6335522714724666445, guid: 0b09fdf46b172724289e20cfb750f9c5, type: 3}
   buildingUIParent: {fileID: 1844109608}
   attackBtn: {fileID: 1878293459}
+  arrow: {fileID: 196712963}
   devMenu: {fileID: 746340825}
 --- !u!114 &1693820583
 MonoBehaviour:

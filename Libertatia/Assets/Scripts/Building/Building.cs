@@ -15,7 +15,7 @@ public enum BuildingState
 public class Building : MonoBehaviour
 {
     // General Data
-    [SerializeField] private string name;
+    [SerializeField] private string buildingName;
     [SerializeField] private Sprite icon;
     [SerializeField] private float radius = 5.0f; // for construction
     private BuildingState state = BuildingState.PLACING;
@@ -42,7 +42,7 @@ public class Building : MonoBehaviour
 
     public string Name
     {
-        get { return name; }
+        get { return buildingName; }
     }
     public Sprite Icon
     {

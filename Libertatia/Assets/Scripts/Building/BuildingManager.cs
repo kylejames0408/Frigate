@@ -69,7 +69,7 @@ public class BuildingManager : MonoBehaviour
             //Graphics.DrawMesh(buildingMesh, position, buildingRotation, placingBuildingMat, 0);
 
             // check collision
-            if (Input.GetMouseButtonDown(0) &&  !activeBuilding.IsColliding) //!IsPointerOverUIObject()
+            if (Input.GetMouseButtonDown(0) &&  !activeBuilding.IsColliding && !IsPointerOverUIObject())
             {
                 SpawnBuilding(activeBuilding, info.point);
             }
