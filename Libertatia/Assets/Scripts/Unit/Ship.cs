@@ -17,7 +17,7 @@ public class Ship : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //detectionRange = 0;
+        detectionRange = 30;
         inRange = false;
     }
 
@@ -28,6 +28,7 @@ public class Ship : MonoBehaviour
 
         foreach (GameObject unit in unitList)
         {
+            //If a unit is within range of the ship, the player can return to the outpost
             if (Vector3.Distance(transform.position, unit.transform.position) <= detectionRange)
             {
                 //Debug.Log("Go home");
@@ -47,7 +48,11 @@ public class Ship : MonoBehaviour
         }
 
     }
-
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, detectionRange);
+    }
     private void OnGUI()
     {
         // the rect that is the canvas
