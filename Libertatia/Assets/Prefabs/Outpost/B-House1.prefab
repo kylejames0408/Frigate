@@ -132,6 +132,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buildingName: House1
+  icon: {fileID: 21300000, guid: d495ab674a6890e4483cef1d5363f415, type: 3}
   radius: 5
   stateColors:
   - {r: 0.003921569, g: 0.003921569, b: 0.003921569, a: 1}

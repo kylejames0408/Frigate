@@ -15,8 +15,9 @@ public enum BuildingState
 public class Building : MonoBehaviour
 {
     // General Data
-    public string buildingName;
-    public float radius = 5.0f; // for construction
+    [SerializeField] private string buildingName;
+    [SerializeField] private Sprite icon;
+    [SerializeField] private float radius = 5.0f; // for construction
     private BuildingState state = BuildingState.PLACING;
     [ColorUsage(true, true)]
     [SerializeField] private Color[] stateColors; // Not sure how this is used yet
@@ -39,6 +40,18 @@ public class Building : MonoBehaviour
     [Header("Events")]
     public GameEvent onCrewmateAssigned;
 
+    public string Name
+    {
+        get { return buildingName; }
+    }
+    public Sprite Icon
+    {
+        get { return icon; }
+    }
+    public float Radius
+    {
+        get { return radius; }
+    }
     public bool IsAssigned
     {
         get

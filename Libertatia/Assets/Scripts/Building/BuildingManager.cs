@@ -48,6 +48,7 @@ public class BuildingManager : MonoBehaviour
             }
         }
         buildingUI = FindObjectOfType<BuildingUI>(); // init both of these
+        buildingUI.FillUI(this, buildingPrefabs);
         outpostUI = FindObjectOfType<OutpostUI>();
         outpostUI.Init(realtimeData.crewmateAmount,
             5,  // crew capacity
@@ -68,7 +69,7 @@ public class BuildingManager : MonoBehaviour
             //Graphics.DrawMesh(buildingMesh, position, buildingRotation, placingBuildingMat, 0);
 
             // check collision
-            if (Input.GetMouseButtonDown(0) &&  !activeBuilding.IsColliding) //!IsPointerOverUIObject()
+            if (Input.GetMouseButtonDown(0) &&  !activeBuilding.IsColliding && !IsPointerOverUIObject())
             {
                 SpawnBuilding(activeBuilding, info.point);
             }

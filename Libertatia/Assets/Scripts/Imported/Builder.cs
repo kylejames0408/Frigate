@@ -21,7 +21,7 @@ public class Builder : Actor
         currentBuilding = job;
         isBuilding = true;
         Vector3 jobPosition = job.transform.position;
-        Vector2 randomPosition = Random.insideUnitCircle.normalized * job.radius;
+        Vector2 randomPosition = Random.insideUnitCircle.normalized * job.Radius;
         jobPosition.x += randomPosition.x;
         jobPosition.z += randomPosition.y;
         SetDestination(jobPosition);
