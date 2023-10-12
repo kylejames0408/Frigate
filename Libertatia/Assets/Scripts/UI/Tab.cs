@@ -7,7 +7,7 @@ public class Tab : MonoBehaviour
 {
     private Button button;
     private Image background;
-    private Color inactiveColor = new Color(91,91,91);
+    private Color inactiveColor = new Color(0.35f, 0.35f, 0.35f, 1.0f);
     private Color activeColor = Color.black;
 
     private void Awake()
@@ -20,12 +20,9 @@ public class Tab : MonoBehaviour
     public void Select()
     {
         background.color = activeColor;
-        button.onClick.RemoveListener(Select);
     }
     public void Deselect()
     {
         background.color = inactiveColor;
-        button.onClick.RemoveListener(Deselect);
-        button.onClick.AddListener(Select);
     }
 }

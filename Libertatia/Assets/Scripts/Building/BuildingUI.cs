@@ -22,6 +22,13 @@ public class BuildingUI : MonoBehaviour
     private void Awake()
     {
         pages = pagesUIParent.GetComponentsInChildren<Transform>();
+        if(pages.Length > 1 )
+        {
+            for( int i = 1; i < pages.Length; i++ )
+            {
+                pages[i - 1] = pages[i];
+            }
+        }
         tabs = tabUIParent.GetComponentsInChildren<Tab>();
     }
 
@@ -32,7 +39,7 @@ public class BuildingUI : MonoBehaviour
             int index = i; // needs to be destroyed after setting listener
             tabs[i].GetComponent<Button>().onClick.AddListener(() => { SelectTab(index); });
         }
-        tabs[0].GetComponent<Button>().Select();
+        SelectTab(0);
 
         // Dev tools
         //devButtons = devMenu.GetComponentsInChildren<Button>();
@@ -74,10 +81,18 @@ public class BuildingUI : MonoBehaviour
 
     public void SelectTab(int index)
     {
-        foreach (Transform page in pages)
+        for (int i = 0; i < tabs.Length; i++) // assumes tabs and pages length are equal
         {
-            page.gameObject.SetActive(false);
+            if(i == index)
+            {
+                tabs[i].Select();
+                pages[i].gameObject.SetActive(true);
+            }
+            else
+            {
+                tabs[i].Deselect();
+                pages[i].gameObject.SetActive(false);
+            }
         }
-        pages[index].gameObject.SetActive(true);
     }
 }
