@@ -24,7 +24,7 @@ public class BuildingManager : MonoBehaviour
     [Header("Events")]
     public GameEvent onBuildingPlaced;
     // Components
-    private BuildingUI buildingUI;
+    private ConstructionUI buildingUI;
     private OutpostUI outpostUI;
     private bool isPlacing = false;
     private Building activeBuilding;
@@ -47,8 +47,8 @@ public class BuildingManager : MonoBehaviour
                 b.CompleteBuild();
             }
         }
-        buildingUI = FindObjectOfType<BuildingUI>(); // init both of these
-        buildingUI.FillUI(this, buildingPrefabs);
+        buildingUI = FindObjectOfType<ConstructionUI>(); // init both of these
+        buildingUI.FillConstructionUI(this, buildingPrefabs);
         outpostUI = FindObjectOfType<OutpostUI>();
         outpostUI.Init(realtimeData.crewmateAmount,
             5,  // crew capacity
