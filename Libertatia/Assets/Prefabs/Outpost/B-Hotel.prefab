@@ -138,7 +138,9 @@ MonoBehaviour:
   - {r: 0.9320358, g: 0.9320358, b: 0.9320358, a: 1}
   isHovered: 0
   isColliding: 0
-  resourceCost: c800000032000000
+  resourceCost:
+    wood: 100
+    dubloons: 100
   builderCapacity: 1
   components: {fileID: 11400000, guid: dce72b56bac855e46b065e2c0dc62d3f, type: 2}
   builtMaterial: {fileID: 2100000, guid: 2ed85a5525951e145ab57bc5eb35b5ba, type: 2}
