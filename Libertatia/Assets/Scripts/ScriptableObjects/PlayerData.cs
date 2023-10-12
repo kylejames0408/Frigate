@@ -7,14 +7,14 @@ public struct PlayerResources
 {
     //public BuildingResources buildingResources; // maybe?
     public int wood;
+    public int doubloons;
     public int food;
-    public int gold;
     public int loyalty;
 
     public void Print()
     {
-        Debug.LogFormat("Wood: {0}\nFood: {1}\nGold: {2}\nLoyalty: {3}",
-            wood, food, gold, loyalty);
+        Debug.LogFormat("Wood: {0}\nDubloons: {1}\nFood: {2}\nLoyalty: {3}",
+            wood, doubloons, food, loyalty);
     }
 }
 
@@ -52,10 +52,7 @@ public class PlayerDataManager
         }
     }
 
-    /// <summary>
-    /// Creates new player data file and saves it to folder
-    /// </summary>
-    /// <param name="startingCrewSize"></param>
+    // Creates new player data file and saves it to folder
     public void CreateNewData(int startingCrewSize)
     {
         // Research difference b/w instance and default contructor

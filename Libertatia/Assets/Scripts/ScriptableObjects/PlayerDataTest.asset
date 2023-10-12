@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: PlayerDataTest
   m_EditorClassIdentifier: 
   gameTimer: 0
-  buildingAmount: 2
+  buildingAmount: 0
   crewmateAmount: 3
   gamePhase: 0
   gameMode: 0
   resources:
     wood: 1000
+    doubloons: 1000
     food: 1000
-    gold: 1000
     loyalty: 1000

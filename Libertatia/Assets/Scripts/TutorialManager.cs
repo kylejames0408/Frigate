@@ -54,8 +54,11 @@ public class TutorialManager : MonoBehaviour
             //}
 
 
-            AttackButton = GameObject.Find("Btn-Attack");
-            AttackButton.SetActive(false);
+            AttackButton = GameObject.Find("BTN-Attack");
+            if(AttackButton != null )
+            {
+                AttackButton.SetActive(false);
+            }
         }
         else if (SceneManager.GetActiveScene().name == "CombatTest - Playtest" || SceneManager.GetActiveScene().name == "CombatTest")
         {

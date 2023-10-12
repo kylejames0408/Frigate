@@ -8,7 +8,7 @@ using UnityEngine.UIElements;
 public struct BuildingResources
 {
     public int wood;
-    public int gold;
+    public int dubloons;
 }
 
 public class BuildingManager : MonoBehaviour
@@ -24,7 +24,8 @@ public class BuildingManager : MonoBehaviour
     [Header("Events")]
     public GameEvent onBuildingPlaced;
     // Components
-    private BuildingUI ui;
+    private BuildingUI buildingUI;
+    private OutpostUI outpostUI;
     private bool isPlacing = false;
     private Building activeBuilding;
 
@@ -46,7 +47,14 @@ public class BuildingManager : MonoBehaviour
                 b.CompleteBuild();
             }
         }
-        ui = FindObjectOfType<BuildingUI>();
+        buildingUI = FindObjectOfType<BuildingUI>(); // init both of these
+        outpostUI = FindObjectOfType<OutpostUI>();
+        outpostUI.Init(realtimeData.crewmateAmount,
+            5,  // crew capacity
+            resources.food,
+            5,  // AP consumption of food
+            resources.doubloons,
+            resources.wood);
     }
     private void Update()
     {
@@ -86,7 +94,7 @@ public class BuildingManager : MonoBehaviour
 
         // Check if there are enough resources - possible move
         BuildingResources cost = building.Cost;
-        if (resources.wood < cost.wood || resources.gold < cost.gold)
+        if (resources.wood < cost.wood || resources.doubloons < cost.dubloons)
         {
             Destroy(building.gameObject);
             Debug.Log("Cannot build; Insufficient resources"); // UI
@@ -95,14 +103,17 @@ public class BuildingManager : MonoBehaviour
 
         // Subtract resources - move to Building or bring CanBuild in here
         resources.wood -= cost.wood;
-        resources.gold -= cost.gold;
+        resources.doubloons -= cost.dubloons;
         //resources.Print();
+
+        outpostUI.UpdateWoodUI(resources.wood);
+        outpostUI.UpdateDubloonUI(resources.doubloons);
 
         // Create Building
         building.Place();
         buildings.Add(building);
     }
-    
+
     // Dev functions
     public void BuildAll()
     {
