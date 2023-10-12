@@ -3,34 +3,20 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.EventSystems;
+using System;
 
 public class BuildingUI : MonoBehaviour
 {
-    // General
-    public static BuildingUI instance;
-    // Ghost Building
-    private Button[] buttons;
-    private Button[] devButtons;
-    [SerializeField] private GameObject devMenu; // could move this into DevUI class/file
+    public GameObject buildingCardPrefab;
+    public Transform buildingUIParent;
+    private List<GameObject> buildingCards;
     public GameObject attackBtn;
-    // Components
-    private BuildingManager bm;
-
-    private void Awake()
-    {
-        //canvasGroup = GetComponent<CanvasGroup>();
-        bm = FindAnyObjectByType<BuildingManager>();
-    }
+    // Ghost Building
+    [SerializeField] private GameObject devMenu; // could move this into DevUI class/file
+    private Button[] devButtons;
 
     void Start()
     {
-        buttons = GetComponentsInChildren<Button>();
-        for (int i = 0; i < buttons.Length; i++)
-        {
-            int index = i;
-            buttons[index].onClick.AddListener(() => bm.SelectBuilding(index));
-        }
-
         // Dev tools
         //devButtons = devMenu.GetComponentsInChildren<Button>();
         //devButtons[0].onClick.AddListener(() => BuildingManager.Instance.BuildAll());
@@ -38,18 +24,28 @@ public class BuildingUI : MonoBehaviour
         attackBtn.SetActive(false);
     }
 
-    private string GetButtonText(Building b)
+    private void OpenMenu()
     {
-        string buildingName = b.buildingName;
-        //int resourceAmount = b.resourceCost.Length;
-        //string[] resourceNames = new string[] { "Wood", "Stone" };
-        //string resourceString = string.Empty;
-        //for (int j = 0; j < resourceAmount; j++)
-        //{
-        //    resourceString += "\n " + resourceNames[j] + " (" + b.resourceCost[j] + ")";
-        //}
+        // raise
+        // flip arrow
+    }
 
-        //return "<size=23><b>" + buildingName + "</b></size>" + resourceString;
-        return "<size=50><b>" + buildingName + "</b></size>";
+    private void CloseMenu()
+    {
+        // lower
+        // flip arrow
+    }
+
+    public void FillUI(BuildingManager bm, Building[] buildings)
+    {
+        buildingCards = new List<GameObject>(buildings.Length);
+        for (int i = 0; i < buildings.Length; i++)
+        {
+            GameObject card = Instantiate(buildingCardPrefab, buildingUIParent);
+            card.GetComponent<Button>().onClick.AddListener(() => { bm.SelectBuilding(i); });
+            card.GetComponentsInChildren<Image>()[1].sprite = buildings[i].Icon;
+            card.GetComponentInChildren<TextMeshProUGUI>().text = buildings[i].Name;
+            buildingCards.Add(card);
+        }
     }
 }

@@ -131,7 +131,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57faedece60f9884ea5265c1efe82d3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buildingName: House1
+  name: House1
+  icon: {fileID: 21300000, guid: d495ab674a6890e4483cef1d5363f415, type: 3}
   radius: 5
   stateColors:
   - {r: 0.003921569, g: 0.003921569, b: 0.003921569, a: 1}

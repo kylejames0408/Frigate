@@ -48,6 +48,7 @@ public class BuildingManager : MonoBehaviour
             }
         }
         buildingUI = FindObjectOfType<BuildingUI>(); // init both of these
+        buildingUI.FillUI(this, buildingPrefabs);
         outpostUI = FindObjectOfType<OutpostUI>();
         outpostUI.Init(realtimeData.crewmateAmount,
             5,  // crew capacity

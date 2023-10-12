@@ -2,6 +2,7 @@
 using UnityEditor;
 using UnityEngine;
 
+// Resources the player uses through the game
 [Serializable]
 public struct PlayerResources
 {
@@ -18,6 +19,7 @@ public struct PlayerResources
     }
 }
 
+// Holds important player data that should persist when game ends
 [CreateAssetMenu(fileName = "PlayerData", menuName = "Libertatia/PlayerData", order = 1)]
 public class PlayerData : ScriptableObject
 {
@@ -29,6 +31,7 @@ public class PlayerData : ScriptableObject
     public PlayerResources resources;
 }
 
+// Manages player data - loading, saving, and converting the data
 public class PlayerDataManager
 {
     private const string DIR_PATH = "Assets\\Scripts\\ScriptableObjects\\";
@@ -81,6 +84,7 @@ public class PlayerDataManager
     }
 }
 
+// Components that all buildings share
 [CreateAssetMenu(fileName = "BuildingComponents", menuName = "Libertatia/BuildingComponents", order = 2)]
 public class BuildingComponents : ScriptableObject
 {
