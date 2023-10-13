@@ -21,10 +21,7 @@ public class CeneManager
     {
         return GetBuildIndex(SceneManager.GetActiveScene().buildIndex + buildIndexOffset);
     }
-    /// <summary>
-    /// Loads scene from build index. Does not unload other scenes
-    /// </summary>
-    /// <param name="buildIndex">Build index of the scene to load</param>
+
     public void LoadScene(int buildIndex)
     {
         SceneManager.LoadScene(buildIndex, LoadSceneMode.Additive);
@@ -42,10 +39,13 @@ public class CeneManager
     {
         SceneManager.SetActiveScene(scene);
     }
-
-    public void UnloadScene(int index)
+    public void UnloadScene(int buildIndex)
     {
-        SceneManager.UnloadSceneAsync(index, UnloadSceneOptions.None);
+        SceneManager.UnloadSceneAsync(buildIndex, UnloadSceneOptions.None);
+    }
+    public void UnloadCurrentScene()
+    {
+        UnloadScene(SceneManager.GetActiveScene().buildIndex);
     }
     public void NextScene()
     {
@@ -69,10 +69,8 @@ public class CeneManager
     /// </summary>
     public void LoadMainMenu()
     {
-        Scene menu = SceneManager.GetSceneByName("MainMenu");
-        if (menu == null)
-        {
-            SceneManager.LoadScene("MainMenu", LoadSceneMode.Additive);
-        }
+        int buildIndex = SceneManager.GetActiveScene().buildIndex;
+        SceneManager.LoadScene("MainMenu", LoadSceneMode.Additive);
+        UnloadScene(buildIndex);
     }
 }

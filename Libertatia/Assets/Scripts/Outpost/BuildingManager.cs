@@ -8,15 +8,13 @@ using UnityEngine.UIElements;
 public struct BuildingResources
 {
     public int wood;
-    public int dubloons;
 }
 
 public class BuildingManager : MonoBehaviour
 {
     // Game/Player Data
     private List<Building> buildings;
-    private PlayerResources resources;
-    private PlayerData realtimeData;
+    private PlayerResourceData resources;
     // Building Data
     public Building[] buildingPrefabs;
     public Transform buildingParent; // happens to be the object it is on
@@ -24,7 +22,7 @@ public class BuildingManager : MonoBehaviour
     [Header("Events")]
     public GameEvent onBuildingPlaced;
     // Components
-    private ConstructionUI buildingUI;
+    private ConstructionUI constructionUI;
     private OutpostUI outpostUI;
     private bool isPlacing = false;
     private Building activeBuilding;
@@ -32,8 +30,7 @@ public class BuildingManager : MonoBehaviour
     private void Start()
     {
         // should check building folder for buildings
-        realtimeData = GameManager.Instance.DataManager.Data;
-        resources = realtimeData.resources;
+        resources = GameManager.Instance.GetResources();
 
         if (buildings == null) // GameManager would fill buildings if any, unless we just stick to the scene
         {
@@ -47,18 +44,14 @@ public class BuildingManager : MonoBehaviour
                 b.CompleteBuild();
             }
         }
-        buildingUI = FindObjectOfType<ConstructionUI>(); // init both of these
-        buildingUI.FillConstructionUI(this, buildingPrefabs);
+        constructionUI = FindObjectOfType<ConstructionUI>(); // init both of these
+        constructionUI.FillConstructionUI(this, buildingPrefabs);
         outpostUI = FindObjectOfType<OutpostUI>();
-        outpostUI.Init(realtimeData.crewmateAmount,
-            5,  // crew capacity
-            resources.food,
-            5,  // AP consumption of food
-            resources.doubloons,
-            resources.wood);
+        outpostUI.Init();
     }
     private void Update()
     {
+        // move functionallity outside of monobehavior
         if (isPlacing)
         {
             // Camera.main or Camera.current?
@@ -95,7 +88,7 @@ public class BuildingManager : MonoBehaviour
 
         // Check if there are enough resources - possible move
         BuildingResources cost = building.Cost;
-        if (resources.wood < cost.wood || resources.doubloons < cost.dubloons)
+        if (resources.wood < cost.wood)
         {
             Destroy(building.gameObject);
             Debug.Log("Cannot build; Insufficient resources"); // UI
@@ -104,7 +97,6 @@ public class BuildingManager : MonoBehaviour
 
         // Subtract resources - move to Building or bring CanBuild in here
         resources.wood -= cost.wood;
-        resources.doubloons -= cost.dubloons;
         //resources.Print();
 
         outpostUI.UpdateWoodUI(resources.wood);
@@ -142,7 +134,7 @@ public class BuildingManager : MonoBehaviour
     private void OnDestroy()
     {
         //realtimeData.resources = resources; // disable for now
-        realtimeData.buildingAmount = buildings.Count;
+        //GameManager.Instance.buildingAmount = buildings.Count;
         //GameManager.Instance.DataManager.Update(realtimeData);
     }
 }

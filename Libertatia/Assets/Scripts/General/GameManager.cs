@@ -21,8 +21,6 @@ public enum GamePhase
 
 public class GameManager : MonoBehaviour
 {
-    // Constants
-    private const int STARTING_CREW_SIZE = 3;
     // Class references
     public static GameManager instance;
     [SerializeField] private CeneManager sm;
@@ -60,7 +58,7 @@ public class GameManager : MonoBehaviour
             instance = this;
         }
         // Game init
-        pdm = new PlayerDataManager(STARTING_CREW_SIZE);
+        pdm = new PlayerDataManager();
 
         // TODO: Might be good to have realtime variables per Unity forum
 
@@ -87,7 +85,19 @@ public class GameManager : MonoBehaviour
                 break;
         }
     }
-
+    public PlayerResourceData GetResources()
+    {
+        return pdm.Data.resources;
+    }
+    public void SetResources(PlayerResourceData resources)
+    {
+        pdm.Data.resources = resources;
+    }
+    public void ToMenu()
+    {
+        //sm.UnloadCurrentScene();
+        sm.LoadMainMenu();
+    }
     public void Quit()
     {
         Application.Quit(0);
