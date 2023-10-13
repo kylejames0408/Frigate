@@ -64,6 +64,7 @@ public class TutorialManager : MonoBehaviour
         }
         else if (SceneManager.GetSceneByName("CombatTest").isLoaded)
         {
+            //UnitSelections.Instance.unitList.Clear();
             currentScene = Scene.Combat;
             combatDialogues[0].TriggerDialogue();
         }

@@ -46,6 +46,13 @@ public class DialogueManager : MonoBehaviour
     public void StartDialogue(Dialogue dialogue)
     {
         currentDialogue = null;
+        panel = GameObject.Find("Dialogue Panel").GetComponent<Image>();
+        speakerNameText = GameObject.Find("Speaker Name").GetComponent<TextMeshProUGUI>();
+        speakerNameText = GameObject.Find("Speaker Name").GetComponent<TextMeshProUGUI>();
+        dialogueBoxText = GameObject.Find("Dialogue Text").GetComponent<TextMeshProUGUI>();
+        continueButtonText = GameObject.Find("Dialogue Continue Button").GetComponentInChildren<TextMeshProUGUI>();
+        taskListName = GameObject.Find("Task Group Name").GetComponent<TextMeshProUGUI>();
+        taskListText = GameObject.Find("Task List").GetComponent<TextMeshProUGUI>();
 
         panel.raycastTarget = true;
         dialogueAnimator.SetBool("IsOpen", true);

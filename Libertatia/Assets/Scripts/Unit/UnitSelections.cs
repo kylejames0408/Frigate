@@ -31,6 +31,9 @@ public class UnitSelections : MonoBehaviour
         eventTriggered = false;
 
         sceneName = SceneManager.GetActiveScene().name;
+        unitList.Clear();
+        unitList = GameObject.FindGameObjectsWithTag("PlayerCharacter").ToList<GameObject>();
+        enemies = GameObject.FindGameObjectsWithTag("Enemy").ToList<GameObject>();
     }
 
     private void Awake()
@@ -46,9 +49,6 @@ public class UnitSelections : MonoBehaviour
             //make this the instance
             _instance = this;
         }
-
-        enemies = GameObject.FindGameObjectsWithTag("Enemy").ToList<GameObject>();
-
     }
 
     public void Update()
@@ -126,10 +126,14 @@ public class UnitSelections : MonoBehaviour
     /// <param name="unitToAdd"></param>
     private void AddSelection(GameObject unitToAdd)
     {
-        if(unitToAdd.GetComponent<Crewmate>().IsBuilding)
+        if(sceneName == "Outpost")
         {
-            return;
+            if (unitToAdd.GetComponent<Crewmate>().IsBuilding)
+            {
+                return;
+            }
         }
+   
 
         unitsSelected.Add(unitToAdd);
         //sets the first child to be active: an indicator showing that the unit is selected

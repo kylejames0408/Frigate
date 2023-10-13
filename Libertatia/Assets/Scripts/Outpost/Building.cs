@@ -169,7 +169,7 @@ public class Building : MonoBehaviour
     {
         if (collision.transform.tag == "Building")
         {
-            buildingRender.material = components.collisionMaterial;
+            buildingRender.material = new Material(components.collisionMaterial);
             isColliding = true;
         }
     }
@@ -180,16 +180,16 @@ public class Building : MonoBehaviour
             switch(state)
             {
                 case BuildingState.PLACING:
-                    buildingRender.material = components.placingMaterial;
+                    buildingRender.material = new Material(components.placingMaterial);
                     break;
                 case BuildingState.WAITING_FOR_ASSIGNMENT:
-                    buildingRender.material = components.needsAssignmentMaterial;
+                    buildingRender.material = new Material(components.needsAssignmentMaterial);
                     break;
                 case BuildingState.BUILDING:
-                    buildingRender.material = components.buildingMaterial;
+                    buildingRender.material = new Material(components.buildingMaterial);
                     break;
                 case BuildingState.COMPLETE:
-                    buildingRender.material = builtMaterial;
+                    buildingRender.material = new Material(builtMaterial);
                     break;
             }
             isColliding = false;
