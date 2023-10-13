@@ -2691,11 +2691,8 @@ MonoBehaviour:
   onBuildingPlaced: {fileID: 11400000, guid: 4ae36f9fe3f9160488e2f40b8ca0c348, type: 2}
   crewmatePrefab: {fileID: 4279940650134947149, guid: 8f1e684d0ce15c240a73f35a690f910e, type: 3}
   crewmateParent: {fileID: 314619651}
-  crewmateSpawn: {fileID: 0}
+  crewmateSpawn: {fileID: 1943279233}
   crewmateSpawnRadius: 10
-  buildingMask:
-    serializedVersion: 2
-    m_Bits: 0
 --- !u!1 &746340825
 GameObject:
   m_ObjectHideFlags: 0

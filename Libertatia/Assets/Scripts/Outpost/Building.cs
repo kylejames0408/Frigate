@@ -98,14 +98,17 @@ public class Building : MonoBehaviour
     {
         if(isHovered && Input.GetMouseButtonDown(1))
         {
-            Crewmate mate = CrewmateManager.Instance.unitsSelected[0].GetComponent<Crewmate>();
-            if(CanAssign())
+            if(CrewmateManager.Instance.unitsSelected.Count > 0)
             {
-                AssignBuilder(mate);
-            }
-            else
-            {
-                Debug.Log("Building assignments are full");
+                Crewmate mate = CrewmateManager.Instance.unitsSelected[0].GetComponent<Crewmate>();
+                if (CanAssign())
+                {
+                    AssignBuilder(mate);
+                }
+                else
+                {
+                    Debug.Log("Building assignments are full");
+                }
             }
         }
     }

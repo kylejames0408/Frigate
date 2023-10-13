@@ -90,7 +90,7 @@ public class ConstructionUI : MonoBehaviour
         {
             GameObject card = Instantiate(buildingCardPrefab, pages[0]);
             int index = i; // needs to be destroyed after setting listener
-            card.GetComponent<Button>().onClick.AddListener(() => { bm.SelectBuilding(index); });
+            card.GetComponent<Button>().onClick.AddListener(() => { SelectCard(bm, index); });
             card.GetComponentsInChildren<Image>()[1].sprite = buildings[i].Icon;
             card.GetComponentInChildren<TextMeshProUGUI>().text = buildings[i].Name;
             buildingCards.Add(card);
@@ -109,5 +109,16 @@ public class ConstructionUI : MonoBehaviour
             card.GetComponentInChildren<TextMeshProUGUI>().text = crewmates[i].Name;
             crewmateCards.Add(card);
         }
+    }
+
+    private void SelectCard(BuildingManager bm, int index)
+    {
+        buildingCards[index].GetComponent<Outline>().enabled = true;
+        bm.SelectBuilding(index);
+        //bm.onBuildingPlaced.RegisterListener(()=> { DeselectCard(index); }); // need to add
+    }
+    public void DeselectCard(int index)
+    {
+        buildingCards[index].GetComponent<Outline>().enabled = false;
     }
 }
