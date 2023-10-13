@@ -11,8 +11,8 @@ public class Enemy : Character
 
     public float detectionRange;
 
-    public GameObject unitSelection;
-    public UnitSelections unitSelectionList;
+    //public GameObject unitSelection;
+    //public UnitSelections unitSelectionList;
 
 
 
@@ -38,8 +38,8 @@ public class Enemy : Character
             crewMembers.Add(crewMember);
         }
 
-        unitSelection = GameObject.FindGameObjectWithTag("Unit Selections");
-        unitSelectionList = unitSelection.GetComponent<UnitSelections>();
+        //unitSelection = GameObject.FindGameObjectWithTag("Unit Selections");
+        //unitSelectionList = unitSelection.GetComponent<UnitSelections>();
     }
 
     // Update is called once per frame
@@ -50,7 +50,7 @@ public class Enemy : Character
         healthbar.UpdateHealthBar(maxHealth, currentHealth);
         Death();
 
-        if(gameObject.active != false)
+        if(gameObject.activeSelf != false)
         {
             DetectCrewMember();
         }
@@ -64,12 +64,16 @@ public class Enemy : Character
     {
         foreach(Character crewMember in crewMembers)
         {
-            //Moves towards crew members if they are within range
-            if (Vector3.Distance(transform.position, crewMember.transform.position) < detectionRange)
+            if(crewMember.isActiveAndEnabled)
             {
-                //Debug.Log("IN RANGE");
-                charAgent.SetDestination(crewMember.transform.position);
+                //Moves towards crew members if they are within range
+                if (Vector3.Distance(transform.position, crewMember.transform.position) < detectionRange)
+                {
+                    //Debug.Log("IN RANGE");
+                    charAgent.SetDestination(crewMember.transform.position);
+                }
             }
+           
         }
     }
 
@@ -79,7 +83,9 @@ public class Enemy : Character
 
         if(currentHealth <= 0)
         {
-            unitSelectionList.enemies.Remove(gameObject);
+            //unitSelectionList.enemies.Remove(gameObject);
+
+            GameObject.Find("Unit Selections").GetComponent<UnitSelections>().enemies.Remove(gameObject);
         }
 
     }

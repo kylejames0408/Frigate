@@ -23,4 +23,17 @@ public class CrewMember : Character
         healthbar.UpdateHealthBar(maxHealth, currentHealth);
         Death();
     }
+
+    public override void Death()
+    {
+        base.Death();
+
+        if (currentHealth <= 0)
+        {
+            //unitSelectionList.enemies.Remove(gameObject);
+
+            GameObject.Find("Unit Selections").GetComponent<UnitSelections>().unitList.Remove(gameObject);
+        }
+
+    }
 }
