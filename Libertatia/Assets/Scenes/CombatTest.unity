@@ -2710,18 +2710,8 @@ MonoBehaviour:
   damage: 0
   charAgent: {fileID: 0}
   healthbar: {fileID: 506170226}
-  enemies:
-  - {fileID: 1117264220}
-  - {fileID: 1636327045}
-  - {fileID: 1632069298}
-  - {fileID: 1252722872}
-  - {fileID: 941200575}
-  - {fileID: 575436585}
-  - {fileID: 931446531}
-  - {fileID: 2046984441}
-  - {fileID: 1967424719}
-  - {fileID: 443887583}
-  - {fileID: 867616229}
+  enemies: []
+  enemyGameobjects: []
 --- !u!1 &219871141
 GameObject:
   m_ObjectHideFlags: 0
@@ -3144,18 +3134,8 @@ MonoBehaviour:
   damage: 0
   charAgent: {fileID: 0}
   healthbar: {fileID: 322517878}
-  enemies:
-  - {fileID: 1117264220}
-  - {fileID: 1636327045}
-  - {fileID: 1632069298}
-  - {fileID: 1252722872}
-  - {fileID: 941200575}
-  - {fileID: 575436585}
-  - {fileID: 931446531}
-  - {fileID: 2046984441}
-  - {fileID: 1967424719}
-  - {fileID: 443887583}
-  - {fileID: 867616229}
+  enemies: []
+  enemyGameobjects: []
 --- !u!1 &261759929
 GameObject:
   m_ObjectHideFlags: 0
@@ -4316,18 +4296,8 @@ MonoBehaviour:
   damage: 0
   charAgent: {fileID: 0}
   healthbar: {fileID: 877310701}
-  enemies:
-  - {fileID: 1117264220}
-  - {fileID: 1636327045}
-  - {fileID: 1632069298}
-  - {fileID: 1252722872}
-  - {fileID: 941200575}
-  - {fileID: 575436585}
-  - {fileID: 931446531}
-  - {fileID: 2046984441}
-  - {fileID: 1967424719}
-  - {fileID: 443887583}
-  - {fileID: 867616229}
+  enemies: []
+  enemyGameobjects: []
 --- !u!1 &356316806
 GameObject:
   m_ObjectHideFlags: 0
@@ -4833,18 +4803,8 @@ MonoBehaviour:
   damage: 0
   charAgent: {fileID: 0}
   healthbar: {fileID: 737809456}
-  enemies:
-  - {fileID: 1117264220}
-  - {fileID: 1636327045}
-  - {fileID: 1632069298}
-  - {fileID: 1252722872}
-  - {fileID: 941200575}
-  - {fileID: 575436585}
-  - {fileID: 931446531}
-  - {fileID: 2046984441}
-  - {fileID: 1967424719}
-  - {fileID: 443887583}
-  - {fileID: 867616229}
+  enemies: []
+  enemyGameobjects: []
 --- !u!1 &393525539
 GameObject:
   m_ObjectHideFlags: 0
@@ -7194,18 +7154,8 @@ MonoBehaviour:
   damage: 0
   charAgent: {fileID: 0}
   healthbar: {fileID: 2012164508}
-  enemies:
-  - {fileID: 1117264220}
-  - {fileID: 1636327045}
-  - {fileID: 1632069298}
-  - {fileID: 1252722872}
-  - {fileID: 941200575}
-  - {fileID: 575436585}
-  - {fileID: 931446531}
-  - {fileID: 2046984441}
-  - {fileID: 1967424719}
-  - {fileID: 443887583}
-  - {fileID: 867616229}
+  enemies: []
+  enemyGameobjects: []
 --- !u!1 &644959100
 GameObject:
   m_ObjectHideFlags: 0
@@ -12107,18 +12057,8 @@ MonoBehaviour:
   damage: 0
   charAgent: {fileID: 0}
   healthbar: {fileID: 671023626}
-  enemies:
-  - {fileID: 1117264220}
-  - {fileID: 1636327045}
-  - {fileID: 1632069298}
-  - {fileID: 1252722872}
-  - {fileID: 941200575}
-  - {fileID: 575436585}
-  - {fileID: 931446531}
-  - {fileID: 2046984441}
-  - {fileID: 1967424719}
-  - {fileID: 443887583}
-  - {fileID: 867616229}
+  enemies: []
+  enemyGameobjects: []
 --- !u!95 &968689745 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 2943135361690097334, guid: 259a93375fc252243a74fb22c384452a, type: 3}
@@ -13735,18 +13675,8 @@ MonoBehaviour:
   damage: 0
   charAgent: {fileID: 0}
   healthbar: {fileID: 1439090914}
-  enemies:
-  - {fileID: 1117264220}
-  - {fileID: 1636327045}
-  - {fileID: 1632069298}
-  - {fileID: 1252722872}
-  - {fileID: 941200575}
-  - {fileID: 575436585}
-  - {fileID: 931446531}
-  - {fileID: 2046984441}
-  - {fileID: 1967424719}
-  - {fileID: 443887583}
-  - {fileID: 867616229}
+  enemies: []
+  enemyGameobjects: []
 --- !u!1 &1155186598
 GameObject:
   m_ObjectHideFlags: 0
@@ -16255,18 +16185,8 @@ MonoBehaviour:
   damage: 0
   charAgent: {fileID: 0}
   healthbar: {fileID: 204846174}
-  enemies:
-  - {fileID: 1117264220}
-  - {fileID: 1636327045}
-  - {fileID: 1632069298}
-  - {fileID: 1252722872}
-  - {fileID: 941200575}
-  - {fileID: 575436585}
-  - {fileID: 931446531}
-  - {fileID: 2046984441}
-  - {fileID: 1967424719}
-  - {fileID: 443887583}
-  - {fileID: 867616229}
+  enemies: []
+  enemyGameobjects: []
 --- !u!1 &1470692682
 GameObject:
   m_ObjectHideFlags: 0
@@ -19482,18 +19402,8 @@ MonoBehaviour:
   damage: 0
   charAgent: {fileID: 0}
   healthbar: {fileID: 226092657}
-  enemies:
-  - {fileID: 1117264220}
-  - {fileID: 1636327045}
-  - {fileID: 1632069298}
-  - {fileID: 1252722872}
-  - {fileID: 941200575}
-  - {fileID: 575436585}
-  - {fileID: 931446531}
-  - {fileID: 2046984441}
-  - {fileID: 1967424719}
-  - {fileID: 443887583}
-  - {fileID: 867616229}
+  enemies: []
+  enemyGameobjects: []
 --- !u!1 &1761322272
 GameObject:
   m_ObjectHideFlags: 0
@@ -20499,18 +20409,8 @@ MonoBehaviour:
   damage: 0
   charAgent: {fileID: 0}
   healthbar: {fileID: 2092591698}
-  enemies:
-  - {fileID: 1117264220}
-  - {fileID: 1636327045}
-  - {fileID: 1632069298}
-  - {fileID: 1252722872}
-  - {fileID: 941200575}
-  - {fileID: 575436585}
-  - {fileID: 931446531}
-  - {fileID: 2046984441}
-  - {fileID: 1967424719}
-  - {fileID: 443887583}
-  - {fileID: 867616229}
+  enemies: []
+  enemyGameobjects: []
 --- !u!1 &1837732571
 GameObject:
   m_ObjectHideFlags: 0
@@ -22460,18 +22360,8 @@ MonoBehaviour:
   damage: 0
   charAgent: {fileID: 0}
   healthbar: {fileID: 983516482}
-  enemies:
-  - {fileID: 1117264220}
-  - {fileID: 1636327045}
-  - {fileID: 1632069298}
-  - {fileID: 1252722872}
-  - {fileID: 941200575}
-  - {fileID: 575436585}
-  - {fileID: 931446531}
-  - {fileID: 2046984441}
-  - {fileID: 1967424719}
-  - {fileID: 443887583}
-  - {fileID: 867616229}
+  enemies: []
+  enemyGameobjects: []
 --- !u!1 &2010857610
 GameObject:
   m_ObjectHideFlags: 0
@@ -23624,18 +23514,8 @@ MonoBehaviour:
   damage: 0
   charAgent: {fileID: 0}
   healthbar: {fileID: 17712094}
-  enemies:
-  - {fileID: 1117264220}
-  - {fileID: 1636327045}
-  - {fileID: 1632069298}
-  - {fileID: 1252722872}
-  - {fileID: 941200575}
-  - {fileID: 575436585}
-  - {fileID: 931446531}
-  - {fileID: 2046984441}
-  - {fileID: 1967424719}
-  - {fileID: 443887583}
-  - {fileID: 867616229}
+  enemies: []
+  enemyGameobjects: []
 --- !u!1 &2090657447
 GameObject:
   m_ObjectHideFlags: 0
