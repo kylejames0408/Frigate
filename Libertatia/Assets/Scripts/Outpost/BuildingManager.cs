@@ -34,6 +34,7 @@ public class BuildingManager : MonoBehaviour
     public Transform crewmateParent;
     public Transform crewmateSpawn;
     public int crewmateSpawnRadius = 10;
+    public LayerMask buildingMask;
 
     private void Start()
     {

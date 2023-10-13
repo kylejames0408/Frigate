@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657737, g: 0.49641442, b: 0.5748176, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1235,8 +1235,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 314619651}
+  - component: {fileID: 314619652}
   m_Layer: 0
-  m_Name: Actors
+  m_Name: Crewmates
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1258,6 +1259,19 @@ Transform:
   m_Father: {fileID: 1975610057}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &314619652
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 314619650}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c037dd51df5a0542acec07d6b174438, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitsSelected: []
 --- !u!1 &317568260
 GameObject:
   m_ObjectHideFlags: 0
@@ -2678,6 +2692,9 @@ MonoBehaviour:
   crewmateParent: {fileID: 314619651}
   crewmateSpawn: {fileID: 0}
   crewmateSpawnRadius: 10
+  buildingMask:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1 &746340825
 GameObject:
   m_ObjectHideFlags: 0

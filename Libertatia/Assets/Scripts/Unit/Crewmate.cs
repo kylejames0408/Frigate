@@ -10,7 +10,7 @@ public class Crewmate : MonoBehaviour
     public bool isHovered = false;
     private Building currentBuilding;
     [SerializeField] private bool isBuilding = false;
-    //private NavMeshAgent agent;
+    private NavMeshAgent agent;
 
     public string Name
     {
@@ -30,11 +30,14 @@ public class Crewmate : MonoBehaviour
 
     private void Awake()
     {
-        //agent = GetComponent<NavMeshAgent>();
+        agent = GetComponent<NavMeshAgent>();
     }
-    private void Start()
+    private void Update()
     {
-        //UnitSelections.Instance.unitList.Add(gameObject);
+        if(isHovered && Input.GetMouseButtonDown(0))
+        {
+            CrewmateManager.Instance.ClickSelect(gameObject);
+        }
     }
 
     public void GiveJob(Building job)
@@ -45,8 +48,8 @@ public class Crewmate : MonoBehaviour
         Vector2 randomPosition = Random.insideUnitCircle.normalized * job.Radius;
         jobPosition.x += randomPosition.x;
         jobPosition.z += randomPosition.y;
-        //agent.destination = jobPosition;
-        //UnitSelections.Instance.RemoveSelection(gameObject);
+        agent.destination = jobPosition;
+        CrewmateManager.Instance.RemoveSelection(gameObject);
     }
 
     public void Free()

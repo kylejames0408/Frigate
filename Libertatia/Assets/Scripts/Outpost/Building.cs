@@ -61,13 +61,6 @@ public class Building : MonoBehaviour
             return state == BuildingState.BUILDING;
         }
     }
-    public bool IsFullyAssigned
-    {
-        get
-        {
-            return builders.Count == builders.Capacity;
-        }
-    }
     public bool IsPlacing
     {
         get
@@ -101,6 +94,21 @@ public class Building : MonoBehaviour
         state = BuildingState.PLACING;
         buildingRender.material = components.placingMaterial;
     }
+    private void Update()
+    {
+        if(isHovered && Input.GetMouseButtonDown(1))
+        {
+            Crewmate mate = CrewmateManager.Instance.unitsSelected[0].GetComponent<Crewmate>();
+            if(CanAssign())
+            {
+                AssignBuilder(mate);
+            }
+            else
+            {
+                Debug.Log("Building assignments are full");
+            }
+        }
+    }
 
     public void Place()
     {
@@ -108,17 +116,18 @@ public class Building : MonoBehaviour
         buildingRender.material = components.needsAssignmentMaterial;
         state = BuildingState.WAITING_FOR_ASSIGNMENT;
     }
-    public bool AssignBuilder(Crewmate builder)
+    public bool CanAssign()
     {
-        if (IsComplete || builders.Count >= builderCapacity)
-        {
-            return false;
-        }
+        return !IsComplete && builders.Count < builders.Capacity;
+    }
+    // can likely make private
+    public void AssignBuilder(Crewmate builder)
+    {
         onCrewmateAssigned.Raise(this, builder);
         builders.Add(builder);
+        builder.GiveJob(this);
         buildingRender.material = components.buildingMaterial;
         state = BuildingState.BUILDING;
-        return true;
     }
     public void CompleteBuild()
     {
