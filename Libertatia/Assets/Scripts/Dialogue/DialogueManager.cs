@@ -7,27 +7,25 @@ using System;
 
 public class DialogueManager : MonoBehaviour
 {
-    public Animator animator;                   // the public reference to the dialogue box's animator (so it can animate on and off screen)
+    public Animator dialogueAnimator;           // the public reference to the dialogue box's animator (so it can animate on and off screen)
+    public Animator taskAnimator;               // the public referenc to the task list's animator (so it can animate on and off screen)
 
     public float textWriteSpeed;                // a public float so you can set how fast characters in a sentence populate the dialogue box
 
-    private TextMeshProUGUI speakerNameText;     // the reference to the dialogue box name text (who the speaker is)
-    private TextMeshProUGUI dialogueBoxText;     // the reference to the dialogue box text (what the speaker is saying)
-    private TextMeshProUGUI continueButtonText;  // the reference to the continue button (to swap between continue and skip)
+    private TextMeshProUGUI speakerNameText;    // the reference to the dialogue box name text (who the speaker is)
+    private TextMeshProUGUI dialogueBoxText;    // the reference to the dialogue box text (what the speaker is saying)
+    private TextMeshProUGUI continueButtonText; // the reference to the continue button (to swap between continue and skip)
 
     private Image panel;                        // the reference to the panel used to block input to other elements during active dialogue
+
+    private TextMeshProUGUI taskListName;       // the reference to the task list name text (a summary of the tasks that need to be done)
+    private TextMeshProUGUI taskListText;       // the reference to the task list text (the individual tasks listed)
 
     private Queue<string> sentences;            // a Queue to hold all the sentences in the dialogue. It's like a list, but better for our use case
 
     private string currentSentence;             // a string used to hold the currently displayed sentence. This is for skipping character typing
 
     private Dialogue currentDialogue;           // a field used to store the currently active dialogue
-
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
 
     private void Awake()
     {
@@ -39,6 +37,9 @@ public class DialogueManager : MonoBehaviour
         dialogueBoxText = GameObject.Find("Dialogue Text").GetComponent<TextMeshProUGUI>();
         continueButtonText = GameObject.Find("Dialogue Continue Button").GetComponentInChildren<TextMeshProUGUI>();
         panel = GameObject.Find("Dialogue Panel").GetComponent<Image>();
+
+        taskListName = GameObject.Find("Task Group Name").GetComponent<TextMeshProUGUI>();
+        taskListText = GameObject.Find("Task List").GetComponent<TextMeshProUGUI>();
     }
 
     // Starts the dialogue display. Brings up the box, queues up all the sentences for this dialogue, sets up the speaker name and displays the first sentence
@@ -47,7 +48,8 @@ public class DialogueManager : MonoBehaviour
         currentDialogue = null;
 
         panel.raycastTarget = true;
-        animator.SetBool("IsOpen", true);
+        dialogueAnimator.SetBool("IsOpen", true);
+        taskAnimator.SetBool("IsOpen", false);
 
         currentDialogue = dialogue;
 
@@ -121,7 +123,7 @@ public class DialogueManager : MonoBehaviour
     void EndDialogue()
     {
         // trigger closing dialogue box animation
-        animator.SetBool("IsOpen", false);
+        dialogueAnimator.SetBool("IsOpen", false);
 
         StopAllCoroutines();
 
@@ -135,11 +137,26 @@ public class DialogueManager : MonoBehaviour
         else
             Debug.Log("No callback here!");
 
+        if (currentDialogue.hasTasks)
+            taskAnimator.SetBool("IsOpen", true);
+
         currentDialogue = null;
         currentSentence = string.Empty;
 
         panel.raycastTarget = false;
 
+    }
+
+    // A method to set a task list after a dialogue event
+    public void SetTaskList(TaskList taskList)
+    {
+        taskListName.text = taskList.taskListName;
+        taskListText.text = "";
+        foreach(string task in taskList.tasks)
+        {
+            taskListText.text += task + "\n";
+        }
+        
     }
 
 }

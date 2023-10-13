@@ -5,14 +5,10 @@ using UnityEngine.Events;
 using TMPro;
 
 [System.Serializable]
-public class Dialogue
+public class TaskList
 {
-    public string speakerName;
+    public string taskListName;
 
     [TextArea(3, 10)]
-    public string[] sentences;
-
-    public UnityEvent callback;
-
-    public bool hasTasks;
+    public string[] tasks;
 }

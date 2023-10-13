@@ -139,6 +139,8 @@ public class BuildingManager : MonoBehaviour
         // Create Building
         building.Place();
         buildings.Add(building);
+
+        onBuildingPlaced.Raise(this, building);
     }
 
     // Dev functions

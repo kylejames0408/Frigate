@@ -28,6 +28,7 @@ public class GameManager : MonoBehaviour
     // Game Data
     private float gameTimer = 0.0f;
     private GameState state = GameState.PLAYING;
+    public bool outpostVisited = false;
 
     public static GameManager Instance
     {
