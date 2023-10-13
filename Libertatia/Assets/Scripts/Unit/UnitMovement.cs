@@ -37,10 +37,10 @@ public class UnitMovement : MonoBehaviour
                 if (hit.collider.tag == "Building")
                 {
                     Building building = hit.rigidbody.GetComponent<Building>();
-                    Builder builder = myAgent.GetComponent<Builder>();
-                    if (building.AssignBuilder(builder))
+                    Crewmate builder = myAgent.GetComponent<Crewmate>();
+                    if (building.CanAssign())
                     {
-                        builder.GiveJob(building);
+                        building.AssignBuilder(builder);
                     }
                 }
                 else

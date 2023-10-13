@@ -93,7 +93,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7052071564808663902}
   - component: {fileID: 4471357269373654606}
-  - component: {fileID: 5558711768018896159}
   - component: {fileID: 5470127200473146616}
   - component: {fileID: 6128470363368173309}
   - component: {fileID: -2009897736505970014}
@@ -133,42 +132,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buildingName: Hotel
+  icon: {fileID: 21300000, guid: d495ab674a6890e4483cef1d5363f415, type: 3}
   radius: 5
   stateColors:
   - {r: 0.003921569, g: 0.003921569, b: 0.003921569, a: 1}
   - {r: 0.9320358, g: 0.9320358, b: 0.9320358, a: 1}
   isHovered: 0
-  isPlacing: 0
-  isAttackable: 0
   isColliding: 0
-  resourceCost: c800000032000000
-  totalWorkToComplete: 100
-  height: 10.1
-  placingMaterial: {fileID: 2100000, guid: d3e5e1b3c116ea947b4250ca7c8746b2, type: 2}
-  buildingMaterial: {fileID: 2100000, guid: 9b6c03d6f347f544fae42a85b3d0e502, type: 2}
+  resourceCost:
+    wood: 100
+    dubloons: 100
+  builderCapacity: 1
+  components: {fileID: 11400000, guid: dce72b56bac855e46b065e2c0dc62d3f, type: 2}
   builtMaterial: {fileID: 2100000, guid: 2ed85a5525951e145ab57bc5eb35b5ba, type: 2}
-  collisionMaterial: {fileID: 2100000, guid: 233ebadc30a9dc04180a21274295cfeb, type: 2}
   onCrewmateAssigned: {fileID: 11400000, guid: 8c002ad9b29a8304d866301b28d5b0b9, type: 2}
---- !u!114 &5558711768018896159
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7068964887495377092}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b5908ff85b8124645a26f839e3e6a646, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  onDestroy:
-    m_PersistentCalls:
-      m_Calls: []
-  onHit:
-    m_PersistentCalls:
-      m_Calls: []
-  totalHealth: 100
-  currentHealth: 0
 --- !u!208 &5470127200473146616
 NavMeshObstacle:
   m_ObjectHideFlags: 0

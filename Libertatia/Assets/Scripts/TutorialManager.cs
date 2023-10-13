@@ -9,10 +9,12 @@ public class TutorialManager : MonoBehaviour
     private static TutorialManager instance;
 
     public List<DialogueTrigger> outpostDialogues;
+    public List<string> outpostTaskLists;
 
     public List<DialogueTrigger> combatDialogues;
+    public List<string> combatTaskLists;
 
-    private GameObject AttackButton;
+    private static GameObject AttackButton;
 
     private bool secondVisit = false;
 
@@ -38,7 +40,7 @@ public class TutorialManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if(SceneManager.GetActiveScene().name == "Outpost - Playtest" || SceneManager.GetActiveScene().name == "Outpost")
+        if(SceneManager.GetActiveScene().name == "Outpost - Playtest" || SceneManager.GetActiveScene().name == "Outpost") // SceneManager.GetActiveScene().name == "PlayerData"
         {
             //check to see if this is the first time, or if its when they're coming back from combat
             currentScene = Scene.Oupost;
@@ -46,16 +48,19 @@ public class TutorialManager : MonoBehaviour
             {
                 outpostDialogues[0].TriggerDialogue();
                 GameManager.Instance.outpostVisited = true;
-            }    
+            }
             else
             {
                 outpostDialogues[5].TriggerDialogue();
                 secondVisit = true;
             }
-                
 
-            AttackButton = GameObject.Find("Btn-Attack");
-            AttackButton.SetActive(false);
+
+            AttackButton = GameObject.Find("BTN-Attack");
+            if(AttackButton != null )
+            {
+                AttackButton.SetActive(false);
+            }
         }
         else if (SceneManager.GetActiveScene().name == "CombatTest - Playtest" || SceneManager.GetActiveScene().name == "CombatTest")
         {
@@ -64,14 +69,14 @@ public class TutorialManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("Something went wrong");
+            //Debug.Log("Something went wrong");
         }
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public void BuildingPlacedEvent(Component sender, object data)
