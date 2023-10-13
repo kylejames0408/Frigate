@@ -14,7 +14,10 @@ public class BuildingManager : MonoBehaviour
 {
     // Game/Player Data
     private List<Building> buildings;
+    private List<Crewmate> crewmates;
     private PlayerResourceData resources;
+    private PlayerCrewData crewData;
+    private PlayerBuildingData buildingData;
     // Building Data
     public Building[] buildingPrefabs;
     public Transform buildingParent; // happens to be the object it is on
@@ -26,11 +29,42 @@ public class BuildingManager : MonoBehaviour
     private OutpostUI outpostUI;
     private bool isPlacing = false;
     private Building activeBuilding;
+    // Crewmate Data
+    public GameObject crewmatePrefab;
+    public Transform crewmateParent;
+    public Transform crewmateSpawn;
+    public int crewmateSpawnRadius = 10;
 
     private void Start()
     {
         // should check building folder for buildings
-        resources = GameManager.Instance.GetResources();
+        resources = GameManager.Instance.GetResourceData();
+        crewData = GameManager.Instance.GetCrewData();
+        buildingData = GameManager.Instance.GetBuildingData();
+        constructionUI = FindObjectOfType<ConstructionUI>(); // init both of these
+        crewmateSpawn = crewmateParent.GetChild(0);
+
+        if (crewmates == null)
+        {
+            crewmates = new List<Crewmate>(crewData.amount);
+            for (int i = 0; i < crewmates.Capacity; i++)
+            {
+                GameObject crewmate = Instantiate(crewmatePrefab, crewmateParent);
+                crewmate.transform.position = crewmateSpawn.position + new Vector3(
+                    UnityEngine.Random.Range(-1.0f, 1.0f) * crewmateSpawnRadius, 0,
+                    UnityEngine.Random.Range(-1.0f, 1.0f) * crewmateSpawnRadius);
+                crewmates.Add(crewmate.GetComponent<Crewmate>());
+            }
+        }
+        else if (crewmates.Count > 0)
+        {
+            foreach (Crewmate c in crewmates)
+            {
+                crewmates.Add(c);
+            }
+        }
+        constructionUI.FillCrewmateUI(this, crewmates.ToArray());
+
 
         if (buildings == null) // GameManager would fill buildings if any, unless we just stick to the scene
         {
@@ -44,7 +78,6 @@ public class BuildingManager : MonoBehaviour
                 b.CompleteBuild();
             }
         }
-        constructionUI = FindObjectOfType<ConstructionUI>(); // init both of these
         constructionUI.FillConstructionUI(this, buildingPrefabs);
         outpostUI = FindObjectOfType<OutpostUI>();
         outpostUI.Init();

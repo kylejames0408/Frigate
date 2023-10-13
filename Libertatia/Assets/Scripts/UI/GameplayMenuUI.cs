@@ -13,7 +13,7 @@ public class GameplayMenuUI : MonoBehaviour
     private void Start()
     {
         resumeBtn.onClick.AddListener(() => { gameplayMenu.SetActive(false); });
-        mainMenuBtn.onClick.AddListener(GameManager.Instance.ToMenu);
+        mainMenuBtn.onClick.AddListener(() => { CeneManager.LoadScene("MainMenu"); });
         gameplayMenu.SetActive(false);
     }
 
@@ -25,4 +25,8 @@ public class GameplayMenuUI : MonoBehaviour
         }
     }
 
+    public void OpenMenu()
+    {
+        gameplayMenu.SetActive(true);
+    }
 }

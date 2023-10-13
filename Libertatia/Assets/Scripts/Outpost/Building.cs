@@ -8,7 +8,8 @@ public enum BuildingState
     BUILDING,
     COMPLETE
 }
-
+// Move some individualstic data to scriptable objects, no need for prefabs atm
+// Building objects are put together upon interaction
 [RequireComponent(typeof(BoxCollider))]
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(BoxCollider))]
@@ -28,7 +29,7 @@ public class Building : MonoBehaviour
     // Building
     public BuildingResources resourceCost;
     public int builderCapacity = 1;
-    private List<Builder> builders;
+    private List<Crewmate> builders;
     // Components
     private MeshRenderer buildingRender;
     // Emissions
@@ -103,11 +104,11 @@ public class Building : MonoBehaviour
 
     public void Place()
     {
-        builders = new List<Builder>(builderCapacity);
+        builders = new List<Crewmate>(builderCapacity);
         buildingRender.material = components.needsAssignmentMaterial;
         state = BuildingState.WAITING_FOR_ASSIGNMENT;
     }
-    public bool AssignBuilder(Builder builder)
+    public bool AssignBuilder(Crewmate builder)
     {
         if (IsComplete || builders.Count >= builderCapacity)
         {
@@ -124,7 +125,7 @@ public class Building : MonoBehaviour
         state = BuildingState.COMPLETE;
         buildingRender.material = builtMaterial;
         // Free builders
-        foreach (Builder builder in builders)
+        foreach (Crewmate builder in builders)
         {
             builder.Free();
         }

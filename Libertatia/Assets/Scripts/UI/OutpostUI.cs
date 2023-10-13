@@ -12,22 +12,16 @@ public class OutpostUI : MonoBehaviour
     public TextMeshProUGUI tmpFoodConsumption;
     public TextMeshProUGUI tmpDubloonAmt;
     public TextMeshProUGUI tmpWoodAmt;
-    public Button btnMenu;
 
-    public void Init(int crewAmt = 0,
-        int crewCapacity = 0,
-        int foodAmt = 0,
-        int foodConsumption = 0,
-        int dubloonAmt = 0,
-        int woodAmt = 0)
+    public void Init()
     {
-        tmpCrewmateAmt.text = crewAmt.ToString();
-        tmpCrewmateCapacity.text = crewCapacity.ToString();
-        tmpFoodAmt.text = foodAmt.ToString();
-        tmpFoodConsumption.text = foodConsumption.ToString();
-        tmpDubloonAmt.text = dubloonAmt.ToString();
-        tmpWoodAmt.text = woodAmt.ToString();
-        //btnMenu.onclick
+        PlayerData data = GameManager.Instance.DataManager.Data;
+        tmpCrewmateAmt.text = data.crew.amount.ToString();
+        tmpCrewmateCapacity.text = data.crew.capacity.ToString();
+        tmpFoodAmt.text = data.resources.food.ToString();
+        tmpFoodConsumption.text = data.resources.foodPerAP.ToString();
+        tmpDubloonAmt.text = data.resources.doubloons.ToString();
+        tmpWoodAmt.text = data.resources.wood.ToString();
     }
 
     public void UpdateCrewAmountUI(int crewAmt)

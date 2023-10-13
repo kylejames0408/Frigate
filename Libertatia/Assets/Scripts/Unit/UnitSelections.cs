@@ -108,7 +108,7 @@ public class UnitSelections : MonoBehaviour
     /// <param name="unitToAdd"></param>
     private void AddSelection(GameObject unitToAdd)
     {
-        if(unitToAdd.GetComponent<Builder>().IsBuilding)
+        if(unitToAdd.GetComponent<Crewmate>().IsBuilding)
         {
             return;
         }

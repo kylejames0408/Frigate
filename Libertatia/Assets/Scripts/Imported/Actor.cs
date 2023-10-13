@@ -4,8 +4,6 @@ using UnityEngine.AI;
 public class Actor : MonoBehaviour
 {
     NavMeshAgent agent;
-
-    public bool isHover = false;
     bool isResource;
 
     private void Awake()
@@ -23,13 +21,5 @@ public class Actor : MonoBehaviour
     }
 
 
-    private void OnMouseEnter()
-    {
-        isHover = true;
-    }
-    private void OnMouseExit()
-    {
-        isHover = false;
-    }
 
 }

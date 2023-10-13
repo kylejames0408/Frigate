@@ -12,6 +12,7 @@ public struct PlayerResourceData
     public int food;
     public int loyalty;
 
+    public int foodPerAP;
     public void Print()
     {
         Debug.LogFormat("Wood: {0}\nDubloons: {1}\nFood: {2}\nLoyalty: {3}",
@@ -56,6 +57,7 @@ public class PlayerDataManager
     private const int STARTING_WOOD_AMOUNT = 50;
     private const int STARTING_DOUBLOON_AMOUNT = 10;
     private const int STARTING_FOOD_AMOUNT = 100;
+    private const int STARTING_FOOD_PER_AP = 5;
     private const int STARTING_LOYALTY_AMOUNT = 0;
     private const int STARTING_CREW_AMOUNT = 6;
     private const int STARTING_CREW_CAPACITY = 0;
@@ -79,13 +81,14 @@ public class PlayerDataManager
     {
         // Research difference b/w instance and default contructor
         data = ScriptableObject.CreateInstance<PlayerData>();
-        data.gamePhase = GamePhase.OUTPOST;
+        data.gamePhase = GamePhase.MAIN_MENU;
         data.gameMode = GameMode.TUTORIAL;
         data.gameTimer = 0.0f;
         data.resources.wood = STARTING_WOOD_AMOUNT;
         data.resources.doubloons = STARTING_DOUBLOON_AMOUNT;
         data.resources.food = STARTING_FOOD_AMOUNT;
         data.resources.loyalty = STARTING_LOYALTY_AMOUNT;
+        data.resources.foodPerAP = STARTING_FOOD_PER_AP;
         data.crew.amount = STARTING_CREW_AMOUNT;
         data.crew.capacity = STARTING_CREW_CAPACITY;
         data.buildings.amount = STARTING_BUILDING_AMOUNT;

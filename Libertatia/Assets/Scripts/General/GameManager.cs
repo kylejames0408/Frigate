@@ -15,6 +15,7 @@ public enum GameState
 }
 public enum GamePhase
 {
+    MAIN_MENU,
     OUTPOST,
     ENEMY_TERRITORY
 }
@@ -23,7 +24,6 @@ public class GameManager : MonoBehaviour
 {
     // Class references
     public static GameManager instance;
-    [SerializeField] private CeneManager sm;
     [SerializeField] private PlayerDataManager pdm; // look into making this public to the inspector // also is linked through inspector
     // Game Data
     private float gameTimer = 0.0f;
@@ -63,8 +63,7 @@ public class GameManager : MonoBehaviour
         // TODO: Might be good to have realtime variables per Unity forum
 
         // Scene
-        sm = new CeneManager();
-        //sm.LoadMainMenu();
+        //CeneManager.LoadMainMenu();
         // Load building man
     }
     private void Update()
@@ -85,22 +84,21 @@ public class GameManager : MonoBehaviour
                 break;
         }
     }
-    public PlayerResourceData GetResources()
+    public PlayerResourceData GetResourceData()
     {
         return pdm.Data.resources;
+    }
+    public PlayerCrewData GetCrewData()
+    {
+        return pdm.Data.crew;
+    }
+    public PlayerBuildingData GetBuildingData()
+    {
+        return pdm.Data.buildings;
     }
     public void SetResources(PlayerResourceData resources)
     {
         pdm.Data.resources = resources;
-    }
-    public void ToMenu()
-    {
-        //sm.UnloadCurrentScene();
-        sm.LoadMainMenu();
-    }
-    public void Quit()
-    {
-        Application.Quit(0);
     }
     private void OnDestroy()
     {

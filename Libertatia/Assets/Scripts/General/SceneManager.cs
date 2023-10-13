@@ -1,76 +1,86 @@
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class CeneManager
+public class CeneManager : MonoBehaviour
 {
-
-    /// <summary>
-    /// Gets usable build index by "clearning" it. Parses the index into our possible indexes.
-    /// </summary>
-    /// <param name="buildIndex">An unsafe build index</param>
-    /// <returns>A safe build index</returns>
-    private int GetBuildIndex(int buildIndex)
+    // Gets usable build index by "clearning" it. Parses the index into our possible indexes.
+    private static int GetBuildIndex(int buildIndex)
     {
         return buildIndex % SceneManager.sceneCountInBuildSettings;
     }
-    /// <summary>
-    /// Gets a safe build index that is offset from current build index
-    /// </summary>
-    /// <param name="buildIndexOffset">Offset from current build index</param>
-    /// <returns>New safe build index</returns>
-    private int GetRelativeBuildIndex(int buildIndexOffset = 0)
+    // Gets a safe build index that is offset from current build index
+    private static int GetRelativeBuildIndex(int buildIndexOffset = 0)
     {
         return GetBuildIndex(SceneManager.GetActiveScene().buildIndex + buildIndexOffset);
     }
-
-    public void LoadScene(int buildIndex)
+    public static void LoadScene(int buildIndex)
     {
         SceneManager.LoadScene(buildIndex, LoadSceneMode.Additive);
     }
-    public void LoadSceneAndActivate(int buildIndex)
+    public static void LoadSceneAndActivate(int buildIndex)
     {
         SceneManager.LoadScene(buildIndex, LoadSceneMode.Additive);
         SetSceneActive();
     }
-    private void SetSceneActive()
+    private static void SetSceneActive()
     {
         SceneManager.sceneLoaded += SceneLoadedCallback;
     }
-    private void SceneLoadedCallback(Scene scene, LoadSceneMode mode)
+    private static void SceneLoadedCallback(Scene scene, LoadSceneMode mode)
     {
         SceneManager.SetActiveScene(scene);
     }
-    public void UnloadScene(int buildIndex)
+    public static void UnloadScene(int buildIndex)
     {
         SceneManager.UnloadSceneAsync(buildIndex, UnloadSceneOptions.None);
     }
-    public void UnloadCurrentScene()
+    public static void UnloadCurrentScene()
     {
         UnloadScene(SceneManager.GetActiveScene().buildIndex);
     }
-    public void NextScene()
+    public static void NextScene()
     {
         LoadSceneAndActivate(GetRelativeBuildIndex(1));
     }
-    public void PreviousScene()
+    public static void PreviousScene()
     {
         LoadSceneAndActivate(GetRelativeBuildIndex(-1));
     }
-
-    public void LoadScenes()
+    public static void LoadScenes()
     {
         for (int i = 0; i < SceneManager.sceneCountInBuildSettings; i++)
         {
             SceneManager.LoadScene(i, LoadSceneMode.Additive);
         }
     }
-    // Specifics
-    /// <summary>
-    /// Loads main menu scene if it does not already exists
-    /// </summary>
-    public void LoadMainMenu()
+    // Loads main menu scene if it does not already exists
+    public static void LoadScene(string sceneName)
+    {
+        int buildIndex = SceneManager.GetActiveScene().buildIndex;
+        SceneManager.LoadScene(sceneName, LoadSceneMode.Additive);
+
+        if (SceneManager.sceneCountInBuildSettings > 1)
+        {
+            UnloadScene(buildIndex);
+        }
+    }
+    public static void LoadMainMenu()
     {
         int buildIndex = SceneManager.GetActiveScene().buildIndex;
         SceneManager.LoadScene("MainMenu", LoadSceneMode.Additive);
-        UnloadScene(buildIndex);
+
+        if (SceneManager.sceneCountInBuildSettings > 1)
+        {
+            UnloadScene(buildIndex);
+        }
+    }
+    public static void LoadOutpostFromMainMenu()
+    {
+        SceneManager.LoadScene("Outpost", LoadSceneMode.Additive);
+        SceneManager.UnloadSceneAsync("MainMenu");
+    }
+    public static void Quit()
+    {
+        Application.Quit(0);
     }
 }

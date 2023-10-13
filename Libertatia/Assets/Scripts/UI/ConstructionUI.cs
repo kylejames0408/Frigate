@@ -9,6 +9,7 @@ public class ConstructionUI : MonoBehaviour
 {
     // Prefabs
     [SerializeField] private GameObject buildingCardPrefab;
+    [SerializeField] private GameObject crewmateCardPrefab;
     // Interface object references
     [SerializeField] private Button arrow;
     // Parent objects
@@ -18,6 +19,7 @@ public class ConstructionUI : MonoBehaviour
     private Tab[] tabs;
     private Transform[] pages;
     private List<GameObject> buildingCards;
+    private List<GameObject> crewmateCards;
 
     private void Awake()
     {
@@ -79,6 +81,7 @@ public class ConstructionUI : MonoBehaviour
             }
         }
     }
+
     // Fills building construction UI page
     public void FillConstructionUI(BuildingManager bm, Building[] buildings)
     {
@@ -91,6 +94,20 @@ public class ConstructionUI : MonoBehaviour
             card.GetComponentsInChildren<Image>()[1].sprite = buildings[i].Icon;
             card.GetComponentInChildren<TextMeshProUGUI>().text = buildings[i].Name;
             buildingCards.Add(card);
+        }
+    }
+    // Fills crewmate construction UI page
+    public void FillCrewmateUI(BuildingManager bm, Crewmate[] crewmates) // will take in a crewmanager script
+    {
+        crewmateCards = new List<GameObject>(crewmates.Length);
+        for (int i = 0; i < crewmates.Length; i++)
+        {
+            GameObject card = Instantiate(crewmateCardPrefab, pages[1]);
+            //int index = i; // needs to be destroyed after setting listener
+            //card.GetComponent<Button>().onClick.AddListener(() => { bm.SelectCrewmate(index); }); // drag + drop func
+            card.GetComponentsInChildren<Image>()[1].sprite = crewmates[i].Icon;
+            card.GetComponentInChildren<TextMeshProUGUI>().text = crewmates[i].Name;
+            crewmateCards.Add(card);
         }
     }
 }
