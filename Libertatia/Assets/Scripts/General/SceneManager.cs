@@ -80,6 +80,11 @@ public class CeneManager : MonoBehaviour
         SceneManager.LoadScene("Outpost", LoadSceneMode.Additive);
         SceneManager.UnloadSceneAsync("MainMenu");
     }
+    public static void LoadCombatFromOutpost()
+    {
+        SceneManager.LoadScene("CombatTest", LoadSceneMode.Additive);
+        SceneManager.UnloadSceneAsync("Outpost");
+    }
     public static void Quit()
     {
         Application.Quit(0);

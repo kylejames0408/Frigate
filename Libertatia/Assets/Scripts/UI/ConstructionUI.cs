@@ -122,8 +122,8 @@ public class ConstructionUI : MonoBehaviour
     }
     private void SelectCrewmateCard(BuildingManager bm, int index)
     {
-        buildingCards[index].GetComponent<Outline>().enabled = true;
-        bm.SelectBuilding(index);
+        crewmateCards[index].GetComponent<Outline>().enabled = true;
+        bm.SelectCrewmate(index);
         bm.placedBuilding.AddListener(() => { DeselectCrewmateCard(index); });
     }
     public void DeselectCrewmateCard(int index)

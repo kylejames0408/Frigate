@@ -40,7 +40,7 @@ public class TutorialManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if(SceneManager.GetActiveScene().name == "Outpost - Playtest" || SceneManager.GetActiveScene().name == "Outpost") // SceneManager.GetActiveScene().name == "PlayerData"
+        if(SceneManager.GetSceneByName("Outpost").isLoaded) // SceneManager.GetActiveScene().name == "PlayerData"
         {
             //check to see if this is the first time, or if its when they're coming back from combat
             currentScene = Scene.Oupost;
@@ -62,7 +62,7 @@ public class TutorialManager : MonoBehaviour
                 AttackButton.SetActive(false);
             }
         }
-        else if (SceneManager.GetActiveScene().name == "CombatTest - Playtest" || SceneManager.GetActiveScene().name == "CombatTest")
+        else if (SceneManager.GetSceneByName("CombatTest").isLoaded)
         {
             currentScene = Scene.Combat;
             combatDialogues[0].TriggerDialogue();

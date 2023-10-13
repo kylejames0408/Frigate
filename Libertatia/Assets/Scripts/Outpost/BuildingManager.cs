@@ -104,6 +104,11 @@ public class BuildingManager : MonoBehaviour
         }
     }
 
+    public void SelectCrewmate(int index)
+    {
+
+    }
+
     // selecting building UI
     public void SelectBuilding(int index)
     {
