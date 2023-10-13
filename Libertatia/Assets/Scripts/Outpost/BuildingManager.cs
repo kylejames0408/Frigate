@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UIElements;
 
@@ -24,6 +25,7 @@ public class BuildingManager : MonoBehaviour
     // - Building Events
     [Header("Events")]
     public GameEvent onBuildingPlaced;
+    public UnityEvent placedBuilding;
     // Components
     private ConstructionUI constructionUI;
     private OutpostUI outpostUI;
@@ -118,6 +120,7 @@ public class BuildingManager : MonoBehaviour
     public void SpawnBuilding(Building building, Vector3 position)
     {
         isPlacing = false;
+        placedBuilding.Invoke();
 
         // Check if there are enough resources - possible move
         BuildingResources cost = building.Cost;
@@ -164,6 +167,8 @@ public class BuildingManager : MonoBehaviour
         EventSystem.current.RaycastAll(eventDataCurrentPosition, results);
         return results.Count > 0;
     }
+
+    
 
     // Update player data when scene is unloaded
     private void OnDestroy()

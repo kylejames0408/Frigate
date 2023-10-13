@@ -14,7 +14,7 @@ public class TutorialManager : MonoBehaviour
     public List<DialogueTrigger> combatDialogues;
     public List<string> combatTaskLists;
 
-    private GameObject AttackButton;
+    private static GameObject AttackButton;
 
     private bool secondVisit = false;
 
@@ -40,7 +40,7 @@ public class TutorialManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if(SceneManager.GetActiveScene().name == "Outpost - Playtest" || SceneManager.GetActiveScene().name == "Outpost")
+        if(SceneManager.GetActiveScene().name == "Outpost - Playtest" || SceneManager.GetActiveScene().name == "Outpost") // SceneManager.GetActiveScene().name == "PlayerData"
         {
             //check to see if this is the first time, or if its when they're coming back from combat
             currentScene = Scene.Oupost;
