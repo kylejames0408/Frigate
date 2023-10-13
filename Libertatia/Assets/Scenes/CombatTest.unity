@@ -8264,7 +8264,7 @@ MonoBehaviour:
   - {fileID: 443887574}
   - {fileID: 867616220}
   enemyCount: 0
-  detectionRange: 30
+  detectionRange: 0
 --- !u!1 &715870907
 GameObject:
   m_ObjectHideFlags: 0

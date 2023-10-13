@@ -105,6 +105,6 @@ public class TutorialManager : MonoBehaviour
     public void AllEnemiesDeadEvent(Component sender, object data)
     {
         combatDialogues[1].TriggerDialogue();
-        GameObject.Find("Ship").GetComponent<Ship>().detectionRange = 60;
+        GameObject.Find("Ship").GetComponent<Ship>().detectionRange = 50;
     }
 }

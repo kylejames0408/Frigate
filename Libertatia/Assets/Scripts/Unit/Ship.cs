@@ -12,36 +12,38 @@ public class Ship : MonoBehaviour
     public int detectionRange;
     private bool inRange;
 
-    
+
 
     // Start is called before the first frame update
     void Start()
     {
-        detectionRange = 30;
+        detectionRange = 0;
         inRange = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        //Debug.Log(enemyList.Count);
-
         foreach (GameObject unit in unitList)
         {
-            //If a unit is within range of the ship, the player can return to the outpost
-            if (Vector3.Distance(transform.position, unit.transform.position) <= detectionRange)
+            if (unit.activeSelf != false)
             {
-                //Debug.Log("Go home");
-                inRange = true;
+                //If a unit is within range of the ship, the player can return to the outpost
+                if (Vector3.Distance(transform.position, unit.transform.position) <= detectionRange)
+                {
+                    //Debug.Log("Go home");
+                    inRange = true;
 
+                }
+                else
+                    inRange = false;
             }
-            else
-                inRange = false;
+
         }
 
-        if(inRange)
+        if (inRange)
         {
-            if(Input.GetKeyDown(KeyCode.E))
+            if (Input.GetKeyDown(KeyCode.E))
             {
                 SceneManager.LoadScene("Outpost");
             }
