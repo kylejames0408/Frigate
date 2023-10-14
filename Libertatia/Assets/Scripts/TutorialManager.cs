@@ -42,10 +42,10 @@ public class TutorialManager : MonoBehaviour
         {
             //check to see if this is the first time, or if its when they're coming back from combat
             currentScene = Scene.Oupost;
-            if (!GameManager.Instance.outpostVisited)
+            if (!GameManager.outpostVisited)
             {
                 outpostDialogues[0].TriggerDialogue();
-                GameManager.Instance.outpostVisited = true;
+                GameManager.outpostVisited = true;
             }
             else
             {

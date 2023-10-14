@@ -22,45 +22,30 @@ public enum GamePhase
 
 public class GameManager : MonoBehaviour
 {
-    // Class references
-    public static GameManager instance;
     // Game Data
     private float gameTimer = 0.0f;
     private GameState state = GameState.PLAYING;
-    public bool outpostVisited = false;
+    public static PlayerData data;
+    public static bool outpostVisited = false;
 
-    public static GameManager Instance
+    public static PlayerData Data
     {
         get
         {
-            if (instance == null)
-            {
-                instance = FindObjectOfType<GameManager>();
-                if (instance == null)
-                {
-                    GameObject obj = new GameObject();
-                    obj.name = typeof(GameManager).Name;
-                    instance = obj.AddComponent<GameManager>();
-                }
-            }
-            return instance;
+            return data;
+        }
+        set
+        {
+            data = value;
         }
     }
 
     public virtual void Awake()
     {
-        if (instance == null)
-        {
-            instance = this;
-        }
-        // Game init
-        PlayerDataManager.Init();
-
-        // TODO: Might be good to have realtime variables per Unity forum
-
-        // Scene
-        //CeneManager.LoadMainMenu();
-        // Load building man
+        GameObject obj = new GameObject();
+        obj.name = typeof(GameManager).Name;
+        data = PlayerDataManager.Load();
+        DontDestroyOnLoad(obj);
     }
     private void Update()
     {

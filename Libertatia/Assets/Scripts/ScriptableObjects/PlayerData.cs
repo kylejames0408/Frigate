@@ -41,9 +41,9 @@ public struct BuildingData
     public BuildingState state;
 }
 
+[Serializable]
 // Holds important player data that should persist when game ends
-[CreateAssetMenu(fileName = "PlayerData", menuName = "Libertatia/PlayerData", order = 1)]
-public class PlayerData : ScriptableObject
+public struct PlayerData
 {
     // Game data
     public float gameTimer;
@@ -78,19 +78,16 @@ public static class PlayerDataManager
         get { return data; }
     }
 
-    public static void Init()
+    public static PlayerData Load()
     {
-        //if (!Fetch())
-        //{
-        //    CreateNewData();
-        //}
         CreateNewData();
+        return data;
+        
     }
     // Creates new player data file and saves it to folder
     private static void CreateNewData()
     {
         // Research difference b/w instance and default contructor
-        data = ScriptableObject.CreateInstance<PlayerData>();
         data.gamePhase = GamePhase.MAIN_MENU;
         data.gameMode = GameMode.TUTORIAL;
         data.gameTimer = 0.0f;
@@ -105,11 +102,5 @@ public static class PlayerDataManager
         data.outpostCrewCapacity = STARTING_CREW_CAPACITY;
         //
         data.buildings = new List<BuildingData>();
-        //AssetDatabase.CreateAsset(data, TESTING_REL_PATH); // not saving for playtest
     }
-    //private static bool Fetch()
-    //{
-    //    data = AssetDatabase.LoadAssetAtPath<PlayerData>(TESTING_REL_PATH); // not sure why this is build erroring
-    //    return data != null;
-    //}
 }

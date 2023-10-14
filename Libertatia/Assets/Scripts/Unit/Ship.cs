@@ -48,9 +48,9 @@ public class Ship : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.E))
             {
-                PlayerDataManager.Data.resources.wood += 50;
-                PlayerDataManager.Data.resources.doubloons += 10;
-                PlayerDataManager.Data.resources.food += 100;
+                GameManager.data.resources.wood += 50;
+                GameManager.data.resources.doubloons += 10;
+                GameManager.data.resources.food += 100;
                 CeneManager.LoadOutpostFromCombat();
             }
         }

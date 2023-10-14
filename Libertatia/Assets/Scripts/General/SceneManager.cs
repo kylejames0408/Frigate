@@ -49,31 +49,24 @@ public class CeneManager : MonoBehaviour
     }
     public static void LoadMainMenu()
     {
-        int buildIndex = SceneManager.GetActiveScene().buildIndex;
-        SceneManager.LoadScene("MainMenu", LoadSceneMode.Additive);
-        SceneManager.SetActiveScene(SceneManager.GetSceneByName("MainMenu"));
-
-        if (SceneManager.sceneCountInBuildSettings > 1)
-        {
-            UnloadScene(buildIndex);
-        }
+        SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
     }
     public static void LoadOutpostFromMainMenu()
     {
-        SceneManager.LoadScene("Outpost", LoadSceneMode.Additive);
-        SceneManager.UnloadSceneAsync("MainMenu");
-        SceneManager.sceneLoaded += OnLoadCallback;
+        SceneManager.LoadScene("Outpost", LoadSceneMode.Single);
+        //SceneManager.UnloadSceneAsync("MainMenu");
+        //SceneManager.sceneLoaded += OnLoadCallback;
         ;
     }
     public static void LoadCombatFromOutpost()
     {
-        SceneManager.LoadScene("CombatTest", LoadSceneMode.Additive);
-        SceneManager.UnloadSceneAsync("Outpost");
+        SceneManager.LoadScene("CombatTest", LoadSceneMode.Single);
+        //SceneManager.UnloadSceneAsync("Outpost");
     }
     public static void LoadOutpostFromCombat()
     {
-        SceneManager.LoadScene("Outpost", LoadSceneMode.Additive);
-        SceneManager.UnloadSceneAsync("CombatTest");
+        SceneManager.LoadScene("Outpost", LoadSceneMode.Single);
+        //SceneManager.UnloadSceneAsync("CombatTest");
     }
     public static void OnLoadCallback(Scene scene, LoadSceneMode mode)
     {

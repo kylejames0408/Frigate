@@ -15,7 +15,7 @@ public class OutpostUI : MonoBehaviour
 
     public void Init()
     {
-        PlayerData data = PlayerDataManager.Data;
+        PlayerData data = GameManager.Data;
         tmpCrewmateAmt.text = data.crewmates.Count.ToString();
         tmpCrewmateCapacity.text = data.outpostCrewCapacity.ToString();
         tmpFoodAmt.text = data.resources.food.ToString();

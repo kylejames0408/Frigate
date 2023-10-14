@@ -38,11 +38,11 @@ public class BuildingManager : MonoBehaviour
         // should check building folder for buildings
         constructionUI = FindObjectOfType<ConstructionUI>(); // init both of these
         crewmateSpawn = crewmateParent.GetChild(0);
-        crewmates = new List<Crewmate>(PlayerDataManager.Data.crewmates.Count);
+        crewmates = new List<Crewmate>(GameManager.Data.crewmates.Count);
 
-        if(PlayerDataManager.Data.crewmates.Count == 0)
+        if(GameManager.Data.crewmates.Count == 0)
         {
-            for (int i = 0; i < PlayerDataManager.Data.crewmates.Capacity; i++)
+            for (int i = 0; i < GameManager.Data.crewmates.Capacity; i++)
             {
                 GameObject crewmate = Instantiate(crewmatePrefab, crewmateParent);
                 crewmate.transform.position = crewmateSpawn.position + new Vector3(
@@ -54,15 +54,15 @@ public class BuildingManager : MonoBehaviour
                 data.icon = mate.Icon;
                 data.name = mate.Name;
                 data.buildingID = mate.buildingID;
-                PlayerDataManager.Data.crewmates.Add(data);
+                GameManager.Data.crewmates.Add(data);
                 crewmates.Add(mate);
             }
         }
         else
         {
-            for (int i = 0; i < PlayerDataManager.Data.crewmates.Count; i++)
+            for (int i = 0; i < GameManager.Data.crewmates.Count; i++)
             {
-                CrewmateData data = PlayerDataManager.Data.crewmates[i];
+                CrewmateData data = GameManager.Data.crewmates[i];
                 GameObject crewmate = Instantiate(crewmatePrefab, crewmateParent);
                 Crewmate mate = crewmate.GetComponent<Crewmate>();
                 mate.crewmateName = data.name;
@@ -75,17 +75,17 @@ public class BuildingManager : MonoBehaviour
             }
         }
 
-        constructionUI.FillCrewmateUI(this, PlayerDataManager.Data.crewmates.ToArray());
+        constructionUI.FillCrewmateUI(this, GameManager.Data.crewmates.ToArray());
 
         buildings = new List<Building>();
 
-        for (int i = 0; i < PlayerDataManager.Data.buildings.Count; i ++)
+        for (int i = 0; i < GameManager.Data.buildings.Count; i ++)
         {
-            Building building = Instantiate(buildingPrefabs[PlayerDataManager.Data.buildings[i].uiIndex], buildingParent);
-            building.id = PlayerDataManager.Data.buildings[i].id;
-            building.uiIndex = PlayerDataManager.Data.buildings[i].uiIndex;
-            building.level = PlayerDataManager.Data.buildings[i].level;
-            building.builders = new List<Crewmate>(PlayerDataManager.Data.buildings[i].assignedCrewmateAmount);
+            Building building = Instantiate(buildingPrefabs[GameManager.Data.buildings[i].uiIndex], buildingParent);
+            building.id = GameManager.Data.buildings[i].id;
+            building.uiIndex = GameManager.Data.buildings[i].uiIndex;
+            building.level = GameManager.Data.buildings[i].level;
+            building.builders = new List<Crewmate>(GameManager.Data.buildings[i].assignedCrewmateAmount);
             foreach(Crewmate mate in crewmates)
             {
                 if(mate.buildingID == building.id)
@@ -93,8 +93,8 @@ public class BuildingManager : MonoBehaviour
                     building.builders.Add(mate);
                 }
             }
-            building.transform.position = PlayerDataManager.Data.buildings[i].position;
-            building.transform.rotation = PlayerDataManager.Data.buildings[i].rotation;
+            building.transform.position = GameManager.Data.buildings[i].position;
+            building.transform.rotation = GameManager.Data.buildings[i].rotation;
             building.CompleteBuild(); // dont keep, but is used to complete for now
             buildings.Add(building);
         }
@@ -150,7 +150,7 @@ public class BuildingManager : MonoBehaviour
 
         // Check if there are enough resources - possible move
         BuildingResources cost = building.Cost;
-        if (PlayerDataManager.Data.resources.wood < cost.wood)
+        if (GameManager.Data.resources.wood < cost.wood)
         {
             Destroy(building.gameObject);
             Debug.Log("Cannot build; Insufficient resources"); // UI
@@ -158,9 +158,9 @@ public class BuildingManager : MonoBehaviour
         }
 
         // Subtract resources - move to Building or bring CanBuild in here
-        PlayerDataManager.Data.resources.wood -= cost.wood;
+        GameManager.data.resources.wood -= cost.wood;
         //resources.Print();
-        outpostUI.UpdateWoodUI(PlayerDataManager.Data.resources.wood);
+        outpostUI.UpdateWoodUI(GameManager.Data.resources.wood);
 
         // Create Building
         BuildingData data = new BuildingData();
@@ -171,16 +171,16 @@ public class BuildingManager : MonoBehaviour
         data.assignedCrewmateAmount = building.builders.Count;
         data.position = building.transform.position;
         data.rotation = building.transform.rotation;
-        PlayerDataManager.Data.buildings.Add(data);
+        GameManager.Data.buildings.Add(data);
         if (building.uiIndex == 0)
         {
-            PlayerDataManager.Data.resources.foodPerAP += 50;
-            outpostUI.UpdateFoodConsumptionUI(PlayerDataManager.Data.resources.foodPerAP);
+            GameManager.data.resources.foodPerAP += 50;
+            outpostUI.UpdateFoodConsumptionUI(GameManager.Data.resources.foodPerAP);
         }
         else if (building.uiIndex == 1)
         {
-            PlayerDataManager.Data.outpostCrewCapacity += 8;
-            outpostUI.UpdateCrewCapacityUI(PlayerDataManager.Data.outpostCrewCapacity);
+            GameManager.data.outpostCrewCapacity += 8;
+            outpostUI.UpdateCrewCapacityUI(GameManager.Data.outpostCrewCapacity);
         }
         else if (building.uiIndex == 2)
         {

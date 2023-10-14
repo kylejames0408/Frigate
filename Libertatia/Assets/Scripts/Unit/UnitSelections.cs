@@ -36,7 +36,7 @@ public class UnitSelections : MonoBehaviour
         unitList.Clear();
 
         //spawns crew members based on the crew size in playerdata
-        for(int i = 0; i < PlayerDataManager.Data.crewmates.Count; i++)
+        for(int i = 0; i < GameManager.Data.crewmates.Count; i++)
         {
 
             GameObject unit = Instantiate(crewMemberPrefab, new Vector3(-5 - 5, 0) + new Vector3(
