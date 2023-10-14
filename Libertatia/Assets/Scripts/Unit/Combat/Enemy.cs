@@ -19,11 +19,11 @@ public class Enemy : Character
     // Start is called before the first frame update
     void Start()
     {
-        maxHealth = 100;
-        currentHealth = 100;
+        maxHealth = 50;
+        currentHealth = 50;
         attackRange = 2;
         attackRate = 4;
-        damage = 20;
+        damage = 10;
         detectionRange = 10;
 
         charAgent = GetComponent<NavMeshAgent>();

@@ -7714,31 +7714,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf1d280de2447ab4e9b0612a0f311bf0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitList:
-  - {fileID: 2004502309}
-  - {fileID: 1754147563}
-  - {fileID: 2056102847}
-  - {fileID: 967286118}
-  - {fileID: 1467598179}
-  - {fileID: 348037768}
-  - {fileID: 1138835291}
-  - {fileID: 217854468}
-  - {fileID: 388982651}
-  - {fileID: 641981749}
-  - {fileID: 228254972}
-  - {fileID: 1823225479}
-  enemyList:
-  - {fileID: 1117264210}
-  - {fileID: 1636327036}
-  - {fileID: 1632069289}
-  - {fileID: 1252722863}
-  - {fileID: 941200566}
-  - {fileID: 575436576}
-  - {fileID: 931446522}
-  - {fileID: 2046984432}
-  - {fileID: 1967424710}
-  - {fileID: 443887574}
-  - {fileID: 867616220}
+  unitList: []
+  enemyList: []
   enemyCount: 0
   detectionRange: 0
 --- !u!1 &715870907
