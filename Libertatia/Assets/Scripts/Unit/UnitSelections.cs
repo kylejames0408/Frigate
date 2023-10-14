@@ -26,12 +26,24 @@ public class UnitSelections : MonoBehaviour
 
     private string sceneName;
 
+    public PlayerData pData;
+
+    public GameObject crewMemberPrefab;
+
     private void Start()
     {
         eventTriggered = false;
 
         sceneName = SceneManager.GetActiveScene().name;
         unitList.Clear();
+
+        //spawns crew members based on the crew size in playerdata
+        for(int i = 0; i < pData.crew.amount; i++)
+        {
+            GameObject unit = Instantiate(crewMemberPrefab, new Vector3(-5-5,0), Quaternion.identity);
+        }
+
+
         unitList = GameObject.FindGameObjectsWithTag("PlayerCharacter").ToList<GameObject>();
         enemies = GameObject.FindGameObjectsWithTag("Enemy").ToList<GameObject>();
     }
@@ -65,6 +77,8 @@ public class UnitSelections : MonoBehaviour
         {
             TriggerEvent();
         }
+
+        //Debug.Log(pData.crew.amount);
   
     }
 
