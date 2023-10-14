@@ -80,10 +80,11 @@ public static class PlayerDataManager
 
     public static void Init()
     {
-        if (!Fetch())
-        {
-            CreateNewData();
-        }
+        //if (!Fetch())
+        //{
+        //    CreateNewData();
+        //}
+        CreateNewData();
     }
     // Creates new player data file and saves it to folder
     private static void CreateNewData()
@@ -106,9 +107,9 @@ public static class PlayerDataManager
         data.buildings = new List<BuildingData>();
         //AssetDatabase.CreateAsset(data, TESTING_REL_PATH); // not saving for playtest
     }
-    private static bool Fetch()
-    {
-        data = AssetDatabase.LoadAssetAtPath<PlayerData>(TESTING_REL_PATH);
-        return data != null;
-    }
+    //private static bool Fetch()
+    //{
+    //    data = AssetDatabase.LoadAssetAtPath<PlayerData>(TESTING_REL_PATH); // not sure why this is build erroring
+    //    return data != null;
+    //}
 }
