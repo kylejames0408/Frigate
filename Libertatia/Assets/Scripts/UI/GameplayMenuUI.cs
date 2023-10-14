@@ -13,7 +13,7 @@ public class GameplayMenuUI : MonoBehaviour
     private void Start()
     {
         resumeBtn.onClick.AddListener(() => { gameplayMenu.SetActive(false); });
-        mainMenuBtn.onClick.AddListener(() => { CeneManager.LoadScene("MainMenu"); });
+        mainMenuBtn.onClick.AddListener(CeneManager.LoadMainMenu);
         gameplayMenu.SetActive(false);
     }
 
