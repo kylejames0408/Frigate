@@ -9,10 +9,8 @@ public class TutorialManager : MonoBehaviour
     private static TutorialManager instance;
 
     public List<DialogueTrigger> outpostDialogues;
-    public List<string> outpostTaskLists;
 
     public List<DialogueTrigger> combatDialogues;
-    public List<string> combatTaskLists;
 
     private static GameObject AttackButton;
 
