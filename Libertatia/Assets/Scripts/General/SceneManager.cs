@@ -3,7 +3,7 @@ using UnityEngine.SceneManagement;
 
 public class CeneManager : MonoBehaviour
 {
-    
+
     // Gets usable build index by "clearning" it. Parses the index into our possible indexes.
     private static int GetBuildIndex(int buildIndex)
     {
@@ -35,25 +35,7 @@ public class CeneManager : MonoBehaviour
     {
         SceneManager.UnloadSceneAsync(buildIndex, UnloadSceneOptions.None);
     }
-    public static void UnloadCurrentScene()
-    {
-        UnloadScene(SceneManager.GetActiveScene().buildIndex);
-    }
-    public static void NextScene()
-    {
-        LoadSceneAndActivate(GetRelativeBuildIndex(1));
-    }
-    public static void PreviousScene()
-    {
-        LoadSceneAndActivate(GetRelativeBuildIndex(-1));
-    }
-    public static void LoadScenes()
-    {
-        for (int i = 0; i < SceneManager.sceneCountInBuildSettings; i++)
-        {
-            SceneManager.LoadScene(i, LoadSceneMode.Additive);
-        }
-    }
+
     // Loads main menu scene if it does not already exists
     public static void LoadScene(string sceneName)
     {
@@ -69,6 +51,7 @@ public class CeneManager : MonoBehaviour
     {
         int buildIndex = SceneManager.GetActiveScene().buildIndex;
         SceneManager.LoadScene("MainMenu", LoadSceneMode.Additive);
+        SceneManager.SetActiveScene(SceneManager.GetSceneByName("MainMenu"));
 
         if (SceneManager.sceneCountInBuildSettings > 1)
         {
@@ -79,11 +62,22 @@ public class CeneManager : MonoBehaviour
     {
         SceneManager.LoadScene("Outpost", LoadSceneMode.Additive);
         SceneManager.UnloadSceneAsync("MainMenu");
+        SceneManager.sceneLoaded += OnLoadCallback;
+        ;
     }
     public static void LoadCombatFromOutpost()
     {
         SceneManager.LoadScene("CombatTest", LoadSceneMode.Additive);
         SceneManager.UnloadSceneAsync("Outpost");
+    }
+    public static void LoadOutpostFromCombat()
+    {
+        SceneManager.LoadScene("Outpost", LoadSceneMode.Additive);
+        SceneManager.UnloadSceneAsync("CombatTest");
+    }
+    public static void OnLoadCallback(Scene scene, LoadSceneMode mode)
+    {
+        SceneManager.SetActiveScene(scene);
     }
     public static void Quit()
     {

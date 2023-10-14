@@ -24,7 +24,6 @@ public class GameManager : MonoBehaviour
 {
     // Class references
     public static GameManager instance;
-    [SerializeField] private PlayerDataManager pdm; // look into making this public to the inspector // also is linked through inspector
     // Game Data
     private float gameTimer = 0.0f;
     private GameState state = GameState.PLAYING;
@@ -47,10 +46,6 @@ public class GameManager : MonoBehaviour
             return instance;
         }
     }
-    public PlayerDataManager DataManager
-    {
-        get { return pdm; }
-    }
 
     public virtual void Awake()
     {
@@ -59,7 +54,7 @@ public class GameManager : MonoBehaviour
             instance = this;
         }
         // Game init
-        pdm = new PlayerDataManager();
+        PlayerDataManager.Init();
 
         // TODO: Might be good to have realtime variables per Unity forum
 
@@ -85,22 +80,7 @@ public class GameManager : MonoBehaviour
                 break;
         }
     }
-    public PlayerResourceData GetResourceData()
-    {
-        return pdm.Data.resources;
-    }
-    public PlayerCrewData GetCrewData()
-    {
-        return pdm.Data.crew;
-    }
-    public PlayerBuildingData GetBuildingData()
-    {
-        return pdm.Data.buildings;
-    }
-    public void SetResources(PlayerResourceData resources)
-    {
-        pdm.Data.resources = resources;
-    }
+
     private void OnDestroy()
     {
         //pdm.UpdateTimer(gameTimer);

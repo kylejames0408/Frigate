@@ -48,7 +48,10 @@ public class Ship : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.E))
             {
-                SceneManager.LoadScene("Outpost");
+                PlayerDataManager.Data.resources.wood += 50;
+                PlayerDataManager.Data.resources.doubloons += 10;
+                PlayerDataManager.Data.resources.food += 100;
+                CeneManager.LoadOutpostFromCombat();
             }
         }
 
@@ -64,7 +67,7 @@ public class Ship : MonoBehaviour
         GameObject canvas = GameObject.Find("BoxSelectCanvas");
         RectTransform canvasRect = canvas.GetComponent<RectTransform>();
 
-        // the style used to set the text size and 
+        // the style used to set the text size and
         GUIStyle GUIBoxStyle = new GUIStyle(GUI.skin.box);
         GUIBoxStyle.fontSize = (int)(canvasRect.rect.height * 0.023f);
         GUIBoxStyle.alignment = TextAnchor.MiddleCenter;

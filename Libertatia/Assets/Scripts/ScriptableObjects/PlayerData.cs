@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
@@ -11,7 +12,6 @@ public struct PlayerResourceData
     public int doubloons;
     public int food;
     public int loyalty;
-
     public int foodPerAP;
     public void Print()
     {
@@ -20,15 +20,25 @@ public struct PlayerResourceData
     }
 }
 [Serializable]
-public struct PlayerCrewData
+public struct CrewmateData
 {
-    public int amount;
-    public int capacity;
+    public Crewmate script; // remove
+    public string name;
+    public Sprite icon;
+    public int buildingID;
 }
+
 [Serializable]
-public struct PlayerBuildingData
+public struct BuildingData
 {
-    public int amount;
+    public Building script; // remove
+    public int id;
+    public int uiIndex; // type?
+    public int level;
+    public int assignedCrewmateAmount;
+    public Vector3 position;
+    public Quaternion rotation;
+    public BuildingState state;
 }
 
 // Holds important player data that should persist when game ends
@@ -41,12 +51,13 @@ public class PlayerData : ScriptableObject
     public GameMode gameMode;
     // Player data
     public PlayerResourceData resources;
-    public PlayerCrewData crew;
-    public PlayerBuildingData buildings;
+    public List<CrewmateData> crewmates;
+    public int outpostCrewCapacity;
+    public List<BuildingData> buildings;
 }
 
 // Manages player data - loading, saving, and converting the data
-public class PlayerDataManager
+public static class PlayerDataManager
 {
     private const string DIR_PATH = "Assets\\Scripts\\ScriptableObjects\\";
     private const string FILE_EXT = ".asset";
@@ -61,51 +72,43 @@ public class PlayerDataManager
     private const int STARTING_LOYALTY_AMOUNT = 0;
     private const int STARTING_CREW_AMOUNT = 6;
     private const int STARTING_CREW_CAPACITY = 0;
-    private const int STARTING_BUILDING_AMOUNT = 0;
-    private PlayerData data;
-    public PlayerData Data
+    private static PlayerData data;
+    public static PlayerData Data
     {
         get { return data; }
     }
 
-    public PlayerDataManager()
+    public static void Init()
     {
         if (!Fetch())
         {
             CreateNewData();
         }
     }
-
     // Creates new player data file and saves it to folder
-    public void CreateNewData()
+    private static void CreateNewData()
     {
         // Research difference b/w instance and default contructor
         data = ScriptableObject.CreateInstance<PlayerData>();
         data.gamePhase = GamePhase.MAIN_MENU;
         data.gameMode = GameMode.TUTORIAL;
         data.gameTimer = 0.0f;
+        //
         data.resources.wood = STARTING_WOOD_AMOUNT;
         data.resources.doubloons = STARTING_DOUBLOON_AMOUNT;
         data.resources.food = STARTING_FOOD_AMOUNT;
         data.resources.loyalty = STARTING_LOYALTY_AMOUNT;
         data.resources.foodPerAP = STARTING_FOOD_PER_AP;
-        data.crew.amount = STARTING_CREW_AMOUNT;
-        data.crew.capacity = STARTING_CREW_CAPACITY;
-        data.buildings.amount = STARTING_BUILDING_AMOUNT;
-        AssetDatabase.CreateAsset(data, TESTING_REL_PATH);
+        //
+        data.crewmates = new List<CrewmateData>(STARTING_CREW_AMOUNT);
+        data.outpostCrewCapacity = STARTING_CREW_CAPACITY;
+        //
+        data.buildings = new List<BuildingData>();
+        //AssetDatabase.CreateAsset(data, TESTING_REL_PATH); // not saving for playtest
     }
-    public bool Fetch()
+    private static bool Fetch()
     {
         data = AssetDatabase.LoadAssetAtPath<PlayerData>(TESTING_REL_PATH);
         return data != null;
-    }
-    public void Update(PlayerData data)
-    {
-        this.data = data; // how does this work
-    }
-
-    internal void UpdateTimer(float gameTimer)
-    {
-        data.gameTimer = gameTimer;
     }
 }

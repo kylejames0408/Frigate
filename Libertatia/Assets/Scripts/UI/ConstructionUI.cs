@@ -1,4 +1,5 @@
 ﻿using DG.Tweening;
+using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -96,22 +97,26 @@ public class ConstructionUI : MonoBehaviour
         }
     }
     // Fills crewmate construction UI page
-    public void FillCrewmateUI(BuildingManager bm, Crewmate[] crewmates) // will take in a crewmanager script
+    public void FillCrewmateUI(BuildingManager bm, CrewmateData[] crewmates) // will take in a crewmanager script
     {
         crewmateCards = new List<GameObject>(crewmates.Length);
         for (int i = 0; i < crewmates.Length; i++)
         {
             GameObject card = Instantiate(crewmateCardPrefab, pages[1]);
-            //int index = i; // needs to be destroyed after setting listener
-            //card.GetComponent<Button>().onClick.AddListener(() => { bm.SelectCrewmate(index); }); // drag + drop func
-            card.GetComponentsInChildren<Image>()[1].sprite = crewmates[i].Icon;
-            card.GetComponentInChildren<TextMeshProUGUI>().text = crewmates[i].Name;
+            int index = i; // needs to be destroyed after setting listener
+            card.GetComponent<Button>().onClick.AddListener(() => { SelectCrewmateCard(bm, index); }); // drag + drop func
+            card.GetComponentsInChildren<Image>()[1].sprite = crewmates[i].script.Icon;
+            card.GetComponentInChildren<TextMeshProUGUI>().text = crewmates[i].script.Name;
             crewmateCards.Add(card);
         }
     }
 
     private void SelectBuildingCard(BuildingManager bm, int index)
     {
+        foreach (GameObject card in buildingCards)
+        {
+            card.GetComponent<Outline>().enabled = false;
+        }
         buildingCards[index].GetComponent<Outline>().enabled = true;
         bm.SelectBuilding(index);
         bm.placedBuilding.AddListener(() => { DeselectBuildingCard(index); });
@@ -122,9 +127,13 @@ public class ConstructionUI : MonoBehaviour
     }
     private void SelectCrewmateCard(BuildingManager bm, int index)
     {
+        foreach (GameObject card in crewmateCards)
+        {
+            card.GetComponent<Outline>().enabled = false;
+        }
         crewmateCards[index].GetComponent<Outline>().enabled = true;
-        bm.SelectCrewmate(index);
-        bm.placedBuilding.AddListener(() => { DeselectCrewmateCard(index); });
+        Crewmate crewmate = bm.SelectCrewmate(index);
+        crewmate.onAssign.AddListener(() => { DeselectCrewmateCard(index); });
     }
     public void DeselectCrewmateCard(int index)
     {
