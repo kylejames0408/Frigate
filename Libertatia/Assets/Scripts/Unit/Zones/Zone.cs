@@ -52,7 +52,7 @@ public class Zone : MonoBehaviour
         NavMeshHit hit;
 
         // Check for nearest point on navmesh to agent, within onMeshThreshold
-        if (NavMesh.SamplePosition(agentPosition, out hit, onMeshThreshold, NavMesh.GetAreaFromName("Walkable")))
+        if (NavMesh.SamplePosition(agentPosition, out hit, onMeshThreshold, NavMesh.AllAreas))
         {
             // Check if the positions are vertically aligned
             if (Mathf.Approximately(agentPosition.x, hit.position.x)
