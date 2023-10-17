@@ -50,7 +50,6 @@ public class BuildingManager : MonoBehaviour
                     UnityEngine.Random.Range(-1.0f, 1.0f) * crewmateSpawnRadius);
                 Crewmate mate = crewmate.GetComponent<Crewmate>();
                 CrewmateData data = new CrewmateData();
-                data.script = mate;
                 data.icon = mate.Icon;
                 data.name = mate.Name;
                 data.buildingID = mate.buildingID;
@@ -164,7 +163,6 @@ public class BuildingManager : MonoBehaviour
 
         // Create Building
         BuildingData data = new BuildingData();
-        data.script = building;
         data.id = building.id;
         data.uiIndex = building.uiIndex;
         data.level = building.level;

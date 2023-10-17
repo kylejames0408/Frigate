@@ -1,13 +1,5 @@
-using System.Collections.Generic;
-using System.Globalization;
-using UnityEditor;
 using UnityEngine;
 
-public enum GameMode
-{
-    TUTORIAL,
-    REGULAR
-}
 public enum GameState
 {
     PLAYING,
@@ -44,8 +36,8 @@ public class GameManager : MonoBehaviour
     {
         GameObject obj = new GameObject();
         obj.name = typeof(GameManager).Name;
-        data = PlayerDataManager.Load();
-        DontDestroyOnLoad(obj);
+        data = PlayerDataManager.CreateNewData();
+        DontDestroyOnLoad(obj); // Required for persistance
     }
     private void Update()
     {
@@ -66,8 +58,9 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    // NOTE: will be necessary for when loading is implemented
     private void OnDestroy()
     {
-        //pdm.UpdateTimer(gameTimer);
+        data.gameTimer = gameTimer;
     }
 }
