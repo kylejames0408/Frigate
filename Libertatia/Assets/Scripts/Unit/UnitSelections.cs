@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using UnityEngine.SceneManagement;
 
 public class UnitSelections : MonoBehaviour
 {
@@ -21,6 +22,33 @@ public class UnitSelections : MonoBehaviour
 
     public GameEvent allEnemiesDead;
 
+    private bool eventTriggered;
+
+    private string sceneName;
+
+    public GameObject crewMemberPrefab;
+
+    private void Start()
+    {
+        eventTriggered = false;
+
+        sceneName = SceneManager.GetActiveScene().name;
+        unitList.Clear();
+
+        //spawns crew members based on the crew size in playerdata
+        for(int i = 0; i < GameManager.Data.crewmates.Count; i++)
+        {
+
+            GameObject unit = Instantiate(crewMemberPrefab, new Vector3(-5 - 5, 0) + new Vector3(
+                UnityEngine.Random.Range(-1.0f, 1.0f) * 5, -5, UnityEngine.Random.Range(-1.0f, 1.0f) * 5), Quaternion.identity);
+
+        }
+
+
+        unitList = GameObject.FindGameObjectsWithTag("PlayerCharacter").ToList<GameObject>();
+        enemies = GameObject.FindGameObjectsWithTag("Enemy").ToList<GameObject>();
+    }
+
     private void Awake()
     {
         //if an instance of this already exists and it isn't this one
@@ -34,20 +62,25 @@ public class UnitSelections : MonoBehaviour
             //make this the instance
             _instance = this;
         }
-
-        enemies = GameObject.FindGameObjectsWithTag("Enemy").ToList<GameObject>();
-
     }
 
     public void Update()
     {
-        for(int i = 0; i<enemies.Count; i++)
+        //for(int i = 0; i<enemies.Count; i++)
+        //{
+        //    if(enemies[i] != null)
+        //    {
+        //        AttackEnemy(enemies[i]);
+        //    }
+        //}
+
+        if (sceneName == "CombatTest")
         {
-            if(enemies[i] != null)
-            {
-                AttackEnemy(enemies[i]);
-            }
+            TriggerEvent();
         }
+
+        //Debug.Log(pData.crew.amount);
+
     }
 
     /// <summary>
@@ -108,10 +141,14 @@ public class UnitSelections : MonoBehaviour
     /// <param name="unitToAdd"></param>
     private void AddSelection(GameObject unitToAdd)
     {
-        if(unitToAdd.GetComponent<Builder>().IsBuilding)
+        if(sceneName == "Outpost")
         {
-            return;
+            if (unitToAdd.GetComponent<Crewmate>().IsBuilding)
+            {
+                return;
+            }
         }
+
 
         unitsSelected.Add(unitToAdd);
         //sets the first child to be active: an indicator showing that the unit is selected
@@ -146,37 +183,41 @@ public class UnitSelections : MonoBehaviour
         unitToRemove.GetComponent<UnitMovement>().enabled = false;
     }
 
+    public void MoveToEnemy(GameObject enemy)
+    {
+        foreach (GameObject e in enemies)
+        {
+            e.transform.GetChild(0).gameObject.SetActive(false);
+        }
+        enemy.transform.GetChild(0).gameObject.SetActive(true);
+    }
+
+
+
+
+
+
 
 
     /// <summary>
-    /// Attack enemy units upon coming into range
+    /// Triggers tutorial event once enemies are all dead
     /// </summary>
     /// <param name="enemy"></param>
     ///
-    //TO BE UPDATED
-    public void AttackEnemy(GameObject enemy)
+    //TO BE REMOVED
+    public void TriggerEvent()
     {
-        //Debug.Log(enemy.tag);
 
-        //enemy.transform.GetChild(0).gameObject.SetActive(true);
-
-        for(int i = 0; i < unitList.Count; i++)
+        if(eventTriggered == false)
         {
-            if (Vector3.Distance(unitList[i].transform.position, enemy.transform.position) < 2)
+            if (enemies.Count == 0)
             {
-                if(enemy.tag == "Enemy")
-                {
-                    //Destroy(enemy);
-                    enemy.SetActive(false);
-                    enemies.Remove(enemy);
-                }
-
+                allEnemiesDead.Raise(this, enemies);
+                eventTriggered = true;
             }
-        }
-        if(enemies.Count == 0)
-        {
-            allEnemiesDead.Raise(this, enemies);
         }
 
     }
+
+
 }

@@ -36,7 +36,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7845774388746979147}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 69.489845, y: -102.65123, z: 1655.8683}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -62,9 +62,11 @@ MonoBehaviour:
   - {fileID: 7317531967827180226}
   - {fileID: 6785737645530700138}
   - {fileID: 6483838458676575870}
+  outpostTaskLists: []
   combatDialogues:
   - {fileID: 4051391971717010772}
   - {fileID: -759242478486736209}
+  combatTaskLists: []
 --- !u!114 &8631642408441138930
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -164,20 +166,28 @@ MonoBehaviour:
   dialogue:
     speakerName: Tutorial Pirate
     sentences:
-    - 'Yargh! Ye''ve caught me crew at a bad time, we jus'' escaped from a ghastly
-      battle ''n thought this island be deserted.
+    - 'Yargh! You''ve caught me crew at a bad time, we just escaped from a ghastly
+      battle and thought this island be deserted.
 
 '
-    - 'Our crew needs a place t'' recover from thar wounds.
+    - 'Our crew needs a place to recover from our wounds.
 
-      All we ''ave are
-      enough resources t'' build a shack ''n a tavern. If ye''d help us we''d be
+      All we have are
+      enough resources to build a shack and a tavern. If you''d help us we''d be
       mighty grateful.'
-    - Click a buildin' on the bottom left 'n then place it on an empty space t' set
-      its build spot!
+    - Open up the building menu and click a building so you can place it on an empty
+      space to set its build spot!
     callback:
       m_PersistentCalls:
         m_Calls: []
+    hasTasks: 1
+  tasks:
+    taskListName: Build some structures
+    tasks:
+    - You can place building by opening up the building menu at the bottom and clicking
+      on a building icon. Then click on an empty patch of ground to place it.
+    - '- Build a shack'
+    - '- Build a tavern'
 --- !u!114 &4137988272570579665
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -193,10 +203,15 @@ MonoBehaviour:
   dialogue:
     speakerName: Tutorial Pirate
     sentences:
-    - Yarr! Now place the other buildin'
+    - Yarr! Now place the other building
     callback:
       m_PersistentCalls:
         m_Calls: []
+    hasTasks: 1
+  tasks:
+    taskListName: Build some structures
+    tasks:
+    - '- Build the other stucture'
 --- !u!114 &6769618784424622894
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -212,12 +227,20 @@ MonoBehaviour:
   dialogue:
     speakerName: Tutorial Pirate
     sentences:
-    - These two structures best be good t' support our crew now, but they won't be
+    - These two structures best be good to support our crew now, but they won't be
       built by themselves.
-    - Assign one o' yer crew t' each o' the buildings t' build 'em.
+    - Assign one of your crew to each of the buildings to build them.
     callback:
       m_PersistentCalls:
         m_Calls: []
+    hasTasks: 1
+  tasks:
+    taskListName: Put your crew to work
+    tasks:
+    - Left click on a crewmate (green pill) to select them. Right click a structure
+      to assign them to it. You'll know they've been assigned when the structure
+      turns green.
+    - '- Assign a crew member to each structure'
 --- !u!114 &7317531967827180226
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -233,12 +256,18 @@ MonoBehaviour:
   dialogue:
     speakerName: Tutorial Pirate
     sentences:
-    - We don't 'ave many resources left on the island. We shall go find some more.
-    - Select the remainder o' the crew that ain't assigned t' a buildin', 'n assign
-      'em t' the ship t' prep fer travel!
+    - Resources are scarce on this island. We should take our remaining crew on a
+      trip to other islands to gather more for our outpost.
+    - Gather the remainder of the crew and let's go plunder!
     callback:
       m_PersistentCalls:
         m_Calls: []
+    hasTasks: 1
+  tasks:
+    taskListName: Head out for some resources
+    tasks:
+    - Click the attack button in the bottom right to gather the remainer of your
+      crew and depart
 --- !u!114 &6785737645530700138
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -261,6 +290,10 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls: []
+    hasTasks: 0
+  tasks:
+    taskListName: 
+    tasks: []
 --- !u!114 &6483838458676575870
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -276,14 +309,18 @@ MonoBehaviour:
   dialogue:
     speakerName: Tutorial Pirate
     sentences:
-    - Good job! Ye jus' finished the first cycle. See how the buildings ye placed
-      afore leavin' got built while ye we be gone? When ye travel, things get done
+    - Good job! You just finished the first cycle. See how the buildings you placed
+      before leaving got built while you were gone? When you travel, things get done
       back at the outpost!
-    - That's all fer now, but in the full game ye can keep buildin' yer outpost,
-      explorin' new islands 'n writin' yer owns legend.
+    - That's all for now, but in the full game ye can keep building your outpost,
+      exploring new islands, and writing your own legend.
     callback:
       m_PersistentCalls:
         m_Calls: []
+    hasTasks: 0
+  tasks:
+    taskListName: 
+    tasks: []
 --- !u!114 &4051391971717010772
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -300,14 +337,22 @@ MonoBehaviour:
     speakerName: Tutorial Pirate
     sentences:
     - Yarr! It looks like this island wasn't deserted either!
-    - We be goin' t' 'ave t' defeat this enemy pirate crew if we wants t' make it
-      out o' here alive wit' the resources.
-    - Select yer crewmates the same way ye did back at the outpost! Ye can move 'em
-      one by one, or click 'n drag t' select a group!
-    - Move 'em t' those red pirates 'n they'll cut 'em down!
+    - We be going to have to defeat this enemy pirate crew if we want to make it
+      out of here alive with the resources.
+    - Select your crewmates the same way you did back at the outpost! You can move
+      them one by one, or click and drag to select a group!
+    - Move them to those red pirates and they'll cut 'em down!
     callback:
       m_PersistentCalls:
         m_Calls: []
+    hasTasks: 1
+  tasks:
+    taskListName: Attack!
+    tasks:
+    - Select individual crewmates by left clicking on them, or select them in a group
+      by holding the left click and dragging over them. You can then right click
+      a point on the map to command them towards it.
+    - '- Wipe out the enemy'
 --- !u!114 &-759242478486736209
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -323,10 +368,18 @@ MonoBehaviour:
   dialogue:
     speakerName: Tutorial Pirate
     sentences:
-    - Yarr! Ye rallied yer crew splendidly! That enemy crew didn' know wha' hit 'em!
-    - Wit' the island clear, it's time t' head back t' the outpost.
-    - Gather yer crew 'n move 'em t' the ship at the back. Once they get close enough
-      ye can hit the E key t' sail back!
+    - Yarr! You rallied your crew splendidly! That enemy crew didnt know what hit
+      them!
+    - With the island clear, it's time to gather what we can and head back to the
+      outpost.
+    - Gather yer crew and move them to the ship at the back. Once they get close
+      enough ye can hit the E key to sail back!
     callback:
       m_PersistentCalls:
         m_Calls: []
+    hasTasks: 1
+  tasks:
+    taskListName: Head home
+    tasks:
+    - Gather your crew and head for the ship above. You can use the WASD keys to
+      move the camera if you don't see it. Hit the E key when they get near to depart.

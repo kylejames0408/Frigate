@@ -70,7 +70,7 @@ public class UnitClick : MonoBehaviour
             ////Enemy interaction when right clicking on an enemy
             //if (Physics.Raycast(ray, out hit, Mathf.Infinity, clickable))
             //{
-            //    UnitSelections.Instance.AttackEnemy(hit.collider.gameObject);
+            //    UnitSelections.Instance.MoveToEnemy(hit.collider.gameObject);
             //}
         }
     }

@@ -13,4 +13,6 @@ public class Dialogue
     public string[] sentences;
 
     public UnityEvent callback;
+
+    public bool hasTasks;
 }

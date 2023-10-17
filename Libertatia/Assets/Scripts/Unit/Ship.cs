@@ -12,49 +12,62 @@ public class Ship : MonoBehaviour
     public int detectionRange;
     private bool inRange;
 
-    
+
 
     // Start is called before the first frame update
     void Start()
     {
-        //detectionRange = 0;
+        detectionRange = 30;
         inRange = false;
+
+        unitList.AddRange(GameObject.FindGameObjectsWithTag("PlayerCharacter"));
+        enemyList.AddRange(GameObject.FindGameObjectsWithTag("Enemy"));
     }
 
     // Update is called once per frame
     void Update()
     {
-        //Debug.Log(enemyList.Count);
-
         foreach (GameObject unit in unitList)
         {
-            if (Vector3.Distance(transform.position, unit.transform.position) <= detectionRange)
+            if (unit.activeSelf != false)
             {
-                //Debug.Log("Go home");
-                inRange = true;
+                //If a unit is within range of the ship, the player can return to the outpost
+                if (Vector3.Distance(transform.position, unit.transform.position) <= detectionRange)
+                {
+                    //Debug.Log("Go home");
+                    inRange = true;
 
+                }
+                else
+                    inRange = false;
             }
-            else
-                inRange = false;
+
         }
 
-        if(inRange)
+        if (inRange)
         {
-            if(Input.GetKeyDown(KeyCode.E))
+            if (Input.GetKeyDown(KeyCode.E))
             {
-                SceneManager.LoadScene("Outpost");
+                GameManager.data.resources.wood += 50;
+                GameManager.data.resources.doubloons += 10;
+                GameManager.data.resources.food += 100;
+                CeneManager.LoadOutpostFromCombat();
             }
         }
 
     }
-
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, detectionRange);
+    }
     private void OnGUI()
     {
         // the rect that is the canvas
         GameObject canvas = GameObject.Find("BoxSelectCanvas");
         RectTransform canvasRect = canvas.GetComponent<RectTransform>();
 
-        // the style used to set the text size and 
+        // the style used to set the text size and
         GUIStyle GUIBoxStyle = new GUIStyle(GUI.skin.box);
         GUIBoxStyle.fontSize = (int)(canvasRect.rect.height * 0.023f);
         GUIBoxStyle.alignment = TextAnchor.MiddleCenter;
