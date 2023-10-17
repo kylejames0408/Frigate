@@ -9,10 +9,8 @@ public class TutorialManager : MonoBehaviour
     private static TutorialManager instance;
 
     public List<DialogueTrigger> outpostDialogues;
-    public List<string> outpostTaskLists;
 
     public List<DialogueTrigger> combatDialogues;
-    public List<string> combatTaskLists;
 
     private static GameObject AttackButton;
 
@@ -40,14 +38,14 @@ public class TutorialManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if(SceneManager.GetActiveScene().name == "Outpost - Playtest" || SceneManager.GetActiveScene().name == "Outpost") // SceneManager.GetActiveScene().name == "PlayerData"
+        if(SceneManager.GetSceneByName("Outpost").isLoaded) // SceneManager.GetActiveScene().name == "PlayerData"
         {
             //check to see if this is the first time, or if its when they're coming back from combat
             currentScene = Scene.Oupost;
-            if (!GameManager.Instance.outpostVisited)
+            if (!GameManager.outpostVisited)
             {
                 outpostDialogues[0].TriggerDialogue();
-                GameManager.Instance.outpostVisited = true;
+                GameManager.outpostVisited = true;
             }
             else
             {
@@ -62,8 +60,9 @@ public class TutorialManager : MonoBehaviour
                 AttackButton.SetActive(false);
             }
         }
-        else if (SceneManager.GetActiveScene().name == "CombatTest - Playtest" || SceneManager.GetActiveScene().name == "CombatTest")
+        else if (SceneManager.GetSceneByName("CombatTest").isLoaded)
         {
+            //UnitSelections.Instance.unitList.Clear();
             currentScene = Scene.Combat;
             combatDialogues[0].TriggerDialogue();
         }
@@ -110,6 +109,6 @@ public class TutorialManager : MonoBehaviour
     public void AllEnemiesDeadEvent(Component sender, object data)
     {
         combatDialogues[1].TriggerDialogue();
-        GameObject.Find("Ship").GetComponent<Ship>().detectionRange = 50;
+        GameObject.Find("Ship").GetComponent<Ship>().detectionRange = 30;
     }
 }

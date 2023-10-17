@@ -22,50 +22,30 @@ public enum GamePhase
 
 public class GameManager : MonoBehaviour
 {
-    // Class references
-    public static GameManager instance;
-    [SerializeField] private PlayerDataManager pdm; // look into making this public to the inspector // also is linked through inspector
     // Game Data
     private float gameTimer = 0.0f;
     private GameState state = GameState.PLAYING;
-    public bool outpostVisited = false;
+    public static PlayerData data;
+    public static bool outpostVisited = false;
 
-    public static GameManager Instance
+    public static PlayerData Data
     {
         get
         {
-            if (instance == null)
-            {
-                instance = FindObjectOfType<GameManager>();
-                if (instance == null)
-                {
-                    GameObject obj = new GameObject();
-                    obj.name = typeof(GameManager).Name;
-                    instance = obj.AddComponent<GameManager>();
-                }
-            }
-            return instance;
+            return data;
         }
-    }
-    public PlayerDataManager DataManager
-    {
-        get { return pdm; }
+        set
+        {
+            data = value;
+        }
     }
 
     public virtual void Awake()
     {
-        if (instance == null)
-        {
-            instance = this;
-        }
-        // Game init
-        pdm = new PlayerDataManager();
-
-        // TODO: Might be good to have realtime variables per Unity forum
-
-        // Scene
-        //CeneManager.LoadMainMenu();
-        // Load building man
+        GameObject obj = new GameObject();
+        obj.name = typeof(GameManager).Name;
+        data = PlayerDataManager.Load();
+        DontDestroyOnLoad(obj);
     }
     private void Update()
     {
@@ -85,22 +65,7 @@ public class GameManager : MonoBehaviour
                 break;
         }
     }
-    public PlayerResourceData GetResourceData()
-    {
-        return pdm.Data.resources;
-    }
-    public PlayerCrewData GetCrewData()
-    {
-        return pdm.Data.crew;
-    }
-    public PlayerBuildingData GetBuildingData()
-    {
-        return pdm.Data.buildings;
-    }
-    public void SetResources(PlayerResourceData resources)
-    {
-        pdm.Data.resources = resources;
-    }
+
     private void OnDestroy()
     {
         //pdm.UpdateTimer(gameTimer);

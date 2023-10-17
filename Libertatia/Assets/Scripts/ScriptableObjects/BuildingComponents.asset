@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: 706f6411c4dde324582a778d039f4ab3, type: 3}
   m_Name: BuildingComponents
   m_EditorClassIdentifier: Assembly-CSharp::BuildingComponents
   placingMaterial: {fileID: 2100000, guid: d3e5e1b3c116ea947b4250ca7c8746b2, type: 2}

@@ -17,8 +17,11 @@ public class Ship : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        detectionRange = 0;
+        detectionRange = 30;
         inRange = false;
+
+        unitList.AddRange(GameObject.FindGameObjectsWithTag("PlayerCharacter"));
+        enemyList.AddRange(GameObject.FindGameObjectsWithTag("Enemy"));
     }
 
     // Update is called once per frame
@@ -45,7 +48,10 @@ public class Ship : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.E))
             {
-                SceneManager.LoadScene("Outpost");
+                GameManager.data.resources.wood += 50;
+                GameManager.data.resources.doubloons += 10;
+                GameManager.data.resources.food += 100;
+                CeneManager.LoadOutpostFromCombat();
             }
         }
 
@@ -61,7 +67,7 @@ public class Ship : MonoBehaviour
         GameObject canvas = GameObject.Find("BoxSelectCanvas");
         RectTransform canvasRect = canvas.GetComponent<RectTransform>();
 
-        // the style used to set the text size and 
+        // the style used to set the text size and
         GUIStyle GUIBoxStyle = new GUIStyle(GUI.skin.box);
         GUIBoxStyle.fontSize = (int)(canvasRect.rect.height * 0.023f);
         GUIBoxStyle.alignment = TextAnchor.MiddleCenter;

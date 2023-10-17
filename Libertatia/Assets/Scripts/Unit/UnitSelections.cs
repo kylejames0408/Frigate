@@ -26,11 +26,27 @@ public class UnitSelections : MonoBehaviour
 
     private string sceneName;
 
+    public GameObject crewMemberPrefab;
+
     private void Start()
     {
         eventTriggered = false;
 
         sceneName = SceneManager.GetActiveScene().name;
+        unitList.Clear();
+
+        //spawns crew members based on the crew size in playerdata
+        for(int i = 0; i < GameManager.Data.crewmates.Count; i++)
+        {
+
+            GameObject unit = Instantiate(crewMemberPrefab, new Vector3(-5 - 5, 0) + new Vector3(
+                UnityEngine.Random.Range(-1.0f, 1.0f) * 5, -5, UnityEngine.Random.Range(-1.0f, 1.0f) * 5), Quaternion.identity);
+
+        }
+
+
+        unitList = GameObject.FindGameObjectsWithTag("PlayerCharacter").ToList<GameObject>();
+        enemies = GameObject.FindGameObjectsWithTag("Enemy").ToList<GameObject>();
     }
 
     private void Awake()
@@ -46,9 +62,6 @@ public class UnitSelections : MonoBehaviour
             //make this the instance
             _instance = this;
         }
-
-        enemies = GameObject.FindGameObjectsWithTag("Enemy").ToList<GameObject>();
-
     }
 
     public void Update()
@@ -61,11 +74,13 @@ public class UnitSelections : MonoBehaviour
         //    }
         //}
 
-        if (sceneName == "CombatTest") 
+        if (sceneName == "CombatTest")
         {
             TriggerEvent();
         }
-  
+
+        //Debug.Log(pData.crew.amount);
+
     }
 
     /// <summary>
@@ -126,10 +141,14 @@ public class UnitSelections : MonoBehaviour
     /// <param name="unitToAdd"></param>
     private void AddSelection(GameObject unitToAdd)
     {
-        if(unitToAdd.GetComponent<Crewmate>().IsBuilding)
+        if(sceneName == "Outpost")
         {
-            return;
+            if (unitToAdd.GetComponent<Crewmate>().IsBuilding)
+            {
+                return;
+            }
         }
+
 
         unitsSelected.Add(unitToAdd);
         //sets the first child to be active: an indicator showing that the unit is selected

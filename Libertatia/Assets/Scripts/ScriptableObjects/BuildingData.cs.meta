@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: 706f6411c4dde324582a778d039f4ab3
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - placingMaterial: {fileID: 2100000, guid: d3e5e1b3c116ea947b4250ca7c8746b2, type: 2}
+  - collisionMaterial: {fileID: 2100000, guid: 233ebadc30a9dc04180a21274295cfeb, type: 2}
+  - needsAssignmentMaterial: {fileID: 2100000, guid: 171a96962a807aa41bbf86e9608f92a2, type: 2}
+  - buildingMaterial: {fileID: 2100000, guid: 9b6c03d6f347f544fae42a85b3d0e502, type: 2}
+  - buildParticle: {instanceID: 0}
+  - finishParticle: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

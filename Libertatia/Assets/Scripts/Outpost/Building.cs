@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public enum BuildingState
@@ -8,17 +9,21 @@ public enum BuildingState
     BUILDING,
     COMPLETE
 }
+
 // Move some individualstic data to scriptable objects, no need for prefabs atm
 // Building objects are put together upon interaction
+[Serializable]
 [RequireComponent(typeof(BoxCollider))]
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(BoxCollider))]
 public class Building : MonoBehaviour
 {
     // General Data
+    public int id;
     [SerializeField] private string buildingName;
     [SerializeField] private Sprite icon;
-    [SerializeField] private int level;
+    public int uiIndex;
+    public int level;
     [SerializeField] private float radius = 5.0f; // for construction
     private BuildingState state = BuildingState.PLACING;
     [ColorUsage(true, true)]
@@ -29,12 +34,12 @@ public class Building : MonoBehaviour
     // Building
     public BuildingResources resourceCost;
     public int builderCapacity = 1;
-    private List<Crewmate> builders;
+    public List<Crewmate> builders;
     // Components
     private MeshRenderer buildingRender;
     // Emissions
-    private Color normalEmission;
-    private Color hoveredEmission;
+    private Color normalEmission = Color.black;
+    private Color hoveredEmission = new Color(0.3f, 0.3f, 0.3f);
     // Materials
     [SerializeField] private BuildingComponents components;
     [SerializeField] private Material builtMaterial;
@@ -81,19 +86,18 @@ public class Building : MonoBehaviour
         get { return resourceCost; }
     }
 
+    // awake runs right as it is instantiated. changing items right after inst will overwrite with start
     private void Awake()
     {
         buildingRender = transform.GetComponentInChildren<MeshRenderer>();
-    }
-    private void Start()
-    {
-        isHovered = false;
-        normalEmission = Color.black;
-        hoveredEmission = new Color(0.3f, 0.3f, 0.3f);
-        // Init state
+        id = gameObject.GetInstanceID();
+        uiIndex = -1;
+        level = 0;
         state = BuildingState.PLACING;
         buildingRender.material = components.placingMaterial;
+        isHovered = false;
     }
+
     private void Update()
     {
         if(isHovered && Input.GetMouseButtonDown(1))
@@ -169,7 +173,7 @@ public class Building : MonoBehaviour
     {
         if (collision.transform.tag == "Building")
         {
-            buildingRender.material = components.collisionMaterial;
+            buildingRender.material = new Material(components.collisionMaterial);
             isColliding = true;
         }
     }
@@ -180,16 +184,16 @@ public class Building : MonoBehaviour
             switch(state)
             {
                 case BuildingState.PLACING:
-                    buildingRender.material = components.placingMaterial;
+                    buildingRender.material = new Material(components.placingMaterial);
                     break;
                 case BuildingState.WAITING_FOR_ASSIGNMENT:
-                    buildingRender.material = components.needsAssignmentMaterial;
+                    buildingRender.material = new Material(components.needsAssignmentMaterial);
                     break;
                 case BuildingState.BUILDING:
-                    buildingRender.material = components.buildingMaterial;
+                    buildingRender.material = new Material(components.buildingMaterial);
                     break;
                 case BuildingState.COMPLETE:
-                    buildingRender.material = builtMaterial;
+                    buildingRender.material = new Material(builtMaterial);
                     break;
             }
             isColliding = false;

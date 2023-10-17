@@ -20,8 +20,7 @@ MonoBehaviour:
     doubloons: 10
     food: 100
     loyalty: 0
-  crew:
-    amount: 6
-    capacity: 0
-  buildings:
-    amount: 0
+    foodPerAP: 5
+  crewmates: []
+  outpostCrewCapacity: 0
+  buildings: []
