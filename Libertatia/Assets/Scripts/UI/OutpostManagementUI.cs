@@ -1,11 +1,10 @@
 ﻿using DG.Tweening;
-using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ConstructionUI : MonoBehaviour
+public class OutpostManagementUI : MonoBehaviour
 {
     // Prefabs
     [SerializeField] private GameObject buildingCardPrefab;

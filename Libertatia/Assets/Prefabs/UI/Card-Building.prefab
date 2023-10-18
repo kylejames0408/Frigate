@@ -91,7 +91,7 @@ GameObject:
   - component: {fileID: 5433463553582545347}
   - component: {fileID: 1936097422279918113}
   m_Layer: 5
-  m_Name: BuildingCard
+  m_Name: Card-Building
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
