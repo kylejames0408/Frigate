@@ -19,12 +19,14 @@ public class Zone : MonoBehaviour
     void Start()
     {
         zoneName = gameObject.name;
+
+        TerrainCollider tCollider = gameObject.GetComponent<TerrainCollider>();
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        
     }
 
     /// <summary>
