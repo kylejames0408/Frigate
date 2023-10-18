@@ -27,7 +27,7 @@ public class Building : MonoBehaviour
     public int level;
     [SerializeField] private float radius = 5.0f; // for construction
     private BuildingState state = BuildingState.PLACING;
-    private List<GameObject> collidingObjects;
+    private int numOfCollisions = 0;
     // Identifiers
     public bool isHovered = false;
     // Building
@@ -79,7 +79,7 @@ public class Building : MonoBehaviour
     }
     public bool IsColliding
     {
-        get { return collidingObjects.Count>0; }
+        get { return numOfCollisions > 0; }
     }
     public BuildingResources Cost
     {
@@ -97,7 +97,7 @@ public class Building : MonoBehaviour
         state = BuildingState.PLACING;
         buildingRender.material = components.placingMaterial;
         isHovered = false;
-        collidingObjects = new List<GameObject>();
+        numOfCollisions = 0;
     }
 
     private void Update()
@@ -176,21 +176,21 @@ public class Building : MonoBehaviour
     {
         if (collision.transform.tag == "Building")
         {
-            if(collidingObjects.Count == 0)
+            if(numOfCollisions == 0)
             {
                 buildingRender.material = new Material(components.collisionMaterial);
             }
 
-            collidingObjects.Add(collision.gameObject);
+            numOfCollisions++;
         }
     }
     private void OnTriggerExit(Collider collision)
     {
         if (collision.transform.tag == "Building")
         {
-            collidingObjects.Remove(collision.gameObject);
+            numOfCollisions--;
 
-            if (collidingObjects.Count == 0)
+            if (numOfCollisions == 0)
             {
                 switch (state)
                 {
