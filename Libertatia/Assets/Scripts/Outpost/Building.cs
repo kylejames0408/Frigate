@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public enum BuildingState
 {
@@ -26,17 +27,16 @@ public class Building : MonoBehaviour
     public int level;
     [SerializeField] private float radius = 5.0f; // for construction
     private BuildingState state = BuildingState.PLACING;
-    [ColorUsage(true, true)]
-    [SerializeField] private Color[] stateColors; // Not sure how this is used yet
+    private List<GameObject> collidingObjects;
     // Identifiers
     public bool isHovered = false;
-    public bool isColliding = false;
     // Building
     public BuildingResources resourceCost;
     public int builderCapacity = 1;
     public List<Crewmate> builders;
     // Components
     private MeshRenderer buildingRender;
+    private NavMeshObstacle navObsticle;
     // Emissions
     private Color normalEmission = Color.black;
     private Color hoveredEmission = new Color(0.3f, 0.3f, 0.3f);
@@ -79,23 +79,25 @@ public class Building : MonoBehaviour
     }
     public bool IsColliding
     {
-        get { return isColliding; }
+        get { return collidingObjects.Count>0; }
     }
     public BuildingResources Cost
     {
         get { return resourceCost; }
     }
 
-    // awake runs right as it is instantiated. changing items right after inst will overwrite with start
     private void Awake()
     {
-        buildingRender = transform.GetComponentInChildren<MeshRenderer>();
+        buildingRender = GetComponentInChildren<MeshRenderer>();
+        navObsticle = GetComponent<NavMeshObstacle>();
+        navObsticle.enabled = false;
         id = gameObject.GetInstanceID();
         uiIndex = -1;
         level = 0;
         state = BuildingState.PLACING;
         buildingRender.material = components.placingMaterial;
         isHovered = false;
+        collidingObjects = new List<GameObject>();
     }
 
     private void Update()
@@ -121,6 +123,7 @@ public class Building : MonoBehaviour
     {
         builders = new List<Crewmate>(builderCapacity);
         buildingRender.material = components.needsAssignmentMaterial;
+        navObsticle.enabled = true;
         state = BuildingState.WAITING_FOR_ASSIGNMENT;
     }
     public bool CanAssign()
@@ -173,30 +176,38 @@ public class Building : MonoBehaviour
     {
         if (collision.transform.tag == "Building")
         {
-            buildingRender.material = new Material(components.collisionMaterial);
-            isColliding = true;
+            if(collidingObjects.Count == 0)
+            {
+                buildingRender.material = new Material(components.collisionMaterial);
+            }
+
+            collidingObjects.Add(collision.gameObject);
         }
     }
     private void OnTriggerExit(Collider collision)
     {
         if (collision.transform.tag == "Building")
         {
-            switch(state)
+            collidingObjects.Remove(collision.gameObject);
+
+            if (collidingObjects.Count == 0)
             {
-                case BuildingState.PLACING:
-                    buildingRender.material = new Material(components.placingMaterial);
-                    break;
-                case BuildingState.WAITING_FOR_ASSIGNMENT:
-                    buildingRender.material = new Material(components.needsAssignmentMaterial);
-                    break;
-                case BuildingState.BUILDING:
-                    buildingRender.material = new Material(components.buildingMaterial);
-                    break;
-                case BuildingState.COMPLETE:
-                    buildingRender.material = new Material(builtMaterial);
-                    break;
+                switch (state)
+                {
+                    case BuildingState.PLACING:
+                        buildingRender.material = new Material(components.placingMaterial);
+                        break;
+                    case BuildingState.WAITING_FOR_ASSIGNMENT:
+                        buildingRender.material = new Material(components.needsAssignmentMaterial);
+                        break;
+                    case BuildingState.BUILDING:
+                        buildingRender.material = new Material(components.buildingMaterial);
+                        break;
+                    case BuildingState.COMPLETE:
+                        buildingRender.material = new Material(builtMaterial);
+                        break;
+                }
             }
-            isColliding = false;
         }
     }
 }
