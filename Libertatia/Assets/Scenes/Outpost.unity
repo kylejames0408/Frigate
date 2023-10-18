@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657737, g: 0.4964143, b: 0.5748176, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657737, g: 0.49641442, b: 0.5748176, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2284,6 +2284,7 @@ GameObject:
   m_Component:
   - component: {fileID: 597511918}
   - component: {fileID: 597511917}
+  - component: {fileID: 597511919}
   m_Layer: 0
   m_Name: SceneManager
   m_TagString: Untagged
@@ -2318,6 +2319,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &597511919
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 597511916}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6a9faac7fc866d4583c9654a2f48cdf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &616914318
 GameObject:
   m_ObjectHideFlags: 0
@@ -2788,6 +2801,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9be1f2f065f9eef41954d8e8e738a85d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  crewmates: []
+  buildings: []
   buildingPrefabs:
   - {fileID: 4471357269373654606, guid: 464be573e97f0c84a9d1788bb444d936, type: 3}
   - {fileID: 8928841551790308315, guid: b1b3bb510e388d446ba20affc2247851, type: 3}
@@ -4079,6 +4094,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: UI-Dialog
       objectReference: {fileID: 0}
+    - target: {fileID: 2649673967140181853, guid: 259a93375fc252243a74fb22c384452a, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -5255,7 +5274,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2649673967140181853, guid: 259a93375fc252243a74fb22c384452a, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3983320247374213579, guid: 259a93375fc252243a74fb22c384452a, type: 3}
       propertyPath: m_margin.x
@@ -5701,7 +5720,7 @@ GameObject:
   - component: {fileID: 1693820585}
   - component: {fileID: 1693820582}
   m_Layer: 5
-  m_Name: INT-Construction
+  m_Name: INT-OutpostMan
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

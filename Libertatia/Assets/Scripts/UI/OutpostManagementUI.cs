@@ -1,11 +1,10 @@
 ﻿using DG.Tweening;
-using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ConstructionUI : MonoBehaviour
+public class OutpostManagementUI : MonoBehaviour
 {
     // Prefabs
     [SerializeField] private GameObject buildingCardPrefab;
@@ -105,8 +104,8 @@ public class ConstructionUI : MonoBehaviour
             GameObject card = Instantiate(crewmateCardPrefab, pages[1]);
             int index = i; // needs to be destroyed after setting listener
             card.GetComponent<Button>().onClick.AddListener(() => { SelectCrewmateCard(bm, index); }); // drag + drop func
-            card.GetComponentsInChildren<Image>()[1].sprite = crewmates[i].script.Icon;
-            card.GetComponentInChildren<TextMeshProUGUI>().text = crewmates[i].script.Name;
+            card.GetComponentsInChildren<Image>()[1].sprite = crewmates[i].icon;
+            card.GetComponentInChildren<TextMeshProUGUI>().text = crewmates[i].name;
             crewmateCards.Add(card);
         }
     }
