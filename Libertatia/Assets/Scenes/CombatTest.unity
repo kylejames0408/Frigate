@@ -1223,6 +1223,7 @@ GameObject:
   - component: {fileID: 111019862}
   - component: {fileID: 111019861}
   - component: {fileID: 111019863}
+  - component: {fileID: 111019864}
   m_Layer: 3
   m_Name: Terrain 1 2 2
   m_TagString: Untagged
@@ -1335,6 +1336,20 @@ MonoBehaviour:
   m_MinRegionArea: 2
   m_NavMeshData: {fileID: 0}
   m_BuildHeightMesh: 0
+--- !u!114 &111019864
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 111019859}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a7f7d94fa9cd8241a06c6db28158eda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitsInZone: []
+  zoneName: 
 --- !u!1 &113437551
 GameObject:
   m_ObjectHideFlags: 0
@@ -2087,6 +2102,7 @@ GameObject:
   - component: {fileID: 206861881}
   - component: {fileID: 206861880}
   - component: {fileID: 206861882}
+  - component: {fileID: 206861883}
   m_Layer: 3
   m_Name: Terrain 1 2 1 3
   m_TagString: Untagged
@@ -2199,6 +2215,20 @@ MonoBehaviour:
   m_MinRegionArea: 2
   m_NavMeshData: {fileID: 0}
   m_BuildHeightMesh: 0
+--- !u!114 &206861883
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 206861878}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a7f7d94fa9cd8241a06c6db28158eda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitsInZone: []
+  zoneName: 
 --- !u!1 &211630678
 GameObject:
   m_ObjectHideFlags: 0
@@ -2247,7 +2277,6 @@ MonoBehaviour:
   unitsSelected: []
   enemies: []
   allEnemiesDead: {fileID: 11400000, guid: 652c65e12d9ed954ea0fb51627342b58, type: 2}
-  pData: {fileID: 11400000, guid: e2c8d50c1744ac245b9d4569c6185f27, type: 2}
   crewMemberPrefab: {fileID: 3693295309995061255, guid: b66c8fd58b8a19240bd7e5b965291055, type: 3}
 --- !u!1 &212216675
 GameObject:
@@ -3278,6 +3307,7 @@ GameObject:
   - component: {fileID: 299553737}
   - component: {fileID: 299553736}
   - component: {fileID: 299553738}
+  - component: {fileID: 299553739}
   m_Layer: 3
   m_Name: Terrain 0 3 2
   m_TagString: Untagged
@@ -3390,6 +3420,20 @@ MonoBehaviour:
   m_MinRegionArea: 2
   m_NavMeshData: {fileID: 0}
   m_BuildHeightMesh: 0
+--- !u!114 &299553739
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 299553734}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a7f7d94fa9cd8241a06c6db28158eda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitsInZone: []
+  zoneName: 
 --- !u!1 &307680369
 GameObject:
   m_ObjectHideFlags: 0
@@ -3507,6 +3551,7 @@ GameObject:
   - component: {fileID: 313866716}
   - component: {fileID: 313866715}
   - component: {fileID: 313866717}
+  - component: {fileID: 313866718}
   m_Layer: 3
   m_Name: Terrain 1 1
   m_TagString: Untagged
@@ -3619,6 +3664,20 @@ MonoBehaviour:
   m_MinRegionArea: 2
   m_NavMeshData: {fileID: 0}
   m_BuildHeightMesh: 0
+--- !u!114 &313866718
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 313866713}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a7f7d94fa9cd8241a06c6db28158eda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitsInZone: []
+  zoneName: 
 --- !u!1 &317582057
 GameObject:
   m_ObjectHideFlags: 0
@@ -4040,6 +4099,7 @@ GameObject:
   - component: {fileID: 356316809}
   - component: {fileID: 356316808}
   - component: {fileID: 356316810}
+  - component: {fileID: 356316811}
   m_Layer: 3
   m_Name: Terrain 0 1
   m_TagString: Untagged
@@ -4152,6 +4212,20 @@ MonoBehaviour:
   m_MinRegionArea: 2
   m_NavMeshData: {fileID: 0}
   m_BuildHeightMesh: 0
+--- !u!114 &356316811
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 356316806}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a7f7d94fa9cd8241a06c6db28158eda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitsInZone: []
+  zoneName: 
 --- !u!1 &371501189
 GameObject:
   m_ObjectHideFlags: 0
@@ -5138,6 +5212,7 @@ GameObject:
   - component: {fileID: 453079383}
   - component: {fileID: 453079382}
   - component: {fileID: 453079384}
+  - component: {fileID: 453079385}
   m_Layer: 3
   m_Name: Terrain 1 0 1
   m_TagString: Untagged
@@ -5250,6 +5325,20 @@ MonoBehaviour:
   m_MinRegionArea: 2
   m_NavMeshData: {fileID: 0}
   m_BuildHeightMesh: 0
+--- !u!114 &453079385
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 453079380}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a7f7d94fa9cd8241a06c6db28158eda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitsInZone: []
+  zoneName: 
 --- !u!1 &460593739
 GameObject:
   m_ObjectHideFlags: 0
@@ -5339,6 +5428,7 @@ GameObject:
   - component: {fileID: 488280474}
   - component: {fileID: 488280473}
   - component: {fileID: 488280475}
+  - component: {fileID: 488280476}
   m_Layer: 3
   m_Name: Terrain 0 3 0
   m_TagString: Untagged
@@ -5451,6 +5541,20 @@ MonoBehaviour:
   m_MinRegionArea: 2
   m_NavMeshData: {fileID: 0}
   m_BuildHeightMesh: 0
+--- !u!114 &488280476
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 488280471}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a7f7d94fa9cd8241a06c6db28158eda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitsInZone: []
+  zoneName: 
 --- !u!1 &491060224
 GameObject:
   m_ObjectHideFlags: 0
@@ -5874,6 +5978,7 @@ GameObject:
   - component: {fileID: 541661261}
   - component: {fileID: 541661260}
   - component: {fileID: 541661262}
+  - component: {fileID: 541661263}
   m_Layer: 3
   m_Name: Terrain 1 2 1 2
   m_TagString: Untagged
@@ -5986,6 +6091,20 @@ MonoBehaviour:
   m_MinRegionArea: 2
   m_NavMeshData: {fileID: 0}
   m_BuildHeightMesh: 0
+--- !u!114 &541661263
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 541661258}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a7f7d94fa9cd8241a06c6db28158eda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitsInZone: []
+  zoneName: 
 --- !u!1 &571805443
 GameObject:
   m_ObjectHideFlags: 0
@@ -6352,6 +6471,7 @@ GameObject:
   - component: {fileID: 627358804}
   - component: {fileID: 627358803}
   - component: {fileID: 627358805}
+  - component: {fileID: 627358806}
   m_Layer: 3
   m_Name: Terrain 1 2 3
   m_TagString: Untagged
@@ -6464,6 +6584,20 @@ MonoBehaviour:
   m_MinRegionArea: 2
   m_NavMeshData: {fileID: 0}
   m_BuildHeightMesh: 0
+--- !u!114 &627358806
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 627358801}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a7f7d94fa9cd8241a06c6db28158eda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitsInZone: []
+  zoneName: 
 --- !u!1 &630686506
 GameObject:
   m_ObjectHideFlags: 0
@@ -6891,6 +7025,7 @@ GameObject:
   - component: {fileID: 656867707}
   - component: {fileID: 656867706}
   - component: {fileID: 656867708}
+  - component: {fileID: 656867709}
   m_Layer: 3
   m_Name: Terrain 3
   m_TagString: Untagged
@@ -7003,6 +7138,20 @@ MonoBehaviour:
   m_MinRegionArea: 2
   m_NavMeshData: {fileID: 0}
   m_BuildHeightMesh: 0
+--- !u!114 &656867709
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 656867704}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a7f7d94fa9cd8241a06c6db28158eda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitsInZone: []
+  zoneName: 
 --- !u!1 &670535847
 GameObject:
   m_ObjectHideFlags: 0
@@ -8118,6 +8267,7 @@ GameObject:
   - component: {fileID: 742453842}
   - component: {fileID: 742453841}
   - component: {fileID: 742453843}
+  - component: {fileID: 742453844}
   m_Layer: 3
   m_Name: Terrain 1 0 0
   m_TagString: Untagged
@@ -8230,6 +8380,20 @@ MonoBehaviour:
   m_MinRegionArea: 2
   m_NavMeshData: {fileID: 0}
   m_BuildHeightMesh: 0
+--- !u!114 &742453844
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 742453839}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a7f7d94fa9cd8241a06c6db28158eda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitsInZone: []
+  zoneName: 
 --- !u!1 &750022757
 GameObject:
   m_ObjectHideFlags: 0
@@ -8360,6 +8524,7 @@ GameObject:
   - component: {fileID: 762499282}
   - component: {fileID: 762499281}
   - component: {fileID: 762499283}
+  - component: {fileID: 762499284}
   m_Layer: 3
   m_Name: Terrain 2
   m_TagString: Untagged
@@ -8472,6 +8637,20 @@ MonoBehaviour:
   m_MinRegionArea: 2
   m_NavMeshData: {fileID: 0}
   m_BuildHeightMesh: 0
+--- !u!114 &762499284
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 762499279}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a7f7d94fa9cd8241a06c6db28158eda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitsInZone: []
+  zoneName: 
 --- !u!1 &769083016
 GameObject:
   m_ObjectHideFlags: 0
@@ -9104,6 +9283,7 @@ GameObject:
   - component: {fileID: 840784755}
   - component: {fileID: 840784754}
   - component: {fileID: 840784756}
+  - component: {fileID: 840784757}
   m_Layer: 3
   m_Name: Terrain 1 2 0
   m_TagString: Untagged
@@ -9216,6 +9396,20 @@ MonoBehaviour:
   m_MinRegionArea: 2
   m_NavMeshData: {fileID: 0}
   m_BuildHeightMesh: 0
+--- !u!114 &840784757
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 840784752}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a7f7d94fa9cd8241a06c6db28158eda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitsInZone: []
+  zoneName: 
 --- !u!1 &845378070
 GameObject:
   m_ObjectHideFlags: 0
@@ -9305,6 +9499,7 @@ GameObject:
   - component: {fileID: 849084249}
   - component: {fileID: 849084248}
   - component: {fileID: 849084250}
+  - component: {fileID: 849084251}
   m_Layer: 3
   m_Name: Terrain 1 3
   m_TagString: Untagged
@@ -9417,6 +9612,20 @@ MonoBehaviour:
   m_MinRegionArea: 2
   m_NavMeshData: {fileID: 0}
   m_BuildHeightMesh: 0
+--- !u!114 &849084251
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 849084246}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a7f7d94fa9cd8241a06c6db28158eda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitsInZone: []
+  zoneName: 
 --- !u!1 &853674774
 GameObject:
   m_ObjectHideFlags: 0
@@ -10039,6 +10248,7 @@ GameObject:
   - component: {fileID: 879006313}
   - component: {fileID: 879006312}
   - component: {fileID: 879006314}
+  - component: {fileID: 879006315}
   m_Layer: 3
   m_Name: Terrain 1 0 3
   m_TagString: Untagged
@@ -10151,6 +10361,20 @@ MonoBehaviour:
   m_MinRegionArea: 2
   m_NavMeshData: {fileID: 0}
   m_BuildHeightMesh: 0
+--- !u!114 &879006315
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 879006310}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a7f7d94fa9cd8241a06c6db28158eda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitsInZone: []
+  zoneName: 
 --- !u!1 &888109083
 GameObject:
   m_ObjectHideFlags: 0
@@ -10457,6 +10681,7 @@ GameObject:
   - component: {fileID: 913244178}
   - component: {fileID: 913244177}
   - component: {fileID: 913244179}
+  - component: {fileID: 913244180}
   m_Layer: 3
   m_Name: Terrain 1 2 1 0
   m_TagString: Untagged
@@ -10569,6 +10794,20 @@ MonoBehaviour:
   m_MinRegionArea: 2
   m_NavMeshData: {fileID: 0}
   m_BuildHeightMesh: 0
+--- !u!114 &913244180
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 913244175}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a7f7d94fa9cd8241a06c6db28158eda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitsInZone: []
+  zoneName: 
 --- !u!1 &927393298
 GameObject:
   m_ObjectHideFlags: 0
@@ -10581,6 +10820,7 @@ GameObject:
   - component: {fileID: 927393301}
   - component: {fileID: 927393300}
   - component: {fileID: 927393302}
+  - component: {fileID: 927393303}
   m_Layer: 3
   m_Name: Terrain 0 3 3
   m_TagString: Untagged
@@ -10693,6 +10933,20 @@ MonoBehaviour:
   m_MinRegionArea: 2
   m_NavMeshData: {fileID: 0}
   m_BuildHeightMesh: 0
+--- !u!114 &927393303
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 927393298}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a7f7d94fa9cd8241a06c6db28158eda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitsInZone: []
+  zoneName: 
 --- !u!1 &931446522
 GameObject:
   m_ObjectHideFlags: 0
@@ -11437,6 +11691,7 @@ GameObject:
   - component: {fileID: 1009234438}
   - component: {fileID: 1009234437}
   - component: {fileID: 1009234439}
+  - component: {fileID: 1009234440}
   m_Layer: 3
   m_Name: Terrain 0 1 3
   m_TagString: Untagged
@@ -11549,6 +11804,20 @@ MonoBehaviour:
   m_MinRegionArea: 2
   m_NavMeshData: {fileID: 0}
   m_BuildHeightMesh: 0
+--- !u!114 &1009234440
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1009234435}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a7f7d94fa9cd8241a06c6db28158eda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitsInZone: []
+  zoneName: 
 --- !u!1 &1014903712
 GameObject:
   m_ObjectHideFlags: 0
@@ -13277,6 +13546,7 @@ GameObject:
   - component: {fileID: 1207557650}
   - component: {fileID: 1207557649}
   - component: {fileID: 1207557651}
+  - component: {fileID: 1207557652}
   m_Layer: 3
   m_Name: Terrain 1 2 1 1
   m_TagString: Untagged
@@ -13389,6 +13659,20 @@ MonoBehaviour:
   m_MinRegionArea: 2
   m_NavMeshData: {fileID: 0}
   m_BuildHeightMesh: 0
+--- !u!114 &1207557652
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1207557647}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a7f7d94fa9cd8241a06c6db28158eda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitsInZone: []
+  zoneName: 
 --- !u!1 &1212936486
 GameObject:
   m_ObjectHideFlags: 0
@@ -13553,6 +13837,7 @@ GameObject:
   - component: {fileID: 1244345895}
   - component: {fileID: 1244345894}
   - component: {fileID: 1244345896}
+  - component: {fileID: 1244345897}
   m_Layer: 3
   m_Name: Terrain 1 0
   m_TagString: Untagged
@@ -13665,6 +13950,20 @@ MonoBehaviour:
   m_MinRegionArea: 2
   m_NavMeshData: {fileID: 0}
   m_BuildHeightMesh: 0
+--- !u!114 &1244345897
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1244345892}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a7f7d94fa9cd8241a06c6db28158eda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitsInZone: []
+  zoneName: 
 --- !u!1 &1244586089
 GameObject:
   m_ObjectHideFlags: 0
@@ -14694,6 +14993,53 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1366766113}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1411551667
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1411551669}
+  - component: {fileID: 1411551668}
+  m_Layer: 0
+  m_Name: Zone Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1411551668
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1411551667}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d7e4c6f4298db44198aa620c5ac9c4e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  crewMembers: []
+  enemies: []
+  zones: []
+--- !u!4 &1411551669
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1411551667}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 72.16677, y: -36.745045, z: 31.804474}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 17
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1433855706
 GameObject:
   m_ObjectHideFlags: 0
@@ -14789,6 +15135,7 @@ GameObject:
   - component: {fileID: 1436806949}
   - component: {fileID: 1436806948}
   - component: {fileID: 1436806950}
+  - component: {fileID: 1436806951}
   m_Layer: 3
   m_Name: Terrain 0 1 0
   m_TagString: Untagged
@@ -14901,6 +15248,20 @@ MonoBehaviour:
   m_MinRegionArea: 2
   m_NavMeshData: {fileID: 0}
   m_BuildHeightMesh: 0
+--- !u!114 &1436806951
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1436806946}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a7f7d94fa9cd8241a06c6db28158eda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitsInZone: []
+  zoneName: 
 --- !u!1 &1439090912
 GameObject:
   m_ObjectHideFlags: 0
@@ -15398,6 +15759,7 @@ GameObject:
   - component: {fileID: 1472249499}
   - component: {fileID: 1472249498}
   - component: {fileID: 1472249500}
+  - component: {fileID: 1472249501}
   m_Layer: 3
   m_Name: Terrain 1 0 2
   m_TagString: Untagged
@@ -15510,6 +15872,20 @@ MonoBehaviour:
   m_MinRegionArea: 2
   m_NavMeshData: {fileID: 0}
   m_BuildHeightMesh: 0
+--- !u!114 &1472249501
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1472249496}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a7f7d94fa9cd8241a06c6db28158eda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitsInZone: []
+  zoneName: 
 --- !u!1 &1503330615
 GameObject:
   m_ObjectHideFlags: 0
@@ -15815,6 +16191,7 @@ GameObject:
   - component: {fileID: 1525622475}
   - component: {fileID: 1525622474}
   - component: {fileID: 1525622476}
+  - component: {fileID: 1525622477}
   m_Layer: 3
   m_Name: Terrain 0 2
   m_TagString: Untagged
@@ -15927,6 +16304,20 @@ MonoBehaviour:
   m_MinRegionArea: 2
   m_NavMeshData: {fileID: 0}
   m_BuildHeightMesh: 0
+--- !u!114 &1525622477
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1525622472}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a7f7d94fa9cd8241a06c6db28158eda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitsInZone: []
+  zoneName: 
 --- !u!1 &1551457830
 GameObject:
   m_ObjectHideFlags: 0
@@ -16022,6 +16413,7 @@ GameObject:
   - component: {fileID: 1558399906}
   - component: {fileID: 1558399905}
   - component: {fileID: 1558399907}
+  - component: {fileID: 1558399908}
   m_Layer: 3
   m_Name: Terrain 0 0
   m_TagString: Untagged
@@ -16134,6 +16526,20 @@ MonoBehaviour:
   m_MinRegionArea: 2
   m_NavMeshData: {fileID: 0}
   m_BuildHeightMesh: 0
+--- !u!114 &1558399908
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1558399903}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a7f7d94fa9cd8241a06c6db28158eda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitsInZone: []
+  zoneName: 
 --- !u!1 &1589571255
 GameObject:
   m_ObjectHideFlags: 0
@@ -19525,6 +19931,7 @@ GameObject:
   - component: {fileID: 1858207588}
   - component: {fileID: 1858207587}
   - component: {fileID: 1858207589}
+  - component: {fileID: 1858207590}
   m_Layer: 3
   m_Name: Terrain 0 1 2
   m_TagString: Untagged
@@ -19637,6 +20044,20 @@ MonoBehaviour:
   m_MinRegionArea: 2
   m_NavMeshData: {fileID: 0}
   m_BuildHeightMesh: 0
+--- !u!114 &1858207590
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1858207585}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a7f7d94fa9cd8241a06c6db28158eda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitsInZone: []
+  zoneName: 
 --- !u!1 &1869201187
 GameObject:
   m_ObjectHideFlags: 0
@@ -21404,6 +21825,7 @@ GameObject:
   - component: {fileID: 2024204119}
   - component: {fileID: 2024204118}
   - component: {fileID: 2024204120}
+  - component: {fileID: 2024204121}
   m_Layer: 3
   m_Name: Terrain 0 3 1
   m_TagString: Untagged
@@ -21516,6 +21938,20 @@ MonoBehaviour:
   m_MinRegionArea: 2
   m_NavMeshData: {fileID: 0}
   m_BuildHeightMesh: 0
+--- !u!114 &2024204121
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2024204116}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a7f7d94fa9cd8241a06c6db28158eda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitsInZone: []
+  zoneName: 
 --- !u!1 &2024865868
 GameObject:
   m_ObjectHideFlags: 0
@@ -22836,6 +23272,7 @@ GameObject:
   - component: {fileID: 2128263231}
   - component: {fileID: 2128263230}
   - component: {fileID: 2128263232}
+  - component: {fileID: 2128263233}
   m_Layer: 3
   m_Name: Terrain 0 1 1
   m_TagString: Untagged
@@ -22948,6 +23385,20 @@ MonoBehaviour:
   m_MinRegionArea: 2
   m_NavMeshData: {fileID: 0}
   m_BuildHeightMesh: 0
+--- !u!114 &2128263233
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2128263228}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a7f7d94fa9cd8241a06c6db28158eda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitsInZone: []
+  zoneName: 
 --- !u!1 &2140525710
 GameObject:
   m_ObjectHideFlags: 0

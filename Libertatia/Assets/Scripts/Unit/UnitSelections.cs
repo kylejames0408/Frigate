@@ -100,7 +100,7 @@ public class UnitSelections : MonoBehaviour
     /// <param name="unitToAdd"></param>
     public void ShiftClickSelect(GameObject unitToAdd)
     {
-        if(!unitsSelected.Contains(unitToAdd))
+        if(unitsSelected.Contains(unitToAdd))
         {
             RemoveSelection(unitToAdd);
         }

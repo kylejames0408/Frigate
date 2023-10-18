@@ -6,8 +6,7 @@ using UnityEngine.AI;
 
 public class Zone : MonoBehaviour
 {
-    public List<GameObject> crewMembers;
-    public List<GameObject> enemies;
+
 
     public List<GameObject> unitsInZone;
 
@@ -19,25 +18,12 @@ public class Zone : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-      
-        enemies = GameObject.FindGameObjectsWithTag("Enemy").ToList<GameObject>();
-
         zoneName = gameObject.name;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(crewMembers.Count == 0)
-        {
-            crewMembers = GameObject.FindGameObjectsWithTag("PlayerCharacter").ToList<GameObject>();
-        }
-
-        AddToUnitsInZoneList(crewMembers);
-        AddToUnitsInZoneList(enemies);
-
-        RemoveUnitsInZoneList(crewMembers);
-        RemoveUnitsInZoneList(enemies);
 
     }
 
