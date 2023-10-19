@@ -1044,11 +1044,19 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -5026275438924245945, guid: 4fe7ec1d555ab494d836addf3c4b2c0f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -5026275438924245945, guid: 4fe7ec1d555ab494d836addf3c4b2c0f, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -4626620147017719340, guid: 4fe7ec1d555ab494d836addf3c4b2c0f, type: 3}
       propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -3587836429085386650, guid: 4fe7ec1d555ab494d836addf3c4b2c0f, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -3587836429085386650, guid: 4fe7ec1d555ab494d836addf3c4b2c0f, type: 3}
@@ -1144,6 +1152,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5165722793586128339, guid: 4fe7ec1d555ab494d836addf3c4b2c0f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5165722793586128339, guid: 4fe7ec1d555ab494d836addf3c4b2c0f, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 0
       objectReference: {fileID: 0}
@@ -1153,6 +1165,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5708343439039342814, guid: 4fe7ec1d555ab494d836addf3c4b2c0f, type: 3}
       propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5989339891505290489, guid: 4fe7ec1d555ab494d836addf3c4b2c0f, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5989339891505290489, guid: 4fe7ec1d555ab494d836addf3c4b2c0f, type: 3}
@@ -1226,7 +1242,7 @@ GameObject:
   - component: {fileID: 111019864}
   m_Layer: 3
   m_Name: Terrain 1 2 2
-  m_TagString: Untagged
+  m_TagString: Zone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -2105,7 +2121,7 @@ GameObject:
   - component: {fileID: 206861883}
   m_Layer: 3
   m_Name: Terrain 1 2 1 3
-  m_TagString: Untagged
+  m_TagString: Zone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -3310,7 +3326,7 @@ GameObject:
   - component: {fileID: 299553739}
   m_Layer: 3
   m_Name: Terrain 0 3 2
-  m_TagString: Untagged
+  m_TagString: Zone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -3554,7 +3570,7 @@ GameObject:
   - component: {fileID: 313866718}
   m_Layer: 3
   m_Name: Terrain 1 1
-  m_TagString: Untagged
+  m_TagString: Zone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -4102,7 +4118,7 @@ GameObject:
   - component: {fileID: 356316811}
   m_Layer: 3
   m_Name: Terrain 0 1
-  m_TagString: Untagged
+  m_TagString: Zone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -5042,6 +5058,7 @@ GameObject:
   - component: {fileID: 443887578}
   - component: {fileID: 443887576}
   - component: {fileID: 443887583}
+  - component: {fileID: 443887584}
   m_Layer: 8
   m_Name: Enemy (9)
   m_TagString: Enemy
@@ -5200,6 +5217,33 @@ MonoBehaviour:
   crewMembers: []
   crewMemberGameObjects: []
   detectionRange: 0
+--- !u!54 &443887584
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 443887574}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &453079380
 GameObject:
   m_ObjectHideFlags: 0
@@ -5215,7 +5259,7 @@ GameObject:
   - component: {fileID: 453079385}
   m_Layer: 3
   m_Name: Terrain 1 0 1
-  m_TagString: Untagged
+  m_TagString: Zone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -5431,7 +5475,7 @@ GameObject:
   - component: {fileID: 488280476}
   m_Layer: 3
   m_Name: Terrain 0 3 0
-  m_TagString: Untagged
+  m_TagString: Zone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -5981,7 +6025,7 @@ GameObject:
   - component: {fileID: 541661263}
   m_Layer: 3
   m_Name: Terrain 1 2 1 2
-  m_TagString: Untagged
+  m_TagString: Zone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -6225,6 +6269,7 @@ GameObject:
   - component: {fileID: 575436580}
   - component: {fileID: 575436578}
   - component: {fileID: 575436585}
+  - component: {fileID: 575436586}
   m_Layer: 8
   m_Name: Enemy (5)
   m_TagString: Enemy
@@ -6383,6 +6428,33 @@ MonoBehaviour:
   crewMembers: []
   crewMemberGameObjects: []
   detectionRange: 0
+--- !u!54 &575436586
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 575436576}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &576300623
 GameObject:
   m_ObjectHideFlags: 0
@@ -6474,7 +6546,7 @@ GameObject:
   - component: {fileID: 627358806}
   m_Layer: 3
   m_Name: Terrain 1 2 3
-  m_TagString: Untagged
+  m_TagString: Zone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -7028,7 +7100,7 @@ GameObject:
   - component: {fileID: 656867709}
   m_Layer: 3
   m_Name: Terrain 3
-  m_TagString: Untagged
+  m_TagString: Zone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -8270,7 +8342,7 @@ GameObject:
   - component: {fileID: 742453844}
   m_Layer: 3
   m_Name: Terrain 1 0 0
-  m_TagString: Untagged
+  m_TagString: Zone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -8527,7 +8599,7 @@ GameObject:
   - component: {fileID: 762499284}
   m_Layer: 3
   m_Name: Terrain 2
-  m_TagString: Untagged
+  m_TagString: Zone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -9284,9 +9356,10 @@ GameObject:
   - component: {fileID: 840784754}
   - component: {fileID: 840784756}
   - component: {fileID: 840784757}
+  - component: {fileID: 840784758}
   m_Layer: 3
   m_Name: Terrain 1 2 0
-  m_TagString: Untagged
+  m_TagString: Zone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -9410,6 +9483,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unitsInZone: []
   zoneName: 
+--- !u!65 &840784758
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 840784752}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 63.062763, y: 18.181541, z: 36.994076}
+  m_Center: {x: 31.154459, y: 113.39386, z: 19.1088}
 --- !u!1 &845378070
 GameObject:
   m_ObjectHideFlags: 0
@@ -9502,7 +9596,7 @@ GameObject:
   - component: {fileID: 849084251}
   m_Layer: 3
   m_Name: Terrain 1 3
-  m_TagString: Untagged
+  m_TagString: Zone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -9759,6 +9853,7 @@ GameObject:
   - component: {fileID: 867616224}
   - component: {fileID: 867616222}
   - component: {fileID: 867616229}
+  - component: {fileID: 867616230}
   m_Layer: 8
   m_Name: Enemy (10)
   m_TagString: Enemy
@@ -9917,6 +10012,33 @@ MonoBehaviour:
   crewMembers: []
   crewMemberGameObjects: []
   detectionRange: 0
+--- !u!54 &867616230
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 867616220}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &871968837
 GameObject:
   m_ObjectHideFlags: 0
@@ -10251,7 +10373,7 @@ GameObject:
   - component: {fileID: 879006315}
   m_Layer: 3
   m_Name: Terrain 1 0 3
-  m_TagString: Untagged
+  m_TagString: Zone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -10684,7 +10806,7 @@ GameObject:
   - component: {fileID: 913244180}
   m_Layer: 3
   m_Name: Terrain 1 2 1 0
-  m_TagString: Untagged
+  m_TagString: Zone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -10823,7 +10945,7 @@ GameObject:
   - component: {fileID: 927393303}
   m_Layer: 3
   m_Name: Terrain 0 3 3
-  m_TagString: Untagged
+  m_TagString: Zone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -10962,6 +11084,7 @@ GameObject:
   - component: {fileID: 931446526}
   - component: {fileID: 931446524}
   - component: {fileID: 931446531}
+  - component: {fileID: 931446532}
   m_Layer: 8
   m_Name: Enemy (6)
   m_TagString: Enemy
@@ -11120,6 +11243,33 @@ MonoBehaviour:
   crewMembers: []
   crewMemberGameObjects: []
   detectionRange: 0
+--- !u!54 &931446532
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 931446522}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &941200566
 GameObject:
   m_ObjectHideFlags: 0
@@ -11135,6 +11285,7 @@ GameObject:
   - component: {fileID: 941200570}
   - component: {fileID: 941200568}
   - component: {fileID: 941200575}
+  - component: {fileID: 941200576}
   m_Layer: 8
   m_Name: Enemy (4)
   m_TagString: Enemy
@@ -11293,6 +11444,33 @@ MonoBehaviour:
   crewMembers: []
   crewMemberGameObjects: []
   detectionRange: 0
+--- !u!54 &941200576
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 941200566}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1001 &961156325
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11694,7 +11872,7 @@ GameObject:
   - component: {fileID: 1009234440}
   m_Layer: 3
   m_Name: Terrain 0 1 3
-  m_TagString: Untagged
+  m_TagString: Zone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -12693,6 +12871,7 @@ GameObject:
   - component: {fileID: 1117264213}
   - component: {fileID: 1117264218}
   - component: {fileID: 1117264220}
+  - component: {fileID: 1117264221}
   m_Layer: 8
   m_Name: Enemy
   m_TagString: Enemy
@@ -12851,6 +13030,33 @@ MonoBehaviour:
   crewMembers: []
   crewMemberGameObjects: []
   detectionRange: 0
+--- !u!54 &1117264221
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1117264210}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &1123326329
 GameObject:
   m_ObjectHideFlags: 0
@@ -13549,7 +13755,7 @@ GameObject:
   - component: {fileID: 1207557652}
   m_Layer: 3
   m_Name: Terrain 1 2 1 1
-  m_TagString: Untagged
+  m_TagString: Zone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -13840,7 +14046,7 @@ GameObject:
   - component: {fileID: 1244345897}
   m_Layer: 3
   m_Name: Terrain 1 0
-  m_TagString: Untagged
+  m_TagString: Zone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -14022,6 +14228,7 @@ GameObject:
   - component: {fileID: 1252722867}
   - component: {fileID: 1252722865}
   - component: {fileID: 1252722872}
+  - component: {fileID: 1252722873}
   m_Layer: 8
   m_Name: Enemy (3)
   m_TagString: Enemy
@@ -14180,6 +14387,33 @@ MonoBehaviour:
   crewMembers: []
   crewMemberGameObjects: []
   detectionRange: 0
+--- !u!54 &1252722873
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1252722863}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &1286661731
 GameObject:
   m_ObjectHideFlags: 0
@@ -15138,7 +15372,7 @@ GameObject:
   - component: {fileID: 1436806951}
   m_Layer: 3
   m_Name: Terrain 0 1 0
-  m_TagString: Untagged
+  m_TagString: Zone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -15762,7 +15996,7 @@ GameObject:
   - component: {fileID: 1472249501}
   m_Layer: 3
   m_Name: Terrain 1 0 2
-  m_TagString: Untagged
+  m_TagString: Zone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -16194,7 +16428,7 @@ GameObject:
   - component: {fileID: 1525622477}
   m_Layer: 3
   m_Name: Terrain 0 2
-  m_TagString: Untagged
+  m_TagString: Zone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -16416,7 +16650,7 @@ GameObject:
   - component: {fileID: 1558399908}
   m_Layer: 3
   m_Name: Terrain 0 0
-  m_TagString: Untagged
+  m_TagString: Zone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -17288,6 +17522,7 @@ GameObject:
   - component: {fileID: 1632069293}
   - component: {fileID: 1632069291}
   - component: {fileID: 1632069298}
+  - component: {fileID: 1632069299}
   m_Layer: 8
   m_Name: Enemy (2)
   m_TagString: Enemy
@@ -17446,6 +17681,33 @@ MonoBehaviour:
   crewMembers: []
   crewMemberGameObjects: []
   detectionRange: 0
+--- !u!54 &1632069299
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1632069289}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &1636327036
 GameObject:
   m_ObjectHideFlags: 0
@@ -17461,6 +17723,7 @@ GameObject:
   - component: {fileID: 1636327040}
   - component: {fileID: 1636327038}
   - component: {fileID: 1636327045}
+  - component: {fileID: 1636327046}
   m_Layer: 8
   m_Name: Enemy (1)
   m_TagString: Enemy
@@ -17619,6 +17882,33 @@ MonoBehaviour:
   crewMembers: []
   crewMemberGameObjects: []
   detectionRange: 0
+--- !u!54 &1636327046
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1636327036}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &1667109088
 GameObject:
   m_ObjectHideFlags: 0
@@ -19934,7 +20224,7 @@ GameObject:
   - component: {fileID: 1858207590}
   m_Layer: 3
   m_Name: Terrain 0 1 2
-  m_TagString: Untagged
+  m_TagString: Zone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -21079,6 +21369,7 @@ GameObject:
   - component: {fileID: 1967424714}
   - component: {fileID: 1967424712}
   - component: {fileID: 1967424719}
+  - component: {fileID: 1967424720}
   m_Layer: 8
   m_Name: Enemy (8)
   m_TagString: Enemy
@@ -21237,6 +21528,33 @@ MonoBehaviour:
   crewMembers: []
   crewMemberGameObjects: []
   detectionRange: 0
+--- !u!54 &1967424720
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1967424710}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &1971664536
 GameObject:
   m_ObjectHideFlags: 0
@@ -21828,7 +22146,7 @@ GameObject:
   - component: {fileID: 2024204121}
   m_Layer: 3
   m_Name: Terrain 0 3 1
-  m_TagString: Untagged
+  m_TagString: Zone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -22372,6 +22690,7 @@ GameObject:
   - component: {fileID: 2046984436}
   - component: {fileID: 2046984434}
   - component: {fileID: 2046984441}
+  - component: {fileID: 2046984442}
   m_Layer: 8
   m_Name: Enemy (7)
   m_TagString: Enemy
@@ -22530,6 +22849,33 @@ MonoBehaviour:
   crewMembers: []
   crewMemberGameObjects: []
   detectionRange: 0
+--- !u!54 &2046984442
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2046984432}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &2056102847
 GameObject:
   m_ObjectHideFlags: 0
@@ -23275,7 +23621,7 @@ GameObject:
   - component: {fileID: 2128263233}
   m_Layer: 3
   m_Name: Terrain 0 1 1
-  m_TagString: Untagged
+  m_TagString: Zone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647

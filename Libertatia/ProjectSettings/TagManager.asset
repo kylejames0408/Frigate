@@ -8,6 +8,7 @@ TagManager:
   - PlayerCharacter
   - Enemy
   - Unit Selections
+  - Zone
   layers:
   - Default
   - TransparentFX

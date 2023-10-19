@@ -76,5 +76,5 @@ public abstract class Character : MonoBehaviour
             gameObject.SetActive(false);
         }
     }
-    
+
 }

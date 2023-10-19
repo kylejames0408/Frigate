@@ -28,21 +28,21 @@ public class ZoneManager : MonoBehaviour
             crewMembers = GameObject.FindGameObjectsWithTag("PlayerCharacter").ToList<GameObject>();
         }
 
-        for (int i = 0; i < zones.Count; i++)
-        {
-            Zone terrainChunk = zones[i].GetComponent<Zone>();
+        //for (int i = 0; i < zones.Count; i++)
+        //{
+        //    Zone terrainChunk = zones[i].GetComponent<Zone>();
 
-            for(int j = 0; j < crewMembers.Count; j++)
-            {
-                terrainChunk.AddToUnitsInZoneList(crewMembers);
-            }
+        //    for(int j = 0; j < crewMembers.Count; j++)
+        //    {
+        //        terrainChunk.AddToUnitsInZoneList(crewMembers);
+        //    }
 
-            for(int k = 0; k < enemies.Count; k++)
-            {
-                terrainChunk.AddToUnitsInZoneList(enemies);
-            }
+        //    for(int k = 0; k < enemies.Count; k++)
+        //    {
+        //        terrainChunk.AddToUnitsInZoneList(enemies);
+        //    }
        
-        }
+        //}
 
     }
 }
