@@ -91,9 +91,9 @@ GameObject:
   - component: {fileID: 5433463553582545347}
   - component: {fileID: 1936097422279918113}
   m_Layer: 5
-  m_Name: Card-Crewmate
+  m_Name: CARD-Crewmate
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
