@@ -19,6 +19,7 @@ public class OutpostManagementUI : MonoBehaviour
     private Transform[] pages;
     private List<GameObject> buildingCards;
     private List<GameObject> crewmateCards;
+    private bool isOpen;
 
     private void Awake()
     {
@@ -35,6 +36,7 @@ public class OutpostManagementUI : MonoBehaviour
 
     void Start()
     {
+        isOpen = true;
         // Sets tab triggers
         for ( int i = 0; i < tabs.Length; i++ )
         {
@@ -44,13 +46,14 @@ public class OutpostManagementUI : MonoBehaviour
         // Init building UI as start tab
         SelectTab(0);
         // Sets arrow initial onclick callback
-        arrow.onClick.AddListener(OpenMenu);
+        arrow.onClick.AddListener(CloseMenu);
     }
 
     // Minimizes menu
     private void OpenMenu()
     {
-        transform.DOMoveY(91.515f, 0.6f);
+        isOpen = true;
+        transform.DOMoveY(0, 0.6f);
         arrow.onClick.RemoveListener(OpenMenu);
         arrow.onClick.AddListener(CloseMenu);
         arrow.transform.GetChild(0).DORotate(new Vector3(0, 0, 180), 0.5f);
@@ -58,7 +61,8 @@ public class OutpostManagementUI : MonoBehaviour
     // Minimizes menu
     private void CloseMenu()
     {
-        transform.DOMoveY(-31, 0.6f);
+        isOpen = false;
+        transform.DOMoveY(-pagesUIParent.GetComponent<RectTransform>().rect.height, 0.6f); // cant get height in start
         arrow.onClick.RemoveListener(CloseMenu);
         arrow.onClick.AddListener(OpenMenu);
         arrow.transform.GetChild(0).DORotate(new Vector3(0, 0, 0), 0.5f);
@@ -66,6 +70,11 @@ public class OutpostManagementUI : MonoBehaviour
     // Select tab callback - changes tab interface and adds interface content
     public void SelectTab(int index)
     {
+        if(!isOpen)
+        {
+            OpenMenu();
+        }
+
         for (int i = 0; i < tabs.Length; i++) // assumes tabs and pages length are equal
         {
             if (i == index)
