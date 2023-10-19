@@ -2119,8 +2119,9 @@ GameObject:
   - component: {fileID: 206861880}
   - component: {fileID: 206861882}
   - component: {fileID: 206861883}
+  - component: {fileID: 206861884}
   m_Layer: 3
-  m_Name: Terrain 1 2 1 3
+  m_Name: Terrain 1 2 1 3 (Zone)
   m_TagString: Zone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2245,6 +2246,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unitsInZone: []
   zoneName: 
+--- !u!65 &206861884
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 206861878}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 30.944435, y: 5.800003, z: 18.8247}
+  m_Center: {x: 15.472218, y: 120, z: 9.58765}
 --- !u!1 &211630678
 GameObject:
   m_ObjectHideFlags: 0
@@ -6023,8 +6045,9 @@ GameObject:
   - component: {fileID: 541661260}
   - component: {fileID: 541661262}
   - component: {fileID: 541661263}
+  - component: {fileID: 541661264}
   m_Layer: 3
-  m_Name: Terrain 1 2 1 2
+  m_Name: Terrain 1 2 1 2 (Zone)
   m_TagString: Zone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6149,6 +6172,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unitsInZone: []
   zoneName: 
+--- !u!65 &541661264
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 541661258}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 30.068272, y: 7.5768585, z: 17.83355}
+  m_Center: {x: 15.534136, y: 121.78843, z: 9.583225}
 --- !u!1 &571805443
 GameObject:
   m_ObjectHideFlags: 0
@@ -9358,7 +9402,7 @@ GameObject:
   - component: {fileID: 840784757}
   - component: {fileID: 840784758}
   m_Layer: 3
-  m_Name: Terrain 1 2 0
+  m_Name: Terrain 1 2 0 (Zone)
   m_TagString: Zone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10804,8 +10848,9 @@ GameObject:
   - component: {fileID: 913244177}
   - component: {fileID: 913244179}
   - component: {fileID: 913244180}
+  - component: {fileID: 913244181}
   m_Layer: 3
-  m_Name: Terrain 1 2 1 0
+  m_Name: Terrain 1 2 1 0 (Zone)
   m_TagString: Zone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10930,6 +10975,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unitsInZone: []
   zoneName: 
+--- !u!65 &913244181
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 913244175}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 29.092976, y: 4.8047714, z: 17.176172}
+  m_Center: {x: 15.348238, y: 121.90239, z: 9.26876}
 --- !u!1 &927393298
 GameObject:
   m_ObjectHideFlags: 0
@@ -13753,8 +13819,9 @@ GameObject:
   - component: {fileID: 1207557649}
   - component: {fileID: 1207557651}
   - component: {fileID: 1207557652}
+  - component: {fileID: 1207557653}
   m_Layer: 3
-  m_Name: Terrain 1 2 1 1
+  m_Name: Terrain 1 2 1 1 (Zone)
   m_TagString: Zone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13879,6 +13946,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unitsInZone: []
   zoneName: 
+--- !u!65 &1207557653
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1207557647}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 30.567356, y: 5.8984146, z: 18.194656}
+  m_Center: {x: 15.783678, y: 119.9908, z: 9.536541}
 --- !u!1 &1212936486
 GameObject:
   m_ObjectHideFlags: 0

@@ -12,7 +12,7 @@ public class CrewMember : Character
     {
         maxHealth = 100;
         currentHealth = 100;
-        attackRange = 2;
+        attackRange = 3;
         attackRate = 2;
         damage = 25;
 
