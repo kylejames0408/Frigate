@@ -23,7 +23,7 @@ public class BuildingManager : MonoBehaviour
     public GameEvent onBuildingPlaced;
     public UnityEvent placedBuilding;
     // Components
-    private ConstructionUI constructionUI;
+    private OutpostManagementUI omi;
     private OutpostUI outpostUI;
     private bool isPlacing = false;
     private Building activeBuilding;
@@ -36,7 +36,7 @@ public class BuildingManager : MonoBehaviour
     private void Start()
     {
         // should check building folder for buildings
-        constructionUI = FindObjectOfType<ConstructionUI>(); // init both of these
+        omi = FindObjectOfType<OutpostManagementUI>(); // init both of these
         crewmateSpawn = crewmateParent.GetChild(0);
         crewmates = new List<Crewmate>(GameManager.Data.crewmates.Count);
 
@@ -74,7 +74,7 @@ public class BuildingManager : MonoBehaviour
             }
         }
 
-        constructionUI.FillCrewmateUI(this, GameManager.Data.crewmates.ToArray());
+        omi.FillCrewmateUI(this, GameManager.Data.crewmates.ToArray());
 
         buildings = new List<Building>();
 
@@ -98,7 +98,7 @@ public class BuildingManager : MonoBehaviour
             buildings.Add(building);
         }
 
-        constructionUI.FillConstructionUI(this, buildingPrefabs);
+        omi.FillConstructionUI(this, buildingPrefabs);
         outpostUI = FindObjectOfType<OutpostUI>();
         outpostUI.Init();
     }
