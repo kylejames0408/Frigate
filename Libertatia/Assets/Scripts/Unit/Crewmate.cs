@@ -8,6 +8,7 @@ using UnityEngine.Events;
 [Serializable]
 public class Crewmate : MonoBehaviour
 {
+    public int id;
     public string crewmateName;
     public Sprite icon;
     public bool isHovered = false;
@@ -36,6 +37,7 @@ public class Crewmate : MonoBehaviour
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
+        id = gameObject.GetInstanceID();
         buildingID = -1;
     }
     private void Update()

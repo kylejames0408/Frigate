@@ -23,6 +23,7 @@ public class Building : MonoBehaviour
     public int id;
     [SerializeField] private string buildingName;
     [SerializeField] private Sprite icon;
+    public string output;
     public int uiIndex;
     public int level;
     [SerializeField] private float radius = 5.0f; // for construction
@@ -33,7 +34,7 @@ public class Building : MonoBehaviour
     // Building
     public BuildingResources resourceCost;
     public int builderCapacity = 1;
-    public List<Crewmate> builders;
+    public Crewmate builder;
     // Components
     private MeshRenderer buildingRender;
     private NavMeshObstacle navObsticle;
@@ -66,13 +67,6 @@ public class Building : MonoBehaviour
             return state == BuildingState.BUILDING;
         }
     }
-    public bool IsPlacing
-    {
-        get
-        {
-            return state == BuildingState.PLACING;
-        }
-    }
     public bool IsComplete
     {
         get { return state == BuildingState.COMPLETE; }
@@ -102,9 +96,13 @@ public class Building : MonoBehaviour
 
     private void Update()
     {
-        if(isHovered && Input.GetMouseButtonDown(1))
+        if(isHovered)
         {
-            if(CrewmateManager.Instance.unitsSelected.Count > 0)
+            if(Input.GetMouseButtonDown(0) && state == BuildingState.BUILDING)
+            {
+                BuildingUI.Instance.FillUI(this);
+            }
+            if(Input.GetMouseButtonDown(1) && CrewmateManager.Instance.unitsSelected.Count > 0)
             {
                 Crewmate mate = CrewmateManager.Instance.unitsSelected[0].GetComponent<Crewmate>();
                 if (CanAssign())
@@ -121,20 +119,19 @@ public class Building : MonoBehaviour
 
     public void Place()
     {
-        builders = new List<Crewmate>(builderCapacity);
         buildingRender.material = components.needsAssignmentMaterial;
         navObsticle.enabled = true;
         state = BuildingState.WAITING_FOR_ASSIGNMENT;
     }
     public bool CanAssign()
     {
-        return !IsComplete && builders.Count < builders.Capacity;
+        return !IsComplete && !builder;
     }
     // can likely make private
     public void AssignBuilder(Crewmate builder)
     {
         onCrewmateAssigned.Raise(this, builder);
-        builders.Add(builder);
+        this.builder = builder;
         builder.GiveJob(this);
         buildingRender.material = components.buildingMaterial;
         state = BuildingState.BUILDING;
@@ -144,17 +141,23 @@ public class Building : MonoBehaviour
         state = BuildingState.COMPLETE;
         buildingRender.material = builtMaterial;
         // Free builders
-        foreach (Crewmate builder in builders)
-        {
-            builder.Free();
-        }
-        builders.Clear();
+        builder.Free();
+        builder = null;
+    }
+
+    public void Upgrade()
+    {
+        level++;
+    }
+    public void Demolish()
+    {
+        level--;
     }
 
     private void OnMouseEnter()
     {
         isHovered = true;
-        if (buildingRender && IsPlacing && !CameraManager.Instance.IsMouseMove)
+        if (state == BuildingState.COMPLETE && !CameraManager.Instance.IsMouseMove)
         {
             buildingRender.material.SetColor("_EmissionColor", hoveredEmission);
         }

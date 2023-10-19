@@ -6,6 +6,9 @@ using UnityEngine.UI;
 
 public class OutpostManagementUI : MonoBehaviour
 {
+    // Animation related
+    private float arrowAnimTime = 0.5f;
+    private float interfaceAnimTime = 0.6f;
     // Prefabs
     [SerializeField] private GameObject buildingCardPrefab;
     [SerializeField] private GameObject crewmateCardPrefab;
@@ -53,19 +56,19 @@ public class OutpostManagementUI : MonoBehaviour
     private void OpenMenu()
     {
         isOpen = true;
-        transform.DOMoveY(0, 0.6f);
+        transform.DOMoveY(0, interfaceAnimTime);
         arrow.onClick.RemoveListener(OpenMenu);
         arrow.onClick.AddListener(CloseMenu);
-        arrow.transform.GetChild(0).DORotate(new Vector3(0, 0, 180), 0.5f);
+        arrow.transform.GetChild(0).DORotate(new Vector3(0, 0, 180), arrowAnimTime);
     }
     // Minimizes menu
     private void CloseMenu()
     {
         isOpen = false;
-        transform.DOMoveY(-pagesUIParent.GetComponent<RectTransform>().rect.height, 0.6f); // cant get height in start
+        transform.DOMoveY(-pagesUIParent.GetComponent<RectTransform>().rect.height, interfaceAnimTime); // cant get height in start
         arrow.onClick.RemoveListener(CloseMenu);
         arrow.onClick.AddListener(OpenMenu);
-        arrow.transform.GetChild(0).DORotate(new Vector3(0, 0, 0), 0.5f);
+        arrow.transform.GetChild(0).DORotate(new Vector3(0, 0, 0), arrowAnimTime);
     }
     // Select tab callback - changes tab interface and adds interface content
     public void SelectTab(int index)

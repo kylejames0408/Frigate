@@ -19,7 +19,7 @@ public struct BuildingData
     public int id;
     public int uiIndex; // type?
     public int level;
-    public int assignedCrewmateAmount;
+    public int assignedCrewmateID;
     public Vector3 position;
     public Quaternion rotation;
     public BuildingState state;

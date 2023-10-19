@@ -84,12 +84,12 @@ public class BuildingManager : MonoBehaviour
             building.id = GameManager.Data.buildings[i].id;
             building.uiIndex = GameManager.Data.buildings[i].uiIndex;
             building.level = GameManager.Data.buildings[i].level;
-            building.builders = new List<Crewmate>(GameManager.Data.buildings[i].assignedCrewmateAmount);
             foreach(Crewmate mate in crewmates)
             {
                 if(mate.buildingID == building.id)
                 {
-                    building.builders.Add(mate);
+                    building.builder = mate;
+                    return;
                 }
             }
             building.transform.position = GameManager.Data.buildings[i].position;
@@ -158,7 +158,6 @@ public class BuildingManager : MonoBehaviour
 
         // Subtract resources - move to Building or bring CanBuild in here
         GameManager.data.resources.wood -= cost.wood;
-        //resources.Print();
         outpostUI.UpdateWoodUI(GameManager.Data.resources.wood);
 
         // Create Building
@@ -166,7 +165,6 @@ public class BuildingManager : MonoBehaviour
         data.id = building.id;
         data.uiIndex = building.uiIndex;
         data.level = building.level;
-        data.assignedCrewmateAmount = building.builders.Count;
         data.position = building.transform.position;
         data.rotation = building.transform.rotation;
         GameManager.Data.buildings.Add(data);
