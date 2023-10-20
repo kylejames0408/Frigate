@@ -60,13 +60,6 @@ public class Building : MonoBehaviour
     {
         get { return radius; }
     }
-    public bool IsAssigned
-    {
-        get
-        {
-            return state == BuildingState.BUILDING;
-        }
-    }
     public bool IsComplete
     {
         get { return state == BuildingState.COMPLETE; }
@@ -98,7 +91,7 @@ public class Building : MonoBehaviour
     {
         if(isHovered)
         {
-            if(Input.GetMouseButtonDown(0) && state == BuildingState.BUILDING)
+            if(Input.GetMouseButtonDown(0) && state != BuildingState.PLACING)
             {
                 BuildingUI.Instance.FillUI(this);
             }
@@ -108,6 +101,7 @@ public class Building : MonoBehaviour
                 if (CanAssign())
                 {
                     AssignBuilder(mate);
+                    BuildingUI.Instance.FillUI(this);
                 }
                 else
                 {
@@ -127,7 +121,6 @@ public class Building : MonoBehaviour
     {
         return !IsComplete && !builder;
     }
-    // can likely make private
     public void AssignBuilder(Crewmate builder)
     {
         onCrewmateAssigned.Raise(this, builder);
@@ -144,20 +137,40 @@ public class Building : MonoBehaviour
         builder.Free();
         builder = null;
     }
-
     public void Upgrade()
     {
-        level++;
+        // conditional
+        //level++;
     }
     public void Demolish()
     {
         level--;
     }
+    public string GetStatus()
+    {
+        string value = string.Empty;
+        switch (state)
+        {
+            case BuildingState.PLACING:
+                value = "Placing";
+                break;
+            case BuildingState.WAITING_FOR_ASSIGNMENT:
+                value = "Needs assignment";
+                break;
+            case BuildingState.BUILDING:
+                value = "Building";
+                break;
+            case BuildingState.COMPLETE:
+                value = "Level " + level.ToString();
+                break;
+        }
+        return value;
+    }
 
     private void OnMouseEnter()
     {
         isHovered = true;
-        if (state == BuildingState.COMPLETE && !CameraManager.Instance.IsMouseMove)
+        if (state != BuildingState.PLACING)
         {
             buildingRender.material.SetColor("_EmissionColor", hoveredEmission);
         }

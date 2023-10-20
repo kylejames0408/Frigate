@@ -1,44 +1,36 @@
-using System;
 using UnityEngine;
-using UnityEngine.InputSystem;
+using UnityEngine.EventSystems;
 
+// TODO: Move calculations to a non-monobehavior class
 public class CameraManager : MonoBehaviour
 {
+    // Components
     private static CameraManager instance;
-    private bool isMouseMove = false;
-    private float aspectRatio;
-    public bool useBounds = true;
-    [SerializeField] private Vector2 maxWorldBounds; // could be set with size
-    [SerializeField] private Vector2 minWorldBounds;
-
-    [Range(0.01f, 10.0f)] // (IS Pet Peave #1) Input system has issues with serializing fields
-    [SerializeField] private float mouseSensitivity = 1.85f; // Calced to 1920x1080
-    private float keyboardSensitivity = 0.2f;
-    private Vector2 previousPos;
-
+    private Camera cameraScript; // could get away with Camera.main, but this might be better
+    // Mouse
+    private Vector3 dragStartPosition;
+    private Vector3 dragCurrentPosition;
+    private Plane dragPlane;
+    // Zooming
     [SerializeField] private const float MINIMUM_ZOOM = 4;
     [SerializeField] private const float MAXIMUM_ZOOM = 20;
-    [SerializeField] private float zoomStep = 1.0f;
-    private float zoomPercentage;
-
-    private Camera cameraScript;
-    private Controls controls;
-
-    [SerializeField] private float movementHorizontalScale;
-    [SerializeField] private float movementVerticalScale;
+    [SerializeField] private float zoomSensitivity = 40.0f;
+    // Keyboard
+    [SerializeField] private float keyboardSensitivity = 50.0f;
+    [SerializeField] private float shiftSensitivity = 20.0f;
+    // Edge Scrolling
+    [SerializeField] private float edgeSize = 30.0f;
+    [SerializeField] private float edgeScrollingSensitivity = 30.0f;
+    // Bounds
+    [SerializeField] private bool useBounds = true;
+    [SerializeField] private Vector2 maxWorldBounds; // could be set with size
+    [SerializeField] private Vector2 minWorldBounds;
 
     public static CameraManager Instance
     {
         get
         {
             return instance;
-        }
-    }
-    public bool IsMouseMove
-    {
-        get
-        {
-            return isMouseMove;
         }
     }
     public Camera Camera
@@ -56,115 +48,141 @@ public class CameraManager : MonoBehaviour
             instance = this;
         }
 
-        isMouseMove = false;
-        aspectRatio = (float)Screen.width / Screen.height;
-        // Tried to scale sensitivity depending on screen size, but doen't seem to be enough
-        movementHorizontalScale = (float)Screen.currentResolution.height/Screen.height;
-        movementVerticalScale = (float)Screen.currentResolution.width/Screen.width;
-
         cameraScript = GetComponent<Camera>();
         cameraScript.orthographicSize = 14;
-        zoomPercentage = cameraScript.orthographicSize / MAXIMUM_ZOOM;
-
-        controls = new Controls();
-        controls.Camera.MouseMove.Enable();
-        controls.Camera.MouseMove.performed += MouseMove;
-        controls.Camera.Zoom.Enable();
-        controls.Camera.Zoom.performed += Zoom;
+        dragPlane = new Plane(Vector3.up, Vector3.zero); // flat plane for dragging
     }
     private void Update()
     {
-        UpdateMouseMovement();
-        if(useBounds)
+        if(HandleMouseValidation())
         {
-            CheckBounds();
+            HandleZoom();
+            HandleEdgeScrolling();
+            HandleKeyboardInput();
+            HandleMouseInput();
+            if (useBounds)
+            {
+                CheckBounds();
+            }
         }
     }
-    private void FixedUpdate()
-    {
-        UpdateKeyboardMovement();
-    }
 
-    // Update Functions
-    private void UpdateMouseMovement()
+    private bool HandleMouseValidation()
     {
-        if (isMouseMove)
+        // Check if mouse is in bounds
+        if (Input.mousePosition.x < 0 ||
+            Input.mousePosition.x > Screen.width||
+            Input.mousePosition.y < 0 ||
+            Input.mousePosition.y > Screen.height)
         {
-            // 2D solution
-            Vector2 currentPos = Mouse.current.position.value;
-            Vector2 posDifference = previousPos - currentPos;
-            // Calculate movement
-            Vector3 horizontalMove = Vector3.right * posDifference.x * zoomPercentage * movementHorizontalScale * mouseSensitivity / 100;
-            Vector3 verticalMove = Vector3.forward * posDifference.y * zoomPercentage * movementVerticalScale * mouseSensitivity /100 * aspectRatio;
-            // Combine movement
-            Vector3 movement = horizontalMove + verticalMove;
-            // Update camera position
-            transform.position += movement;
-            // Store value
-            previousPos = currentPos;
+            return false;
         }
-    }
-    private void UpdateKeyboardMovement()
-    {
-        Vector3 keyboardMovement = Vector3.zero;
 
+        // Check if mouse is over any UI
+        if (EventSystem.current.IsPointerOverGameObject())
+        {
+            return false;
+        }
+        return true;
+    }
+    private void HandleZoom()
+    {
+        float orthoSizeDelta = 0.0f;
+        if(Input.GetKey(KeyCode.KeypadPlus))
+        {
+            orthoSizeDelta -= zoomSensitivity * Time.deltaTime;
+        }
+        if(Input.GetKey(KeyCode.KeypadMinus))
+        {
+            orthoSizeDelta += zoomSensitivity * Time.deltaTime;
+        }
+
+        if(Input.mouseScrollDelta.y > 0.0f)
+        {
+            orthoSizeDelta -= zoomSensitivity * Time.deltaTime;
+        }
+        if (Input.mouseScrollDelta.y < 0.0f)
+        {
+            orthoSizeDelta += zoomSensitivity * Time.deltaTime;
+        }
+
+        cameraScript.orthographicSize += orthoSizeDelta;
+        cameraScript.orthographicSize = Mathf.Clamp(cameraScript.orthographicSize, MINIMUM_ZOOM, MAXIMUM_ZOOM);
+    }
+    private void HandleEdgeScrolling()
+    {
+        Vector3 scrollingDelta = Vector3.zero;
+
+        if(Input.mousePosition.x > Screen.width - edgeSize)
+        {
+            scrollingDelta.x += edgeScrollingSensitivity * Time.deltaTime;
+
+        }
+        if (Input.mousePosition.x < edgeSize)
+        {
+            scrollingDelta.x -= edgeScrollingSensitivity * Time.deltaTime;
+        }
+        if(Input.mousePosition.y > Screen.height - edgeSize - 64) // 64 is height of resource UI
+        {
+            scrollingDelta.z += edgeScrollingSensitivity * Time.deltaTime;
+        }
+        if (Input.mousePosition.y < edgeSize)
+        {
+            scrollingDelta.z -= edgeScrollingSensitivity * Time.deltaTime;
+        }
+        transform.position += scrollingDelta;
+    }
+    private void HandleKeyboardInput()
+    {
+        float shiftDelta = 0.0f;
+        if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
+        {
+            shiftDelta = shiftSensitivity;
+        }
+
+        Vector3 keyboardDelta = Vector3.zero;
+
+        float nsDelta = (keyboardSensitivity+ shiftDelta) * Time.deltaTime;
         if (Input.GetKey(KeyCode.W))
         {
-            keyboardMovement += Vector3.forward * keyboardSensitivity * zoomPercentage * aspectRatio;
-        }
-        if (Input.GetKey(KeyCode.A))
-        {
-            keyboardMovement += Vector3.left * keyboardSensitivity * zoomPercentage;
+            keyboardDelta.z += nsDelta;
         }
         if (Input.GetKey(KeyCode.S))
         {
-            keyboardMovement += Vector3.back * keyboardSensitivity * zoomPercentage * aspectRatio;
+            keyboardDelta.z -= nsDelta;
+        }
+
+        float ewDelta = (keyboardSensitivity + shiftDelta) * Time.deltaTime;
+        if (Input.GetKey(KeyCode.A))
+        {
+            keyboardDelta.x -= ewDelta;
         }
         if (Input.GetKey(KeyCode.D))
         {
-            keyboardMovement += Vector3.right * keyboardSensitivity * zoomPercentage;
+            keyboardDelta.x += ewDelta;
         }
-        transform.position += keyboardMovement;
+        transform.position += keyboardDelta;
     }
-
-    // Input Callback Functions
-    private void MouseMove(InputAction.CallbackContext context)
+    private void HandleMouseInput()
     {
-        // Pressed
-        if (context.ReadValue<float>() == 1)
+        if(Input.GetMouseButtonDown(2)) // Clicked
         {
-            isMouseMove = true;
-            previousPos = Mouse.current.position.value;
+            Ray ray = cameraScript.ScreenPointToRay(Input.mousePosition);
+            if(dragPlane.Raycast(ray,out float entry))
+            {
+                dragStartPosition = ray.GetPoint(entry);
+            }
         }
-        // Release
-        else
+        if (Input.GetMouseButton(2)) // Holding
         {
-            isMouseMove = false;
+            Ray ray = cameraScript.ScreenPointToRay(Input.mousePosition);
+            if (dragPlane.Raycast(ray, out float entry))
+            {
+                dragCurrentPosition = ray.GetPoint(entry);
+                transform.position = transform.position + dragStartPosition - dragCurrentPosition;
+            }
         }
     }
-    private void Zoom(InputAction.CallbackContext context)
-    {
-        // Get zoom input
-        float zoomInput = context.ReadValue<float>();
-        float zoomSpeed = zoomInput * zoomStep;
-
-        // Update camera zoom
-        cameraScript.orthographicSize += zoomSpeed;
-
-        // Clamp
-        if(cameraScript.orthographicSize > MAXIMUM_ZOOM)
-        {
-            cameraScript.orthographicSize = MAXIMUM_ZOOM;
-        }
-        else if(cameraScript.orthographicSize < MINIMUM_ZOOM)
-        {
-            cameraScript.orthographicSize = MINIMUM_ZOOM;
-        }
-        // Mathf.Clamp(camera.orthographicSize, MINIMUM_ZOOM, MAXIMUM_ZOOM); // why is this not working
-        zoomPercentage = cameraScript.orthographicSize / MAXIMUM_ZOOM;
-    }
-
-    // Utility Functions
     private void CheckBounds()
     {
         Vector3 cameraPos = transform.position;

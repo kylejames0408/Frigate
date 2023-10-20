@@ -1,6 +1,4 @@
 using DG.Tweening;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,8 +7,7 @@ public class BuildingUI : MonoBehaviour
 {
     private static BuildingUI instance;
     private float interfaceAnimSpeed = 0.6f;
-    private float interfaceWidth;
-    [SerializeField] private Sprite emptyAssignmentIcon; 
+    [SerializeField] private Sprite emptyAssignmentIcon;
     // Building information objects
     [SerializeField] private Transform iconUI;
     [SerializeField] private Transform nameUI;
@@ -37,12 +34,12 @@ public class BuildingUI : MonoBehaviour
         }
         upgradeBtn.onClick.AddListener(UpgradeCallback);
         demolishBtn.onClick.AddListener(DemolishCallback);
-        interfaceWidth = GetComponent<RectTransform>().rect.width;
     }
 
     private void UpgradeCallback()
     {
         activeBuilding.Upgrade();
+        levelUI.GetComponent<TextMeshProUGUI>().text = activeBuilding.GetStatus();
     }
 
     private void DemolishCallback()
@@ -60,7 +57,7 @@ public class BuildingUI : MonoBehaviour
     {
         iconUI.GetComponent<Image>().sprite = building.Icon;
         nameUI.GetComponent<TextMeshProUGUI>().text = building.Name;
-        levelUI.GetComponent<TextMeshProUGUI>().text = building.level.ToString(); // will also need to show status
+        levelUI.GetComponent<TextMeshProUGUI>().text = building.GetStatus();
         outputUI.GetComponent<TextMeshProUGUI>().text = building.output; // not sure what output is yet
 
         if(building.builder != null)
@@ -73,16 +70,17 @@ public class BuildingUI : MonoBehaviour
         }
 
         activeBuilding = building;
+        OpenMenu();
     }
 
     // Minimizes menu
     public void OpenMenu()
     {
-        transform.DOMoveX(0, interfaceAnimSpeed);
+        transform.DOMoveX(630, interfaceAnimSpeed);
     }
     // Minimizes menu
     public void CloseMenu()
     {
-        transform.DOMoveX(-interfaceWidth-10, interfaceAnimSpeed); // cant get height in start
+        transform.DOMoveX(0, interfaceAnimSpeed); // cant get height in start
     }
 }

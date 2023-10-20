@@ -63,4 +63,15 @@ public class GameManager : MonoBehaviour
     {
         data.gameTimer = gameTimer;
     }
+
+    // Game to editor and other programs
+    void OnApplicationFocus(bool hasFocus)
+    {
+        //Debug.Log("Focus: " + hasFocus);
+    }
+    // Game to other programs
+    void OnApplicationPause(bool pauseStatus)
+    {
+        //Debug.Log("Pause: " + pauseStatus);
+    }
 }
