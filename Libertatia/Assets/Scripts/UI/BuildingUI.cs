@@ -20,6 +20,7 @@ public class BuildingUI : MonoBehaviour
     [SerializeField] private Button demolishBtn;
     // Dynamic/tracking information
     private Building activeBuilding;
+    private RectTransform bounds;
 
     public static BuildingUI Instance
     {
@@ -34,23 +35,11 @@ public class BuildingUI : MonoBehaviour
         }
         upgradeBtn.onClick.AddListener(UpgradeCallback);
         demolishBtn.onClick.AddListener(DemolishCallback);
+        bounds = GetComponent<RectTransform>();
     }
-
-    private void UpgradeCallback()
+    private void Update()
     {
-        activeBuilding.Upgrade();
-        levelUI.GetComponent<TextMeshProUGUI>().text = activeBuilding.GetStatus();
-    }
-
-    private void DemolishCallback()
-    {
-        activeBuilding.Demolish();
-    }
-
-    private void AssignCallback()
-    {
-        // some information would need to be passed through
-        //activeBuilding.AssignBuilder();
+        HandleClicking();
     }
 
     public void FillUI(Building building)
@@ -60,7 +49,7 @@ public class BuildingUI : MonoBehaviour
         levelUI.GetComponent<TextMeshProUGUI>().text = building.GetStatus();
         outputUI.GetComponent<TextMeshProUGUI>().text = building.output; // not sure what output is yet
 
-        if(building.builder != null)
+        if (building.builder != null)
         {
             assignmentIconUI.GetComponent<Image>().sprite = building.builder.Icon;
         }
@@ -73,12 +62,39 @@ public class BuildingUI : MonoBehaviour
         OpenMenu();
     }
 
-    // Minimizes menu
+    private void HandleClicking()
+    {
+        if(Input.GetMouseButtonDown(0) && (
+            Input.mousePosition.x < bounds.offsetMin.x ||
+            Input.mousePosition.x > bounds.offsetMax.x ||
+            Input.mousePosition.y < bounds.offsetMin.y ||
+            Input.mousePosition.y > bounds.offsetMax.y))
+        {
+            CloseMenu();
+        }
+    }
+
+    // Callbacks
+    private void UpgradeCallback()
+    {
+        activeBuilding.Upgrade();
+        levelUI.GetComponent<TextMeshProUGUI>().text = activeBuilding.GetStatus();
+    }
+    private void DemolishCallback()
+    {
+        activeBuilding.Demolish();
+    }
+    private void AssignCallback()
+    {
+        // some information would need to be passed through
+        //activeBuilding.AssignBuilder();
+    }
+
+    // Open/close
     public void OpenMenu()
     {
         transform.DOMoveX(630, interfaceAnimSpeed);
     }
-    // Minimizes menu
     public void CloseMenu()
     {
         transform.DOMoveX(0, interfaceAnimSpeed); // cant get height in start

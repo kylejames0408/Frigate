@@ -24,7 +24,7 @@ public class BuildingManager : MonoBehaviour
     public UnityEvent placedBuilding;
     // Components
     private OutpostManagementUI omi;
-    private OutpostUI outpostUI;
+    private ResourcesUI outpostUI;
     private bool isPlacing = false;
     private Building activeBuilding;
     // Crewmate Data
@@ -99,27 +99,12 @@ public class BuildingManager : MonoBehaviour
         }
 
         omi.FillConstructionUI(this, buildingPrefabs);
-        outpostUI = FindObjectOfType<OutpostUI>();
+        outpostUI = FindObjectOfType<ResourcesUI>();
         outpostUI.Init();
     }
     private void Update()
     {
-        // move functionallity outside of monobehavior
-        if (isPlacing)
-        {
-            // Camera.main or Camera.current?
-            Physics.Raycast(CameraManager.Instance.Camera.ScreenPointToRay(Input.mousePosition),
-                out RaycastHit info, 300, LayerMask.GetMask("Terrain"));
-
-            activeBuilding.transform.position = info.point;
-            //Graphics.DrawMesh(buildingMesh, position, buildingRotation, placingBuildingMat, 0);
-
-            // check collision
-            if (Input.GetMouseButtonDown(0) &&  !activeBuilding.IsColliding && !IsPointerOverUIObject())
-            {
-                SpawnBuilding(activeBuilding, info.point);
-            }
-        }
+        HandlePlacing();
     }
 
     public Crewmate SelectCrewmate(int index)
@@ -127,7 +112,6 @@ public class BuildingManager : MonoBehaviour
         CrewmateManager.Instance.ClickSelect(crewmates[index].gameObject);
         return crewmates[index];
     }
-
     // selecting building UI
     public void SelectBuilding(int index)
     {
@@ -187,7 +171,6 @@ public class BuildingManager : MonoBehaviour
 
         onBuildingPlaced.Raise(this, building);
     }
-
     // Dev functions
     public void BuildAll()
     {
@@ -197,18 +180,24 @@ public class BuildingManager : MonoBehaviour
         }
     }
 
-    // Checks if mouse is over any UI - might not need with canvasgroup
-    private bool IsPointerOverUIObject()
+    private void HandlePlacing()
     {
-        // https://stackoverflow.com/questions/52064801/unity-raycasts-going-through-ui
-        // Referencing this code for GraphicRaycaster https://gist.github.com/stramit/ead7ca1f432f3c0f181f
-        // the ray cast appears to require only eventData.position.
-        PointerEventData eventDataCurrentPosition = new PointerEventData(EventSystem.current);
-        eventDataCurrentPosition.position = (Vector2)Input.mousePosition;
+        // move functionallity outside of monobehavior
+        if (isPlacing)
+        {
+            // Camera.main or Camera.current?
+            Physics.Raycast(CameraManager.Instance.Camera.ScreenPointToRay(Input.mousePosition),
+                out RaycastHit info, 300, LayerMask.GetMask("Terrain"));
 
-        List<RaycastResult> results = new List<RaycastResult>();
-        EventSystem.current.RaycastAll(eventDataCurrentPosition, results);
-        return results.Count > 0;
+            activeBuilding.transform.position = info.point;
+            //Graphics.DrawMesh(buildingMesh, position, buildingRotation, placingBuildingMat, 0);
+
+            // check collision
+            if (Input.GetMouseButtonDown(0) && !activeBuilding.IsColliding && !EventSystem.current.IsPointerOverGameObject())
+            {
+                SpawnBuilding(activeBuilding, info.point);
+            }
+        }
     }
 
 

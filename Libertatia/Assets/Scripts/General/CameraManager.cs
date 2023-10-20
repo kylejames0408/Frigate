@@ -79,7 +79,7 @@ public class CameraManager : MonoBehaviour
         }
 
         // Check if mouse is over any UI
-        if (EventSystem.current.IsPointerOverGameObject())
+        if (EventSystem.current.IsPointerOverGameObject()) // maybe implement IPointerClickHandler
         {
             return false;
         }
