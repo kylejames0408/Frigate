@@ -86,28 +86,12 @@ public class Building : MonoBehaviour
         isHovered = false;
         numOfCollisions = 0;
     }
-
     private void Update()
     {
         if(isHovered)
         {
-            if(Input.GetMouseButtonDown(0) && state != BuildingState.PLACING)
-            {
-                BuildingUI.Instance.FillUI(this);
-            }
-            if(Input.GetMouseButtonDown(1) && CrewmateManager.Instance.unitsSelected.Count > 0)
-            {
-                Crewmate mate = CrewmateManager.Instance.unitsSelected[0].GetComponent<Crewmate>();
-                if (CanAssign())
-                {
-                    AssignBuilder(mate);
-                    BuildingUI.Instance.FillUI(this);
-                }
-                else
-                {
-                    Debug.Log("Building assignments are full");
-                }
-            }
+            HandleSelection();
+            HandleAssignment();
         }
     }
 
@@ -133,9 +117,7 @@ public class Building : MonoBehaviour
     {
         state = BuildingState.COMPLETE;
         buildingRender.material = builtMaterial;
-        // Free builders
-        builder.Free();
-        builder = null;
+        FreeBuilder();
     }
     public void Upgrade()
     {
@@ -144,7 +126,17 @@ public class Building : MonoBehaviour
     }
     public void Demolish()
     {
-        level--;
+        FreeBuilder();
+        Destroy(gameObject);
+    }
+    private void FreeBuilder()
+    {
+        // only can occur through dev menu
+        if (builder != null)
+        {
+            builder.Free(); // Free builders
+            builder = null;
+        }
     }
     public string GetStatus()
     {
@@ -165,6 +157,31 @@ public class Building : MonoBehaviour
                 break;
         }
         return value;
+    }
+
+    // Handle
+    private void HandleSelection()
+    {
+        if (Input.GetMouseButtonDown(0) && state != BuildingState.PLACING)
+        {
+            BuildingUI.Instance.FillUI(this);
+        }
+    }
+    private void HandleAssignment()
+    {
+        if (Input.GetMouseButtonDown(1) && CrewmateManager.Instance.unitsSelected.Count > 0)
+        {
+            Crewmate mate = CrewmateManager.Instance.unitsSelected[0].GetComponent<Crewmate>();
+            if (CanAssign())
+            {
+                AssignBuilder(mate);
+                BuildingUI.Instance.FillUI(this);
+            }
+            else
+            {
+                Debug.Log("Building assignments are full");
+            }
+        }
     }
 
     private void OnMouseEnter()

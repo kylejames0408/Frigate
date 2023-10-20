@@ -1,4 +1,5 @@
 ﻿using DG.Tweening;
+using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -36,8 +37,7 @@ public class OutpostManagementUI : MonoBehaviour
         }
         tabs = tabUIParent.GetComponentsInChildren<Tab>();
     }
-
-    void Start()
+    private void Start()
     {
         isOpen = true;
         // Sets tab triggers
@@ -52,24 +52,6 @@ public class OutpostManagementUI : MonoBehaviour
         arrow.onClick.AddListener(CloseMenu);
     }
 
-    // Minimizes menu
-    private void OpenMenu()
-    {
-        isOpen = true;
-        transform.DOMoveY(0, interfaceAnimTime);
-        arrow.onClick.RemoveListener(OpenMenu);
-        arrow.onClick.AddListener(CloseMenu);
-        arrow.transform.GetChild(0).DORotate(new Vector3(0, 0, 180), arrowAnimTime);
-    }
-    // Minimizes menu
-    private void CloseMenu()
-    {
-        isOpen = false;
-        transform.DOMoveY(-pagesUIParent.GetComponent<RectTransform>().rect.height, interfaceAnimTime); // cant get height in start
-        arrow.onClick.RemoveListener(CloseMenu);
-        arrow.onClick.AddListener(OpenMenu);
-        arrow.transform.GetChild(0).DORotate(new Vector3(0, 0, 0), arrowAnimTime);
-    }
     // Select tab callback - changes tab interface and adds interface content
     public void SelectTab(int index)
     {
@@ -108,18 +90,27 @@ public class OutpostManagementUI : MonoBehaviour
         }
     }
     // Fills crewmate construction UI page
-    public void FillCrewmateUI(BuildingManager bm, CrewmateData[] crewmates) // will take in a crewmanager script
+    public void FillCrewmateUI(CrewmateManager cm, CrewmateData[] crewmates) // will take in a crewmanager script
     {
         crewmateCards = new List<GameObject>(crewmates.Length);
         for (int i = 0; i < crewmates.Length; i++)
         {
             GameObject card = Instantiate(crewmateCardPrefab, pages[1]);
             int index = i; // needs to be destroyed after setting listener
-            card.GetComponent<Button>().onClick.AddListener(() => { SelectCrewmateCard(bm, index); }); // drag + drop func
+            card.GetComponent<Button>().onClick.AddListener(() => { SelectCrewmateCard(cm, index); }); // drag + drop func
             card.GetComponentsInChildren<Image>()[1].sprite = crewmates[i].icon;
             card.GetComponentInChildren<TextMeshProUGUI>().text = crewmates[i].name;
             crewmateCards.Add(card);
         }
+    }
+    public void AddCrewmateCard(CrewmateManager cm, Crewmate mate)
+    {
+        GameObject card = Instantiate(crewmateCardPrefab, pages[1]);
+        crewmateCards.Add(card);
+        int index = crewmateCards.IndexOf(card); // needs to be destroyed after setting listener
+        card.GetComponent<Button>().onClick.AddListener(() => { SelectCrewmateCard(cm, index); }); // drag + drop func
+        card.GetComponentsInChildren<Image>()[1].sprite = mate.icon;
+        card.GetComponentInChildren<TextMeshProUGUI>().text = mate.name;
     }
 
     private void SelectBuildingCard(BuildingManager bm, int index)
@@ -136,18 +127,37 @@ public class OutpostManagementUI : MonoBehaviour
     {
         buildingCards[index].GetComponent<Outline>().enabled = false;
     }
-    private void SelectCrewmateCard(BuildingManager bm, int index)
+    private void SelectCrewmateCard(CrewmateManager cm, int index)
     {
         foreach (GameObject card in crewmateCards)
         {
             card.GetComponent<Outline>().enabled = false;
         }
         crewmateCards[index].GetComponent<Outline>().enabled = true;
-        Crewmate crewmate = bm.SelectCrewmate(index);
+        Crewmate crewmate = cm.SelectCrewmate(index);
         crewmate.onAssign.AddListener(() => { DeselectCrewmateCard(index); });
     }
     public void DeselectCrewmateCard(int index)
     {
         crewmateCards[index].GetComponent<Outline>().enabled = false;
+    }
+
+    // Minimizes menu
+    private void OpenMenu()
+    {
+        isOpen = true;
+        transform.DOMoveY(0, interfaceAnimTime);
+        arrow.onClick.RemoveListener(OpenMenu);
+        arrow.onClick.AddListener(CloseMenu);
+        arrow.transform.GetChild(0).DORotate(new Vector3(0, 0, 180), arrowAnimTime);
+    }
+    // Minimizes menu
+    private void CloseMenu()
+    {
+        isOpen = false;
+        transform.DOMoveY(-pagesUIParent.GetComponent<RectTransform>().rect.height, interfaceAnimTime); // cant get height in start
+        arrow.onClick.RemoveListener(CloseMenu);
+        arrow.onClick.AddListener(OpenMenu);
+        arrow.transform.GetChild(0).DORotate(new Vector3(0, 0, 0), arrowAnimTime);
     }
 }

@@ -17,9 +17,10 @@ public class GameManager : MonoBehaviour
     // Game Data
     private float gameTimer = 0.0f;
     private GameState state = GameState.PLAYING;
-    public static PlayerData data;
     public static bool outpostVisited = false;
+    public static PlayerData data;
 
+    // starting to act like the actual data manager - read/write
     public static PlayerData Data
     {
         get
@@ -31,8 +32,23 @@ public class GameManager : MonoBehaviour
             data = value;
         }
     }
+    public static void AddBuilding(BuildingData data)
+    {
+        Data.buildings.Add(data); // why is this.data not working???
+    }
+    public static void RemoveBuilding(int buildingID)
+    {
+        foreach (BuildingData data in Data.buildings)
+        {
+            if(data.id == buildingID)
+            {
+                Data.buildings.Remove(data);
+                return;
+            }
+        }
+    }
 
-    public virtual void Awake()
+    private void Awake()
     {
         GameObject obj = new GameObject();
         obj.name = typeof(GameManager).Name;

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
@@ -12,108 +13,51 @@ public struct BuildingResources
 
 public class BuildingManager : MonoBehaviour
 {
-    //
-    public List<Crewmate> crewmates;
-    public List<Building> buildings;
     // Building Data
     public Building[] buildingPrefabs;
     public Transform buildingParent; // happens to be the object it is on
+    // Components
+    private OutpostManagementUI omui;
+    private ResourcesUI oui;
+    private bool isPlacing = false;
+    private Building activeBuilding;
     // - Building Events
     [Header("Events")]
     public GameEvent onBuildingPlaced;
     public UnityEvent placedBuilding;
-    // Components
-    private OutpostManagementUI omi;
-    private ResourcesUI outpostUI;
-    private bool isPlacing = false;
-    private Building activeBuilding;
-    // Crewmate Data
-    public GameObject crewmatePrefab;
-    public Transform crewmateParent;
-    public Transform crewmateSpawn;
-    public int crewmateSpawnRadius = 10;
+    // Tracking
+    public List<Building> buildings; // maybe make a lookup table for buildings since they have an ID
 
     private void Start()
     {
-        // should check building folder for buildings
-        omi = FindObjectOfType<OutpostManagementUI>(); // init both of these
-        crewmateSpawn = crewmateParent.GetChild(0);
-        crewmates = new List<Crewmate>(GameManager.Data.crewmates.Count);
+        if (omui == null) { omui = FindObjectOfType<OutpostManagementUI>(); }// init both of these
+        if (oui == null) { oui = FindObjectOfType<ResourcesUI>(); }
 
-        if(GameManager.Data.crewmates.Count == 0)
-        {
-            for (int i = 0; i < GameManager.Data.crewmates.Capacity; i++)
-            {
-                GameObject crewmate = Instantiate(crewmatePrefab, crewmateParent);
-                crewmate.transform.position = crewmateSpawn.position + new Vector3(
-                    UnityEngine.Random.Range(-1.0f, 1.0f) * crewmateSpawnRadius, 0,
-                    UnityEngine.Random.Range(-1.0f, 1.0f) * crewmateSpawnRadius);
-                Crewmate mate = crewmate.GetComponent<Crewmate>();
-                CrewmateData data = new CrewmateData();
-                data.icon = mate.Icon;
-                data.name = mate.Name;
-                data.buildingID = mate.buildingID;
-                GameManager.Data.crewmates.Add(data);
-                crewmates.Add(mate);
-            }
-        }
-        else
-        {
-            for (int i = 0; i < GameManager.Data.crewmates.Count; i++)
-            {
-                CrewmateData data = GameManager.Data.crewmates[i];
-                GameObject crewmate = Instantiate(crewmatePrefab, crewmateParent);
-                Crewmate mate = crewmate.GetComponent<Crewmate>();
-                mate.crewmateName = data.name;
-                mate.icon = data.icon;
-                mate.buildingID = data.buildingID;
-                mate.transform.position = crewmateSpawn.position + new Vector3(
-                    UnityEngine.Random.Range(-1.0f, 1.0f) * crewmateSpawnRadius, 0,
-                    UnityEngine.Random.Range(-1.0f, 1.0f) * crewmateSpawnRadius);
-                crewmates.Add(mate);
-            }
-        }
-
-        omi.FillCrewmateUI(this, GameManager.Data.crewmates.ToArray());
-
-        buildings = new List<Building>();
-
-        for (int i = 0; i < GameManager.Data.buildings.Count; i ++)
+        // Init Building (make own function)
+        buildings = new List<Building>(); //GameManager.Data.buildings.Count
+        for (int i = 0; i < GameManager.Data.buildings.Count; i ++) // cache buildings list?
         {
             Building building = Instantiate(buildingPrefabs[GameManager.Data.buildings[i].uiIndex], buildingParent);
             building.id = GameManager.Data.buildings[i].id;
             building.uiIndex = GameManager.Data.buildings[i].uiIndex;
             building.level = GameManager.Data.buildings[i].level;
-            foreach(Crewmate mate in crewmates)
-            {
-                if(mate.buildingID == building.id)
-                {
-                    building.builder = mate;
-                    return;
-                }
-            }
             building.transform.position = GameManager.Data.buildings[i].position;
             building.transform.rotation = GameManager.Data.buildings[i].rotation;
             building.CompleteBuild(); // dont keep, but is used to complete for now
             buildings.Add(building);
         }
 
-        omi.FillConstructionUI(this, buildingPrefabs);
-        outpostUI = FindObjectOfType<ResourcesUI>();
-        outpostUI.Init();
+        // Fill UI - probably combine?
+        omui.FillConstructionUI(this, buildingPrefabs);
+        oui.Init();
     }
     private void Update()
     {
         HandlePlacing();
     }
 
-    public Crewmate SelectCrewmate(int index)
-    {
-        CrewmateManager.Instance.ClickSelect(crewmates[index].gameObject);
-        return crewmates[index];
-    }
     // selecting building UI
-    public void SelectBuilding(int index)
+    internal void SelectBuilding(int index)
     {
         if (isPlacing)
         {
@@ -126,7 +70,7 @@ public class BuildingManager : MonoBehaviour
         activeBuilding.uiIndex = index; // sets type
     }
     // placing a building
-    public void SpawnBuilding(Building building, Vector3 position)
+    internal void SpawnBuilding(Building building, Vector3 position)
     {
         isPlacing = false;
         placedBuilding.Invoke();
@@ -142,7 +86,7 @@ public class BuildingManager : MonoBehaviour
 
         // Subtract resources - move to Building or bring CanBuild in here
         GameManager.data.resources.wood -= cost.wood;
-        outpostUI.UpdateWoodUI(GameManager.Data.resources.wood);
+        oui.UpdateWoodUI(GameManager.Data.resources.wood);
 
         // Create Building
         BuildingData data = new BuildingData();
@@ -151,16 +95,16 @@ public class BuildingManager : MonoBehaviour
         data.level = building.level;
         data.position = building.transform.position;
         data.rotation = building.transform.rotation;
-        GameManager.Data.buildings.Add(data);
+        GameManager.AddBuilding(data);
         if (building.uiIndex == 0)
         {
             GameManager.data.resources.foodPerAP += 50;
-            outpostUI.UpdateFoodConsumptionUI(GameManager.Data.resources.foodPerAP);
+            oui.UpdateFoodConsumptionUI(GameManager.Data.resources.foodPerAP);
         }
         else if (building.uiIndex == 1)
         {
             GameManager.data.outpostCrewCapacity += 8;
-            outpostUI.UpdateCrewCapacityUI(GameManager.Data.outpostCrewCapacity);
+            oui.UpdateCrewCapacityUI(GameManager.Data.outpostCrewCapacity);
         }
         else if (building.uiIndex == 2)
         {
@@ -171,15 +115,33 @@ public class BuildingManager : MonoBehaviour
 
         onBuildingPlaced.Raise(this, building);
     }
-    // Dev functions
-    public void BuildAll()
+    internal string UpgradeBuilding(int buildingID)
+    {
+        Building building = GetBuilding(buildingID);
+        building.Upgrade();
+        return building.GetStatus();
+    }
+    internal void DemolishBuilding(int buildingID)
+    {
+        Building building = GetBuilding(buildingID);
+        GameManager.RemoveBuilding(buildingID);
+        buildings.Remove(building);
+        building.Demolish();
+    }
+    // Lookup table would be faster
+    private Building GetBuilding(int buildingID)
     {
         foreach (Building building in buildings)
         {
-            building.CompleteBuild();
+            if(building.id == buildingID)
+            {
+                return building;
+            }
         }
+        return null;
     }
 
+    // Handlers
     private void HandlePlacing()
     {
         // move functionallity outside of monobehavior
@@ -200,7 +162,14 @@ public class BuildingManager : MonoBehaviour
         }
     }
 
-
+    // Dev
+    internal void BuildAll()
+    {
+        foreach (Building building in buildings)
+        {
+            building.CompleteBuild();
+        }
+    }
 
     // Update player data when scene is unloaded
     private void OnDestroy()
@@ -209,4 +178,6 @@ public class BuildingManager : MonoBehaviour
         //GameManager.Instance.buildingAmount = buildings.Count;
         //GameManager.Instance.DataManager.Update(realtimeData);
     }
+
+
 }

@@ -42,12 +42,12 @@ public struct PlayerData
     // Player data
     public PlayerResourceData resources;
     public int outpostCrewCapacity;
-    // maybe make arrays
+    // maybe make arrays or even lookup tables
     public List<BuildingData> buildings;
     public List<CrewmateData> crewmates;
 }
 
-// Manages player data - creating and converting the data
+// Manages player data - creating and converting the data - should this be separate from data tracking?
 public static class PlayerDataManager
 {
     private const string DIR_PATH = "Assets\\Scripts\\ScriptableObjects\\";

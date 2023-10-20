@@ -42,10 +42,7 @@ public class Crewmate : MonoBehaviour
     }
     private void Update()
     {
-        if(isHovered && Input.GetMouseButtonDown(0))
-        {
-            CrewmateManager.Instance.ClickSelect(gameObject);
-        }
+        HandleSelection();
     }
 
     public void GiveJob(Building job)
@@ -55,6 +52,7 @@ public class Crewmate : MonoBehaviour
         isBuilding = true;
         Vector3 jobPosition = job.transform.position;
         Vector2 randomPosition = UnityEngine.Random.insideUnitCircle.normalized * job.Radius;
+        randomPosition.y = -(Mathf.Abs(randomPosition.y)); // keeps builders in-front of the building
         jobPosition.x += randomPosition.x;
         jobPosition.z += randomPosition.y;
         agent.destination = jobPosition;
@@ -66,6 +64,14 @@ public class Crewmate : MonoBehaviour
     {
         currentBuilding = null;
         isBuilding = false;
+    }
+
+    private void HandleSelection()
+    {
+        if (isHovered && Input.GetMouseButtonDown(0))
+        {
+            CrewmateManager.Instance.ClickSelect(gameObject);
+        }
     }
 
     private void OnMouseEnter()

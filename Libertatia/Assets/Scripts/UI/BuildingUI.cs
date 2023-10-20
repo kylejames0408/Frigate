@@ -6,6 +6,9 @@ using UnityEngine.UI;
 public class BuildingUI : MonoBehaviour
 {
     private static BuildingUI instance;
+    // Components
+    [SerializeField] private BuildingManager bm;
+    // ?
     private float interfaceAnimSpeed = 0.6f;
     [SerializeField] private Sprite emptyAssignmentIcon;
     // Building information objects
@@ -19,7 +22,7 @@ public class BuildingUI : MonoBehaviour
     [SerializeField] private Button upgradeBtn;
     [SerializeField] private Button demolishBtn;
     // Dynamic/tracking information
-    private Building activeBuilding;
+    private int activeBuildingID;
     private RectTransform bounds;
 
     public static BuildingUI Instance
@@ -33,6 +36,9 @@ public class BuildingUI : MonoBehaviour
         {
             instance = this;
         }
+
+        if(bm == null) { bm = FindObjectOfType<BuildingManager>(); }
+
         upgradeBtn.onClick.AddListener(UpgradeCallback);
         demolishBtn.onClick.AddListener(DemolishCallback);
         bounds = GetComponent<RectTransform>();
@@ -58,10 +64,11 @@ public class BuildingUI : MonoBehaviour
             assignmentIconUI.GetComponent<Image>().sprite = emptyAssignmentIcon;
         }
 
-        activeBuilding = building;
+        activeBuildingID = building.id;
         OpenMenu();
     }
 
+    // Handlers
     private void HandleClicking()
     {
         if(Input.GetMouseButtonDown(0) && (
@@ -77,15 +84,16 @@ public class BuildingUI : MonoBehaviour
     // Callbacks
     private void UpgradeCallback()
     {
-        activeBuilding.Upgrade();
-        levelUI.GetComponent<TextMeshProUGUI>().text = activeBuilding.GetStatus();
+        levelUI.GetComponent<TextMeshProUGUI>().text = bm.UpgradeBuilding(activeBuildingID);
     }
     private void DemolishCallback()
     {
-        activeBuilding.Demolish();
+        bm.DemolishBuilding(activeBuildingID);
+        CloseMenu();
     }
     private void AssignCallback()
     {
+        //BuildingManager.Instance.AssignBuilding(activeBuildingID);
         // some information would need to be passed through
         //activeBuilding.AssignBuilder();
     }
