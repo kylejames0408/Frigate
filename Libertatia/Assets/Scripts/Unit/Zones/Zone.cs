@@ -6,12 +6,14 @@ using UnityEngine.AI;
 
 public class Zone : MonoBehaviour
 {
-    public List<GameObject> unitsInZone;
+    public List<GameObject> crewMembersInZone;
+    public List<GameObject> enemiesInZone;
 
     public string zoneName;
 
     float onMeshThreshold = 3;
 
+    public Vector3 zoneCenter;
 
     // Start is called before the first frame update
     void Start()
@@ -19,6 +21,25 @@ public class Zone : MonoBehaviour
         zoneName = gameObject.name;
 
         TerrainCollider tCollider = gameObject.GetComponent<TerrainCollider>();
+
+        BoxCollider boxCollider = gameObject.GetComponent<BoxCollider>();
+
+        //zoneCenter = boxCollider.center;
+
+    }
+
+    private void Update()
+    {
+        foreach(GameObject crewMember in crewMembersInZone.ToList())
+        {
+            CheckUnitHealth(crewMember);
+        }
+
+        foreach(GameObject enemy in enemiesInZone.ToList())
+        {
+            CheckUnitHealth(enemy);
+        }
+
     }
 
     public void OnTriggerEnter(Collider collider)
@@ -28,10 +49,7 @@ public class Zone : MonoBehaviour
         {
             //Debug.Log(collider.gameObject.name + " Enter");
 
-            if (unitsInZone.Contains(collider.gameObject) == false)
-            {
-                unitsInZone.Add(collider.gameObject);
-            }
+            AddToUnitsInZoneList(collider.gameObject);
 
         }
     }
@@ -43,37 +61,73 @@ public class Zone : MonoBehaviour
         {
             //Debug.Log(other.gameObject.name + " Exit");
 
-            if (unitsInZone.Contains(other.gameObject))
-            {
-                unitsInZone.Remove(other.gameObject);
-            }
-
+            RemoveUnitsInZoneList(other.gameObject);
         }
     }
 
     /// <summary>
-    /// Adds unit to units in zone list
+    /// Adds unit to units in zone list based on their type
     /// </summary>
     /// <param name="agents"></param>
     public void AddToUnitsInZoneList(GameObject unit)
     {
-        if (unitsInZone.Contains(unit) == false)
+        if(unit.gameObject.tag == "PlayerCharacter")
         {
-            unitsInZone.Add(unit.gameObject);
+            if (crewMembersInZone.Contains(unit) == false)
+            {
+                crewMembersInZone.Add(unit.gameObject);
+            }
         }
+
+        if (unit.gameObject.tag == "Enemy")
+        {
+            if (enemiesInZone.Contains(unit) == false)
+            {
+                enemiesInZone.Add(unit.gameObject);
+            }
+        }
+
     }
 
     /// <summary>
-    /// Removes unit from units in zone list
+    /// Removes unit from units in zone list based on their type
     /// </summary>
     /// <param name="unit"></param>
     public void RemoveUnitsInZoneList(GameObject unit)
     {
-        if (unitsInZone.Contains(unit))
+        Character character = unit.GetComponent<Character>();
+
+        if (unit.gameObject.tag == "PlayerCharacter")
         {
-            unitsInZone.Remove(unit);
+            if (crewMembersInZone.Contains(unit))
+            {
+                crewMembersInZone.Remove(unit);
+            }
+        }
+
+        if (unit.gameObject.tag == "Enemy")
+        {
+            if (enemiesInZone.Contains(unit))
+            {
+                enemiesInZone.Remove(unit);
+            }
         }
     }
+
+    /// <summary>
+    /// Removes units from lists if their health reaches 0
+    /// </summary>
+    /// <param name="unit"></param>
+    public void CheckUnitHealth(GameObject unit)
+    {
+        Character character = unit.gameObject.GetComponent<Character>();
+
+        if (character.currentHealth <= 0)
+        {
+            RemoveUnitsInZoneList(character.gameObject);
+        }
+    }
+   
 
 
 }
