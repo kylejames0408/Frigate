@@ -32,9 +32,9 @@ public class CombatUI : MonoBehaviour
 
     public void Init()
     {
-        PlayerData data = GameManager.Data;
-        tmpCrewmateAmt.text = data.crewmates.Count.ToString();
-        tmpCrewmateCapacity.text = data.outpostCrewCapacity.ToString();
+        //PlayerData data = GameManager.Data;
+        //tmpCrewmateAmt.text = data.crewmates.Count.ToString();
+        //tmpCrewmateCapacity.text = data.outpostCrewCapacity.ToString();
         //tmpFoodAmt.text = data.resources.food.ToString();
         //tmpFoodConsumption.text = data.resources.foodPerAP.ToString();
         //tmpDubloonAmt.text = data.resources.doubloons.ToString();
