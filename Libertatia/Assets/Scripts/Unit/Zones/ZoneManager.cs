@@ -10,6 +10,8 @@ public class ZoneManager : MonoBehaviour
 
     public List<Terrain> zones;
 
+    public GameObject shipWaypoint;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -44,5 +46,15 @@ public class ZoneManager : MonoBehaviour
        
         //}
 
+    }
+
+    public void Retreat()
+    {
+        for(int i = 0; i < crewMembers.Count; i++)
+        {
+            CrewMember crewMember = crewMembers[i].GetComponent<CrewMember>();
+
+            crewMember.charAgent.SetDestination(shipWaypoint.transform.position);
+        }
     }
 }

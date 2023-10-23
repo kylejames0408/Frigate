@@ -19,10 +19,15 @@ public class CombatUI : MonoBehaviour
         PlayerData data = GameManager.Data;
         tmpCrewmateAmt.text = data.crewmates.Count.ToString();
         tmpCrewmateCapacity.text = data.outpostCrewCapacity.ToString();
-        tmpFoodAmt.text = data.resources.food.ToString();
-        tmpFoodConsumption.text = data.resources.foodPerAP.ToString();
-        tmpDubloonAmt.text = data.resources.doubloons.ToString();
-        tmpWoodAmt.text = data.resources.wood.ToString();
+        //tmpFoodAmt.text = data.resources.food.ToString();
+        //tmpFoodConsumption.text = data.resources.foodPerAP.ToString();
+        //tmpDubloonAmt.text = data.resources.doubloons.ToString();
+        //tmpWoodAmt.text = data.resources.wood.ToString();
+
+        tmpFoodAmt.text = 0.ToString();
+        tmpFoodConsumption.text = 0.ToString();
+        tmpDubloonAmt.text = 0.ToString();
+        tmpWoodAmt.text = 0.ToString();
     }
 
     public void UpdateCrewAmountUI(int crewAmt)
