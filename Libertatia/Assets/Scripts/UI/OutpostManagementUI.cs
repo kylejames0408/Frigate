@@ -7,9 +7,11 @@ using UnityEngine.UI;
 
 public class OutpostManagementUI : MonoBehaviour
 {
+    // Components
+    [SerializeField] private CrewmateManager cm;
     // Animation related
-    private float arrowAnimTime = 0.5f;
-    private float interfaceAnimTime = 0.6f;
+    [SerializeField] private float arrowAnimTime = 0.5f;
+    [SerializeField] private float interfaceAnimTime = 0.6f;
     // Prefabs
     [SerializeField] private GameObject buildingCardPrefab;
     [SerializeField] private GameObject crewmateCardPrefab;
@@ -27,6 +29,8 @@ public class OutpostManagementUI : MonoBehaviour
 
     private void Awake()
     {
+        if(cm == null) { cm = FindObjectOfType<CrewmateManager>(); }
+
         pages = pagesUIParent.GetComponentsInChildren<Transform>();
         if(pages.Length > 1 )
         {
@@ -36,6 +40,7 @@ public class OutpostManagementUI : MonoBehaviour
             }
         }
         tabs = tabUIParent.GetComponentsInChildren<Tab>();
+        crewmateCards = new List<GameObject>();
     }
     private void Start()
     {
@@ -90,27 +95,22 @@ public class OutpostManagementUI : MonoBehaviour
         }
     }
     // Fills crewmate construction UI page
-    public void FillCrewmateUI(CrewmateManager cm, CrewmateData[] crewmates) // will take in a crewmanager script
+    public void FillCrewmateUI(Crewmate[] crewmates)
     {
         crewmateCards = new List<GameObject>(crewmates.Length);
         for (int i = 0; i < crewmates.Length; i++)
         {
-            GameObject card = Instantiate(crewmateCardPrefab, pages[1]);
-            int index = i; // needs to be destroyed after setting listener
-            card.GetComponent<Button>().onClick.AddListener(() => { SelectCrewmateCard(cm, index); }); // drag + drop func
-            card.GetComponentsInChildren<Image>()[1].sprite = crewmates[i].icon;
-            card.GetComponentInChildren<TextMeshProUGUI>().text = crewmates[i].name;
-            crewmateCards.Add(card);
+            AddCrewmateCard(crewmates[i]);
         }
     }
-    public void AddCrewmateCard(CrewmateManager cm, Crewmate mate)
+    public void AddCrewmateCard(Crewmate mate)
     {
         GameObject card = Instantiate(crewmateCardPrefab, pages[1]);
         crewmateCards.Add(card);
         int index = crewmateCards.IndexOf(card); // needs to be destroyed after setting listener
-        card.GetComponent<Button>().onClick.AddListener(() => { SelectCrewmateCard(cm, index); }); // drag + drop func
-        card.GetComponentsInChildren<Image>()[1].sprite = mate.icon;
-        card.GetComponentInChildren<TextMeshProUGUI>().text = mate.name;
+        card.GetComponent<Button>().onClick.AddListener(() => { SelectCrewmateCard(index); }); // drag + drop func
+        card.GetComponentsInChildren<Image>()[1].sprite = mate.Icon;
+        card.GetComponentInChildren<TextMeshProUGUI>().text = mate.Name;
     }
 
     private void SelectBuildingCard(BuildingManager bm, int index)
@@ -127,7 +127,7 @@ public class OutpostManagementUI : MonoBehaviour
     {
         buildingCards[index].GetComponent<Outline>().enabled = false;
     }
-    private void SelectCrewmateCard(CrewmateManager cm, int index)
+    public void SelectCrewmateCard(int index)
     {
         foreach (GameObject card in crewmateCards)
         {

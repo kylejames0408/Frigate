@@ -5,7 +5,7 @@ using System.Linq;
 
 public class CrewmateManager : MonoBehaviour
 {
-    private static CrewmateManager _instance;
+    private static CrewmateManager instance;
     // Components
     private OutpostManagementUI omui;
     // Crewmate Data
@@ -20,19 +20,19 @@ public class CrewmateManager : MonoBehaviour
     {
         get
         {
-            return _instance;
+            return instance;
         }
     }
 
     private void Awake()
     {
-        if(_instance != null && _instance != this)
+        if(instance != null && instance != this)
         {
             Destroy(gameObject);
         }
         else
         {
-            _instance = this;
+            instance = this;
         }
 
         if (omui == null) { omui = FindObjectOfType<OutpostManagementUI>(); }// init both of these
@@ -76,31 +76,34 @@ public class CrewmateManager : MonoBehaviour
                 crewmates.Add(mate);
             }
         }
-
-
-
     }
     private void Start()
     {
-        omui.FillCrewmateUI(this, GameManager.Data.crewmates.ToArray());
+        //omui.FillCrewmateUI(crewmates.ToArray());
     }
 
     internal void SpawnNewCrewmate()
     {
-        GameObject crewmate = Instantiate(crewmatePrefab, transform);
+        GameObject crewmateObj = Instantiate(crewmatePrefab, transform);
+        Crewmate crewmate = crewmateObj.GetComponent<Crewmate>();
+
+        // Position
         Vector2 circleLocation = Random.insideUnitCircle;
         Vector3 spawnPosition = new Vector3(circleLocation.x * crewmateSpawnRadius, 0, circleLocation.y * crewmateSpawnRadius);
-        crewmate.transform.position = crewmateSpawn.position + spawnPosition;
-        Crewmate mate = crewmate.GetComponent<Crewmate>();
+        crewmateObj.transform.position = crewmateSpawn.position + spawnPosition;
+        // Save Data
         CrewmateData data = new CrewmateData();
-        data.icon = mate.Icon;
-        data.name = mate.Name;
-        data.buildingID = mate.buildingID;
+        data.icon = crewmate.Icon;
+        data.name = crewmate.Name;
+        data.buildingID = crewmate.buildingID;
         GameManager.Data.crewmates.Add(data);
-        crewmates.Add(mate);
-        // Add card
-        //omui.AddCrewmateCard(this, mate);
+        crewmates.Add(crewmate);
+        // Update UI
+        crewmate.cardIndex = GameManager.Data.crewmates.Count - 1; // check
+        crewmate.onSelect.AddListener(() => { SelectionCallback(crewmate); });
 
+        // Add card
+        omui.AddCrewmateCard(crewmate);
     }
     internal Crewmate SelectCrewmate(int index)
     {
@@ -136,5 +139,10 @@ public class CrewmateManager : MonoBehaviour
         //sets the first child to be active: an indicator showing that the unit is selected
         unitToRemove.transform.GetChild(0).gameObject.SetActive(false);
     }
-
+    // TODO only pass in index somehow
+    private void SelectionCallback(Crewmate mate)
+    {
+        ClickSelect(mate.gameObject);
+        omui.SelectCrewmateCard(mate.cardIndex); // will likely break when crewmates die. Will need to have another method
+    }
 }

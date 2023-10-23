@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
@@ -12,11 +10,12 @@ public class Crewmate : MonoBehaviour
     public string crewmateName;
     public Sprite icon;
     public bool isHovered = false;
-    private Building currentBuilding;
     public int buildingID = -1;
+    public int cardIndex = -1;
     [SerializeField] private bool isBuilding = false;
     private NavMeshAgent agent;
     public UnityEvent onAssign;
+    public UnityEvent onSelect;
 
     public string Name
     {
@@ -48,7 +47,6 @@ public class Crewmate : MonoBehaviour
     public void GiveJob(Building job)
     {
         buildingID = job.id;
-        currentBuilding = job;
         isBuilding = true;
         Vector3 jobPosition = job.transform.position;
         Vector2 randomPosition = UnityEngine.Random.insideUnitCircle.normalized * job.Radius;
@@ -62,7 +60,7 @@ public class Crewmate : MonoBehaviour
 
     public void Free()
     {
-        currentBuilding = null;
+        buildingID = -1;
         isBuilding = false;
     }
 
@@ -70,7 +68,7 @@ public class Crewmate : MonoBehaviour
     {
         if (isHovered && Input.GetMouseButtonDown(0))
         {
-            CrewmateManager.Instance.ClickSelect(gameObject);
+            onSelect.Invoke();
         }
     }
 
