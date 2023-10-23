@@ -7604,8 +7604,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 1.5249939}
-  m_SizeDelta: {x: 0, y: 3.0500154}
+  m_AnchoredPosition: {x: 0, y: -80.19}
+  m_SizeDelta: {x: 0, y: -160.38}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &608516869
 MonoBehaviour:
@@ -7627,7 +7627,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Retreat
+  m_text: 'Retreat to Ship
+
+'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -19100,6 +19102,7 @@ MonoBehaviour:
   enemies: []
   zones: []
   shipWaypoint: {fileID: 894041250}
+  combatUI: {fileID: 1198130054}
 --- !u!4 &1411551669
 Transform:
   m_ObjectHideFlags: 0

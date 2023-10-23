@@ -12,6 +12,8 @@ public class ZoneManager : MonoBehaviour
 
     public GameObject shipWaypoint;
 
+    public CombatUI combatUI;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -28,6 +30,17 @@ public class ZoneManager : MonoBehaviour
         if (crewMembers.Count == 0)
         {
             crewMembers = GameObject.FindGameObjectsWithTag("PlayerCharacter").ToList<GameObject>();
+        }
+
+        foreach(GameObject cm in crewMembers)
+        {
+            CrewMember crewMember = cm.GetComponent<CrewMember>();
+
+            //Decreases crewmate number by 1 if they died
+            if(crewMember.currentHealth <= 0)
+            {
+                combatUI.UpdateCrewAmountUI(crewMembers.Count - 1);
+            }
         }
 
         //for (int i = 0; i < zones.Count; i++)
@@ -48,6 +61,9 @@ public class ZoneManager : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// Makes the crew members retreat back to the ship's waypoint game object
+    /// </summary>
     public void Retreat()
     {
         for(int i = 0; i < crewMembers.Count; i++)

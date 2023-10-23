@@ -14,6 +14,22 @@ public class CombatUI : MonoBehaviour
     public TextMeshProUGUI tmpWoodAmt;
     public TextMeshProUGUI tmpStoneAmt;
 
+    private void Start()
+    {
+        PlayerData data = GameManager.Data;
+        //tmpCrewmateAmt.text = data.crewmates.Count.ToString();
+        //tmpCrewmateCapacity.text = data.crewmates.Count.ToString();
+
+        //Test values - TO BE REMOVED OR COMMENTED OUT
+        tmpCrewmateAmt.text = 6.ToString();
+        tmpCrewmateCapacity.text = 6.ToString();
+
+        tmpFoodAmt.text = 0.ToString();
+        tmpFoodConsumption.text = 0.ToString();
+        tmpDubloonAmt.text = 0.ToString();
+        tmpWoodAmt.text = 0.ToString();
+    }
+
     public void Init()
     {
         PlayerData data = GameManager.Data;
@@ -24,10 +40,7 @@ public class CombatUI : MonoBehaviour
         //tmpDubloonAmt.text = data.resources.doubloons.ToString();
         //tmpWoodAmt.text = data.resources.wood.ToString();
 
-        tmpFoodAmt.text = 0.ToString();
-        tmpFoodConsumption.text = 0.ToString();
-        tmpDubloonAmt.text = 0.ToString();
-        tmpWoodAmt.text = 0.ToString();
+
     }
 
     public void UpdateCrewAmountUI(int crewAmt)
