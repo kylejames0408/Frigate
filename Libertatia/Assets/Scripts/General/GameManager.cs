@@ -50,10 +50,8 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        GameObject obj = new GameObject();
-        obj.name = typeof(GameManager).Name;
         data = PlayerDataManager.CreateNewData();
-        DontDestroyOnLoad(obj); // Required for persistance
+        DontDestroyOnLoad(gameObject); // Required for persistance
     }
     private void Update()
     {

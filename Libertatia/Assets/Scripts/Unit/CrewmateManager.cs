@@ -1,7 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Linq;
 
 public class CrewmateManager : MonoBehaviour
 {
@@ -40,6 +38,10 @@ public class CrewmateManager : MonoBehaviour
         // Init Crewmates (make own function)
         crewmateSpawn = transform.GetChild(0);
         crewmates = new List<Crewmate>(); //GameManager.Data.crewmates.Count
+        if(GameManager.Data.crewmates == null)
+        {
+            Debug.Log("You might need to add the game manager to the scene; likely through PlayerData scene");
+        }
         if (GameManager.Data.crewmates.Count == 0)
         {
             for (int i = 0; i < GameManager.Data.crewmates.Capacity; i++)
