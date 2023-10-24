@@ -1,17 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using UnityEngine.UI;
 
-public class OutpostUI : MonoBehaviour
+public class ResourcesUI : MonoBehaviour
 {
-    public TextMeshProUGUI tmpCrewmateAmt;
-    public TextMeshProUGUI tmpCrewmateCapacity;
-    public TextMeshProUGUI tmpFoodAmt;
-    public TextMeshProUGUI tmpFoodConsumption;
-    public TextMeshProUGUI tmpDubloonAmt;
-    public TextMeshProUGUI tmpWoodAmt;
+    [SerializeField] private TextMeshProUGUI tmpCrewmateAmt;
+    [SerializeField] private TextMeshProUGUI tmpCrewmateCapacity;
+    [SerializeField] private TextMeshProUGUI tmpFoodAmt;
+    [SerializeField] private TextMeshProUGUI tmpFoodConsumption;
+    [SerializeField] private TextMeshProUGUI tmpDubloonAmt;
+    [SerializeField] private TextMeshProUGUI tmpWoodAmt;
 
     public void Init()
     {
