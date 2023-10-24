@@ -52,7 +52,11 @@ public class CrewmateManager : MonoBehaviour
             for (int i = 0; i < GameManager.Data.crewmates.Count; i++)
             {
                 CrewmateData data = GameManager.Data.crewmates[i];
-                GameObject crewmate = Instantiate(crewmatePrefab, transform);
+                //GameObject crewmate = Instantiate(crewmatePrefab, transform);
+
+                GameObject crewmate = Instantiate(crewmatePrefab, new Vector3(-5 - 5, 0) + new Vector3(
+                UnityEngine.Random.Range(-1.0f, 1.0f) * 5, -5, UnityEngine.Random.Range(-1.0f, 1.0f) * 5), Quaternion.identity);
+
                 Crewmate mate = crewmate.GetComponent<Crewmate>();
                 mate.crewmateName = data.name;
                 mate.icon = data.icon;
@@ -71,9 +75,14 @@ public class CrewmateManager : MonoBehaviour
                     //}
                 }
 
+
+
+
                 Vector3 spawnPosition = Random.insideUnitCircle * crewmateSpawnRadius;
                 mate.transform.position = crewmateSpawn.position + spawnPosition;
                 crewmates.Add(mate);
+
+                omui.AddCrewmateCard(mate);
             }
         }
     }
