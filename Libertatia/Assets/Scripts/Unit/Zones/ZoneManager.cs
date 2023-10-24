@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class ZoneManager : MonoBehaviour
 {
@@ -43,23 +44,44 @@ public class ZoneManager : MonoBehaviour
             }
         }
 
-        //for (int i = 0; i < zones.Count; i++)
-        //{
-        //    Zone terrainChunk = zones[i].GetComponent<Zone>();
 
-        //    for(int j = 0; j < crewMembers.Count; j++)
-        //    {
-        //        terrainChunk.AddToUnitsInZoneList(crewMembers);
-        //    }
 
-        //    for(int k = 0; k < enemies.Count; k++)
-        //    {
-        //        terrainChunk.AddToUnitsInZoneList(enemies);
-        //    }
-       
-        //}
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            RaycastHit hit;
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity))
+            {
+                if (hit.transform.gameObject.tag == "Zone")
+                {
+                    Zone zone = hit.transform.gameObject.GetComponent<Zone>();
+
+                    Debug.Log(zone.crewMembersInZone.Count + zone.enemiesInZone.Count);
+                }
+            }
+        }
+
+            //for (int i = 0; i < zones.Count; i++)
+            //{
+            //    Zone terrainChunk = zones[i].GetComponent<Zone>();
+
+            //    for(int j = 0; j < crewMembers.Count; j++)
+            //    {
+            //        terrainChunk.AddToUnitsInZoneList(crewMembers);
+            //    }
+
+            //    for(int k = 0; k < enemies.Count; k++)
+            //    {
+            //        terrainChunk.AddToUnitsInZoneList(enemies);
+            //    }
+
+            //}
 
     }
+
 
     /// <summary>
     /// Makes the crew members retreat back to the ship's waypoint game object

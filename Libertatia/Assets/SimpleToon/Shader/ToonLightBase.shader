@@ -20,7 +20,7 @@ Shader "Lpk/LightModel/ToonLightBase"
         _RimColor           ("RimColor", Color)                   = (1,1,1,1)
         
         [Space]   
-        _OutlineWidth      ("OutlineWidth", Range(0.0, 1.0))      = 0.15
+        _OutlineWidth      ("OutlineWidth", Range(0.0, 2.0))      = 0.15
         _OutlineColor      ("OutlineColor", Color)                = (0.0, 0.0, 0.0, 1)
     }
     SubShader
