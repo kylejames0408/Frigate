@@ -31,7 +31,7 @@ Material:
     m_Floats:
     - Step1: 1
     - _Gloss: 10
-    - _OutlineWidth: 0.2
+    - _OutlineWidth: 1.41
     - _RimPower: 2.2
     - _RimStep: 0.65
     - _RimStepSmooth: 0.54
