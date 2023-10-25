@@ -1,5 +1,4 @@
 ﻿using DG.Tweening;
-using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -9,6 +8,11 @@ public class OutpostManagementUI : MonoBehaviour
 {
     // Components
     [SerializeField] private CrewmateManager cm;
+    // popup UI - maybe separate
+    [SerializeField] private GameObject popupUI;
+    [SerializeField] private TextMeshProUGUI buildingResourceCost;
+    [SerializeField] private TextMeshProUGUI buildingAPCost;
+    [SerializeField] private TextMeshProUGUI buildingProduction;
     // Animation related
     [SerializeField] private float arrowAnimTime = 0.5f;
     [SerializeField] private float interfaceAnimTime = 0.6f;
@@ -86,15 +90,35 @@ public class OutpostManagementUI : MonoBehaviour
         buildingCards = new List<GameObject>(buildings.Length);
         for (int i = 0; i < buildings.Length; i++)
         {
-            GameObject card = Instantiate(buildingCardPrefab, pages[0]);
-            int index = i; // needs to be destroyed after setting listener
-            card.GetComponent<Button>().onClick.AddListener(() => { SelectBuildingCard(bm, index); });
-            card.GetComponentsInChildren<Image>()[1].sprite = buildings[i].Icon;
-            card.GetComponentInChildren<TextMeshProUGUI>().text = buildings[i].Name;
-            buildingCards.Add(card);
+            AddBuildingCard(bm, i, buildings[i]);
         }
     }
 
+    // Building cards
+    private void AddBuildingCard(BuildingManager bm, int index, Building building)
+    {
+        GameObject card = Instantiate(buildingCardPrefab, pages[0]);
+        card.GetComponent<BuildingCard>().onHover.AddListener(()=> { BuildingCardHoveredCallback(index); });
+        card.GetComponent<Button>().onClick.AddListener(() => { SelectBuildingCard(bm, index); });
+        card.GetComponentsInChildren<Image>()[1].sprite = building.Icon;
+        card.GetComponentInChildren<TextMeshProUGUI>().text = building.Name;
+        buildingCards.Add(card);
+    }
+    private void SelectBuildingCard(BuildingManager bm, int cardIndex)
+    {
+        foreach (GameObject card in buildingCards)
+        {
+            card.GetComponent<Outline>().enabled = false;
+        }
+        buildingCards[cardIndex].GetComponent<Outline>().enabled = true;
+        bm.SelectBuilding(cardIndex);
+        bm.placedBuilding.AddListener(() => { DeselectBuildingCard(cardIndex); });
+    }
+    public void DeselectBuildingCard(int cardIndex)
+    {
+        buildingCards[cardIndex].GetComponent<Outline>().enabled = false;
+    }
+    // Crew cards
     public void AddCrewmateCard(Crewmate mate)
     {
         GameObject card = Instantiate(crewmateCardPrefab, pages[1]);
@@ -104,35 +128,30 @@ public class OutpostManagementUI : MonoBehaviour
         card.GetComponentsInChildren<Image>()[1].sprite = mate.Icon;
         card.GetComponentInChildren<TextMeshProUGUI>().text = mate.Name;
     }
-
-    private void SelectBuildingCard(BuildingManager bm, int index)
-    {
-        foreach (GameObject card in buildingCards)
-        {
-            card.GetComponent<Outline>().enabled = false;
-        }
-        buildingCards[index].GetComponent<Outline>().enabled = true;
-        bm.SelectBuilding(index);
-        bm.placedBuilding.AddListener(() => { DeselectBuildingCard(index); });
-    }
-    public void DeselectBuildingCard(int index)
-    {
-        buildingCards[index].GetComponent<Outline>().enabled = false;
-    }
-    public void SelectCrewmateCard(int index)
+    public void SelectCrewmateCard(int cardIndex)
     {
         foreach (GameObject card in crewmateCards)
         {
             card.GetComponent<Outline>().enabled = false;
         }
-        crewmateCards[index].GetComponent<Outline>().enabled = true;
-        Crewmate crewmate = cm.SelectCrewmate(index);
-        crewmate.onAssign.AddListener(() => { DeselectCrewmateCard(index); });
+        crewmateCards[cardIndex].GetComponent<Outline>().enabled = true;
+        Crewmate crewmate = cm.SelectCrewmate(cardIndex);
+        crewmate.onAssign.AddListener(() => { DeselectCrewmateCard(cardIndex); });
     }
-    public void DeselectCrewmateCard(int index)
+    public void DeselectCrewmateCard(int cardIndex)
     {
-        crewmateCards[index].GetComponent<Outline>().enabled = false;
+        crewmateCards[cardIndex].GetComponent<Outline>().enabled = false;
     }
+    // Callbacks
+    private void BuildingCardHoveredCallback(int cardIndex)
+    {
+        //popupUI.SetActive(true);
+        //buildingResourceCost.text = buildingCards[cardIndex].cost;
+        //buildingAPCost.text = "";
+        //buildingProduction.text = "";
+        //buildingCards[cardIndex]
+    }
+
 
     // Minimizes menu
     private void OpenMenu()
