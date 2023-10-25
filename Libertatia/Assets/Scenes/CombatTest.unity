@@ -28656,7 +28656,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   crewmatePrefab: {fileID: 3693295309995061255, guid: b66c8fd58b8a19240bd7e5b965291055, type: 3}
   crewmateSpawn: {fileID: 666108731}
-  crewmateSpawnRadius: 10
+  crewmateSpawnRadius: 5
   crewmates: []
   unitsSelected: []
 --- !u!4 &2009515020
