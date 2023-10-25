@@ -4,10 +4,13 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
+// Might need to separate into cost and production
 [Serializable]
 public struct BuildingResources
 {
     public int wood;
+    public int food;
+    public int ap;
 }
 
 public class BuildingManager : MonoBehaviour

@@ -13,9 +13,10 @@ public class OutpostManagementUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI buildingResourceCost;
     [SerializeField] private TextMeshProUGUI buildingAPCost;
     [SerializeField] private TextMeshProUGUI buildingProduction;
+    [SerializeField] private float animTimeHoverInterface = 0.1f;
     // Animation related
-    [SerializeField] private float arrowAnimTime = 0.5f;
-    [SerializeField] private float interfaceAnimTime = 0.6f;
+    [SerializeField] private float animTimeArrow = 0.5f;
+    [SerializeField] private float animTimeInterface = 0.6f;
     // Prefabs
     [SerializeField] private GameObject buildingCardPrefab;
     [SerializeField] private GameObject crewmateCardPrefab;
@@ -27,7 +28,7 @@ public class OutpostManagementUI : MonoBehaviour
     // Data tracking
     private Tab[] tabs;
     private Transform[] pages;
-    private List<GameObject> buildingCards;
+    private List<BuildingCard> buildingCards;
     private List<GameObject> crewmateCards;
     private bool isOpen;
 
@@ -45,6 +46,7 @@ public class OutpostManagementUI : MonoBehaviour
         }
         tabs = tabUIParent.GetComponentsInChildren<Tab>();
         crewmateCards = new List<GameObject>();
+        popupUI.GetComponent<CanvasGroup>().DOFade(0, animTimeHoverInterface);
     }
     private void Start()
     {
@@ -87,7 +89,7 @@ public class OutpostManagementUI : MonoBehaviour
     // Fills building construction UI page
     public void FillConstructionUI(BuildingManager bm, Building[] buildings)
     {
-        buildingCards = new List<GameObject>(buildings.Length);
+        buildingCards = new List<BuildingCard>(buildings.Length);
         for (int i = 0; i < buildings.Length; i++)
         {
             AddBuildingCard(bm, i, buildings[i]);
@@ -97,16 +99,21 @@ public class OutpostManagementUI : MonoBehaviour
     // Building cards
     private void AddBuildingCard(BuildingManager bm, int index, Building building)
     {
-        GameObject card = Instantiate(buildingCardPrefab, pages[0]);
-        card.GetComponent<BuildingCard>().onHover.AddListener(()=> { BuildingCardHoveredCallback(index); });
-        card.GetComponent<Button>().onClick.AddListener(() => { SelectBuildingCard(bm, index); });
-        card.GetComponentsInChildren<Image>()[1].sprite = building.Icon;
-        card.GetComponentInChildren<TextMeshProUGUI>().text = building.Name;
+        GameObject cardObj = Instantiate(buildingCardPrefab, pages[0]);
+
+        BuildingCard card = cardObj.GetComponent<BuildingCard>();
+        card.Init(building.resourceCost, building.resourceProduction);
+        card.onHover.AddListener(()=> { BuildingCardHoveredCallback(index); });
+        card.onHoverExit.AddListener(BuildingCardHoveredExitCallback);
         buildingCards.Add(card);
+
+        cardObj.GetComponent<Button>().onClick.AddListener(() => { SelectBuildingCard(bm, index); });
+        cardObj.GetComponentsInChildren<Image>()[1].sprite = building.Icon;
+        cardObj.GetComponentInChildren<TextMeshProUGUI>().text = building.Name;
     }
     private void SelectBuildingCard(BuildingManager bm, int cardIndex)
     {
-        foreach (GameObject card in buildingCards)
+        foreach (BuildingCard card in buildingCards)
         {
             card.GetComponent<Outline>().enabled = false;
         }
@@ -145,11 +152,29 @@ public class OutpostManagementUI : MonoBehaviour
     // Callbacks
     private void BuildingCardHoveredCallback(int cardIndex)
     {
-        //popupUI.SetActive(true);
-        //buildingResourceCost.text = buildingCards[cardIndex].cost;
-        //buildingAPCost.text = "";
-        //buildingProduction.text = "";
-        //buildingCards[cardIndex]
+        BuildingCard card = buildingCards[cardIndex];
+        // Move to be above/aligned with the card
+        Vector3 aboveCard = popupUI.transform.position;
+        aboveCard.x = card.transform.position.x;
+        popupUI.transform.position = aboveCard;
+        popupUI.GetComponent<CanvasGroup>().DOFade(1, animTimeHoverInterface);
+
+        // Populate UI
+        buildingResourceCost.text = card.resourceCost.wood.ToString(); // cost
+        buildingAPCost.text = card.resourceCost.ap.ToString(); // AP
+        // Production
+        if (card.resourceProduction.food>0)
+        {
+            buildingProduction.text = "Food";
+        }
+        else
+        {
+            buildingProduction.text = "None";
+        }
+    }
+    private void BuildingCardHoveredExitCallback()
+    {
+        popupUI.GetComponent<CanvasGroup>().DOFade(0, animTimeHoverInterface);
     }
 
 
@@ -157,18 +182,18 @@ public class OutpostManagementUI : MonoBehaviour
     private void OpenMenu()
     {
         isOpen = true;
-        transform.DOMoveY(0, interfaceAnimTime);
+        transform.DOMoveY(0, animTimeInterface);
         arrow.onClick.RemoveListener(OpenMenu);
         arrow.onClick.AddListener(CloseMenu);
-        arrow.transform.GetChild(0).DORotate(new Vector3(0, 0, 180), arrowAnimTime);
+        arrow.transform.GetChild(0).DORotate(new Vector3(0, 0, 180), animTimeArrow);
     }
     // Minimizes menu
     private void CloseMenu()
     {
         isOpen = false;
-        transform.DOMoveY(-pagesUIParent.GetComponent<RectTransform>().rect.height, interfaceAnimTime); // cant get height in start
+        transform.DOMoveY(-pagesUIParent.GetComponent<RectTransform>().rect.height, animTimeInterface); // cant get height in start
         arrow.onClick.RemoveListener(CloseMenu);
         arrow.onClick.AddListener(OpenMenu);
-        arrow.transform.GetChild(0).DORotate(new Vector3(0, 0, 0), arrowAnimTime);
+        arrow.transform.GetChild(0).DORotate(new Vector3(0, 0, 0), animTimeArrow);
     }
 }

@@ -92,7 +92,7 @@ GameObject:
   - component: {fileID: 1936097422279918113}
   - component: {fileID: 7281188846282433368}
   m_Layer: 5
-  m_Name: Card-Building
+  m_Name: CARD-Building
   m_TagString: Untagged
   m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -256,6 +256,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   onHover:
+    m_PersistentCalls:
+      m_Calls: []
+  onHoverExit:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &6855926677336490678

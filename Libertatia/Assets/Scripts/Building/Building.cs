@@ -26,13 +26,15 @@ public class Building : MonoBehaviour
     public string output;
     public int uiIndex;
     public int level;
-    [SerializeField] private float radius = 5.0f; // for construction
     private BuildingState state = BuildingState.PLACING;
-    private int numOfCollisions = 0;
     // Identifiers
     public bool isHovered = false;
+    // In-game characteristics
+    [SerializeField] private float radius = 5.0f; // for construction
+    private int numOfCollisions = 0;
     // Building
     public BuildingResources resourceCost;
+    public BuildingResources resourceProduction;
     public int builderCapacity = 1;
     public Crewmate builder;
     // Components
