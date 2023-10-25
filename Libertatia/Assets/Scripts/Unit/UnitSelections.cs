@@ -130,7 +130,12 @@ public class UnitSelections : MonoBehaviour
         foreach(var unit in unitsSelected)
         {
             unit.GetComponent<UnitMovement>().enabled = false;
-            unit.transform.GetChild(0).gameObject.SetActive(false);
+            //unit.transform.GetChild(0).gameObject.SetActive(false);
+
+            //Switches the character's shader when selected
+            Character unitChar = unit.GetComponent<Character>();
+            unitChar.rend.sharedMaterial = unitChar.materials[0];
+
             //unit.transform.GetChild(1).gameObject.SetActive(false);
         }
         unitsSelected.Clear();
@@ -153,7 +158,11 @@ public class UnitSelections : MonoBehaviour
 
         unitsSelected.Add(unitToAdd);
         //sets the first child to be active: an indicator showing that the unit is selected
-        unitToAdd.transform.GetChild(0).gameObject.SetActive(true);
+        //unitToAdd.transform.GetChild(0).gameObject.SetActive(true);
+
+        //Switches the character's shader when selected
+        Character unit = unitToAdd.GetComponent<Character>();
+        unit.rend.sharedMaterial = unit.materials[1];
 
         //sets the second child to be active: a sphere showing detection range
         //unitToAdd.transform.GetChild(1).gameObject.SetActive(true);
@@ -176,7 +185,11 @@ public class UnitSelections : MonoBehaviour
     {
         unitsSelected.Remove(unitToRemove);
         //sets the first child to be active: an indicator showing that the unit is selected
-        unitToRemove.transform.GetChild(0).gameObject.SetActive(false);
+        //unitToRemove.transform.GetChild(0).gameObject.SetActive(false);
+
+        //Switches the character's shader when deselected
+        Character unit = unitToRemove.GetComponent<Character>();
+        unit.rend.sharedMaterial = unit.materials[0];
 
         //sets the second child to be active: a sphere showing detection range
         //unitToRemove.transform.GetChild(1).gameObject.SetActive(false);

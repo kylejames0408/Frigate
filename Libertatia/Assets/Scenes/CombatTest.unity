@@ -3013,6 +3013,8 @@ MonoBehaviour:
   damage: 0
   charAgent: {fileID: 0}
   healthbar: {fileID: 506170226}
+  materials: []
+  rend: {fileID: 0}
   enemies: []
   enemyGameobjects: []
 --- !u!114 &217854478
@@ -3409,6 +3411,8 @@ MonoBehaviour:
   damage: 0
   charAgent: {fileID: 0}
   healthbar: {fileID: 322517878}
+  materials: []
+  rend: {fileID: 0}
   enemies: []
   enemyGameobjects: []
 --- !u!114 &228254982
@@ -3464,7 +3468,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: 90.21}
+  m_AnchoredPosition: {x: 0, y: 91.83}
   m_SizeDelta: {x: 721.0767, y: 183.0297}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &236154516
@@ -4684,6 +4688,8 @@ MonoBehaviour:
   damage: 0
   charAgent: {fileID: 0}
   healthbar: {fileID: 877310701}
+  materials: []
+  rend: {fileID: 0}
   enemies: []
   enemyGameobjects: []
 --- !u!114 &348037778
@@ -5180,6 +5186,8 @@ MonoBehaviour:
   damage: 0
   charAgent: {fileID: 0}
   healthbar: {fileID: 737809456}
+  materials: []
+  rend: {fileID: 0}
   enemies: []
   enemyGameobjects: []
 --- !u!114 &388982661
@@ -5765,7 +5773,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: d9833e0a01d4bf140b1559b18cb59a46, type: 2}
+  - {fileID: 2100000, guid: 0438259f38ba9794db820959803e42ef, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5814,6 +5822,10 @@ MonoBehaviour:
   damage: 0
   charAgent: {fileID: 0}
   healthbar: {fileID: 750022759}
+  materials:
+  - {fileID: 2100000, guid: 0438259f38ba9794db820959803e42ef, type: 2}
+  - {fileID: 2100000, guid: d9833e0a01d4bf140b1559b18cb59a46, type: 2}
+  rend: {fileID: 443887580}
   crewMembers: []
   crewMemberGameObjects: []
   detectionRange: 0
@@ -7118,6 +7130,10 @@ MonoBehaviour:
   damage: 0
   charAgent: {fileID: 0}
   healthbar: {fileID: 44273363}
+  materials:
+  - {fileID: 2100000, guid: 0438259f38ba9794db820959803e42ef, type: 2}
+  - {fileID: 2100000, guid: d9833e0a01d4bf140b1559b18cb59a46, type: 2}
+  rend: {fileID: 575436582}
   crewMembers: []
   crewMemberGameObjects: []
   detectionRange: 0
@@ -8080,6 +8096,8 @@ MonoBehaviour:
   damage: 0
   charAgent: {fileID: 0}
   healthbar: {fileID: 2012164508}
+  materials: []
+  rend: {fileID: 0}
   enemies: []
   enemyGameobjects: []
 --- !u!114 &641981759
@@ -11980,6 +11998,10 @@ MonoBehaviour:
   damage: 0
   charAgent: {fileID: 0}
   healthbar: {fileID: 1467092324}
+  materials:
+  - {fileID: 2100000, guid: 0438259f38ba9794db820959803e42ef, type: 2}
+  - {fileID: 2100000, guid: d9833e0a01d4bf140b1559b18cb59a46, type: 2}
+  rend: {fileID: 867616226}
   crewMembers: []
   crewMemberGameObjects: []
   detectionRange: 0
@@ -13767,6 +13789,10 @@ MonoBehaviour:
   damage: 0
   charAgent: {fileID: 0}
   healthbar: {fileID: 1170059227}
+  materials:
+  - {fileID: 2100000, guid: 0438259f38ba9794db820959803e42ef, type: 2}
+  - {fileID: 2100000, guid: d9833e0a01d4bf140b1559b18cb59a46, type: 2}
+  rend: {fileID: 931446528}
   crewMembers: []
   crewMemberGameObjects: []
   detectionRange: 0
@@ -13968,6 +13994,10 @@ MonoBehaviour:
   damage: 0
   charAgent: {fileID: 0}
   healthbar: {fileID: 317582059}
+  materials:
+  - {fileID: 2100000, guid: 0438259f38ba9794db820959803e42ef, type: 2}
+  - {fileID: 2100000, guid: d9833e0a01d4bf140b1559b18cb59a46, type: 2}
+  rend: {fileID: 941200572}
   crewMembers: []
   crewMemberGameObjects: []
   detectionRange: 0
@@ -14350,6 +14380,8 @@ MonoBehaviour:
   damage: 0
   charAgent: {fileID: 0}
   healthbar: {fileID: 671023626}
+  materials: []
+  rend: {fileID: 0}
   enemies: []
   enemyGameobjects: []
 --- !u!114 &967286128
@@ -14691,7 +14723,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 1694, y: -109}
+  m_AnchoredPosition: {x: 1694, y: 0}
   m_SizeDelta: {x: 329, y: 123.03}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1008998645
@@ -15985,6 +16017,10 @@ MonoBehaviour:
   damage: 0
   charAgent: {fileID: 0}
   healthbar: {fileID: 2045817283}
+  materials:
+  - {fileID: 2100000, guid: 0438259f38ba9794db820959803e42ef, type: 2}
+  - {fileID: 2100000, guid: d9833e0a01d4bf140b1559b18cb59a46, type: 2}
+  rend: {fileID: 1117264215}
   crewMembers: []
   crewMemberGameObjects: []
   detectionRange: 0
@@ -16488,6 +16524,8 @@ MonoBehaviour:
   damage: 0
   charAgent: {fileID: 0}
   healthbar: {fileID: 1439090914}
+  materials: []
+  rend: {fileID: 0}
   enemies: []
   enemyGameobjects: []
 --- !u!114 &1138835301
@@ -17082,7 +17120,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -31.87}
+  m_AnchoredPosition: {x: 0, y: -31.42}
   m_SizeDelta: {x: 1920, y: 64}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1198130052
@@ -17812,6 +17850,10 @@ MonoBehaviour:
   damage: 0
   charAgent: {fileID: 0}
   healthbar: {fileID: 871968839}
+  materials:
+  - {fileID: 2100000, guid: 0438259f38ba9794db820959803e42ef, type: 2}
+  - {fileID: 2100000, guid: d9833e0a01d4bf140b1559b18cb59a46, type: 2}
+  rend: {fileID: 1252722869}
   crewMembers: []
   crewMemberGameObjects: []
   detectionRange: 0
@@ -19898,6 +19940,8 @@ MonoBehaviour:
   damage: 0
   charAgent: {fileID: 0}
   healthbar: {fileID: 204846174}
+  materials: []
+  rend: {fileID: 0}
   enemies: []
   enemyGameobjects: []
 --- !u!114 &1467598189
@@ -22605,6 +22649,10 @@ MonoBehaviour:
   damage: 0
   charAgent: {fileID: 0}
   healthbar: {fileID: 853674776}
+  materials:
+  - {fileID: 2100000, guid: 0438259f38ba9794db820959803e42ef, type: 2}
+  - {fileID: 2100000, guid: d9833e0a01d4bf140b1559b18cb59a46, type: 2}
+  rend: {fileID: 1632069295}
   crewMembers: []
   crewMemberGameObjects: []
   detectionRange: 0
@@ -22806,6 +22854,10 @@ MonoBehaviour:
   damage: 0
   charAgent: {fileID: 0}
   healthbar: {fileID: 1931766419}
+  materials:
+  - {fileID: 2100000, guid: 0438259f38ba9794db820959803e42ef, type: 2}
+  - {fileID: 2100000, guid: d9833e0a01d4bf140b1559b18cb59a46, type: 2}
+  rend: {fileID: 1636327042}
   crewMembers: []
   crewMemberGameObjects: []
   detectionRange: 0
@@ -24399,6 +24451,8 @@ MonoBehaviour:
   damage: 0
   charAgent: {fileID: 0}
   healthbar: {fileID: 226092657}
+  materials: []
+  rend: {fileID: 0}
   enemies: []
   enemyGameobjects: []
 --- !u!114 &1754147573
@@ -25520,6 +25574,8 @@ MonoBehaviour:
   damage: 0
   charAgent: {fileID: 0}
   healthbar: {fileID: 2092591698}
+  materials: []
+  rend: {fileID: 0}
   enemies: []
   enemyGameobjects: []
 --- !u!114 &1823225489
@@ -27007,6 +27063,10 @@ MonoBehaviour:
   damage: 0
   charAgent: {fileID: 0}
   healthbar: {fileID: 769776848}
+  materials:
+  - {fileID: 2100000, guid: 0438259f38ba9794db820959803e42ef, type: 2}
+  - {fileID: 2100000, guid: d9833e0a01d4bf140b1559b18cb59a46, type: 2}
+  rend: {fileID: 1967424716}
   crewMembers: []
   crewMemberGameObjects: []
   detectionRange: 0
@@ -28654,6 +28714,10 @@ MonoBehaviour:
   damage: 0
   charAgent: {fileID: 0}
   healthbar: {fileID: 701793767}
+  materials:
+  - {fileID: 2100000, guid: 0438259f38ba9794db820959803e42ef, type: 2}
+  - {fileID: 2100000, guid: d9833e0a01d4bf140b1559b18cb59a46, type: 2}
+  rend: {fileID: 2046984438}
   crewMembers: []
   crewMemberGameObjects: []
   detectionRange: 0
@@ -28840,6 +28904,8 @@ MonoBehaviour:
   damage: 0
   charAgent: {fileID: 0}
   healthbar: {fileID: 17712094}
+  materials: []
+  rend: {fileID: 0}
   enemies: []
   enemyGameobjects: []
 --- !u!114 &2056102857

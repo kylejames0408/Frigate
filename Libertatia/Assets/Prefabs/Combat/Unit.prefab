@@ -353,6 +353,10 @@ MonoBehaviour:
   damage: 0
   charAgent: {fileID: 0}
   healthbar: {fileID: 4311244736423995171}
+  materials:
+  - {fileID: 2100000, guid: 8e58b6f3119697b429f7ad7281411480, type: 2}
+  - {fileID: 2100000, guid: ba6bce09ec0237645ad20b298f314f45, type: 2}
+  rend: {fileID: 7283512582683049553}
   enemies: []
   enemyGameobjects: []
 --- !u!114 &3468405016551804946

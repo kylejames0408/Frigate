@@ -19,6 +19,9 @@ public abstract class Character : MonoBehaviour
 
     public HealthBar healthbar;
 
+    public Material[] materials;
+    public Renderer rend;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -29,6 +32,10 @@ public abstract class Character : MonoBehaviour
         damage = 50;
 
         healthbar.UpdateHealthBar(maxHealth, currentHealth); 
+
+        rend = GetComponent<Renderer>();
+        rend.enabled = true;
+        rend.sharedMaterial = materials[0];
     }
 
     // Update is called once per frame
