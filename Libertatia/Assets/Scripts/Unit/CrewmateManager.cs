@@ -43,6 +43,7 @@ public class CrewmateManager : MonoBehaviour
         if(GameManager.Data.crewmates == null)
         {
             Debug.Log("You might need to add the game manager to the scene; likely through PlayerData scene");
+            return;
         }
         if (GameManager.Data.crewmates.Count == 0)
         {

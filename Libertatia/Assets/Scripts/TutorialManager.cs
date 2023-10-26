@@ -12,7 +12,7 @@ public class TutorialManager : MonoBehaviour
 
     public List<DialogueTrigger> combatDialogues;
 
-    private static GameObject AttackButton;
+    public GameObject AttackButton;
 
     private bool secondVisit = false;
 
@@ -54,10 +54,14 @@ public class TutorialManager : MonoBehaviour
             }
 
 
-            AttackButton = GameObject.Find("BTN-Attack");
+            //AttackButton = GameObject.Find("BTN-Attack");
             if(AttackButton != null )
             {
                 AttackButton.SetActive(false);
+            }
+            else
+            {
+                Debug.LogError("No attack button reference");
             }
         }
         else if (SceneManager.GetSceneByName("CombatTest").isLoaded)

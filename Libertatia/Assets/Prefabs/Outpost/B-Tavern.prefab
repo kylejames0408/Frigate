@@ -133,7 +133,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 0
   buildingName: Tavern
-  icon: {fileID: 21300000, guid: d495ab674a6890e4483cef1d5363f415, type: 3}
+  icon: {fileID: 21300000, guid: 2955870a14916154485a2abf1b753762, type: 3}
   output: 
   uiIndex: 0
   level: 0
@@ -147,8 +147,8 @@ MonoBehaviour:
     wood: 0
     food: 0
     ap: 4
-  builderCapacity: 1
-  builder: {fileID: 0}
+  assignee1: {fileID: 0}
+  assignee2: {fileID: 0}
   components: {fileID: 11400000, guid: dce72b56bac855e46b065e2c0dc62d3f, type: 2}
   builtMaterial: {fileID: 2100000, guid: 2ed85a5525951e145ab57bc5eb35b5ba, type: 2}
   onCrewmateAssigned: {fileID: 11400000, guid: 8c002ad9b29a8304d866301b28d5b0b9, type: 2}
