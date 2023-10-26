@@ -1,5 +1,4 @@
 ﻿using DG.Tweening;
-using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -9,9 +8,15 @@ public class OutpostManagementUI : MonoBehaviour
 {
     // Components
     [SerializeField] private CrewmateManager cm;
+    // popup UI - maybe separate
+    [SerializeField] private GameObject popupUI;
+    [SerializeField] private TextMeshProUGUI buildingResourceCost;
+    [SerializeField] private TextMeshProUGUI buildingAPCost;
+    [SerializeField] private TextMeshProUGUI buildingProduction;
+    [SerializeField] private float animTimeHoverInterface = 0.1f;
     // Animation related
-    [SerializeField] private float arrowAnimTime = 0.5f;
-    [SerializeField] private float interfaceAnimTime = 0.6f;
+    [SerializeField] private float animTimeArrow = 0.5f;
+    [SerializeField] private float animTimeInterface = 0.6f;
     // Prefabs
     [SerializeField] private GameObject buildingCardPrefab;
     [SerializeField] private GameObject crewmateCardPrefab;
@@ -23,7 +28,7 @@ public class OutpostManagementUI : MonoBehaviour
     // Data tracking
     private Tab[] tabs;
     private Transform[] pages;
-    private List<GameObject> buildingCards;
+    private List<BuildingCard> buildingCards;
     private List<GameObject> crewmateCards;
     private bool isOpen;
 
@@ -41,6 +46,7 @@ public class OutpostManagementUI : MonoBehaviour
         }
         tabs = tabUIParent.GetComponentsInChildren<Tab>();
         crewmateCards = new List<GameObject>();
+        popupUI.GetComponent<CanvasGroup>().alpha = 0;
     }
     private void Start()
     {
@@ -83,26 +89,44 @@ public class OutpostManagementUI : MonoBehaviour
     // Fills building construction UI page
     public void FillConstructionUI(BuildingManager bm, Building[] buildings)
     {
-        buildingCards = new List<GameObject>(buildings.Length);
+        buildingCards = new List<BuildingCard>(buildings.Length);
         for (int i = 0; i < buildings.Length; i++)
         {
-            GameObject card = Instantiate(buildingCardPrefab, pages[0]);
-            int index = i; // needs to be destroyed after setting listener
-            card.GetComponent<Button>().onClick.AddListener(() => { SelectBuildingCard(bm, index); });
-            card.GetComponentsInChildren<Image>()[1].sprite = buildings[i].Icon;
-            card.GetComponentInChildren<TextMeshProUGUI>().text = buildings[i].Name;
-            buildingCards.Add(card);
+            AddBuildingCard(bm, i, buildings[i]);
         }
     }
-    // Fills crewmate construction UI page
-    public void FillCrewmateUI(Crewmate[] crewmates)
+
+    // Building cards
+    private void AddBuildingCard(BuildingManager bm, int index, Building building)
     {
-        crewmateCards = new List<GameObject>(crewmates.Length);
-        for (int i = 0; i < crewmates.Length; i++)
-        {
-            AddCrewmateCard(crewmates[i]);
-        }
+        GameObject cardObj = Instantiate(buildingCardPrefab, pages[0]);
+
+        BuildingCard card = cardObj.GetComponent<BuildingCard>();
+        card.Init(building.resourceCost, building.resourceProduction);
+        card.onHover.AddListener(()=> { BuildingCardHoveredCallback(index); });
+        card.onHoverExit.AddListener(BuildingCardHoveredExitCallback);
+        buildingCards.Add(card);
+
+        cardObj.GetComponent<Button>().onClick.AddListener(() => { SelectBuildingCard(bm, index); });
+        cardObj.GetComponentsInChildren<Image>()[1].sprite = building.Icon;
+        cardObj.GetComponentInChildren<TextMeshProUGUI>().text = building.Name;
     }
+    private void SelectBuildingCard(BuildingManager bm, int cardIndex)
+    {
+        foreach (BuildingCard card in buildingCards)
+        {
+            card.GetComponent<Outline>().enabled = false;
+        }
+        buildingCards[cardIndex].GetComponent<Outline>().enabled = true;
+        bm.SelectBuilding(cardIndex);
+        bm.placedBuilding.AddListener(() => { DeselectBuildingCard(cardIndex); }); // might be able to merge these 2
+        bm.cancelBuilding.AddListener(() => { DeselectBuildingCard(cardIndex); });
+    }
+    public void DeselectBuildingCard(int cardIndex)
+    {
+        buildingCards[cardIndex].GetComponent<Outline>().enabled = false;
+    }
+    // Crew cards
     public void AddCrewmateCard(Crewmate mate)
     {
         GameObject card = Instantiate(crewmateCardPrefab, pages[1]);
@@ -112,52 +136,65 @@ public class OutpostManagementUI : MonoBehaviour
         card.GetComponentsInChildren<Image>()[1].sprite = mate.Icon;
         card.GetComponentInChildren<TextMeshProUGUI>().text = mate.Name;
     }
-
-    private void SelectBuildingCard(BuildingManager bm, int index)
-    {
-        foreach (GameObject card in buildingCards)
-        {
-            card.GetComponent<Outline>().enabled = false;
-        }
-        buildingCards[index].GetComponent<Outline>().enabled = true;
-        bm.SelectBuilding(index);
-        bm.placedBuilding.AddListener(() => { DeselectBuildingCard(index); });
-    }
-    public void DeselectBuildingCard(int index)
-    {
-        buildingCards[index].GetComponent<Outline>().enabled = false;
-    }
-    public void SelectCrewmateCard(int index)
+    public void SelectCrewmateCard(int cardIndex)
     {
         foreach (GameObject card in crewmateCards)
         {
             card.GetComponent<Outline>().enabled = false;
         }
-        crewmateCards[index].GetComponent<Outline>().enabled = true;
-        Crewmate crewmate = cm.SelectCrewmate(index);
-        crewmate.onAssign.AddListener(() => { DeselectCrewmateCard(index); });
+        crewmateCards[cardIndex].GetComponent<Outline>().enabled = true;
+        Crewmate crewmate = cm.SelectCrewmate(cardIndex);
+        crewmate.onAssign.AddListener(() => { DeselectCrewmateCard(cardIndex); });
     }
-    public void DeselectCrewmateCard(int index)
+    public void DeselectCrewmateCard(int cardIndex)
     {
-        crewmateCards[index].GetComponent<Outline>().enabled = false;
+        crewmateCards[cardIndex].GetComponent<Outline>().enabled = false;
     }
+    // Callbacks
+    private void BuildingCardHoveredCallback(int cardIndex)
+    {
+        BuildingCard card = buildingCards[cardIndex];
+        // Move to be above/aligned with the card
+        Vector3 aboveCard = popupUI.transform.position;
+        aboveCard.x = card.transform.position.x;
+        popupUI.transform.position = aboveCard;
+        popupUI.GetComponent<CanvasGroup>().DOFade(1, animTimeHoverInterface);
+
+        // Populate UI
+        buildingResourceCost.text = card.resourceCost.wood.ToString(); // cost
+        buildingAPCost.text = card.resourceCost.ap.ToString(); // AP
+        // Production
+        if (card.resourceProduction.food>0)
+        {
+            buildingProduction.text = "Food";
+        }
+        else
+        {
+            buildingProduction.text = "None";
+        }
+    }
+    private void BuildingCardHoveredExitCallback()
+    {
+        popupUI.GetComponent<CanvasGroup>().DOFade(0, animTimeHoverInterface);
+    }
+
 
     // Minimizes menu
     private void OpenMenu()
     {
         isOpen = true;
-        transform.DOMoveY(0, interfaceAnimTime);
+        transform.DOMoveY(0, animTimeInterface);
         arrow.onClick.RemoveListener(OpenMenu);
         arrow.onClick.AddListener(CloseMenu);
-        arrow.transform.GetChild(0).DORotate(new Vector3(0, 0, 180), arrowAnimTime);
+        arrow.transform.GetChild(0).DORotate(new Vector3(0, 0, 180), animTimeArrow);
     }
     // Minimizes menu
     private void CloseMenu()
     {
         isOpen = false;
-        transform.DOMoveY(-pagesUIParent.GetComponent<RectTransform>().rect.height, interfaceAnimTime); // cant get height in start
+        transform.DOMoveY(-pagesUIParent.GetComponent<RectTransform>().rect.height, animTimeInterface); // cant get height in start
         arrow.onClick.RemoveListener(CloseMenu);
         arrow.onClick.AddListener(OpenMenu);
-        arrow.transform.GetChild(0).DORotate(new Vector3(0, 0, 0), arrowAnimTime);
+        arrow.transform.GetChild(0).DORotate(new Vector3(0, 0, 0), animTimeArrow);
     }
 }

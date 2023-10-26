@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.7004271, g: 0.77887654, b: 0.7672576, a: 1}
+  m_IndirectSpecularColor: {r: 0.7018396, g: 0.78017706, b: 0.7678828, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2439,7 +2439,7 @@ GameObject:
   - component: {fileID: 1988140348}
   - component: {fileID: 1988140349}
   m_Layer: 0
-  m_Name: SceneManager
+  m_Name: Manager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2484,7 +2484,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6a9faac7fc866d4583c9654a2f48cdf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  outpostVisited: 0
 --- !u!1001 &2104807747
 PrefabInstance:
   m_ObjectHideFlags: 0

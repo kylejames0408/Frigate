@@ -26,15 +26,17 @@ public class Building : MonoBehaviour
     public string output;
     public int uiIndex;
     public int level;
-    [SerializeField] private float radius = 5.0f; // for construction
     private BuildingState state = BuildingState.PLACING;
-    private int numOfCollisions = 0;
     // Identifiers
     public bool isHovered = false;
+    // In-game characteristics
+    [SerializeField] private float radius = 5.0f; // for construction
+    private int numOfCollisions = 0;
     // Building
     public BuildingResources resourceCost;
-    public int builderCapacity = 1;
-    public Crewmate builder;
+    public BuildingResources resourceProduction;
+    public Crewmate assignee1;
+    public Crewmate assignee2;
     // Components
     private MeshRenderer buildingRender;
     private NavMeshObstacle navObsticle;
@@ -103,39 +105,69 @@ public class Building : MonoBehaviour
     }
     public bool CanAssign()
     {
-        return !IsComplete && !builder;
+        if(state == BuildingState.WAITING_FOR_ASSIGNMENT)
+        {
+            return !assignee1;
+        }
+        else if (state == BuildingState.COMPLETE)
+        {
+            return !assignee1 || !assignee2;
+        }
+        else
+        {
+            Debug.LogWarning("Building is not in a state to assign");
+            return false;
+        }
     }
-    public void AssignBuilder(Crewmate builder)
+    public void AssignCrewmate(Crewmate assignee)
     {
-        onCrewmateAssigned.Raise(this, builder);
-        this.builder = builder;
-        builder.GiveJob(this);
-        buildingRender.material = components.buildingMaterial;
-        state = BuildingState.BUILDING;
+        onCrewmateAssigned.Raise(this, assignee);
+        // Assign
+        if(assignee1 == null)
+        {
+            assignee1 = assignee;
+        }
+        else if(assignee2 == null)
+        {
+            assignee2 = assignee;
+        }
+        assignee.GiveJob(this);
+        // Update building state
+        if(state == BuildingState.WAITING_FOR_ASSIGNMENT)
+        {
+            buildingRender.material = components.buildingMaterial;
+            state = BuildingState.BUILDING;
+        }
     }
     public void CompleteBuild()
     {
         state = BuildingState.COMPLETE;
         buildingRender.material = builtMaterial;
-        FreeBuilder();
+        level = 1;
+        navObsticle.enabled = true; // maybe cache? I am not sure why this is disabled when coming back to outpost
+        FreeAssignees();
     }
     public void Upgrade()
     {
         // conditional
-        //level++;
+        level++;
     }
     public void Demolish()
     {
-        FreeBuilder();
+        FreeAssignees();
         Destroy(gameObject);
     }
-    private void FreeBuilder()
+    private void FreeAssignees()
     {
-        // only can occur through dev menu
-        if (builder != null)
+        if (assignee1 != null)
         {
-            builder.Free(); // Free builders
-            builder = null;
+            assignee1.Free();
+            assignee1 = null;
+        }
+        if (assignee2 != null)
+        {
+            assignee2.Free();
+            assignee2 = null;
         }
     }
     public string GetStatus()
@@ -174,7 +206,7 @@ public class Building : MonoBehaviour
             Crewmate mate = CrewmateManager.Instance.unitsSelected[0].GetComponent<Crewmate>();
             if (CanAssign())
             {
-                AssignBuilder(mate);
+                AssignCrewmate(mate);
                 BuildingUI.Instance.FillUI(this);
             }
             else

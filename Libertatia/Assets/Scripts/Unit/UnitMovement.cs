@@ -40,7 +40,7 @@ public class UnitMovement : MonoBehaviour
                     Crewmate builder = myAgent.GetComponent<Crewmate>();
                     if (building.CanAssign())
                     {
-                        building.AssignBuilder(builder);
+                        building.AssignCrewmate(builder);
                     }
                 }
                 else

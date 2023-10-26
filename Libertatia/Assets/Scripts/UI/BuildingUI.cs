@@ -17,7 +17,8 @@ public class BuildingUI : MonoBehaviour
     [SerializeField] private Transform levelUI;
     [SerializeField] private Transform outputUI;
     //[SerializeField] private Transform assignmentUI; // will need this if more information is portrayed
-    [SerializeField] private Transform assignmentIconUI;
+    [SerializeField] private Transform assignment1IconUI;
+    [SerializeField] private Transform assignment2IconUI;
     // Buttons
     [SerializeField] private Button upgradeBtn;
     [SerializeField] private Button demolishBtn;
@@ -53,15 +54,24 @@ public class BuildingUI : MonoBehaviour
         iconUI.GetComponent<Image>().sprite = building.Icon;
         nameUI.GetComponent<TextMeshProUGUI>().text = building.Name;
         levelUI.GetComponent<TextMeshProUGUI>().text = building.GetStatus();
-        outputUI.GetComponent<TextMeshProUGUI>().text = building.output; // not sure what output is yet
+        outputUI.GetComponent<TextMeshProUGUI>().text = building.resourceProduction.ToString(); // not sure what output is yet
 
-        if (building.builder != null)
+        if (building.assignee1 != null)
         {
-            assignmentIconUI.GetComponent<Image>().sprite = building.builder.Icon;
+            assignment1IconUI.GetComponent<Image>().sprite = building.assignee1.Icon;
         }
         else
         {
-            assignmentIconUI.GetComponent<Image>().sprite = emptyAssignmentIcon;
+            assignment1IconUI.GetComponent<Image>().sprite = emptyAssignmentIcon;
+        }
+
+        if (building.assignee2 != null)
+        {
+            assignment2IconUI.GetComponent<Image>().sprite = building.assignee2.Icon;
+        }
+        else
+        {
+            assignment2IconUI.GetComponent<Image>().sprite = emptyAssignmentIcon;
         }
 
         activeBuildingID = building.id;
@@ -101,7 +111,7 @@ public class BuildingUI : MonoBehaviour
     // Open/close
     public void OpenMenu()
     {
-        transform.DOMoveX(630, interfaceAnimSpeed);
+        transform.DOMoveX(680, interfaceAnimSpeed);
     }
     public void CloseMenu()
     {
