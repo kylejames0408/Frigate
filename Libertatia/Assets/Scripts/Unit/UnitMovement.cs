@@ -32,7 +32,7 @@ public class UnitMovement : MonoBehaviour
             //Ray ray = myCam.ScreenPointToRay(targetPositionList[randNum]);
             Ray ray = myCam.ScreenPointToRay(Input.mousePosition);
 
-            if (Physics.Raycast(ray, out RaycastHit hit, 500f, mask))
+            if (Physics.Raycast(ray, out RaycastHit hit, 500f, mask, QueryTriggerInteraction.Ignore))
             {
                 if (hit.collider.tag == "Building")
                 {

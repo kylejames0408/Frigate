@@ -58,7 +58,7 @@ public class UnitClick : MonoBehaviour
 
             //Creates a ground marker at the mouse position when clicked to show a visual indicator
             //of where the units are moving to
-            if(Physics.Raycast(ray, out hit, Mathf.Infinity, ground))
+            if(Physics.Raycast(ray, out hit, Mathf.Infinity, ground, QueryTriggerInteraction.Ignore))
             {
                 groundMarker.transform.position = hit.point;
                 groundMarker.SetActive(false);
