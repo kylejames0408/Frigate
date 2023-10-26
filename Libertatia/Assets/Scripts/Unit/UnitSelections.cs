@@ -75,7 +75,7 @@ public class UnitSelections : MonoBehaviour
         //    }
         //}
 
-        if (sceneName == "CombatTest")
+        if (sceneName == "Combat")
         {
             TriggerEvent();
         }

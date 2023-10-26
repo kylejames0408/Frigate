@@ -5,35 +5,13 @@ using UnityEngine.SceneManagement;
 
 public class TutorialManager : MonoBehaviour
 {
-
-    private static TutorialManager instance;
-
     public List<DialogueTrigger> outpostDialogues;
-
     public List<DialogueTrigger> combatDialogues;
-
-    public GameObject AttackButton;
-
+    public GameObject btnAttack;
     private bool secondVisit = false;
-
-    enum Scene
-    {
-        Oupost,
-        Combat
-    }
-
-    Scene currentScene;
 
     int buildingsPlaced = 0;
     int crewmatesAssigned = 0;
-
-    public static TutorialManager Instance
-    {
-        get
-        {
-            return instance;
-        }
-    }
 
     // Start is called before the first frame update
     void Start()
@@ -41,45 +19,27 @@ public class TutorialManager : MonoBehaviour
         if(SceneManager.GetSceneByName("Outpost").isLoaded) // SceneManager.GetActiveScene().name == "PlayerData"
         {
             //check to see if this is the first time, or if its when they're coming back from combat
-            currentScene = Scene.Oupost;
             if (!GameManager.outpostVisited)
             {
                 outpostDialogues[0].TriggerDialogue();
                 GameManager.outpostVisited = true;
+                btnAttack.SetActive(false);
             }
             else
             {
                 outpostDialogues[5].TriggerDialogue();
                 secondVisit = true;
-            }
-
-
-            //AttackButton = GameObject.Find("BTN-Attack");
-            if(AttackButton != null )
-            {
-                AttackButton.SetActive(false);
-            }
-            else
-            {
-                Debug.LogError("No attack button reference");
+                btnAttack.SetActive(true);
             }
         }
-        else if (SceneManager.GetSceneByName("CombatTest").isLoaded)
+        else if (SceneManager.GetSceneByName("Combat").isLoaded)
         {
-            //UnitSelections.Instance.unitList.Clear();
-            currentScene = Scene.Combat;
             combatDialogues[0].TriggerDialogue();
         }
         else
         {
-            //Debug.Log("Something went wrong");
+            Debug.Log("Something went wrong");
         }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 
     public void BuildingPlacedEvent(Component sender, object data)
@@ -106,7 +66,7 @@ public class TutorialManager : MonoBehaviour
         if(crewmatesAssigned == 2 && !secondVisit)
         {
             outpostDialogues[3].TriggerDialogue();
-            AttackButton.SetActive(true);
+            btnAttack.SetActive(true);
         }
     }
 
