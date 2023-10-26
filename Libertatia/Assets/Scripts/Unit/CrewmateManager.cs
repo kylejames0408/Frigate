@@ -136,7 +136,14 @@ public class CrewmateManager : MonoBehaviour
         crewmate.onSelect.AddListener(() => { SelectionCallback(crewmate); });
 
         // Add card
-        omui.AddCrewmateCard(crewmate);
+        if (omui == null)
+        {
+            cmui.AddCrewmateCard(crewmate);
+        }
+        else
+        {
+            omui.AddCrewmateCard(crewmate);
+        }
 
         // Update UI
         GameManager.data.resources.foodConsumption += 10; // crewmate food consumption
