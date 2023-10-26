@@ -17,7 +17,8 @@ public class BuildingUI : MonoBehaviour
     [SerializeField] private Transform levelUI;
     [SerializeField] private Transform outputUI;
     //[SerializeField] private Transform assignmentUI; // will need this if more information is portrayed
-    [SerializeField] private Transform assignmentIconUI;
+    [SerializeField] private Transform assignment1IconUI;
+    [SerializeField] private Transform assignment2IconUI;
     // Buttons
     [SerializeField] private Button upgradeBtn;
     [SerializeField] private Button demolishBtn;
@@ -55,13 +56,22 @@ public class BuildingUI : MonoBehaviour
         levelUI.GetComponent<TextMeshProUGUI>().text = building.GetStatus();
         outputUI.GetComponent<TextMeshProUGUI>().text = building.output; // not sure what output is yet
 
-        if (building.builder != null)
+        if (building.assignee1 != null)
         {
-            assignmentIconUI.GetComponent<Image>().sprite = building.builder.Icon;
+            assignment1IconUI.GetComponent<Image>().sprite = building.assignee1.Icon;
         }
         else
         {
-            assignmentIconUI.GetComponent<Image>().sprite = emptyAssignmentIcon;
+            assignment1IconUI.GetComponent<Image>().sprite = emptyAssignmentIcon;
+        }
+
+        if (building.assignee2 != null)
+        {
+            assignment2IconUI.GetComponent<Image>().sprite = building.assignee2.Icon;
+        }
+        else
+        {
+            assignment2IconUI.GetComponent<Image>().sprite = emptyAssignmentIcon;
         }
 
         activeBuildingID = building.id;

@@ -27,6 +27,7 @@ public class BuildingManager : MonoBehaviour
     [Header("Events")]
     public GameEvent onBuildingPlaced;
     public UnityEvent placedBuilding;
+    public UnityEvent cancelBuilding;
     // Tracking
     public List<Building> buildings; // maybe make a lookup table for buildings since they have an ID
     public BuildingResources totalProduction;
@@ -73,7 +74,7 @@ public class BuildingManager : MonoBehaviour
         activeBuilding.uiIndex = index; // sets type
     }
     // placing a building
-    internal void SpawnBuilding(Building building, Vector3 position)
+    private void SpawnBuilding(Building building, Vector3 position)
     {
         isPlacing = false;
         placedBuilding.Invoke();
@@ -162,6 +163,12 @@ public class BuildingManager : MonoBehaviour
             {
                 SpawnBuilding(activeBuilding, info.point);
             }
+            if(Input.GetMouseButtonDown(1) && !activeBuilding.IsColliding)
+            {
+                isPlacing = false;
+                Destroy(activeBuilding.gameObject);
+                cancelBuilding.Invoke();
+            }
         }
     }
 
@@ -181,6 +188,4 @@ public class BuildingManager : MonoBehaviour
         //GameManager.Instance.buildingAmount = buildings.Count;
         //GameManager.Instance.DataManager.Update(realtimeData);
     }
-
-
 }

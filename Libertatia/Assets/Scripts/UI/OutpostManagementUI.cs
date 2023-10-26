@@ -119,7 +119,8 @@ public class OutpostManagementUI : MonoBehaviour
         }
         buildingCards[cardIndex].GetComponent<Outline>().enabled = true;
         bm.SelectBuilding(cardIndex);
-        bm.placedBuilding.AddListener(() => { DeselectBuildingCard(cardIndex); });
+        bm.placedBuilding.AddListener(() => { DeselectBuildingCard(cardIndex); }); // might be able to merge these 2
+        bm.cancelBuilding.AddListener(() => { DeselectBuildingCard(cardIndex); });
     }
     public void DeselectBuildingCard(int cardIndex)
     {
