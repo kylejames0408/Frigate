@@ -140,7 +140,7 @@ MonoBehaviour:
   isHovered: 0
   radius: 5
   resourceCost:
-    wood: 30
+    wood: 70
     food: 0
     ap: 0
   resourceProduction:

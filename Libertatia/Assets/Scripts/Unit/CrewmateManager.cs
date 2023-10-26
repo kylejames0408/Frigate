@@ -93,7 +93,7 @@ public class CrewmateManager : MonoBehaviour
                 // Add card
                 if(omui == null)
                 {
-                    cmui.AddCrewmateCard(crewmate);
+                    //cmui.AddCrewmateCard(crewmate);
                 }
                 else
                 {

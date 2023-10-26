@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657737, g: 0.49641442, b: 0.5748176, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657737, g: 0.4964143, b: 0.5748176, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -131,6 +131,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -759242478486736209, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
+      propertyPath: tasks.tasks.Array.data[0]
+      value: Gather your crew and head for the ship above. You can use the WASD keys
+        to move the camera if you don't see it. Once everyone is at the ship, a promp
+        will appear letting you press the E key to depart.
+      objectReference: {fileID: 0}
+    - target: {fileID: -759242478486736209, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
+      propertyPath: dialogue.sentences.Array.data[0]
+      value: Yarr! Ye rallied yer crew splendidly! That enemy crew didnt know what
+        hit em!
+      objectReference: {fileID: 0}
+    - target: {fileID: -759242478486736209, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
+      propertyPath: dialogue.sentences.Array.data[2]
+      value: Gather yer crew and move em to the ship at the back. Once they get close
+        enough ye can hit the E key to sail back!
+      objectReference: {fileID: 0}
     - target: {fileID: 834794479261776291, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
       propertyPath: btnAttack
       value: 
@@ -139,6 +155,33 @@ PrefabInstance:
       propertyPath: AttackButton
       value: 
       objectReference: {fileID: 2004096424}
+    - target: {fileID: 4051391971717010772, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
+      propertyPath: tasks.tasks.Array.data[0]
+      value: Select individual crewmates by left clicking on them directly, or select
+        them in a group by holding the left click and dragging over them. You can
+        then right click a point on the map to command them to move towards it.
+      objectReference: {fileID: 0}
+    - target: {fileID: 4051391971717010772, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
+      propertyPath: dialogue.sentences.Array.data[2]
+      value: Select yer crewmates directly on the map and commad em! You can move
+        em one by one, or click and drag to select a group!
+      objectReference: {fileID: 0}
+    - target: {fileID: 4051391971717010772, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
+      propertyPath: dialogue.sentences.Array.data[3]
+      value: Move em to those red pirates and they'll cut em down!
+      objectReference: {fileID: 0}
+    - target: {fileID: 4829848524955143945, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
+      propertyPath: tasks.tasks.Array.data[1]
+      value: '- Build a house'
+      objectReference: {fileID: 0}
+    - target: {fileID: 4829848524955143945, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
+      propertyPath: dialogue.sentences.Array.data[1]
+      value: 'Our crew needs a place to recover from our wounds.
+
+        All we
+        have are enough resources to build a house and a tavern. If you''d help us
+        we''d be mighty grateful.'
+      objectReference: {fileID: 0}
     - target: {fileID: 6231409215963263180, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
       propertyPath: m_RootOrder
       value: 7
@@ -182,6 +225,18 @@ PrefabInstance:
     - target: {fileID: 6231409215963263180, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6769618784424622894, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
+      propertyPath: tasks.tasks.Array.data[0]
+      value: Open up the crewmate menu the same way you opened the building menu,
+        but select the crewmate tab. Click on a crewmates icon to select them, then
+        right click on a structure to assign them to it. You'll know you've done
+        it when the structure turns green and a pirate icon appears in the structures
+        detail box in the bottom left!
+      objectReference: {fileID: 0}
+    - target: {fileID: 6769618784424622894, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
+      propertyPath: dialogue.sentences.Array.data[1]
+      value: Assign one of yer crew to each of the buildings to build em.
       objectReference: {fileID: 0}
     - target: {fileID: 7845774388746979147, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
       propertyPath: m_Name
@@ -9610,7 +9665,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 960, y: 330}
+  m_SizeDelta: {x: 960, y: 400}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &1219076890133093848
 RectTransform:
@@ -11054,7 +11109,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 41.217102, y: -13.304985, z: 41.654755, w: -98.06169}
+  m_margin: {x: 0.81427, y: -0.50273895, z: -0.933136, w: 0.79756165}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -11437,8 +11492,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -3.495, y: 8}
-  m_SizeDelta: {x: 999.01, y: 109.3238}
+  m_AnchoredPosition: {x: -3.495, y: -25}
+  m_SizeDelta: {x: 929.43, y: 285.1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &5561050972463990548
 GameObject:
@@ -11573,8 +11628,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -3.495, y: 117}
-  m_SizeDelta: {x: 999.01, y: 50}
+  m_AnchoredPosition: {x: -3.495, y: 166}
+  m_SizeDelta: {x: 932.5, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &5684620997684938297
 RectTransform:
