@@ -21,7 +21,7 @@ public class Enemy : Character
     {
         maxHealth = 50;
         currentHealth = 50;
-        attackRange = 2;
+        attackRange = 3;
         attackRate = 4;
         damage = 10;
         detectionRange = 10;
