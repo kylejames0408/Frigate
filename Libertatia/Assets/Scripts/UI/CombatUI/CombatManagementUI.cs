@@ -1,5 +1,4 @@
 ﻿using DG.Tweening;
-using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -50,8 +49,6 @@ public class CombatManagementUI : MonoBehaviour
             int index = i; // needs to be destroyed after setting listener
             tabs[i].GetComponent<Button>().onClick.AddListener(() => { SelectTab(index); });
         }
-        // Init building UI as start tab
-        SelectTab(0);
         // Sets arrow initial onclick callback
         arrow.onClick.AddListener(CloseMenu);
     }
@@ -80,15 +77,6 @@ public class CombatManagementUI : MonoBehaviour
     }
 
 
-    // Fills crewmate construction UI page
-    public void FillCrewmateUI(Crewmate[] crewmates)
-    {
-        crewmateCards = new List<GameObject>(crewmates.Length);
-        for (int i = 0; i < crewmates.Length; i++)
-        {
-            AddCrewmateCard(crewmates[i]);
-        }
-    }
     public void AddCrewmateCard(Crewmate mate)
     {
         GameObject card = Instantiate(crewmateCardPrefab, pages[1]);
@@ -98,7 +86,6 @@ public class CombatManagementUI : MonoBehaviour
         card.GetComponentsInChildren<Image>()[1].sprite = mate.Icon;
         card.GetComponentInChildren<TextMeshProUGUI>().text = mate.Name;
     }
-
 
     public void SelectCrewmateCard(int index)
     {

@@ -13,7 +13,7 @@ public class ZoneManager : MonoBehaviour
 
     public GameObject shipWaypoint;
 
-    public CombatUI combatUI;
+    public ResourcesUI resourceUI;
 
     // Start is called before the first frame update
     void Start()
@@ -40,7 +40,7 @@ public class ZoneManager : MonoBehaviour
             //Decreases crewmate number by 1 if they died
             if(crewMember.currentHealth <= 0)
             {
-                combatUI.UpdateCrewAmountUI(crewMembers.Count - 1);
+                resourceUI.UpdateCrewAmountUI(crewMembers.Count - 1);
             }
         }
 

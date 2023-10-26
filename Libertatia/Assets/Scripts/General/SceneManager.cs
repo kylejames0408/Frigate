@@ -60,7 +60,7 @@ public class CeneManager : MonoBehaviour
     }
     public static void LoadCombatFromOutpost()
     {
-        SceneManager.LoadScene("CombatTest", LoadSceneMode.Single);
+        SceneManager.LoadScene("Combat", LoadSceneMode.Single);
         //SceneManager.UnloadSceneAsync("Outpost");
     }
     public static void LoadOutpostFromCombat()

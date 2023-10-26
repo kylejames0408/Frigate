@@ -6,6 +6,7 @@ public class CrewmateManager : MonoBehaviour
     private static CrewmateManager instance;
     // Components
     private OutpostManagementUI omui;
+    private CombatManagementUI cmui;
     private ResourcesUI rui;
     // Crewmate Data
     [SerializeField] private GameObject crewmatePrefab;
@@ -34,8 +35,9 @@ public class CrewmateManager : MonoBehaviour
             instance = this;
         }
 
-        if (omui == null) { omui = FindObjectOfType<OutpostManagementUI>(); }// init both of these
-        if (rui == null) { rui = FindObjectOfType<ResourcesUI>(); }// init both of these
+        if (omui == null) { omui = FindObjectOfType<OutpostManagementUI>(); }
+        if (cmui == null) { cmui = FindObjectOfType<CombatManagementUI>(); }
+        if (rui == null) { rui = FindObjectOfType<ResourcesUI>(); }
 
         // Init Crewmates (make own function)
         crewmateSpawn = transform.GetChild(0);
@@ -57,7 +59,11 @@ public class CrewmateManager : MonoBehaviour
             for (int i = 0; i < GameManager.Data.crewmates.Count; i++)
             {
                 CrewmateData data = GameManager.Data.crewmates[i];
-                GameObject crewmateObj = Instantiate(crewmatePrefab, transform);
+                //GameObject crewmateObj = Instantiate(crewmatePrefab, transform);
+                Vector3 position = new Vector3(-5 - 5, 0) + new Vector3(Random.Range(-1.0f, 1.0f) * 5, -5, Random.Range(-1.0f, 1.0f) * 5);
+                //Debug.Log(position); // this actually makes no sense
+                GameObject crewmateObj = Instantiate(crewmatePrefab, position, Quaternion.identity);
+
                 Crewmate crewmate = crewmateObj.GetComponent<Crewmate>();
                 crewmate.crewmateName = data.name;
                 crewmate.icon = data.icon;
@@ -85,11 +91,28 @@ public class CrewmateManager : MonoBehaviour
                 crewmate.cardIndex = crewmates.Count - 1; // check
                 crewmate.onSelect.AddListener(() => { SelectionCallback(crewmate); });
                 // Add card
-                omui.AddCrewmateCard(crewmate);
-                // Update UI
-                rui.UpdateFoodUI(GameManager.Data.resources);
+                if(omui == null)
+                {
+                    cmui.AddCrewmateCard(crewmate);
+                }
+                else
+                {
+                    omui.AddCrewmateCard(crewmate);
+                }
+
             }
         }
+    }
+
+    private void Start()
+    {
+        rui.Init(); // inits here since crewmate manager inits in both outpost and combat scene
+        // Update UI
+        if (rui != null)
+        {
+            rui.UpdateFoodUI(GameManager.Data.resources);
+        }
+
     }
 
     internal void SpawnNewCrewmate()
@@ -157,6 +180,13 @@ public class CrewmateManager : MonoBehaviour
     private void SelectionCallback(Crewmate mate)
     {
         ClickSelect(mate.gameObject);
-        omui.SelectCrewmateCard(mate.cardIndex); // will likely break when crewmates die. Will need to have another method
+        if (omui == null)
+        {
+            cmui.SelectCrewmateCard(mate.cardIndex);
+        }
+        else
+        {
+            omui.SelectCrewmateCard(mate.cardIndex); // will likely break when crewmates die. Will need to have another method
+        }
     }
 }

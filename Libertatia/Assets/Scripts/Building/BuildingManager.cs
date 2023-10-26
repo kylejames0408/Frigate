@@ -69,7 +69,6 @@ public class BuildingManager : MonoBehaviour
 
         // Fill UI - probably combine?
         omui.FillConstructionUI(this, buildingPrefabs);
-        rui.Init();
     }
     private void Update()
     {
