@@ -20,7 +20,7 @@ public class BuildingManager : MonoBehaviour
     public Transform buildingParent; // happens to be the object it is on
     // Components
     private OutpostManagementUI omui;
-    private ResourcesUI oui;
+    private ResourcesUI rui;
     private bool isPlacing = false;
     private Building activeBuilding;
     // - Building Events
@@ -29,11 +29,12 @@ public class BuildingManager : MonoBehaviour
     public UnityEvent placedBuilding;
     // Tracking
     public List<Building> buildings; // maybe make a lookup table for buildings since they have an ID
+    public BuildingResources totalProduction;
 
     private void Start()
     {
         if (omui == null) { omui = FindObjectOfType<OutpostManagementUI>(); }// init both of these
-        if (oui == null) { oui = FindObjectOfType<ResourcesUI>(); }
+        if (rui == null) { rui = FindObjectOfType<ResourcesUI>(); }
 
         // Init Building (make own function)
         buildings = new List<Building>(); //GameManager.Data.buildings.Count
@@ -51,7 +52,7 @@ public class BuildingManager : MonoBehaviour
 
         // Fill UI - probably combine?
         omui.FillConstructionUI(this, buildingPrefabs);
-        oui.Init();
+        rui.Init();
     }
     private void Update()
     {
@@ -88,7 +89,7 @@ public class BuildingManager : MonoBehaviour
 
         // Subtract resources - move to Building or bring CanBuild in here
         GameManager.data.resources.wood -= cost.wood;
-        oui.UpdateWoodUI(GameManager.Data.resources.wood);
+        rui.UpdateWoodUI(GameManager.Data.resources.wood);
 
         // Create Building
         BuildingData data = new BuildingData();
@@ -100,13 +101,13 @@ public class BuildingManager : MonoBehaviour
         GameManager.AddBuilding(data);
         if (building.uiIndex == 0)
         {
-            GameManager.data.resources.foodPerAP += 50;
-            oui.UpdateFoodConsumptionUI(GameManager.Data.resources.foodPerAP);
+            GameManager.data.resources.foodProduction += building.resourceProduction.food;
+            rui.UpdateFoodUI(GameManager.Data.resources);
         }
         else if (building.uiIndex == 1)
         {
             GameManager.data.outpostCrewCapacity += 8;
-            oui.UpdateCrewCapacityUI(GameManager.Data.outpostCrewCapacity);
+            rui.UpdateCrewCapacityUI(GameManager.Data.outpostCrewCapacity);
         }
         else if (building.uiIndex == 2)
         {

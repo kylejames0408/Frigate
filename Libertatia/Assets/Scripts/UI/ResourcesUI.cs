@@ -1,3 +1,4 @@
+using DG.Tweening;
 using UnityEngine;
 using TMPro;
 
@@ -6,9 +7,24 @@ public class ResourcesUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI tmpCrewmateAmt;
     [SerializeField] private TextMeshProUGUI tmpCrewmateCapacity;
     [SerializeField] private TextMeshProUGUI tmpFoodAmt;
-    [SerializeField] private TextMeshProUGUI tmpFoodConsumption;
+    [SerializeField] private TextMeshProUGUI tmpFoodTrend;
     [SerializeField] private TextMeshProUGUI tmpDubloonAmt;
     [SerializeField] private TextMeshProUGUI tmpWoodAmt;
+
+    [SerializeField] private ResourceTab foodTab;
+    // Popup
+    [SerializeField] private GameObject foodPopupUI;
+    [SerializeField] private TextMeshProUGUI tmpFoodProduction;
+    [SerializeField] private TextMeshProUGUI tmpFoodConsumption;
+    [SerializeField] private TextMeshProUGUI tmpFoodCalculation;
+    [SerializeField] private float animTimeHoverInterface = 0.1f;
+
+    private void Awake()
+    {
+        foodTab.onHover.AddListener(ResourceHoveredCallback);
+        foodTab.onHoverExit.AddListener(ResourceHoveredExitCallback);
+        foodPopupUI.GetComponent<CanvasGroup>().DOFade(0, animTimeHoverInterface);
+    }
 
     public void Init()
     {
@@ -16,7 +32,7 @@ public class ResourcesUI : MonoBehaviour
         tmpCrewmateAmt.text = data.crewmates.Count.ToString();
         tmpCrewmateCapacity.text = data.outpostCrewCapacity.ToString();
         tmpFoodAmt.text = data.resources.food.ToString();
-        tmpFoodConsumption.text = data.resources.foodPerAP.ToString();
+        UpdateFoodUI(data.resources);
         tmpDubloonAmt.text = data.resources.doubloons.ToString();
         tmpWoodAmt.text = data.resources.wood.ToString();
     }
@@ -33,9 +49,20 @@ public class ResourcesUI : MonoBehaviour
     {
         tmpFoodAmt.text = foodAmt.ToString();
     }
-    public void UpdateFoodConsumptionUI(int consumption)
+    public void UpdateFoodUI(PlayerResourceData data)
     {
-        tmpFoodConsumption.text = consumption.ToString();
+        tmpFoodProduction.text = data.foodProduction > 0 ? "+ " + data.foodProduction.ToString() : data.foodProduction.ToString();
+        tmpFoodConsumption.text = (-data.foodConsumption).ToString();
+        int foodCalculation = data.foodProduction - data.foodConsumption;
+        tmpFoodCalculation.text = foodCalculation > 0 ? "+ " + foodCalculation.ToString() + " Per AP" : foodCalculation.ToString() + " Per AP";
+        if (foodCalculation > 0)
+        {
+            tmpFoodTrend.text = "+";
+        }
+        else
+        {
+            tmpFoodTrend.text = "-";
+        }
     }
     public void UpdateDubloonUI(int dubloonAmt)
     {
@@ -44,5 +71,15 @@ public class ResourcesUI : MonoBehaviour
     public void UpdateWoodUI(int woodAmt)
     {
         tmpWoodAmt.text = woodAmt.ToString();
+    }
+
+    // Callbacks
+    private void ResourceHoveredCallback()
+    {
+        foodPopupUI.GetComponent<CanvasGroup>().DOFade(1, animTimeHoverInterface);
+    }
+    private void ResourceHoveredExitCallback()
+    {
+        foodPopupUI.GetComponent<CanvasGroup>().DOFade(0, animTimeHoverInterface);
     }
 }

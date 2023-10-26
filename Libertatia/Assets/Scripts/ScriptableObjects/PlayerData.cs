@@ -10,7 +10,9 @@ public struct PlayerResourceData
     public int doubloons;
     public int food;
     public int loyalty;
-    public int foodPerAP;
+
+    public int foodProduction;
+    public int foodConsumption;
 }
 // Necessary building Data
 [Serializable]
@@ -73,8 +75,10 @@ public static class PlayerDataManager
         data.resources.wood = STARTING_WOOD_AMOUNT;
         data.resources.doubloons = STARTING_DOUBLOON_AMOUNT;
         data.resources.food = STARTING_FOOD_AMOUNT;
+        data.resources.foodProduction = 0;
+        data.resources.foodConsumption = 0;
+        data.resources.food = STARTING_FOOD_AMOUNT;
         data.resources.loyalty = STARTING_LOYALTY_AMOUNT;
-        data.resources.foodPerAP = STARTING_FOOD_PER_AP;
         // Crewmates
         data.crewmates = new List<CrewmateData>(STARTING_CREW_AMOUNT);
         data.outpostCrewCapacity = STARTING_CREW_CAPACITY;

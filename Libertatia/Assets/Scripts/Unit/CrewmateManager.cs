@@ -6,6 +6,7 @@ public class CrewmateManager : MonoBehaviour
     private static CrewmateManager instance;
     // Components
     private OutpostManagementUI omui;
+    private ResourcesUI rui;
     // Crewmate Data
     [SerializeField] private GameObject crewmatePrefab;
     [SerializeField] private Transform crewmateSpawn;
@@ -34,6 +35,7 @@ public class CrewmateManager : MonoBehaviour
         }
 
         if (omui == null) { omui = FindObjectOfType<OutpostManagementUI>(); }// init both of these
+        if (rui == null) { rui = FindObjectOfType<ResourcesUI>(); }// init both of these
 
         // Init Crewmates (make own function)
         crewmateSpawn = transform.GetChild(0);
@@ -79,10 +81,6 @@ public class CrewmateManager : MonoBehaviour
             }
         }
     }
-    private void Start()
-    {
-        //omui.FillCrewmateUI(crewmates.ToArray());
-    }
 
     internal void SpawnNewCrewmate()
     {
@@ -106,6 +104,10 @@ public class CrewmateManager : MonoBehaviour
 
         // Add card
         omui.AddCrewmateCard(crewmate);
+
+        // Update UI
+        GameManager.data.resources.foodConsumption += 10; // crewmate food consumption
+        rui.UpdateFoodUI(GameManager.Data.resources);
     }
     internal Crewmate SelectCrewmate(int index)
     {
