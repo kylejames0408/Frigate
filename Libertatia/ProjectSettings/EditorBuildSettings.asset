@@ -12,9 +12,6 @@ EditorBuildSettings:
     path: Assets/Scenes/Outpost.unity
     guid: d3de042f7c8457e4786c20178673206d
   - enabled: 1
-    path: Assets/Scenes/PlayerData.unity
-    guid: f5a1b54e743173541b144c51e2e58178
-  - enabled: 1
-    path: Assets/Scenes/CombatTest.unity
+    path: Assets/Scenes/Combat.unity
     guid: 570f374ce32683f4bab9e2f4e5d0bafb
   m_configObjects: {}

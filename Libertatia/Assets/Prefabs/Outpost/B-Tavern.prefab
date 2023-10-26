@@ -131,18 +131,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57faedece60f9884ea5265c1efe82d3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  id: 0
   buildingName: Tavern
-  icon: {fileID: 21300000, guid: d495ab674a6890e4483cef1d5363f415, type: 3}
+  icon: {fileID: 21300000, guid: 2955870a14916154485a2abf1b753762, type: 3}
+  output: 
+  uiIndex: 0
   level: 0
-  radius: 5
-  stateColors:
-  - {r: 0.003921569, g: 0.003921569, b: 0.003921569, a: 1}
-  - {r: 0.9320358, g: 0.9320358, b: 0.9320358, a: 1}
   isHovered: 0
-  isColliding: 0
+  radius: 5
   resourceCost:
-    wood: 30
-  builderCapacity: 1
+    wood: 70
+    food: 0
+    ap: 0
+  resourceProduction:
+    wood: 0
+    food: 0
+    ap: 4
+  assignee1: {fileID: 0}
+  assignee2: {fileID: 0}
   components: {fileID: 11400000, guid: dce72b56bac855e46b065e2c0dc62d3f, type: 2}
   builtMaterial: {fileID: 2100000, guid: 2ed85a5525951e145ab57bc5eb35b5ba, type: 2}
   onCrewmateAssigned: {fileID: 11400000, guid: 8c002ad9b29a8304d866301b28d5b0b9, type: 2}

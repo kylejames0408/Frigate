@@ -3,21 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using System;
+using DG.Tweening;
 
 public class DialogueManager : MonoBehaviour
 {
-    public Animator dialogueAnimator;           // the public reference to the dialogue box's animator (so it can animate on and off screen)
-    public Animator taskAnimator;               // the public referenc to the task list's animator (so it can animate on and off screen)
+    //public Animator dialogueAnimator;           // the public reference to the dialogue box's animator (so it can animate on and off screen)
+    //public Animator taskAnimator;               // the public referenc to the task list's animator (so it can animate on and off screen)
 
     public float textWriteSpeed;                // a public float so you can set how fast characters in a sentence populate the dialogue box
+    public int openX = 1600;
+    public int closedX = 2400;
+    public float animTimeDialogue = 0.5f;
 
+    public Transform dialogueTrans;
     private TextMeshProUGUI speakerNameText;    // the reference to the dialogue box name text (who the speaker is)
     private TextMeshProUGUI dialogueBoxText;    // the reference to the dialogue box text (what the speaker is saying)
     private TextMeshProUGUI continueButtonText; // the reference to the continue button (to swap between continue and skip)
 
-    private Image panel;                        // the reference to the panel used to block input to other elements during active dialogue
-
+    public Transform taskListTrans;
     private TextMeshProUGUI taskListName;       // the reference to the task list name text (a summary of the tasks that need to be done)
     private TextMeshProUGUI taskListText;       // the reference to the task list text (the individual tasks listed)
 
@@ -36,7 +39,6 @@ public class DialogueManager : MonoBehaviour
         speakerNameText = GameObject.Find("Speaker Name").GetComponent<TextMeshProUGUI>();
         dialogueBoxText = GameObject.Find("Dialogue Text").GetComponent<TextMeshProUGUI>();
         continueButtonText = GameObject.Find("Dialogue Continue Button").GetComponentInChildren<TextMeshProUGUI>();
-        panel = GameObject.Find("Dialogue Panel").GetComponent<Image>();
 
         taskListName = GameObject.Find("Task Group Name").GetComponent<TextMeshProUGUI>();
         taskListText = GameObject.Find("Task List").GetComponent<TextMeshProUGUI>();
@@ -46,7 +48,6 @@ public class DialogueManager : MonoBehaviour
     public void StartDialogue(Dialogue dialogue)
     {
         currentDialogue = null;
-        panel = GameObject.Find("Dialogue Panel").GetComponent<Image>();
         speakerNameText = GameObject.Find("Speaker Name").GetComponent<TextMeshProUGUI>();
         speakerNameText = GameObject.Find("Speaker Name").GetComponent<TextMeshProUGUI>();
         dialogueBoxText = GameObject.Find("Dialogue Text").GetComponent<TextMeshProUGUI>();
@@ -54,9 +55,8 @@ public class DialogueManager : MonoBehaviour
         taskListName = GameObject.Find("Task Group Name").GetComponent<TextMeshProUGUI>();
         taskListText = GameObject.Find("Task List").GetComponent<TextMeshProUGUI>();
 
-        panel.raycastTarget = true;
-        dialogueAnimator.SetBool("IsOpen", true);
-        taskAnimator.SetBool("IsOpen", false);
+        OpenDialogue();
+        CloseTaskList();
 
         currentDialogue = dialogue;
 
@@ -130,7 +130,7 @@ public class DialogueManager : MonoBehaviour
     void EndDialogue()
     {
         // trigger closing dialogue box animation
-        dialogueAnimator.SetBool("IsOpen", false);
+        CloseDialogue();
 
         StopAllCoroutines();
 
@@ -145,13 +145,12 @@ public class DialogueManager : MonoBehaviour
             Debug.Log("No callback here!");
 
         if (currentDialogue.hasTasks)
-            taskAnimator.SetBool("IsOpen", true);
+        {
+            OpenTaskList();
+        }
 
         currentDialogue = null;
         currentSentence = string.Empty;
-
-        panel.raycastTarget = false;
-
     }
 
     // A method to set a task list after a dialogue event
@@ -163,7 +162,22 @@ public class DialogueManager : MonoBehaviour
         {
             taskListText.text += task + "\n";
         }
-        
     }
 
+    private void OpenTaskList()
+    {
+        taskListTrans.DOMoveX(openX, animTimeDialogue);
+    }
+    private void CloseTaskList()
+    {
+        taskListTrans.DOMoveX(closedX, animTimeDialogue);
+    }
+    private void OpenDialogue()
+    {
+        dialogueTrans.DOMoveX(openX, animTimeDialogue);
+    }
+    private void CloseDialogue()
+    {
+        dialogueTrans.DOMoveX(closedX, animTimeDialogue);
+    }
 }

@@ -27,7 +27,7 @@ RectTransform:
   m_GameObject: {fileID: 1291442551910939285}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.2, y: 1.3, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 502789545832135117}
@@ -36,7 +36,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: -0.534}
   m_SizeDelta: {x: 1.5, y: 1.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &369289083977923310
@@ -67,11 +67,11 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 0b42a14a3c2e6234c8fee7ad7b61bd88, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a252e38b51710b3429f427fb63c4330f, type: 3}
   m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
-  m_FillMethod: 4
+  m_FillMethod: 0
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
@@ -210,6 +210,8 @@ GameObject:
   - component: {fileID: 8321386238970710667}
   - component: {fileID: 8331304123198821169}
   - component: {fileID: 3468405016551804946}
+  - component: {fileID: 9093835905025242026}
+  - component: {fileID: 763426460616472588}
   m_Layer: 8
   m_Name: Unit
   m_TagString: PlayerCharacter
@@ -235,7 +237,7 @@ Transform:
   - {fileID: 5971294937238376908}
   - {fileID: 5802469356389869787}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &1081036237624841424
 MeshFilter:
@@ -351,6 +353,10 @@ MonoBehaviour:
   damage: 0
   charAgent: {fileID: 0}
   healthbar: {fileID: 4311244736423995171}
+  materials:
+  - {fileID: 2100000, guid: 8e58b6f3119697b429f7ad7281411480, type: 2}
+  - {fileID: 2100000, guid: 20b8e5c0d5dd17940ab06fe53614d5cc, type: 2}
+  rend: {fileID: 7283512582683049553}
   enemies: []
   enemyGameobjects: []
 --- !u!114 &3468405016551804946
@@ -368,6 +374,58 @@ MonoBehaviour:
   mask:
     serializedVersion: 2
     m_Bits: 136
+--- !u!54 &9093835905025242026
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3693295309995061255}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!114 &763426460616472588
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3693295309995061255}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 359ce586d4c21174c936a9dec9aca186, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: 0
+  crewmateName: 
+  icon: {fileID: 0}
+  isHovered: 0
+  buildingID: -1
+  cardIndex: -1
+  isBuilding: 0
+  onAssign:
+    m_PersistentCalls:
+      m_Calls: []
+  onSelect:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &3992206410372394403
 GameObject:
   m_ObjectHideFlags: 0
@@ -667,7 +725,7 @@ RectTransform:
   m_GameObject: {fileID: 6314857542320268973}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.2, y: 1.3, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3168896064602973241}
@@ -706,11 +764,11 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 0b42a14a3c2e6234c8fee7ad7b61bd88, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a252e38b51710b3429f427fb63c4330f, type: 3}
   m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
-  m_FillMethod: 4
+  m_FillMethod: 0
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0

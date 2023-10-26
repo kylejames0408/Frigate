@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class CrewMember : Character
 {
@@ -12,9 +13,11 @@ public class CrewMember : Character
     {
         maxHealth = 100;
         currentHealth = 100;
-        attackRange = 2;
+        attackRange = 3;
         attackRate = 2;
         damage = 25;
+
+        charAgent = GetComponent<NavMeshAgent>();
 
         enemyGameobjects.AddRange(GameObject.FindGameObjectsWithTag("Enemy"));
 
