@@ -143,6 +143,8 @@ public class Building : MonoBehaviour
     {
         state = BuildingState.COMPLETE;
         buildingRender.material = builtMaterial;
+        level = 1;
+        navObsticle.enabled = true; // maybe cache? I am not sure why this is disabled when coming back to outpost
         FreeAssignees();
     }
     public void Upgrade()

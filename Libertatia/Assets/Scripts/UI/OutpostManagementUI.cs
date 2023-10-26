@@ -46,7 +46,7 @@ public class OutpostManagementUI : MonoBehaviour
         }
         tabs = tabUIParent.GetComponentsInChildren<Tab>();
         crewmateCards = new List<GameObject>();
-        popupUI.GetComponent<CanvasGroup>().DOFade(0, animTimeHoverInterface);
+        popupUI.GetComponent<CanvasGroup>().alpha = 0;
     }
     private void Start()
     {

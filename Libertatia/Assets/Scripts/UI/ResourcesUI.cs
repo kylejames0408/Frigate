@@ -23,7 +23,7 @@ public class ResourcesUI : MonoBehaviour
     {
         foodTab.onHover.AddListener(ResourceHoveredCallback);
         foodTab.onHoverExit.AddListener(ResourceHoveredExitCallback);
-        foodPopupUI.GetComponent<CanvasGroup>().DOFade(0, animTimeHoverInterface);
+        foodPopupUI.GetComponent<CanvasGroup>().alpha = 0;
     }
 
     public void Init()

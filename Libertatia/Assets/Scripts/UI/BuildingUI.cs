@@ -54,7 +54,7 @@ public class BuildingUI : MonoBehaviour
         iconUI.GetComponent<Image>().sprite = building.Icon;
         nameUI.GetComponent<TextMeshProUGUI>().text = building.Name;
         levelUI.GetComponent<TextMeshProUGUI>().text = building.GetStatus();
-        outputUI.GetComponent<TextMeshProUGUI>().text = building.output; // not sure what output is yet
+        outputUI.GetComponent<TextMeshProUGUI>().text = building.resourceProduction.ToString(); // not sure what output is yet
 
         if (building.assignee1 != null)
         {
@@ -111,7 +111,7 @@ public class BuildingUI : MonoBehaviour
     // Open/close
     public void OpenMenu()
     {
-        transform.DOMoveX(630, interfaceAnimSpeed);
+        transform.DOMoveX(680, interfaceAnimSpeed);
     }
     public void CloseMenu()
     {

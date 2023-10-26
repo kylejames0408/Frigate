@@ -57,15 +57,16 @@ public class CrewmateManager : MonoBehaviour
             for (int i = 0; i < GameManager.Data.crewmates.Count; i++)
             {
                 CrewmateData data = GameManager.Data.crewmates[i];
-                GameObject crewmate = Instantiate(crewmatePrefab, transform);
-                Crewmate mate = crewmate.GetComponent<Crewmate>();
-                mate.crewmateName = data.name;
-                mate.icon = data.icon;
-                mate.buildingID = data.buildingID;
+                GameObject crewmateObj = Instantiate(crewmatePrefab, transform);
+                Crewmate crewmate = crewmateObj.GetComponent<Crewmate>();
+                crewmate.crewmateName = data.name;
+                crewmate.icon = data.icon;
+                crewmate.buildingID = data.buildingID;
 
+                // they will be freed anyways, however might be worth spawning them near the front of the building
                 if(data.buildingID != -1)
                 {
-                    // Reassign crewmate
+                    // Reassign crewmate to building
                     //foreach (Building building in buildings)
                     //{
                     //    if (mate.buildingID == building.id)
@@ -76,9 +77,17 @@ public class CrewmateManager : MonoBehaviour
                     //}
                 }
 
-                Vector3 spawnPosition = Random.insideUnitCircle * crewmateSpawnRadius;
-                mate.transform.position = crewmateSpawn.position + spawnPosition;
-                crewmates.Add(mate);
+                Vector2 circleLocation = Random.insideUnitCircle;
+                Vector3 spawnPosition = new Vector3(circleLocation.x * crewmateSpawnRadius, 0, circleLocation.y * crewmateSpawnRadius);
+                crewmateObj.transform.position = crewmateSpawn.position + spawnPosition;
+                crewmates.Add(crewmate);
+                // Update UI
+                crewmate.cardIndex = crewmates.Count - 1; // check
+                crewmate.onSelect.AddListener(() => { SelectionCallback(crewmate); });
+                // Add card
+                omui.AddCrewmateCard(crewmate);
+                // Update UI
+                rui.UpdateFoodUI(GameManager.Data.resources);
             }
         }
     }
@@ -100,7 +109,7 @@ public class CrewmateManager : MonoBehaviour
         GameManager.Data.crewmates.Add(data);
         crewmates.Add(crewmate);
         // Update UI
-        crewmate.cardIndex = GameManager.Data.crewmates.Count - 1; // check
+        crewmate.cardIndex = crewmates.Count - 1; // check
         crewmate.onSelect.AddListener(() => { SelectionCallback(crewmate); });
 
         // Add card

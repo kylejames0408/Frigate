@@ -11,6 +11,22 @@ public struct BuildingResources
     public int wood;
     public int food;
     public int ap;
+
+    public override string ToString()
+    {
+        if(wood > 0)
+        {
+            return wood + " wood";
+        }
+        else if(food > 0)
+        {
+            return food + " wood";
+        }
+        else
+        {
+            return "None";
+        }
+    }
 }
 
 public class BuildingManager : MonoBehaviour
