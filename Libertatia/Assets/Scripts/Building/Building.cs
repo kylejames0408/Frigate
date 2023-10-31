@@ -63,9 +63,9 @@ public class Building : MonoBehaviour
     {
         get { return radius; }
     }
-    public bool IsColliding
+    public bool IsComplete
     {
-        get { return numOfCollisions > 0; }
+        get { return state == BuildingState.COMPLETE; }
     }
     public BuildingResources Cost
     {

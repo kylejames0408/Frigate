@@ -43,6 +43,7 @@ public class BuildingUI : MonoBehaviour
         upgradeBtn.onClick.AddListener(UpgradeCallback);
         demolishBtn.onClick.AddListener(DemolishCallback);
         bounds = GetComponent<RectTransform>();
+        assignment2IconUI.gameObject.SetActive(false);
     }
     private void Update()
     {
@@ -65,13 +66,21 @@ public class BuildingUI : MonoBehaviour
             assignment1IconUI.GetComponent<Image>().sprite = emptyAssignmentIcon;
         }
 
-        if (building.assignee2 != null)
+        if (building.IsComplete)
         {
-            assignment2IconUI.GetComponent<Image>().sprite = building.assignee2.Icon;
+            assignment2IconUI.gameObject.SetActive(true);
+            if (building.assignee2 != null)
+            {
+                assignment2IconUI.GetComponent<Image>().sprite = building.assignee2.Icon;
+            }
+            else
+            {
+                assignment2IconUI.GetComponent<Image>().sprite = emptyAssignmentIcon;
+            }
         }
         else
         {
-            assignment2IconUI.GetComponent<Image>().sprite = emptyAssignmentIcon;
+            assignment2IconUI.gameObject.SetActive(false);
         }
 
         activeBuildingID = building.id;
