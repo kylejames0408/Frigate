@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using Unity.Burst.CompilerServices;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
+using static UnityEngine.GraphicsBuffer;
 
 // Might need to separate into cost and production
 [Serializable]
@@ -171,18 +174,26 @@ public class BuildingManager : MonoBehaviour
                 out RaycastHit info, 300, LayerMask.GetMask("Terrain"));
 
             activeBuilding.transform.position = info.point;
-            //Graphics.DrawMesh(buildingMesh, position, buildingRotation, placingBuildingMat, 0);
 
-            // check collision
-            if (Input.GetMouseButtonDown(0) && !activeBuilding.IsColliding && !EventSystem.current.IsPointerOverGameObject())
+            // angle of incline check
+            if(info.normal.y < .9f)
             {
-                SpawnBuilding(activeBuilding, info.point);
+                activeBuilding.PlacementInvalid();
             }
-            if(Input.GetMouseButtonDown(1) && !activeBuilding.IsColliding)
+            else
             {
-                isPlacing = false;
-                Destroy(activeBuilding.gameObject);
-                cancelBuilding.Invoke();
+                activeBuilding.PlacementValid();
+                // check collision
+                if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
+                {
+                    SpawnBuilding(activeBuilding, info.point);
+                }
+                if (Input.GetMouseButtonDown(1))
+                {
+                    isPlacing = false;
+                    Destroy(activeBuilding.gameObject);
+                    cancelBuilding.Invoke();
+                }
             }
         }
     }

@@ -29,6 +29,7 @@ public class Building : MonoBehaviour
     private BuildingState state = BuildingState.PLACING;
     // Identifiers
     public bool isHovered = false;
+    public bool isPlacementValid = false;
     // In-game characteristics
     [SerializeField] private float radius = 5.0f; // for construction
     private int numOfCollisions = 0;
@@ -61,10 +62,6 @@ public class Building : MonoBehaviour
     public float Radius
     {
         get { return radius; }
-    }
-    public bool IsComplete
-    {
-        get { return state == BuildingState.COMPLETE; }
     }
     public bool IsColliding
     {
@@ -190,6 +187,34 @@ public class Building : MonoBehaviour
         }
         return value;
     }
+    public void PlacementValid()
+    {
+        if (isPlacementValid) return;
+
+        switch (state)
+        {
+            case BuildingState.PLACING:
+                buildingRender.material = new Material(components.placingMaterial);
+                break;
+            case BuildingState.WAITING_FOR_ASSIGNMENT:
+                buildingRender.material = new Material(components.needsAssignmentMaterial);
+                break;
+            case BuildingState.BUILDING:
+                buildingRender.material = new Material(components.buildingMaterial);
+                break;
+            case BuildingState.COMPLETE:
+                buildingRender.material = new Material(builtMaterial);
+                break;
+        }
+        isPlacementValid = true;
+    }
+    public void PlacementInvalid()
+    {
+        if (!isPlacementValid) return;
+
+        buildingRender.material = new Material(components.collisionMaterial);
+        isPlacementValid = false;
+    }
 
     // Handle
     private void HandleSelection()
@@ -243,7 +268,7 @@ public class Building : MonoBehaviour
         {
             if(numOfCollisions == 0)
             {
-                buildingRender.material = new Material(components.collisionMaterial);
+                PlacementInvalid();
             }
 
             numOfCollisions++;
@@ -257,21 +282,7 @@ public class Building : MonoBehaviour
 
             if (numOfCollisions == 0)
             {
-                switch (state)
-                {
-                    case BuildingState.PLACING:
-                        buildingRender.material = new Material(components.placingMaterial);
-                        break;
-                    case BuildingState.WAITING_FOR_ASSIGNMENT:
-                        buildingRender.material = new Material(components.needsAssignmentMaterial);
-                        break;
-                    case BuildingState.BUILDING:
-                        buildingRender.material = new Material(components.buildingMaterial);
-                        break;
-                    case BuildingState.COMPLETE:
-                        buildingRender.material = new Material(builtMaterial);
-                        break;
-                }
+                PlacementValid();
             }
         }
     }
