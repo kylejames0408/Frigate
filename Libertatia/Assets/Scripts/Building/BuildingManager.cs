@@ -184,7 +184,7 @@ public class BuildingManager : MonoBehaviour
             {
                 activeBuilding.PlacementValid();
                 // check collision
-                if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
+                if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject() && activeBuilding.isPlacementValid)
                 {
                     SpawnBuilding(activeBuilding, info.point);
                 }

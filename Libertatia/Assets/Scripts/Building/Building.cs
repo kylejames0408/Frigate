@@ -29,7 +29,7 @@ public class Building : MonoBehaviour
     private BuildingState state = BuildingState.PLACING;
     // Identifiers
     public bool isHovered = false;
-    public bool isPlacementValid = false;
+    public bool isPlacementValid = true;
     // In-game characteristics
     [SerializeField] private float radius = 5.0f; // for construction
     private int numOfCollisions = 0;
@@ -189,7 +189,7 @@ public class Building : MonoBehaviour
     }
     public void PlacementValid()
     {
-        if (isPlacementValid) return;
+        if (isPlacementValid || numOfCollisions > 0) return;
 
         switch (state)
         {
