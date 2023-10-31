@@ -1294,19 +1294,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4fe7ec1d555ab494d836addf3c4b2c0f, type: 3}
       propertyPath: m_LocalScale.x
-      value: 1.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4fe7ec1d555ab494d836addf3c4b2c0f, type: 3}
       propertyPath: m_LocalScale.y
-      value: 1.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4fe7ec1d555ab494d836addf3c4b2c0f, type: 3}
       propertyPath: m_LocalScale.z
-      value: 1.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4fe7ec1d555ab494d836addf3c4b2c0f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1041.3844
+      value: -1040.91
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4fe7ec1d555ab494d836addf3c4b2c0f, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1314,7 +1314,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4fe7ec1d555ab494d836addf3c4b2c0f, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 47.50331
+      value: 43.66
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4fe7ec1d555ab494d836addf3c4b2c0f, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1706,8 +1706,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   crewMembersInZone: []
   enemiesInZone: []
+  housesInZone: []
   zoneName: 
   zoneCenter: {x: 0, y: 0, z: 0}
+  zoneLootCollected: 0
 --- !u!1 &164944551
 GameObject:
   m_ObjectHideFlags: 0
@@ -2219,10 +2221,10 @@ RectTransform:
   m_Father: {fileID: 499974156}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 62.58735, y: -97.5}
+  m_SizeDelta: {x: 125.1747, y: 65}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &180979074
 MonoBehaviour:
@@ -3181,8 +3183,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   crewMembersInZone: []
   enemiesInZone: []
+  housesInZone: []
   zoneName: 
   zoneCenter: {x: 0, y: 0, z: 0}
+  zoneLootCollected: 0
 --- !u!65 &206861884
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3340,11 +3344,11 @@ GameObject:
   - component: {fileID: 217143881}
   - component: {fileID: 217143885}
   - component: {fileID: 217143884}
-  - component: {fileID: 217143883}
   - component: {fileID: 217143882}
+  - component: {fileID: 217143886}
   m_Layer: 5
   m_Name: UI-Information
-  m_TagString: Untagged
+  m_TagString: CombatUI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3397,30 +3401,6 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
---- !u!114 &217143883
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 217143880}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2118b498ba1407e4d981681695be0526, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  tmpCrewmateAmt: {fileID: 1116612039}
-  tmpCrewmateCapacity: {fileID: 1386896268}
-  tmpFoodAmt: {fileID: 1417130478}
-  tmpFoodTrend: {fileID: 2145784143}
-  tmpDubloonAmt: {fileID: 764462426}
-  tmpWoodAmt: {fileID: 90467425}
-  foodTab: {fileID: 993748434}
-  foodPopupUI: {fileID: 853889044}
-  tmpFoodProduction: {fileID: 707493663}
-  tmpFoodConsumption: {fileID: 180979074}
-  tmpFoodCalculation: {fileID: 1150184442}
-  animTimeHoverInterface: 0.1
 --- !u!114 &217143884
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3459,6 +3439,27 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 217143880}
   m_CullTransparentMesh: 1
+--- !u!114 &217143886
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 217143880}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43dd1856e7d49cd40a8d0d73264fcf02, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tmpCrewmateAmt: {fileID: 1116612039}
+  tmpCrewmateCapacity: {fileID: 1386896268}
+  tmpFoodAmt: {fileID: 1417130478}
+  tmpFoodConsumption: {fileID: 180979074}
+  tmpDubloonAmt: {fileID: 764462426}
+  tmpWoodAmt: {fileID: 90467425}
+  doubloonAmount: 0
+  woodAmount: 0
+  foodAmount: 0
 --- !u!1 &217854468
 GameObject:
   m_ObjectHideFlags: 0
@@ -4064,10 +4065,10 @@ RectTransform:
   m_Father: {fileID: 853889045}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 258.3668, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 266.70197, y: -65}
+  m_SizeDelta: {x: 258.3668, y: 130}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &236154514
 GameObject:
@@ -4692,8 +4693,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   crewMembersInZone: []
   enemiesInZone: []
+  housesInZone: []
   zoneName: 
   zoneCenter: {x: 0, y: 0, z: 0}
+  zoneLootCollected: 0
 --- !u!1 &300841467
 GameObject:
   m_ObjectHideFlags: 0
@@ -4978,8 +4981,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   crewMembersInZone: []
   enemiesInZone: []
+  housesInZone: []
   zoneName: 
   zoneCenter: {x: 0, y: 0, z: 0}
+  zoneLootCollected: 0
 --- !u!1 &317582057
 GameObject:
   m_ObjectHideFlags: 0
@@ -5530,8 +5535,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   crewMembersInZone: []
   enemiesInZone: []
+  housesInZone: []
   zoneName: 
   zoneCenter: {x: 0, y: 0, z: 0}
+  zoneLootCollected: 0
 --- !u!1 &371501189
 GameObject:
   m_ObjectHideFlags: 0
@@ -6589,6 +6596,9 @@ MonoBehaviour:
   crewMembers: []
   crewMemberGameObjects: []
   detectionRange: 0
+  combatUI: {fileID: 0}
+  resourceText: {fileID: 8633550456291223390, guid: f9089bcc96641064b8fb3e64d5386866, type: 3}
+  lootDropped: 0
 --- !u!54 &443887584
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -6755,8 +6765,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   crewMembersInZone: []
   enemiesInZone: []
+  housesInZone: []
   zoneName: 
   zoneCenter: {x: 0, y: 0, z: 0}
+  zoneLootCollected: 0
 --- !u!1 &460593739
 GameObject:
   m_ObjectHideFlags: 0
@@ -7078,8 +7090,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   crewMembersInZone: []
   enemiesInZone: []
+  housesInZone: []
   zoneName: 
   zoneCenter: {x: 0, y: 0, z: 0}
+  zoneLootCollected: 0
 --- !u!1 &491060224
 GameObject:
   m_ObjectHideFlags: 0
@@ -7219,10 +7233,10 @@ RectTransform:
   m_Father: {fileID: 853889045}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 125.1747, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 66.70197, y: -65}
+  m_SizeDelta: {x: 125.1747, y: 130}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &499974157
 MonoBehaviour:
@@ -7696,8 +7710,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   crewMembersInZone: []
   enemiesInZone: []
+  housesInZone: []
   zoneName: 
   zoneCenter: {x: 0, y: 0, z: 0}
+  zoneLootCollected: 0
 --- !u!65 &541661264
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -8143,6 +8159,9 @@ MonoBehaviour:
   crewMembers: []
   crewMemberGameObjects: []
   detectionRange: 0
+  combatUI: {fileID: 0}
+  resourceText: {fileID: 8633550456291223390, guid: f9089bcc96641064b8fb3e64d5386866, type: 3}
+  lootDropped: 0
 --- !u!54 &575436586
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -8588,8 +8607,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   crewMembersInZone: []
   enemiesInZone: []
+  housesInZone: []
   zoneName: 
   zoneCenter: {x: 0, y: 0, z: 0}
+  zoneLootCollected: 0
 --- !u!1 &630686506
 GameObject:
   m_ObjectHideFlags: 0
@@ -9357,8 +9378,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   crewMembersInZone: []
   enemiesInZone: []
+  housesInZone: []
   zoneName: 
   zoneCenter: {x: 0, y: 0, z: 0}
+  zoneLootCollected: 0
 --- !u!1 &666108730
 GameObject:
   m_ObjectHideFlags: 0
@@ -10208,10 +10231,10 @@ RectTransform:
   m_Father: {fileID: 499974156}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 62.58735, y: -32.5}
+  m_SizeDelta: {x: 125.1747, y: 65}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &707493663
 MonoBehaviour:
@@ -11003,8 +11026,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   crewMembersInZone: []
   enemiesInZone: []
+  housesInZone: []
   zoneName: 
   zoneCenter: {x: 0, y: 0, z: 0}
+  zoneLootCollected: 0
 --- !u!1 &750022757
 GameObject:
   m_ObjectHideFlags: 0
@@ -11338,8 +11363,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   crewMembersInZone: []
   enemiesInZone: []
+  housesInZone: []
   zoneName: 
   zoneCenter: {x: 0, y: 0, z: 0}
+  zoneLootCollected: 0
 --- !u!1 &764462424
 GameObject:
   m_ObjectHideFlags: 0
@@ -12235,8 +12262,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   crewMembersInZone: []
   enemiesInZone: []
+  housesInZone: []
   zoneName: 
   zoneCenter: {x: 0, y: 0, z: 0}
+  zoneLootCollected: 0
 --- !u!65 &840784758
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -12474,8 +12503,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   crewMembersInZone: []
   enemiesInZone: []
+  housesInZone: []
   zoneName: 
   zoneCenter: {x: 0, y: 0, z: 0}
+  zoneLootCollected: 0
 --- !u!1 &853674774
 GameObject:
   m_ObjectHideFlags: 0
@@ -12613,7 +12644,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &853889045
 RectTransform:
   m_ObjectHideFlags: 0
@@ -12968,6 +12999,9 @@ MonoBehaviour:
   crewMembers: []
   crewMemberGameObjects: []
   detectionRange: 0
+  combatUI: {fileID: 0}
+  resourceText: {fileID: 8633550456291223390, guid: f9089bcc96641064b8fb3e64d5386866, type: 3}
+  lootDropped: 0
 --- !u!54 &867616230
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -13453,8 +13487,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   crewMembersInZone: []
   enemiesInZone: []
+  housesInZone: []
   zoneName: 
   zoneCenter: {x: 0, y: 0, z: 0}
+  zoneLootCollected: 0
 --- !u!1 &885505063
 GameObject:
   m_ObjectHideFlags: 0
@@ -14042,8 +14078,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   crewMembersInZone: []
   enemiesInZone: []
+  housesInZone: []
   zoneName: 
   zoneCenter: {x: 0, y: 0, z: 0}
+  zoneLootCollected: 0
 --- !u!65 &913244181
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -14204,8 +14242,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   crewMembersInZone: []
   enemiesInZone: []
+  housesInZone: []
   zoneName: 
   zoneCenter: {x: 0, y: 0, z: 0}
+  zoneLootCollected: 0
 --- !u!1 &931446522
 GameObject:
   m_ObjectHideFlags: 0
@@ -14384,6 +14424,9 @@ MonoBehaviour:
   crewMembers: []
   crewMemberGameObjects: []
   detectionRange: 0
+  combatUI: {fileID: 0}
+  resourceText: {fileID: 8633550456291223390, guid: f9089bcc96641064b8fb3e64d5386866, type: 3}
+  lootDropped: 0
 --- !u!54 &931446532
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -14589,6 +14632,9 @@ MonoBehaviour:
   crewMembers: []
   crewMemberGameObjects: []
   detectionRange: 0
+  combatUI: {fileID: 0}
+  resourceText: {fileID: 8633550456291223390, guid: f9089bcc96641064b8fb3e64d5386866, type: 3}
+  lootDropped: 0
 --- !u!54 &941200576
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -15904,8 +15950,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   crewMembersInZone: []
   enemiesInZone: []
+  housesInZone: []
   zoneName: 
   zoneCenter: {x: 0, y: 0, z: 0}
+  zoneLootCollected: 0
 --- !u!1 &1014903712
 GameObject:
   m_ObjectHideFlags: 0
@@ -17051,6 +17099,9 @@ MonoBehaviour:
   crewMembers: []
   crewMemberGameObjects: []
   detectionRange: 0
+  combatUI: {fileID: 0}
+  resourceText: {fileID: 8633550456291223390, guid: f9089bcc96641064b8fb3e64d5386866, type: 3}
+  lootDropped: 0
 --- !u!54 &1117264221
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -18450,8 +18501,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   crewMembersInZone: []
   enemiesInZone: []
+  housesInZone: []
   zoneName: 
   zoneCenter: {x: 0, y: 0, z: 0}
+  zoneLootCollected: 0
 --- !u!65 &1207557653
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -18764,8 +18817,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   crewMembersInZone: []
   enemiesInZone: []
+  housesInZone: []
   zoneName: 
   zoneCenter: {x: 0, y: 0, z: 0}
+  zoneLootCollected: 0
 --- !u!1 &1244586089
 GameObject:
   m_ObjectHideFlags: 0
@@ -18987,6 +19042,9 @@ MonoBehaviour:
   crewMembers: []
   crewMemberGameObjects: []
   detectionRange: 0
+  combatUI: {fileID: 0}
+  resourceText: {fileID: 8633550456291223390, guid: f9089bcc96641064b8fb3e64d5386866, type: 3}
+  lootDropped: 0
 --- !u!54 &1252722873
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -19841,7 +19899,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 38ee7152caa11f645bd3d446d8526ffd, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1021.7644
+      value: -1022.6
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 38ee7152caa11f645bd3d446d8526ffd, type: 3}
       propertyPath: m_LocalPosition.y
@@ -19849,7 +19907,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 38ee7152caa11f645bd3d446d8526ffd, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 2.0533085
+      value: 4.68
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 38ee7152caa11f645bd3d446d8526ffd, type: 3}
       propertyPath: m_LocalRotation.w
@@ -19879,9 +19937,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: 38ee7152caa11f645bd3d446d8526ffd, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: -927199367670048503, guid: 38ee7152caa11f645bd3d446d8526ffd, type: 3}
       propertyPath: m_Name
-      value: Building_HouseB
+      value: Enemy_House
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 38ee7152caa11f645bd3d446d8526ffd, type: 3}
+      propertyPath: m_TagString
+      value: EnemyHouse
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -19890,6 +19956,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -927199367670048503, guid: 38ee7152caa11f645bd3d446d8526ffd, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1591987633}
+    - targetCorrespondingSourceObject: {fileID: -927199367670048503, guid: 38ee7152caa11f645bd3d446d8526ffd, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1591987636}
+    - targetCorrespondingSourceObject: {fileID: -927199367670048503, guid: 38ee7152caa11f645bd3d446d8526ffd, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1591987637}
   m_SourcePrefab: {fileID: 100100000, guid: 38ee7152caa11f645bd3d446d8526ffd, type: 3}
 --- !u!4 &1362389770 stripped
 Transform:
@@ -20243,9 +20315,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   crewMembers: []
   enemies: []
+  enemyHouses: []
   zones: []
   shipWaypoint: {fileID: 894041250}
   resourceUI: {fileID: 0}
+  combatUI: {fileID: 0}
 --- !u!4 &1411551669
 Transform:
   m_ObjectHideFlags: 0
@@ -20896,8 +20970,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   crewMembersInZone: []
   enemiesInZone: []
+  housesInZone: []
   zoneName: 
   zoneCenter: {x: 0, y: 0, z: 0}
+  zoneLootCollected: 0
 --- !u!1 &1439090912
 GameObject:
   m_ObjectHideFlags: 0
@@ -21600,8 +21676,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   crewMembersInZone: []
   enemiesInZone: []
+  housesInZone: []
   zoneName: 
   zoneCenter: {x: 0, y: 0, z: 0}
+  zoneLootCollected: 0
 --- !u!1 &1483947623
 GameObject:
   m_ObjectHideFlags: 0
@@ -22186,8 +22264,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   crewMembersInZone: []
   enemiesInZone: []
+  housesInZone: []
   zoneName: 
   zoneCenter: {x: 0, y: 0, z: 0}
+  zoneLootCollected: 0
 --- !u!1 &1551457830
 GameObject:
   m_ObjectHideFlags: 0
@@ -22410,8 +22490,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   crewMembersInZone: []
   enemiesInZone: []
+  housesInZone: []
   zoneName: 
   zoneCenter: {x: 0, y: 0, z: 0}
+  zoneLootCollected: 0
 --- !u!1 &1571733160
 GameObject:
   m_ObjectHideFlags: 0
@@ -22831,6 +22913,54 @@ NavMeshObstacle:
   m_CarveOnlyStationary: 1
   m_Center: {x: -0.65800005, y: 2.8860002, z: 0.13700001}
   m_TimeToStationary: 0.5
+--- !u!65 &1591987636
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1591987632}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 9.2, y: 5.918, z: 10.88}
+  m_Center: {x: -0.6580001, y: 2.886, z: 0.137}
+--- !u!54 &1591987637
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1591987632}
+  serializedVersion: 4
+  m_Mass: 1000
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &1592743401
 GameObject:
   m_ObjectHideFlags: 0
@@ -23745,6 +23875,9 @@ MonoBehaviour:
   crewMembers: []
   crewMemberGameObjects: []
   detectionRange: 0
+  combatUI: {fileID: 0}
+  resourceText: {fileID: 8633550456291223390, guid: f9089bcc96641064b8fb3e64d5386866, type: 3}
+  lootDropped: 0
 --- !u!54 &1632069299
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -23950,6 +24083,9 @@ MonoBehaviour:
   crewMembers: []
   crewMemberGameObjects: []
   detectionRange: 0
+  combatUI: {fileID: 0}
+  resourceText: {fileID: 8633550456291223390, guid: f9089bcc96641064b8fb3e64d5386866, type: 3}
+  lootDropped: 0
 --- !u!54 &1636327046
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -26933,8 +27069,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   crewMembersInZone: []
   enemiesInZone: []
+  housesInZone: []
   zoneName: 
   zoneCenter: {x: 0, y: 0, z: 0}
+  zoneLootCollected: 0
 --- !u!1 &1869201187
 GameObject:
   m_ObjectHideFlags: 0
@@ -28589,6 +28727,9 @@ MonoBehaviour:
   crewMembers: []
   crewMemberGameObjects: []
   detectionRange: 0
+  combatUI: {fileID: 0}
+  resourceText: {fileID: 8633550456291223390, guid: f9089bcc96641064b8fb3e64d5386866, type: 3}
+  lootDropped: 0
 --- !u!54 &1967424720
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -29649,8 +29790,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   crewMembersInZone: []
   enemiesInZone: []
+  housesInZone: []
   zoneName: 
   zoneCenter: {x: 0, y: 0, z: 0}
+  zoneLootCollected: 0
 --- !u!1 &2024865868
 GameObject:
   m_ObjectHideFlags: 0
@@ -30369,6 +30512,9 @@ MonoBehaviour:
   crewMembers: []
   crewMemberGameObjects: []
   detectionRange: 0
+  combatUI: {fileID: 0}
+  resourceText: {fileID: 8633550456291223390, guid: f9089bcc96641064b8fb3e64d5386866, type: 3}
+  lootDropped: 0
 --- !u!54 &2046984442
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -31494,8 +31640,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   crewMembersInZone: []
   enemiesInZone: []
+  housesInZone: []
   zoneName: 
   zoneCenter: {x: 0, y: 0, z: 0}
+  zoneLootCollected: 0
 --- !u!1 &2140525710
 GameObject:
   m_ObjectHideFlags: 0

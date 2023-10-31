@@ -8,6 +8,7 @@ public class ZoneManager : MonoBehaviour
 {
     public List<GameObject> crewMembers;
     public List<GameObject> enemies;
+    public List<GameObject> enemyHouses;
 
     public List<Terrain> zones;
 
@@ -15,14 +16,15 @@ public class ZoneManager : MonoBehaviour
 
     public ResourcesUI resourceUI;
 
+    public GameObject combatUI;
+
     // Start is called before the first frame update
     void Start()
     {
         enemies = GameObject.FindGameObjectsWithTag("Enemy").ToList<GameObject>();
-
+        enemyHouses = GameObject.FindGameObjectsWithTag("EnemyHouse").ToList<GameObject>();
+        combatUI = GameObject.FindGameObjectWithTag("CombatUI");
         zones = Terrain.activeTerrains.ToList();
-
-
     }
 
     // Update is called once per frame
@@ -44,14 +46,11 @@ public class ZoneManager : MonoBehaviour
             }
         }
 
-
-
-
+        //checks the number of objects in a zone when clicking on it
         if (Input.GetMouseButtonDown(0))
         {
             RaycastHit hit;
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
 
             if (Physics.Raycast(ray, out hit, Mathf.Infinity))
             {
@@ -59,29 +58,33 @@ public class ZoneManager : MonoBehaviour
                 {
                     Zone zone = hit.transform.gameObject.GetComponent<Zone>();
 
-                    Debug.Log(zone.crewMembersInZone.Count + zone.enemiesInZone.Count);
+                    Debug.Log("Crew Members: " + zone.crewMembersInZone.Count + " Enemies: " + zone.enemiesInZone.Count + " Houses: " + zone.housesInZone.Count);
                 }
             }
         }
 
-            //for (int i = 0; i < zones.Count; i++)
-            //{
-            //    Zone terrainChunk = zones[i].GetComponent<Zone>();
+        //Obtain loot from zones after beating the enemies, if there are resource deposits
+        foreach(Terrain terrain in zones)
+        {
+            Zone zone = terrain.GetComponent<Zone>();
 
-            //    for(int j = 0; j < crewMembers.Count; j++)
-            //    {
-            //        terrainChunk.AddToUnitsInZoneList(crewMembers);
-            //    }
+            //if there is a resource depot & the zone has at least 1 crew member & the zone has no enemies left
+            if(zone.housesInZone.Count >= 1 && zone.crewMembersInZone.Count >= 1 && zone.enemiesInZone.Count <= 0)
+            {
+                //if the loot has not been collected yet
+                if(zone.zoneLootCollected == false)
+                {
+                    CombatUI combatResources = combatUI.GetComponent<CombatUI>();
 
-            //    for(int k = 0; k < enemies.Count; k++)
-            //    {
-            //        terrainChunk.AddToUnitsInZoneList(enemies);
-            //    }
+                    //obtain wood from the houses
+                    combatResources.woodAmount += 40;
+                    combatResources.UpdateWoodUI(combatResources.woodAmount);
 
-            //}
-
+                    zone.zoneLootCollected = true;
+                }
+            }
+        }
     }
-
 
     /// <summary>
     /// Makes the crew members retreat back to the ship's waypoint game object
