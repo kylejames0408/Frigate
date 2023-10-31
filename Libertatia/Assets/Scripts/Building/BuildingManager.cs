@@ -187,6 +187,12 @@ public class BuildingManager : MonoBehaviour
         }
     }
 
+    public void OnCrewmateDropAssign()
+    {
+        foreach(Building building in buildings)
+            building.HandleAssignmentDragDrop();
+    }
+
     // Dev
     internal void BuildAll()
     {

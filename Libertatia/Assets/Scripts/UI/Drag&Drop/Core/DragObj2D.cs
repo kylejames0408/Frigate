@@ -68,7 +68,7 @@ namespace EasyDragAndDrop.Core
                 dragState = DragState.OnDrag;
                 _rectTransform.anchoredPosition += eventData.delta / m_Canvas.scaleFactor;
                 onDrag?.Invoke(this);
-                Debug.Log("Delta: " + eventData.delta);
+                //Debug.Log("Delta: " + eventData.delta);
             }
             else if(m_Canvas.renderMode == RenderMode.WorldSpace)
             {
