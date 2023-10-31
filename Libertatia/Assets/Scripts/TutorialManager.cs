@@ -27,6 +27,7 @@ public class TutorialManager : MonoBehaviour
             }
             else
             {
+                GameManager.data.isTutorial = false;
                 outpostDialogues[5].TriggerDialogue();
                 secondVisit = true;
                 btnAttack.SetActive(true);

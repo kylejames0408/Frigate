@@ -40,10 +40,19 @@ public class BuildingUI : MonoBehaviour
 
         if(bm == null) { bm = FindObjectOfType<BuildingManager>(); }
 
-        upgradeBtn.onClick.AddListener(UpgradeCallback);
-        demolishBtn.onClick.AddListener(DemolishCallback);
+
         bounds = GetComponent<RectTransform>();
         assignment2IconUI.gameObject.SetActive(false);
+    }
+    private void Start()
+    {
+        upgradeBtn.onClick.AddListener(UpgradeCallback);
+        demolishBtn.onClick.AddListener(DemolishCallback);
+        if (GameManager.Data.isTutorial)
+        {
+            upgradeBtn.interactable = false;
+            demolishBtn.interactable = false;
+        }
     }
     private void Update()
     {
@@ -81,6 +90,12 @@ public class BuildingUI : MonoBehaviour
         else
         {
             assignment2IconUI.gameObject.SetActive(false);
+        }
+
+        if (!GameManager.Data.isTutorial)
+        {
+            //upgradeBtn.interactable = true;
+            demolishBtn.interactable = true;
         }
 
         activeBuildingID = building.id;
