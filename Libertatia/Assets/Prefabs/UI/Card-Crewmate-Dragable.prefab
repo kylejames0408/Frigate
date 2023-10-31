@@ -257,7 +257,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainCanvasName: Interface
   isReturnPosition: 1
-  isDropSwap: 1
+  isDropSwap: 0
   dropAsFirstSibling: 0
   m_ObjInfoComponent: {fileID: 0}
   onBeginDrag:

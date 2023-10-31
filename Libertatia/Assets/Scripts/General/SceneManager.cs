@@ -3,7 +3,6 @@ using UnityEngine.SceneManagement;
 
 public class CeneManager : MonoBehaviour
 {
-
     // Gets usable build index by "clearning" it. Parses the index into our possible indexes.
     private static int GetBuildIndex(int buildIndex)
     {
@@ -49,23 +48,34 @@ public class CeneManager : MonoBehaviour
     }
     public static void LoadMainMenu()
     {
-        SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
+        if(GameManager.MainMenuTesting)
+            SceneManager.LoadScene("MainMenu-Testing", LoadSceneMode.Single);
+        else
+            SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
     }
     public static void LoadOutpostFromMainMenu()
     {
-        SceneManager.LoadScene("Outpost", LoadSceneMode.Single);
+        if(GameManager.OutpostTesting)
+            SceneManager.LoadScene("Outpost-Testing", LoadSceneMode.Single);
+        else
+            SceneManager.LoadScene("Outpost", LoadSceneMode.Single);
         //SceneManager.UnloadSceneAsync("MainMenu");
         //SceneManager.sceneLoaded += OnLoadCallback;
-        ;
     }
     public static void LoadCombatFromOutpost()
     {
-        SceneManager.LoadScene("Combat", LoadSceneMode.Single);
+        if(GameManager.CombatTesting)
+            SceneManager.LoadScene("Combat-Testing", LoadSceneMode.Single);
+        else
+            SceneManager.LoadScene("Combat", LoadSceneMode.Single);
         //SceneManager.UnloadSceneAsync("Outpost");
     }
     public static void LoadOutpostFromCombat()
     {
-        SceneManager.LoadScene("Outpost", LoadSceneMode.Single);
+        if (GameManager.OutpostTesting)
+            SceneManager.LoadScene("Outpost-Testing", LoadSceneMode.Single);
+        else
+            SceneManager.LoadScene("Outpost", LoadSceneMode.Single);
         //SceneManager.UnloadSceneAsync("CombatTest");
     }
     public static void OnLoadCallback(Scene scene, LoadSceneMode mode)
