@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
 using static UnityEngine.UI.CanvasScaler;
@@ -18,6 +19,7 @@ public class Enemy : Character
     public GameObject resourceText;
 
     public bool lootDropped;
+    public int lootValue;
 
     // Start is called before the first frame update
     void Start()
@@ -28,6 +30,8 @@ public class Enemy : Character
         attackRate = 4;
         damage = 10;
         detectionRange = 10;
+
+        lootValue = 5;
 
         charAgent = GetComponent<NavMeshAgent>();
 
@@ -95,11 +99,14 @@ public class Enemy : Character
             {
                 CombatUI combatResource = combatUI.GetComponent<CombatUI>();
 
-                combatResource.doubloonAmount += 5;
+                //increase doubloon amount upon killing an enemy
+                combatResource.doubloonAmount += lootValue;
                 combatResource.UpdateDubloonUI(combatResource.doubloonAmount);
 
                 //Create a pop up message for resources gained
-                Instantiate(resourceText, transform.position, Quaternion.identity);
+                Vector3 messagePos = transform.position + new Vector3(0, 1.5f, 0);
+                GameObject popUpMessage = Instantiate(resourceText, messagePos, Quaternion.identity) as GameObject;
+                popUpMessage.transform.GetChild(0).GetComponent<TextMeshPro>().text = "+" + lootValue;
 
                 lootDropped = true;
             }
