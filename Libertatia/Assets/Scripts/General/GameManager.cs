@@ -20,6 +20,10 @@ public class GameManager : MonoBehaviour
     public static bool outpostVisited = false;
     public static PlayerData data;
 
+    public static bool MainMenuTesting = false;
+    public static bool OutpostTesting = true;
+    public static bool CombatTesting = false;
+
     // starting to act like the actual data manager - read/write
     public static PlayerData Data
     {
