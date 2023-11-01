@@ -54,7 +54,7 @@ public class Crewmate : MonoBehaviour
         jobPosition.x += randomPosition.x;
         jobPosition.z += randomPosition.y;
         agent.destination = jobPosition;
-        CrewmateManager.Instance.RemoveSelection(gameObject);
+        CrewmateManager.Instance.RemoveSelection(this);
         onAssign.Invoke();
     }
 

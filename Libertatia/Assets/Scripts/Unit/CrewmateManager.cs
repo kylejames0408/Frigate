@@ -1,7 +1,6 @@
+using System;
 using System.Collections.Generic;
-using Unity.AI.Navigation;
 using UnityEngine;
-using UnityEngine.AI;
 
 public class CrewmateManager : MonoBehaviour
 {
@@ -16,7 +15,12 @@ public class CrewmateManager : MonoBehaviour
     public int crewmateSpawnRadius = 10;
     // Tracking
     public List<Crewmate> crewmates;
-    public List<GameObject> unitsSelected = new List<GameObject>();
+    public List<Crewmate> selectedCrewmates;
+    // Selection
+    [SerializeField] RectTransform selectionBoxTrans;
+    private Rect selectionBoxRect;
+    private Vector2 startPosition;
+    private Vector2 endPosition;
 
     public static CrewmateManager Instance
     {
@@ -44,7 +48,8 @@ public class CrewmateManager : MonoBehaviour
         // Init Crewmates (make own function)
         crewmateSpawn = transform.GetChild(0);
         crewmates = new List<Crewmate>(); //GameManager.Data.crewmates.Count
-        if(GameManager.Data.crewmates == null)
+        selectedCrewmates = new List<Crewmate>();
+        if (GameManager.Data.crewmates == null)
         {
             Debug.Log("You might need to add the game manager to the scene; likely through PlayerData scene");
             return;
@@ -62,7 +67,7 @@ public class CrewmateManager : MonoBehaviour
             {
                 CrewmateData data = GameManager.Data.crewmates[i];
                 //GameObject crewmateObj = Instantiate(crewmatePrefab, transform);
-                Vector3 position = new Vector3(-5 - 5, 0) + new Vector3(Random.Range(-1.0f, 1.0f) * 5, -5, Random.Range(-1.0f, 1.0f) * 5);
+                Vector3 position = new Vector3(-5 - 5, 0) + new Vector3(UnityEngine.Random.Range(-1.0f, 1.0f) * 5, -5, UnityEngine.Random.Range(-1.0f, 1.0f) * 5);
                 //Debug.Log(position); // this actually makes no sense
                 GameObject crewmateObj = Instantiate(crewmatePrefab, position, Quaternion.identity);
 
@@ -85,7 +90,7 @@ public class CrewmateManager : MonoBehaviour
                     //}
                 }
 
-                Vector2 circleLocation = Random.insideUnitCircle;
+                Vector2 circleLocation = UnityEngine.Random.insideUnitCircle;
                 Vector3 spawnPosition = new Vector3(circleLocation.x * crewmateSpawnRadius, 0, circleLocation.y * crewmateSpawnRadius);
                 crewmateObj.transform.position = crewmateSpawn.position + spawnPosition;
                 crewmates.Add(crewmate);
@@ -114,16 +119,77 @@ public class CrewmateManager : MonoBehaviour
         {
             rui.UpdateFoodUI(GameManager.Data.resources);
         }
+    }
+    private void Update()
+    {
+        //when clicked
+        if (Input.GetMouseButtonDown(0))
+        {
+            startPosition = Input.mousePosition;
+        }
 
+        //when dragging
+        if (Input.GetMouseButton(0))
+        {
+            endPosition = Input.mousePosition;
+
+            Vector3 boxCenter = (startPosition + endPosition) * 0.5f;
+            Vector2 boxSize = new Vector2(Mathf.Abs(endPosition.x - startPosition.x), Mathf.Abs(endPosition.y - startPosition.y));
+            selectionBoxTrans.position = boxCenter;
+            selectionBoxTrans.sizeDelta = boxSize;
+        }
+
+        // when released
+        if (Input.GetMouseButtonUp(0))
+        {
+            // Calculates screen sp
+            if (endPosition.x < startPosition.x)
+            {
+                selectionBoxRect.xMin = endPosition.x;
+                selectionBoxRect.xMax = startPosition.x;
+            }
+            else
+            {
+                selectionBoxRect.xMin = startPosition.x;
+                selectionBoxRect.xMax = endPosition.x;
+            }
+
+            if (endPosition.y < startPosition.y)
+            {
+                selectionBoxRect.yMin = endPosition.y;
+                selectionBoxRect.yMax = startPosition.y;
+            }
+            else
+            {
+                selectionBoxRect.yMin = startPosition.y;
+                selectionBoxRect.yMax = endPosition.y;
+            }
+            DeselectAll();
+            foreach (Crewmate mate in crewmates)
+            {
+                //if unit is within bounds of the selection rect
+                if (selectionBoxRect.Contains(CameraManager.Instance.Camera.WorldToScreenPoint(mate.transform.position)))
+                {
+                    if (!selectedCrewmates.Contains(mate))
+                    {
+                        AddSelection(mate);
+                    }
+                }
+            }
+            startPosition = Vector2.zero;
+            endPosition = Vector2.zero;
+            selectionBoxTrans.sizeDelta = endPosition;
+        }
     }
 
     internal void SpawnNewCrewmate()
     {
         GameObject crewmateObj = Instantiate(crewmatePrefab, transform);
         Crewmate crewmate = crewmateObj.GetComponent<Crewmate>();
+        crewmateObj.name = crewmate.Name + crewmate.id;
 
         // Position
-        Vector2 circleLocation = Random.insideUnitCircle;
+        Vector2 circleLocation = UnityEngine.Random.insideUnitCircle;
         Vector3 spawnPosition = new Vector3(circleLocation.x * crewmateSpawnRadius, 0, circleLocation.y * crewmateSpawnRadius);
         crewmateObj.transform.position = crewmateSpawn.position + spawnPosition;
         // Save Data
@@ -153,42 +219,41 @@ public class CrewmateManager : MonoBehaviour
     }
     internal Crewmate SelectCrewmate(int index)
     {
-        ClickSelect(crewmates[index].gameObject);
+        ClickSelect(crewmates[index]);
         return crewmates[index];
     }
-    internal void ClickSelect(GameObject unitToAdd)
+    internal void ClickSelect(Crewmate mate)
     {
         DeselectAll();
-        AddSelection(unitToAdd);
+        AddSelection(mate);
     }
     internal void DeselectAll()
     {
-        foreach(var unit in unitsSelected)
+        foreach(Crewmate mate in selectedCrewmates)
         {
-            unit.transform.GetChild(0).gameObject.SetActive(false);
+            mate.transform.GetChild(0).gameObject.SetActive(false);
         }
-        unitsSelected.Clear();
+        selectedCrewmates.Clear();
     }
-    private void AddSelection(GameObject unitToAdd)
+    private void AddSelection(Crewmate mate)
     {
-        if(unitToAdd.GetComponent<Crewmate>().IsBuilding)
+        if (mate.IsBuilding)
         {
             return;
         }
 
-        unitsSelected.Add(unitToAdd);
-        unitToAdd.transform.GetChild(0).gameObject.SetActive(true);
+        selectedCrewmates.Add(mate);
+        mate.transform.GetChild(0).gameObject.SetActive(true);
     }
-    internal void RemoveSelection(GameObject unitToRemove)
+    internal void RemoveSelection(Crewmate mate)
     {
-        unitsSelected.Remove(unitToRemove);
-        //sets the first child to be active: an indicator showing that the unit is selected
-        unitToRemove.transform.GetChild(0).gameObject.SetActive(false);
+        selectedCrewmates.Remove(mate);
+        mate.transform.GetChild(0).gameObject.SetActive(false);
     }
     // TODO only pass in index somehow
     private void SelectionCallback(Crewmate mate)
     {
-        ClickSelect(mate.gameObject);
+        ClickSelect(mate);
         if (omui == null)
         {
             cmui.SelectCrewmateCard(mate.cardIndex);

@@ -226,9 +226,9 @@ public class Building : MonoBehaviour
     }
     private void HandleAssignment()
     {
-        if (Input.GetMouseButtonDown(1) && CrewmateManager.Instance.unitsSelected.Count > 0)
+        if (Input.GetMouseButtonDown(1) && CrewmateManager.Instance.selectedCrewmates.Count > 0)
         {
-            Crewmate mate = CrewmateManager.Instance.unitsSelected[0].GetComponent<Crewmate>();
+            Crewmate mate = CrewmateManager.Instance.selectedCrewmates[0];
             if (CanAssign())
             {
                 AssignCrewmate(mate);
