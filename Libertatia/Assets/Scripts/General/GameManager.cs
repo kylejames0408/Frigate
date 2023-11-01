@@ -52,9 +52,9 @@ public class GameManager : MonoBehaviour
     {
         data = PlayerDataManager.CreateNewData();
         DontDestroyOnLoad(gameObject); // Required for persistance
-//#if !UNITY_EDITOR
+#if !UNITY_EDITOR
         Cursor.lockState = CursorLockMode.Confined;
-//#endif
+#endif
     }
     private void Update()
     {
@@ -79,16 +79,5 @@ public class GameManager : MonoBehaviour
     private void OnDestroy()
     {
         data.gameTimer = gameTimer;
-    }
-
-    // Game to editor and other programs
-    void OnApplicationFocus(bool hasFocus)
-    {
-        //Debug.Log("Focus: " + hasFocus);
-    }
-    // Game to other programs
-    void OnApplicationPause(bool pauseStatus)
-    {
-        //Debug.Log("Pause: " + pauseStatus);
     }
 }
