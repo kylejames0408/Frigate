@@ -74,8 +74,8 @@ public class ZoneManager : MonoBehaviour
                 //if the loot has not been collected yet
                 if(zone.zoneLootCollected == false)
                 {
-                   
-                    CombatUI combatResources = combatUI.GetComponent<CombatUI>();
+
+                    CombatResourcesUI combatResources = combatUI.GetComponent<CombatResourcesUI>();
 
                     foreach (GameObject enemyHouse in zone.housesInZone)
                     {

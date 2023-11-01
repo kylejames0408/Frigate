@@ -4,7 +4,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 
-public class CombatUI : MonoBehaviour
+public class CombatResourcesUI : MonoBehaviour
 {
     public TextMeshProUGUI tmpCrewmateAmt;
     public TextMeshProUGUI tmpCrewmateCapacity;

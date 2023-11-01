@@ -97,7 +97,7 @@ public class Enemy : Character
 
             if(lootDropped == false)
             {
-                CombatUI combatResource = combatUI.GetComponent<CombatUI>();
+                CombatResourcesUI combatResource = combatUI.GetComponent<CombatResourcesUI>();
 
                 //increase doubloon amount upon killing an enemy
                 combatResource.doubloonAmount += lootValue;
