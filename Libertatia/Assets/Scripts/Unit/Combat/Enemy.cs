@@ -62,7 +62,7 @@ public class Enemy : Character
 
         if(gameObject.activeSelf != false)
         {
-            DetectCrewMember();
+            //DetectCrewMember();
         }
 
     }

@@ -74,7 +74,6 @@ public class ZoneManager : MonoBehaviour
                 //if the loot has not been collected yet
                 if(zone.zoneLootCollected == false)
                 {
-
                     CombatResourcesUI combatResources = combatUI.GetComponent<CombatResourcesUI>();
 
                     foreach (GameObject enemyHouse in zone.housesInZone)
@@ -92,6 +91,43 @@ public class ZoneManager : MonoBehaviour
                     zone.zoneLootCollected = true;
                 }
             }
+
+
+            //If there is at least one crew member and enemy in a zone
+            if (zone.crewMembersInZone.Count >= 1 && zone.enemiesInZone.Count >= 1)
+            {
+                foreach (GameObject e in zone.enemiesInZone)
+                {
+                    Enemy enemy = e.GetComponent<Enemy>();
+
+                    //Makes the enemies move by giving them a speed value
+                    enemy.charAgent.speed = 3.5f;
+
+                    foreach (GameObject cm in zone.crewMembersInZone)
+                    {
+                        CrewMember crewMember = cm.GetComponent<CrewMember>();
+
+                        if (crewMember.isActiveAndEnabled)
+                        {
+                            //Enemies will go after crew members in the zone
+                            enemy.charAgent.SetDestination(crewMember.transform.position);
+                        }
+
+                    }
+                }
+            }
+            //If there is no longer a crew member in the zone
+            else if (zone.crewMembersInZone.Count <= 0 && zone.enemiesInZone.Count >= 1)
+            {
+                foreach (GameObject e in zone.enemiesInZone)
+                {
+                    Enemy enemy = e.GetComponent<Enemy>();
+
+                    //Make the enemies stop chasing by setting their speed value to zero
+                    enemy.charAgent.speed = 0;
+                }
+            }
+            
         }
     }
 
