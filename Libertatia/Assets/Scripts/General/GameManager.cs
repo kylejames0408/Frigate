@@ -52,6 +52,9 @@ public class GameManager : MonoBehaviour
     {
         data = PlayerDataManager.CreateNewData();
         DontDestroyOnLoad(gameObject); // Required for persistance
+//#if !UNITY_EDITOR
+        Cursor.lockState = CursorLockMode.Confined;
+//#endif
     }
     private void Update()
     {
