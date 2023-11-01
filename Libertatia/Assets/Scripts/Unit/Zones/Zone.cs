@@ -31,7 +31,6 @@ public class Zone : MonoBehaviour
         //zoneCenter = boxCollider.center;
 
         zoneLootCollected = false;
-
     }
 
     private void Update()

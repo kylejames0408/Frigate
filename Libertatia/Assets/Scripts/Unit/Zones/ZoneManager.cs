@@ -74,11 +74,20 @@ public class ZoneManager : MonoBehaviour
                 //if the loot has not been collected yet
                 if(zone.zoneLootCollected == false)
                 {
+                   
                     CombatUI combatResources = combatUI.GetComponent<CombatUI>();
 
-                    //obtain wood from the houses
-                    combatResources.woodAmount += 40;
-                    combatResources.UpdateWoodUI(combatResources.woodAmount);
+                    foreach (GameObject enemyHouse in zone.housesInZone)
+                    {
+                        EnemyHouse house = enemyHouse.GetComponent<EnemyHouse>();
+
+                        //obtain wood from the houses
+                        combatResources.woodAmount += house.lootValue;
+                        combatResources.UpdateWoodUI(combatResources.woodAmount);
+
+                        house.CreatePopUpText();
+                    }
+       
 
                     zone.zoneLootCollected = true;
                 }
