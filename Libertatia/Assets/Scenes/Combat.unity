@@ -28461,7 +28461,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1731623796}
         m_TargetAssemblyTypeName: GameplayMenuUI, Assembly-CSharp
         m_MethodName: OpenMenu
         m_Mode: 1
