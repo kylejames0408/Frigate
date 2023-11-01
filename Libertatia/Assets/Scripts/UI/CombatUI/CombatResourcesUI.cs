@@ -29,8 +29,8 @@ public class CombatResourcesUI : MonoBehaviour
         foodAmount = 0;
 
         //Test values - TO BE REMOVED OR COMMENTED OUT
-        tmpCrewmateAmt.text = 6.ToString();
-        tmpCrewmateCapacity.text = 6.ToString();
+        tmpCrewmateAmt.text = data.crewmates.Count.ToString();
+        tmpCrewmateCapacity.text = data.crewmates.Count.ToString();
 
         tmpFoodAmt.text = foodAmount.ToString();
         tmpFoodConsumption.text = 0.ToString();
