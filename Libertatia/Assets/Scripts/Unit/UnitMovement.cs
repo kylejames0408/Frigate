@@ -43,6 +43,14 @@ public class UnitMovement : MonoBehaviour
                         building.AssignCrewmate(builder);
                     }
                 }
+
+                //Moves units to the center of zone when it is clicked on
+                if(hit.collider.tag == "Zone")
+                {
+                    Zone zone = hit.transform.gameObject.GetComponent<Zone>();
+
+                    myAgent.SetDestination(zone.zoneCenter);
+                }
                 else
                 {
                     myAgent.SetDestination(hit.point);
