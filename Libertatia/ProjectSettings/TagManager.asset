@@ -11,6 +11,7 @@ TagManager:
   - Zone
   - CombatUI
   - EnemyHouse
+  - Marker
   layers:
   - Default
   - TransparentFX
