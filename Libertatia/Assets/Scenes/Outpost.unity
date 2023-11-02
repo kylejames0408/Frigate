@@ -1642,9 +1642,14 @@ MonoBehaviour:
   crewmatePrefab: {fileID: 4279940650134947149, guid: 8f1e684d0ce15c240a73f35a690f910e, type: 3}
   crewmateSpawn: {fileID: 0}
   crewmateSpawnRadius: 10
-  crewmates: []
-  selectedCrewmates: []
+  selectedCrewmateIDs: 
   selectionBoxTrans: {fileID: 1492379092}
+  selectionBoxRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 0
+    height: 0
 --- !u!1 &317568260
 GameObject:
   m_ObjectHideFlags: 0
@@ -6747,7 +6752,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.20392157, g: 0.3764706, b: 0.26666668, a: 0.27058825}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.2784314}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

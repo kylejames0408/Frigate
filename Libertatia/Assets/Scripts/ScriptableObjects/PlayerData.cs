@@ -30,6 +30,7 @@ public struct BuildingData
 [Serializable]
 public struct CrewmateData
 {
+    public int id;
     public string name;
     public Sprite icon;
     public int buildingID;

@@ -54,16 +54,16 @@ public class Crewmate : MonoBehaviour
         jobPosition.x += randomPosition.x;
         jobPosition.z += randomPosition.y;
         agent.destination = jobPosition;
-        CrewmateManager.Instance.RemoveSelection(this);
+        CrewmateManager.Instance.DeselectCrewmate(id);
         onAssign.Invoke();
     }
-
     public void Free()
     {
         buildingID = -1;
         isBuilding = false;
     }
 
+    // handlers
     private void HandleSelection()
     {
         if (isHovered && Input.GetMouseButtonDown(0))
@@ -82,10 +82,6 @@ public class Crewmate : MonoBehaviour
     }
     private void OnDestroy()
     {
-        UnitSelections selection = UnitSelections.Instance;
-        if (selection != null)
-        {
-            selection.enemies.Remove(gameObject);
-        }
+        //CrewmateManager.Instance.selectedCrewmates.Remove(this);
     }
 }

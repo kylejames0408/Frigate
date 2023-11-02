@@ -1,4 +1,5 @@
 ﻿using DG.Tweening;
+using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -87,6 +88,12 @@ public class CombatManagementUI : MonoBehaviour
         card.GetComponentInChildren<TextMeshProUGUI>().text = mate.Name;
     }
 
+    internal void RemoveCrewmateCard(int cardIndex)
+    {
+        DeselectCrewmateCard(cardIndex);
+        Destroy(crewmateCards[cardIndex].gameObject);
+        crewmateCards.RemoveAt(cardIndex);
+    }
     public void SelectCrewmateCard(int index)
     {
         foreach (GameObject card in crewmateCards)
@@ -94,8 +101,8 @@ public class CombatManagementUI : MonoBehaviour
             card.GetComponent<Outline>().enabled = false;
         }
         crewmateCards[index].GetComponent<Outline>().enabled = true;
-        Crewmate crewmate = cm.SelectCrewmate(index);
-        crewmate.onAssign.AddListener(() => { DeselectCrewmateCard(index); });
+        //Crewmate crewmate = cm.SelectCrewmate(index);
+        //crewmate.onAssign.AddListener(() => { DeselectCrewmateCard(index); });
     }
     public void DeselectCrewmateCard(int index)
     {
@@ -119,5 +126,10 @@ public class CombatManagementUI : MonoBehaviour
         arrow.onClick.RemoveListener(CloseMenu);
         arrow.onClick.AddListener(OpenMenu);
         arrow.transform.GetChild(0).DORotate(new Vector3(0, 0, 0), arrowAnimTime);
+    }
+
+    internal void DeselectAllCrewmateCards()
+    {
+        throw new NotImplementedException();
     }
 }
