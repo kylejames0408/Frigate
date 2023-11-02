@@ -41,12 +41,14 @@ public class Building : MonoBehaviour
     // Components
     private MeshRenderer buildingRender;
     private NavMeshObstacle navObsticle;
-    // Emissions
+    // Emissions - move to manager or set from manager
     private Color normalEmission = Color.black;
     private Color hoveredEmission = new Color(0.3f, 0.3f, 0.3f);
     // Materials
     [SerializeField] private BuildingComponents components;
     [SerializeField] private Material builtMaterial;
+    // UI
+    [SerializeField] private RectTransform canvasTrans;
 
     [Header("Events")]
     public GameEvent onCrewmateAssigned;
@@ -74,16 +76,26 @@ public class Building : MonoBehaviour
 
     private void Awake()
     {
+        // Get/set components
         buildingRender = GetComponentInChildren<MeshRenderer>();
+        buildingRender.material = components.placingMaterial;
         navObsticle = GetComponent<NavMeshObstacle>();
-        navObsticle.enabled = false;
+        navObsticle.enabled = false; // prevents moving crewmates
+
+        // Set variables' initial state
         id = gameObject.GetInstanceID();
         uiIndex = -1;
         level = 0;
         state = BuildingState.PLACING;
-        buildingRender.material = components.placingMaterial;
         isHovered = false;
         numOfCollisions = 0;
+    }
+    private void Start()
+    {
+        // Set UI rotation
+        Vector3 lookARotation = canvasTrans.eulerAngles;
+        lookARotation.x = CameraManager.Instance.Camera.transform.eulerAngles.x;
+        canvasTrans.eulerAngles = lookARotation;
     }
     private void Update()
     {
