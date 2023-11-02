@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
 using static UnityEngine.UI.CanvasScaler;
@@ -14,7 +15,11 @@ public class Enemy : Character
     //public GameObject unitSelection;
     //public UnitSelections unitSelectionList;
 
+    public GameObject combatUI;
+    public GameObject resourceText;
 
+    public bool lootDropped;
+    public int lootValue;
 
     // Start is called before the first frame update
     void Start()
@@ -25,6 +30,8 @@ public class Enemy : Character
         attackRate = 4;
         damage = 10;
         detectionRange = 10;
+
+        lootValue = 5;
 
         charAgent = GetComponent<NavMeshAgent>();
 
@@ -40,6 +47,9 @@ public class Enemy : Character
 
         //unitSelection = GameObject.FindGameObjectWithTag("Unit Selections");
         //unitSelectionList = unitSelection.GetComponent<UnitSelections>();
+
+        combatUI = GameObject.FindGameObjectWithTag("CombatUI");
+        lootDropped = false;
     }
 
     // Update is called once per frame
@@ -52,7 +62,7 @@ public class Enemy : Character
 
         if(gameObject.activeSelf != false)
         {
-            DetectCrewMember();
+            //DetectCrewMember();
         }
 
     }
@@ -84,6 +94,23 @@ public class Enemy : Character
         if(currentHealth <= 0)
         {
             //unitSelectionList.enemies.Remove(gameObject);
+
+            if(lootDropped == false)
+            {
+                CombatResourcesUI combatResource = combatUI.GetComponent<CombatResourcesUI>();
+
+                //increase doubloon amount upon killing an enemy
+                combatResource.doubloonAmount += lootValue;
+                combatResource.UpdateDubloonUI(combatResource.doubloonAmount);
+
+                //Create a pop up message for resources gained
+                Vector3 messagePos = transform.position + new Vector3(0, 1.5f, 0);
+                GameObject popUpMessage = Instantiate(resourceText, messagePos, Quaternion.identity) as GameObject;
+                popUpMessage.transform.GetChild(0).GetComponent<TextMeshPro>().text = "+" + lootValue;
+
+                lootDropped = true;
+            }
+  
 
             GameObject.Find("Unit Selections").GetComponent<UnitSelections>().enemies.Remove(gameObject);
         }

@@ -9,11 +9,16 @@ public class Zone : MonoBehaviour
     public List<GameObject> crewMembersInZone;
     public List<GameObject> enemiesInZone;
 
+    public List<GameObject> housesInZone;
+
     public string zoneName;
 
     float onMeshThreshold = 3;
 
     public Vector3 zoneCenter;
+    public GameObject centerObject;
+
+    public bool zoneLootCollected;
 
     // Start is called before the first frame update
     void Start()
@@ -26,6 +31,9 @@ public class Zone : MonoBehaviour
 
         //zoneCenter = boxCollider.center;
 
+        zoneLootCollected = false;
+
+        zoneCenter = centerObject.transform.position;
     }
 
     private void Update()
@@ -44,12 +52,12 @@ public class Zone : MonoBehaviour
 
     public void OnTriggerEnter(Collider collider)
     {
-        //If a crew member or enemy is within the zone, add them to the list
-        if (collider.gameObject.tag == "PlayerCharacter" || collider.gameObject.tag == "Enemy")
+        //Adds gameobjects within the zone into their respective lists
+        if (collider.gameObject.tag == "PlayerCharacter" || collider.gameObject.tag == "Enemy" || collider.gameObject.tag == "EnemyHouse")
         {
             //Debug.Log(collider.gameObject.name + " Enter");
 
-            AddToUnitsInZoneList(collider.gameObject);
+            AddToZoneList(collider.gameObject);
 
         }
     }
@@ -66,28 +74,37 @@ public class Zone : MonoBehaviour
     }
 
     /// <summary>
-    /// Adds unit to units in zone list based on their type
+    /// Adds game objects to zone list based on their type
     /// </summary>
     /// <param name="agents"></param>
-    public void AddToUnitsInZoneList(GameObject unit)
+    public void AddToZoneList(GameObject objectType)
     {
-        if(unit.gameObject.tag == "PlayerCharacter")
+        if(objectType.gameObject.tag == "PlayerCharacter")
         {
-            if (crewMembersInZone.Contains(unit) == false)
+            if (crewMembersInZone.Contains(objectType) == false)
             {
-                crewMembersInZone.Add(unit.gameObject);
+                crewMembersInZone.Add(objectType.gameObject);
             }
         }
 
-        if (unit.gameObject.tag == "Enemy")
+        if (objectType.gameObject.tag == "Enemy")
         {
-            if (enemiesInZone.Contains(unit) == false)
+            if (enemiesInZone.Contains(objectType) == false)
             {
-                enemiesInZone.Add(unit.gameObject);
+                enemiesInZone.Add(objectType.gameObject);
+            }
+        }
+
+        if (objectType.gameObject.tag == "EnemyHouse")
+        {
+            if (housesInZone.Contains(objectType) == false)
+            {
+                housesInZone.Add(objectType.gameObject);
             }
         }
 
     }
+
 
     /// <summary>
     /// Removes unit from units in zone list based on their type

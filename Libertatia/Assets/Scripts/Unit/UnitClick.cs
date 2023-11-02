@@ -58,13 +58,23 @@ public class UnitClick : MonoBehaviour
 
             //Creates a ground marker at the mouse position when clicked to show a visual indicator
             //of where the units are moving to
-            if(Physics.Raycast(ray, out hit, Mathf.Infinity, ground, QueryTriggerInteraction.Ignore))
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity, ground, QueryTriggerInteraction.Ignore))
             {
                 groundMarker.transform.position = hit.point;
+           
+
+                if (hit.transform.gameObject.tag == "Zone")
+                {
+                    Zone zone = hit.transform.gameObject.GetComponent<Zone>();
+
+                    groundMarker.transform.position = zone.zoneCenter;
+   
+                }
+
                 groundMarker.SetActive(false);
                 groundMarker.SetActive(true);
-            }
 
+            }
 
 
             ////Enemy interaction when right clicking on an enemy

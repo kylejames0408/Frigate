@@ -4,7 +4,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 
-public class CombatUI : MonoBehaviour
+public class CombatResourcesUI : MonoBehaviour
 {
     public TextMeshProUGUI tmpCrewmateAmt;
     public TextMeshProUGUI tmpCrewmateCapacity;
@@ -12,7 +12,11 @@ public class CombatUI : MonoBehaviour
     public TextMeshProUGUI tmpFoodConsumption;
     public TextMeshProUGUI tmpDubloonAmt;
     public TextMeshProUGUI tmpWoodAmt;
-    public TextMeshProUGUI tmpStoneAmt;
+    //public TextMeshProUGUI tmpStoneAmt;
+
+    public int doubloonAmount;
+    public int woodAmount;
+    public int foodAmount;
 
     private void Start()
     {
@@ -20,14 +24,27 @@ public class CombatUI : MonoBehaviour
         //tmpCrewmateAmt.text = data.crewmates.Count.ToString();
         //tmpCrewmateCapacity.text = data.crewmates.Count.ToString();
 
-        //Test values - TO BE REMOVED OR COMMENTED OUT
-        tmpCrewmateAmt.text = 6.ToString();
-        tmpCrewmateCapacity.text = 6.ToString();
+        doubloonAmount = 0;
+        woodAmount = 0;
+        foodAmount = 0;
 
-        tmpFoodAmt.text = 0.ToString();
+        //Test values - TO BE REMOVED OR COMMENTED OUT
+        tmpCrewmateAmt.text = data.crewmates.Count.ToString();
+        tmpCrewmateCapacity.text = data.crewmates.Count.ToString();
+
+        tmpFoodAmt.text = foodAmount.ToString();
         tmpFoodConsumption.text = 0.ToString();
-        tmpDubloonAmt.text = 0.ToString();
-        tmpWoodAmt.text = 0.ToString();
+        tmpDubloonAmt.text = doubloonAmount.ToString();
+        tmpWoodAmt.text = woodAmount.ToString();
+    }
+
+    private void Update()
+    {
+        if(Input.GetKeyUp(KeyCode.Alpha0))
+        {
+            doubloonAmount += 5;
+            UpdateDubloonUI(doubloonAmount);
+        }
     }
 
     public void Init()
