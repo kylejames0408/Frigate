@@ -16,6 +16,7 @@ public class Zone : MonoBehaviour
     float onMeshThreshold = 3;
 
     public Vector3 zoneCenter;
+    public GameObject centerObject;
 
     public bool zoneLootCollected;
 
@@ -31,6 +32,8 @@ public class Zone : MonoBehaviour
         //zoneCenter = boxCollider.center;
 
         zoneLootCollected = false;
+
+        zoneCenter = centerObject.transform.position;
     }
 
     private void Update()
