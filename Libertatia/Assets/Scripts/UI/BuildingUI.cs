@@ -20,6 +20,7 @@ public class BuildingUI : MonoBehaviour
     [SerializeField] private Transform assignment1IconUI;
     [SerializeField] private Transform assignment2IconUI;
     // Buttons
+    [SerializeField] private Button closeBtn;
     [SerializeField] private Button upgradeBtn;
     [SerializeField] private Button demolishBtn;
     // Dynamic/tracking information
@@ -46,6 +47,7 @@ public class BuildingUI : MonoBehaviour
     }
     private void Start()
     {
+        closeBtn.onClick.AddListener(CloseMenu);
         upgradeBtn.onClick.AddListener(UpgradeCallback);
         demolishBtn.onClick.AddListener(DemolishCallback);
         if (GameManager.Data.isTutorial)

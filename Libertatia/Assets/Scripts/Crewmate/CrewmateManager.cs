@@ -20,7 +20,7 @@ public class CrewmateManager : MonoBehaviour
     public List<int> selectedCrewmateIDs;
     // Selection
     [SerializeField] private RectTransform selectionBoxTrans; // I am 99% sure we can just use the rectTrans. I dont know why it is not working however
-    [SerializeField] private Rect selectionBoxRect;
+    private Rect selectionBoxRect;
     private Vector2 startPosition;
     private Vector2 endPosition;
     private bool isDragging = false;
