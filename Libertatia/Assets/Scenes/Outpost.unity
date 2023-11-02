@@ -13435,7 +13435,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bm: {fileID: 745434448}
-  emptyAssignmentIcon: {fileID: 21300000, guid: 7fc897f482c918d4c935d6157d1b9510, type: 3}
+  emptyAssignmentIcon: {fileID: 21300000, guid: 352bd3b255cdb8540aa3455efeb7b45f, type: 3}
   iconUI: {fileID: 8605678549316488387}
   nameUI: {fileID: 2443200422422508111}
   levelUI: {fileID: 5577530313757099140}
