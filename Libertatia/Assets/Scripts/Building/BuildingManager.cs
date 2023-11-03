@@ -4,6 +4,15 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
+public enum BuildingState
+{
+    PLACING,
+    WAITING_FOR_ASSIGNMENT,
+    BUILDING,
+    COMPLETE,
+    COUNT
+}
+
 // Might need to separate into cost and production
 [Serializable]
 public struct BuildingResources
@@ -31,21 +40,37 @@ public struct BuildingResources
 
 public class BuildingManager : MonoBehaviour
 {
-    // Building Data
-    public Building[] buildingPrefabs;
-    // Components
-    private OutpostManagementUI omui;
-    private ResourcesUI rui;
-    private bool isPlacing = false;
-    private Building prospectiveBuilding;
+    [Header("Building Data")]
+    // Placing
+    [SerializeField] private Material matPlacing;
+    // Colliding
+    [SerializeField] private Material matColliding;
+    // Recruiting
+    [SerializeField] private Sprite iconRecruiting;
+    [SerializeField] private Material matRecruiting;
+    // Constructing
+    [SerializeField] private Sprite iconConstructing;
+    [SerializeField] private Material matConstructing;
+    [SerializeField] private ParticleSystem particleConstructing;
+    // Built
+    [SerializeField] private Sprite iconBuilt;
+    [SerializeField] private ParticleSystem particleBuilt;
+    // Buildings
+    [SerializeField] private Building[] buildingPrefabs;
+    [Header("Components")]
+    [SerializeField] private OutpostManagementUI omui;
+    [SerializeField] private ResourcesUI rui;
+    [Header("Tracking")]
+    [SerializeField] private bool isPlacing = false;
+    [SerializeField] private Building prospectiveBuilding;
     // - Building Events
     [Header("Events")]
     public GameEvent onBuildingPlaced;
     public UnityEvent placedBuilding;
     public UnityEvent cancelBuilding;
     // Tracking
-    public Dictionary<int, Building> buildings;
-    public BuildingResources totalProduction;
+    [SerializeField] private Dictionary<int, Building> buildings;
+    [SerializeField] private BuildingResources totalProduction;
 
     private void Start()
     {
@@ -74,9 +99,16 @@ public class BuildingManager : MonoBehaviour
     {
         HandlePlacing();
     }
+    private void OnDestroy()
+    {
+        // Update player data when scene is unloaded
+        //realtimeData.resources = resources; // disable for now
+        //GameManager.Instance.buildingAmount = buildings.Count;
+        //GameManager.Instance.DataManager.Update(realtimeData);
+    }
 
-    // selecting building UI
-    internal void SelectBuilding(int index)
+    // Actions
+    internal void SelectBuilding(int buildingIndex)
     {
         if (isPlacing)
         {
@@ -84,11 +116,10 @@ public class BuildingManager : MonoBehaviour
         }
         isPlacing = true;
 
-        Building prefab = buildingPrefabs[index];
+        Building prefab = buildingPrefabs[buildingIndex];
         prospectiveBuilding = Instantiate(prefab, Vector3.zero, prefab.transform.rotation, transform);
-        prospectiveBuilding.uiIndex = index; // stores type
+        prospectiveBuilding.uiIndex = buildingIndex; // stores type
     }
-    // placing a building
     private void SpawnBuilding(Building prospectiveBuilding)
     {
         isPlacing = false;
@@ -205,9 +236,9 @@ public class BuildingManager : MonoBehaviour
     }
 
     // UI
-    internal bool CanConstructBuilding(int i)
+    internal bool CanConstructBuilding(int buildingIndex)
     {
-        return GameManager.Data.resources.wood >= buildingPrefabs[i].Cost.wood;
+        return GameManager.Data.resources.wood >= buildingPrefabs[buildingIndex].Cost.wood;
     }
 
     // Dev
@@ -218,13 +249,4 @@ public class BuildingManager : MonoBehaviour
             building.CompleteBuild();
         }
     }
-
-    // Update player data when scene is unloaded
-    private void OnDestroy()
-    {
-        //realtimeData.resources = resources; // disable for now
-        //GameManager.Instance.buildingAmount = buildings.Count;
-        //GameManager.Instance.DataManager.Update(realtimeData);
-    }
-
 }

@@ -6,26 +6,30 @@ using UnityEngine.UI;
 public class BuildingUI : MonoBehaviour
 {
     private static BuildingUI instance;
-    // Components
+
+    [Header("Components")]
     [SerializeField] private BuildingManager bm;
-    // ?
-    private float interfaceAnimSpeed = 0.6f;
-    [SerializeField] private Sprite emptyAssignmentIcon;
-    // Building information objects
-    [SerializeField] private Transform iconUI;
-    [SerializeField] private Transform nameUI;
-    [SerializeField] private Transform levelUI;
-    [SerializeField] private Transform outputUI;
-    //[SerializeField] private Transform assignmentUI; // will need this if more information is portrayed
-    [SerializeField] private Transform assignment1IconUI;
-    [SerializeField] private Transform assignment2IconUI;
-    // Buttons
-    [SerializeField] private Button closeBtn;
-    [SerializeField] private Button upgradeBtn;
-    [SerializeField] private Button demolishBtn;
-    // Dynamic/tracking information
-    private int activeBuildingID;
-    private RectTransform bounds;
+
+    [Header("Static Data")]
+    [SerializeField] private float animSpeedInterface = 0.6f;
+    [SerializeField] private Sprite iconEmptyAssignment;
+
+    [Header("Interface")] // Building information objects
+    [SerializeField] private Transform uiIcon;
+    [SerializeField] private Transform uiName;
+    [SerializeField] private Transform uiLevel;
+    [SerializeField] private Transform uiOutpost;
+    [SerializeField] private Transform uiAsign1;
+    [SerializeField] private Transform uiAsign2;
+
+    [Header("Buttons")]
+    [SerializeField] private Button btnClose;
+    [SerializeField] private Button btnUpgrade;
+    [SerializeField] private Button btnDemolish;
+    
+    [Header("Tracking")] // Dynamic/tracking information
+    [SerializeField] private int activeBuildingID;
+    [SerializeField] private RectTransform bounds;
 
     public static BuildingUI Instance
     {
@@ -43,17 +47,17 @@ public class BuildingUI : MonoBehaviour
 
 
         bounds = GetComponent<RectTransform>();
-        assignment2IconUI.gameObject.SetActive(false);
+        uiAsign2.gameObject.SetActive(false);
     }
     private void Start()
     {
-        closeBtn.onClick.AddListener(CloseMenu);
-        upgradeBtn.onClick.AddListener(UpgradeCallback);
-        demolishBtn.onClick.AddListener(DemolishCallback);
+        btnClose.onClick.AddListener(CloseMenu);
+        btnUpgrade.onClick.AddListener(UpgradeCallback);
+        btnDemolish.onClick.AddListener(DemolishCallback);
         if (GameManager.Data.isTutorial)
         {
-            upgradeBtn.interactable = false;
-            demolishBtn.interactable = false;
+            btnUpgrade.interactable = false;
+            btnDemolish.interactable = false;
         }
     }
     private void Update()
@@ -63,41 +67,41 @@ public class BuildingUI : MonoBehaviour
 
     public void FillUI(Building building)
     {
-        iconUI.GetComponent<Image>().sprite = building.Icon;
-        nameUI.GetComponent<TextMeshProUGUI>().text = building.Name;
-        levelUI.GetComponent<TextMeshProUGUI>().text = building.GetStatus();
-        outputUI.GetComponent<TextMeshProUGUI>().text = building.resourceProduction.ToString(); // not sure what output is yet
+        uiIcon.GetComponent<Image>().sprite = building.Icon;
+        uiName.GetComponent<TextMeshProUGUI>().text = building.Name;
+        uiLevel.GetComponent<TextMeshProUGUI>().text = building.GetStatus();
+        uiOutpost.GetComponent<TextMeshProUGUI>().text = building.resourceProduction.ToString(); // not sure what output is yet
 
         if (building.assignee1 != null)
         {
-            assignment1IconUI.GetComponent<Image>().sprite = building.assignee1.Icon;
+            uiAsign1.GetComponent<Image>().sprite = building.assignee1.Icon;
         }
         else
         {
-            assignment1IconUI.GetComponent<Image>().sprite = emptyAssignmentIcon;
+            uiAsign1.GetComponent<Image>().sprite = iconEmptyAssignment;
         }
 
         if (building.IsComplete)
         {
-            assignment2IconUI.gameObject.SetActive(true);
+            uiAsign2.gameObject.SetActive(true);
             if (building.assignee2 != null)
             {
-                assignment2IconUI.GetComponent<Image>().sprite = building.assignee2.Icon;
+                uiAsign2.GetComponent<Image>().sprite = building.assignee2.Icon;
             }
             else
             {
-                assignment2IconUI.GetComponent<Image>().sprite = emptyAssignmentIcon;
+                uiAsign2.GetComponent<Image>().sprite = iconEmptyAssignment;
             }
         }
         else
         {
-            assignment2IconUI.gameObject.SetActive(false);
+            uiAsign2.gameObject.SetActive(false);
         }
 
         if (!GameManager.Data.isTutorial)
         {
             //upgradeBtn.interactable = true;
-            demolishBtn.interactable = true;
+            btnDemolish.interactable = true;
         }
 
         activeBuildingID = building.id;
@@ -120,7 +124,7 @@ public class BuildingUI : MonoBehaviour
     // Callbacks
     private void UpgradeCallback()
     {
-        levelUI.GetComponent<TextMeshProUGUI>().text = bm.UpgradeBuilding(activeBuildingID);
+        uiLevel.GetComponent<TextMeshProUGUI>().text = bm.UpgradeBuilding(activeBuildingID);
     }
     private void DemolishCallback()
     {
@@ -137,10 +141,10 @@ public class BuildingUI : MonoBehaviour
     // Open/close
     public void OpenMenu()
     {
-        transform.DOMoveX(680, interfaceAnimSpeed);
+        transform.DOMoveX(680, animSpeedInterface);
     }
     public void CloseMenu()
     {
-        transform.DOMoveX(0, interfaceAnimSpeed); // cant get height in start
+        transform.DOMoveX(0, animSpeedInterface); // cant get height in start
     }
 }

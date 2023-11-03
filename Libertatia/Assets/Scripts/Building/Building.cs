@@ -1,22 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using DG.Tweening;
+using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
-
-public enum BuildingState
-{
-    PLACING,
-    WAITING_FOR_ASSIGNMENT,
-    BUILDING,
-    COMPLETE
-}
+using UnityEngine.UI;
 
 // Move some individualstic data to scriptable objects, no need for prefabs atm
 // Building objects are put together upon interaction
 [Serializable]
-[RequireComponent(typeof(BoxCollider))]
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(BoxCollider))]
+[RequireComponent(typeof(NavMeshObstacle))]
 public class Building : MonoBehaviour
 {
     // General Data
@@ -45,10 +39,18 @@ public class Building : MonoBehaviour
     private Color normalEmission = Color.black;
     private Color hoveredEmission = new Color(0.3f, 0.3f, 0.3f);
     // Materials
-    [SerializeField] private BuildingComponents components;
     [SerializeField] private Material builtMaterial;
     // UI
     [SerializeField] private RectTransform canvasTrans;
+    [SerializeField] private CanvasGroup canvasGroup;
+    private bool isPopUpOpen = false;
+    private float animTimeInterface = 0.3f;
+    [SerializeField] private TextMeshProUGUI uiLevel;
+    [SerializeField] private TextMeshProUGUI uiName;
+    [SerializeField] private Image uiStatus;
+    [SerializeField] private TextMeshProUGUI uiAP;
+    [SerializeField] private Image uiAsign1;
+    [SerializeField] private Image uiAsign2;
 
     [Header("Events")]
     public GameEvent onCrewmateAssigned;
@@ -78,9 +80,9 @@ public class Building : MonoBehaviour
     {
         // Get/set components
         buildingRender = GetComponentInChildren<MeshRenderer>();
-        buildingRender.material = components.placingMaterial;
         navObsticle = GetComponent<NavMeshObstacle>();
         navObsticle.enabled = false; // prevents moving crewmates
+        canvasGroup = canvasTrans.GetComponent<CanvasGroup>();
 
         // Set variables' initial state
         id = gameObject.GetInstanceID();
@@ -92,23 +94,38 @@ public class Building : MonoBehaviour
     }
     private void Start()
     {
-        // Set UI rotation
+        // Set UI
         Vector3 lookARotation = canvasTrans.eulerAngles;
         lookARotation.x = CameraManager.Instance.Camera.transform.eulerAngles.x;
         canvasTrans.eulerAngles = lookARotation;
+        canvasGroup.alpha = 0;
     }
     private void Update()
     {
-        if(isHovered)
+        if (isHovered)
         {
             HandleSelection();
             HandleAssignment();
         }
     }
 
+    public void SetMaterial(Material material)
+    {
+        buildingRender.material = material;
+    }
+
+    public void FillUI(Sprite stateIcon, Sprite assignmentIcon)
+    {
+        uiLevel.text = "Lv. " + level;
+        uiName.text = buildingName;
+        uiStatus.sprite = stateIcon;
+        uiAP.text = resourceCost.ap.ToString();
+        uiAsign1.sprite = assignmentIcon;
+        uiAsign2.sprite = assignmentIcon;
+    }
+
     public void Place()
     {
-        buildingRender.material = components.needsAssignmentMaterial;
         navObsticle.enabled = true;
         state = BuildingState.WAITING_FOR_ASSIGNMENT;
     }
@@ -144,7 +161,7 @@ public class Building : MonoBehaviour
         // Update building state
         if(state == BuildingState.WAITING_FOR_ASSIGNMENT)
         {
-            buildingRender.material = components.buildingMaterial;
+            //buildingRender.material = components.buildingMaterial;
             state = BuildingState.BUILDING;
         }
     }
@@ -207,13 +224,10 @@ public class Building : MonoBehaviour
         switch (state)
         {
             case BuildingState.PLACING:
-                buildingRender.material = new Material(components.placingMaterial);
                 break;
             case BuildingState.WAITING_FOR_ASSIGNMENT:
-                buildingRender.material = new Material(components.needsAssignmentMaterial);
                 break;
             case BuildingState.BUILDING:
-                buildingRender.material = new Material(components.buildingMaterial);
                 break;
             case BuildingState.COMPLETE:
                 buildingRender.material = new Material(builtMaterial);
@@ -225,7 +239,6 @@ public class Building : MonoBehaviour
     {
         if (!isPlacementValid) return;
 
-        buildingRender.material = new Material(components.collisionMaterial);
         isPlacementValid = false;
     }
 
@@ -261,6 +274,7 @@ public class Building : MonoBehaviour
         {
             buildingRender.material.SetColor("_EmissionColor", hoveredEmission);
         }
+        canvasGroup.DOFade(1.0f, animTimeInterface);
     }
     private void OnMouseExit()
     {
@@ -268,6 +282,7 @@ public class Building : MonoBehaviour
         {
             buildingRender.material.SetColor("_EmissionColor", normalEmission);
         }
+        canvasGroup.DOFade(0.0f, animTimeInterface);
         isHovered = false;
     }
     private void OnDrawGizmosSelected()
