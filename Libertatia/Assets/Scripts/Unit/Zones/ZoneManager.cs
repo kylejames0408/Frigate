@@ -14,7 +14,7 @@ public class ZoneManager : MonoBehaviour
 
     public GameObject shipWaypoint;
 
-    public ResourcesUI resourceUI;
+    //public ResourcesUI resourceUI;
 
     public GameObject combatUI;
 
@@ -42,7 +42,9 @@ public class ZoneManager : MonoBehaviour
             //Decreases crewmate number by 1 if they died
             if(crewMember.currentHealth <= 0)
             {
-                resourceUI.UpdateCrewAmountUI(crewMembers.Count - 1);
+                //resourceUI.UpdateCrewAmountUI(crewMembers.Count - 1);
+                CombatResourcesUI combatResourcesUI = combatUI.GetComponent<CombatResourcesUI>();
+                combatResourcesUI.UpdateCrewAmountUI(crewMembers.Count - 1);
             }
         }
 
