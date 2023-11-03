@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using Unity.Burst.CompilerServices;
 using UnityEngine;
-using UnityEngine.AI;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
-using static UnityEngine.GraphicsBuffer;
 
 // Might need to separate into cost and production
 [Serializable]
@@ -41,14 +38,15 @@ public class BuildingManager : MonoBehaviour
     private OutpostManagementUI omui;
     private ResourcesUI rui;
     private bool isPlacing = false;
-    private Building activeBuilding;
+    private int activeBuildingID;
+    private Building prospectiveBuilding;
     // - Building Events
     [Header("Events")]
     public GameEvent onBuildingPlaced;
     public UnityEvent placedBuilding;
     public UnityEvent cancelBuilding;
     // Tracking
-    public List<Building> buildings; // maybe make a lookup table for buildings since they have an ID
+    public Dictionary<int, Building> buildings;
     public BuildingResources totalProduction;
 
     private void Start()
@@ -57,7 +55,7 @@ public class BuildingManager : MonoBehaviour
         if (rui == null) { rui = FindObjectOfType<ResourcesUI>(); }
 
         // Init Building (make own function)
-        buildings = new List<Building>(); //GameManager.Data.buildings.Count
+        buildings = new Dictionary<int, Building>(); //GameManager.Data.buildings.Count
         for (int i = 0; i < GameManager.Data.buildings.Count; i ++) // cache buildings list?
         {
             Building building = Instantiate(buildingPrefabs[GameManager.Data.buildings[i].uiIndex], buildingParent);
@@ -67,7 +65,7 @@ public class BuildingManager : MonoBehaviour
             building.transform.position = GameManager.Data.buildings[i].position;
             building.transform.rotation = GameManager.Data.buildings[i].rotation;
             building.CompleteBuild(); // dont keep, but is used to complete for now
-            buildings.Add(building);
+            buildings.Add(building.id, building);
         }
 
         // Fill UI - probably combine?
@@ -83,13 +81,13 @@ public class BuildingManager : MonoBehaviour
     {
         if (isPlacing)
         {
-            Destroy(activeBuilding.gameObject);
+            Destroy(prospectiveBuilding.gameObject);
         }
         isPlacing = true;
 
         Building prefab = buildingPrefabs[index];
-        activeBuilding = Instantiate(prefab, Vector3.zero, prefab.transform.rotation, buildingParent);
-        activeBuilding.uiIndex = index; // sets type
+        prospectiveBuilding = Instantiate(prefab, Vector3.zero, prefab.transform.rotation, buildingParent);
+        prospectiveBuilding.uiIndex = index; // sets type
     }
     // placing a building
     private void SpawnBuilding(Building building, Vector3 position)
@@ -132,35 +130,20 @@ public class BuildingManager : MonoBehaviour
         {
             // ?
         }
-        buildings.Add(building);
+        buildings.Add(building.id, building);
         building.Place();
 
         onBuildingPlaced.Raise(this, building);
     }
     internal string UpgradeBuilding(int buildingID)
     {
-        Building building = GetBuilding(buildingID);
-        building.Upgrade();
-        return building.GetStatus();
+        return buildings[buildingID].Upgrade();
     }
     internal void DemolishBuilding(int buildingID)
     {
-        Building building = GetBuilding(buildingID);
         GameManager.RemoveBuilding(buildingID);
-        buildings.Remove(building);
-        building.Demolish();
-    }
-    // Lookup table would be faster
-    private Building GetBuilding(int buildingID)
-    {
-        foreach (Building building in buildings)
-        {
-            if(building.id == buildingID)
-            {
-                return building;
-            }
-        }
-        return null;
+        buildings[buildingID].Demolish();
+        buildings.Remove(buildingID);
     }
 
     // Handlers
@@ -173,25 +156,25 @@ public class BuildingManager : MonoBehaviour
             Physics.Raycast(CameraManager.Instance.Camera.ScreenPointToRay(Input.mousePosition),
                 out RaycastHit info, 300, LayerMask.GetMask("Terrain"));
 
-            activeBuilding.transform.position = info.point;
+            prospectiveBuilding.transform.position = info.point;
 
             // angle of incline check
             if(info.normal.y < .9f)
             {
-                activeBuilding.PlacementInvalid();
+                prospectiveBuilding.PlacementInvalid();
             }
             else
             {
-                activeBuilding.PlacementValid();
+                prospectiveBuilding.PlacementValid();
                 // check collision
-                if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject() && activeBuilding.isPlacementValid)
+                if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject() && prospectiveBuilding.isPlacementValid)
                 {
-                    SpawnBuilding(activeBuilding, info.point);
+                    SpawnBuilding(prospectiveBuilding, info.point);
                 }
                 if (Input.GetMouseButtonDown(1))
                 {
                     isPlacing = false;
-                    Destroy(activeBuilding.gameObject);
+                    Destroy(prospectiveBuilding.gameObject);
                     cancelBuilding.Invoke();
                 }
             }
@@ -201,7 +184,7 @@ public class BuildingManager : MonoBehaviour
     // Dev
     internal void BuildAll()
     {
-        foreach (Building building in buildings)
+        foreach (Building building in buildings.Values)
         {
             building.CompleteBuild();
         }

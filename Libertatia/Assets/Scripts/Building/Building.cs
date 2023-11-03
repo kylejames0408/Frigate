@@ -156,10 +156,11 @@ public class Building : MonoBehaviour
         navObsticle.enabled = true; // maybe cache? I am not sure why this is disabled when coming back to outpost
         FreeAssignees();
     }
-    public void Upgrade()
+    public string Upgrade()
     {
         // conditional
         level++;
+        return GetStatus();
     }
     public void Demolish()
     {
