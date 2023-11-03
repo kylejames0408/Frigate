@@ -115,6 +115,10 @@ public class ZoneManager : MonoBehaviour
                             enemy.charAgent.SetDestination(crewMember.transform.position);
                         }
 
+                        //if(enemy.isActiveAndEnabled)
+                        //{
+                        //    crewMember.charAgent.SetDestination(enemy.transform.position);
+                        //}
                     }
                 }
             }
