@@ -136,15 +136,18 @@ public class ZoneManager : MonoBehaviour
     /// </summary>
     public void Retreat()
     {
-        //Makes marker disappear when retreating to ship
-        GameObject marker = GameObject.FindGameObjectWithTag("Marker");
-        marker.SetActive(false);
-
-        for(int i = 0; i < crewMembers.Count; i++)
+        for (int i = 0; i < crewMembers.Count; i++)
         {
             CrewMember crewMember = crewMembers[i].GetComponent<CrewMember>();
 
             crewMember.charAgent.SetDestination(shipWaypoint.transform.position);
+        }
+
+        //Makes marker disappear when retreating to ship
+        GameObject marker = GameObject.FindGameObjectWithTag("Marker");
+        if(GameObject.FindGameObjectWithTag("Marker"))
+        {
+            marker.SetActive(false);
         }
     }
 }
