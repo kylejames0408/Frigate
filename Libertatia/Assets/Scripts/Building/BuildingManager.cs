@@ -87,19 +87,19 @@ public class BuildingManager : MonoBehaviour
 
         Building prefab = buildingPrefabs[index];
         prospectiveBuilding = Instantiate(prefab, Vector3.zero, prefab.transform.rotation, buildingParent);
-        prospectiveBuilding.uiIndex = index; // sets type
+        prospectiveBuilding.uiIndex = index; // stores type
     }
     // placing a building
-    private void SpawnBuilding(Building building, Vector3 position)
+    private void SpawnBuilding(Building prospectiveBuilding, Vector3 position)
     {
         isPlacing = false;
         placedBuilding.Invoke();
 
         // Check if there are enough resources - possible move
-        BuildingResources cost = building.Cost;
+        BuildingResources cost = prospectiveBuilding.Cost;
         if (GameManager.Data.resources.wood < cost.wood)
         {
-            Destroy(building.gameObject);
+            Destroy(prospectiveBuilding.gameObject);
             Debug.Log("Cannot build; Insufficient resources"); // UI
             return;
         }
@@ -108,32 +108,34 @@ public class BuildingManager : MonoBehaviour
         GameManager.data.resources.wood -= cost.wood;
         rui.UpdateWoodUI(GameManager.Data.resources.wood);
 
-        // Create Building
+        // Create Building data
         BuildingData data = new BuildingData();
-        data.id = building.id;
-        data.uiIndex = building.uiIndex;
-        data.level = building.level;
-        data.position = building.transform.position;
-        data.rotation = building.transform.rotation;
+        data.id = prospectiveBuilding.id;
+        data.uiIndex = prospectiveBuilding.uiIndex;
+        data.level = prospectiveBuilding.level;
+        data.position = prospectiveBuilding.transform.position;
+        data.rotation = prospectiveBuilding.transform.rotation;
         GameManager.AddBuilding(data);
-        if (building.uiIndex == 0)
+
+        // Building type
+        if (prospectiveBuilding.uiIndex == 0)
         {
-            GameManager.data.resources.foodProduction += building.resourceProduction.food;
+            GameManager.data.resources.foodProduction += prospectiveBuilding.resourceProduction.food;
             rui.UpdateFoodUI(GameManager.Data.resources);
         }
-        else if (building.uiIndex == 1)
+        else if (prospectiveBuilding.uiIndex == 1)
         {
             GameManager.data.outpostCrewCapacity += 8;
             rui.UpdateCrewCapacityUI(GameManager.Data.outpostCrewCapacity);
         }
-        else if (building.uiIndex == 2)
+        else if (prospectiveBuilding.uiIndex == 2)
         {
             // ?
         }
-        buildings.Add(building.id, building);
-        building.Place();
+        prospectiveBuilding.Place();
 
-        onBuildingPlaced.Raise(this, building);
+        buildings.Add(prospectiveBuilding.id, prospectiveBuilding);
+        onBuildingPlaced.Raise(this, prospectiveBuilding);
     }
     internal string UpgradeBuilding(int buildingID)
     {
@@ -141,6 +143,37 @@ public class BuildingManager : MonoBehaviour
     }
     internal void DemolishBuilding(int buildingID)
     {
+        Building building = buildings[buildingID];
+
+        // Add resources
+        BuildingResources cost = prospectiveBuilding.Cost;
+        if(building.IsComplete)
+        {
+            GameManager.data.resources.wood += (cost.wood/2);
+        }
+        else
+        {
+            GameManager.data.resources.wood += cost.wood;
+        }
+        rui.UpdateWoodUI(GameManager.Data.resources.wood);
+
+        // Building type
+        if (building.uiIndex == 0)
+        {
+
+            GameManager.data.resources.foodProduction -= building.resourceProduction.food;
+            rui.UpdateFoodUI(GameManager.Data.resources);
+        }
+        else if (building.uiIndex == 1)
+        {
+            GameManager.data.outpostCrewCapacity -= 8;
+            rui.UpdateCrewCapacityUI(GameManager.Data.outpostCrewCapacity);
+        }
+        else if (building.uiIndex == 2)
+        {
+            // ...?
+        }
+
         GameManager.RemoveBuilding(buildingID);
         buildings[buildingID].Demolish();
         buildings.Remove(buildingID);
