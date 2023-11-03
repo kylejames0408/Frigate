@@ -3873,7 +3873,6 @@ MonoBehaviour:
   - {fileID: 4471357269373654606, guid: 464be573e97f0c84a9d1788bb444d936, type: 3}
   - {fileID: 3209175704074374051, guid: 8dc54a48df5c6364abb610d16cad1c53, type: 3}
   - {fileID: 4471357269373654606, guid: 96f8b8e50d2808943afa86abb3c98f10, type: 3}
-  buildingParent: {fileID: 745434447}
   onBuildingPlaced: {fileID: 11400000, guid: 4ae36f9fe3f9160488e2f40b8ca0c348, type: 2}
   placedBuilding:
     m_PersistentCalls:
@@ -10304,6 +10303,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cm: {fileID: 314619652}
+  bm: {fileID: 745434448}
   popupUI: {fileID: 365225364}
   buildingResourceCost: {fileID: 1557529230}
   buildingAPCost: {fileID: 845936223}

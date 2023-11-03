@@ -33,12 +33,10 @@ public class BuildingManager : MonoBehaviour
 {
     // Building Data
     public Building[] buildingPrefabs;
-    public Transform buildingParent; // happens to be the object it is on
     // Components
     private OutpostManagementUI omui;
     private ResourcesUI rui;
     private bool isPlacing = false;
-    private int activeBuildingID;
     private Building prospectiveBuilding;
     // - Building Events
     [Header("Events")]
@@ -58,13 +56,14 @@ public class BuildingManager : MonoBehaviour
         buildings = new Dictionary<int, Building>(); //GameManager.Data.buildings.Count
         for (int i = 0; i < GameManager.Data.buildings.Count; i ++) // cache buildings list?
         {
-            Building building = Instantiate(buildingPrefabs[GameManager.Data.buildings[i].uiIndex], buildingParent);
-            building.id = GameManager.Data.buildings[i].id;
-            building.uiIndex = GameManager.Data.buildings[i].uiIndex;
-            building.level = GameManager.Data.buildings[i].level;
-            building.transform.position = GameManager.Data.buildings[i].position;
-            building.transform.rotation = GameManager.Data.buildings[i].rotation;
-            building.CompleteBuild(); // dont keep, but is used to complete for now
+            BuildingData data = GameManager.Data.buildings[i];
+            Building building = Instantiate(buildingPrefabs[data.uiIndex], transform);
+            building.id = data.id;
+            building.uiIndex = data.uiIndex;
+            building.level = data.level;
+            building.transform.position = data.position;
+            building.transform.rotation = data.rotation;
+            building.CompleteBuild(); // dont keep, but is used to complete for now, will be using AP
             buildings.Add(building.id, building);
         }
 
@@ -86,26 +85,17 @@ public class BuildingManager : MonoBehaviour
         isPlacing = true;
 
         Building prefab = buildingPrefabs[index];
-        prospectiveBuilding = Instantiate(prefab, Vector3.zero, prefab.transform.rotation, buildingParent);
+        prospectiveBuilding = Instantiate(prefab, Vector3.zero, prefab.transform.rotation, transform);
         prospectiveBuilding.uiIndex = index; // stores type
     }
     // placing a building
-    private void SpawnBuilding(Building prospectiveBuilding, Vector3 position)
+    private void SpawnBuilding(Building prospectiveBuilding)
     {
         isPlacing = false;
         placedBuilding.Invoke();
 
-        // Check if there are enough resources - possible move
-        BuildingResources cost = prospectiveBuilding.Cost;
-        if (GameManager.Data.resources.wood < cost.wood)
-        {
-            Destroy(prospectiveBuilding.gameObject);
-            Debug.Log("Cannot build; Insufficient resources"); // UI
-            return;
-        }
-
         // Subtract resources - move to Building or bring CanBuild in here
-        GameManager.data.resources.wood -= cost.wood;
+        GameManager.data.resources.wood -= prospectiveBuilding.Cost.wood;
         rui.UpdateWoodUI(GameManager.Data.resources.wood);
 
         // Create Building data
@@ -120,7 +110,7 @@ public class BuildingManager : MonoBehaviour
         // Building type
         if (prospectiveBuilding.uiIndex == 0)
         {
-            GameManager.data.resources.foodProduction += prospectiveBuilding.resourceProduction.food;
+            GameManager.data.resources.foodProduction += prospectiveBuilding.resourceProduction.food; // should probably use these buildingPrefabs[prospectiveBuilding.uiIndex], that would mean keeping the costs and production in the manager which might be better. This would just need the number of each type to update the UI
             rui.UpdateFoodUI(GameManager.Data.resources);
         }
         else if (prospectiveBuilding.uiIndex == 1)
@@ -202,7 +192,7 @@ public class BuildingManager : MonoBehaviour
                 // check collision
                 if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject() && prospectiveBuilding.isPlacementValid)
                 {
-                    SpawnBuilding(prospectiveBuilding, info.point);
+                    SpawnBuilding(prospectiveBuilding);
                 }
                 if (Input.GetMouseButtonDown(1))
                 {
@@ -212,6 +202,12 @@ public class BuildingManager : MonoBehaviour
                 }
             }
         }
+    }
+
+    // UI
+    internal bool CanConstructBuilding(int i)
+    {
+        return GameManager.Data.resources.wood >= buildingPrefabs[i].Cost.wood;
     }
 
     // Dev
@@ -230,4 +226,5 @@ public class BuildingManager : MonoBehaviour
         //GameManager.Instance.buildingAmount = buildings.Count;
         //GameManager.Instance.DataManager.Update(realtimeData);
     }
+
 }

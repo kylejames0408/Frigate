@@ -10,6 +10,7 @@ public class OutpostManagementUI : MonoBehaviour
 {
     // Components
     [SerializeField] private CrewmateManager cm;
+    [SerializeField] private BuildingManager bm;
     // popup UI - maybe separate
     [SerializeField] private GameObject popupUI;
     [SerializeField] private TextMeshProUGUI buildingResourceCost;
@@ -38,6 +39,7 @@ public class OutpostManagementUI : MonoBehaviour
     private void Awake()
     {
         if(cm == null) { cm = FindObjectOfType<CrewmateManager>(); }
+        if(bm == null) { bm = FindObjectOfType<BuildingManager>(); }
 
         pages = pagesUIParent.GetComponentsInChildren<Transform>();
         if(pages.Length > 1 )
@@ -65,6 +67,25 @@ public class OutpostManagementUI : MonoBehaviour
         SelectTab(0);
         // Sets arrow initial onclick callback
         arrow.onClick.AddListener(CloseMenu);
+    }
+    private void Update()
+    {
+        UpdateBuildingCardAvailability();
+    }
+
+    private void UpdateBuildingCardAvailability()
+    {
+        for (int i = 0; i < buildingCards.Count; i++)
+        {
+            if(bm.CanConstructBuilding(i))
+            {
+                buildingCards[i].GetComponent<Button>().interactable = true;
+            }
+            else
+            {
+                buildingCards[i].GetComponent<Button>().interactable = false;
+            }
+        }
     }
 
     // Select tab callback - changes tab interface and adds interface content
