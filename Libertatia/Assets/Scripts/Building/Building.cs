@@ -3,6 +3,7 @@ using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 // Move some individualstic data to scriptable objects, no need for prefabs atm
@@ -20,7 +21,7 @@ public class Building : MonoBehaviour
     public string output;
     public int uiIndex;
     public int level;
-    private BuildingState state = BuildingState.PLACING;
+    public BuildingState state = BuildingState.PLACING;
     // Identifiers
     public bool isHovered = false;
     public bool isPlacementValid = true;
@@ -39,7 +40,7 @@ public class Building : MonoBehaviour
     private Color normalEmission = Color.black;
     private Color hoveredEmission = new Color(0.3f, 0.3f, 0.3f);
     // Materials
-    [SerializeField] private Material builtMaterial;
+    [SerializeField] private Material matBuilt;
     // UI
     [SerializeField] private RectTransform canvasTrans;
     [SerializeField] private CanvasGroup canvasGroup;
@@ -51,9 +52,16 @@ public class Building : MonoBehaviour
     [SerializeField] private TextMeshProUGUI uiAP;
     [SerializeField] private Image uiAsign1;
     [SerializeField] private Image uiAsign2;
+    // Cache
+    private Sprite iconEmptyAsssignment;
 
     [Header("Events")]
-    public GameEvent onCrewmateAssigned;
+    public UnityEvent onCrewmateAssigned;
+    public UnityEvent onFirstAssignment;
+    public UnityEvent onConstructionCompleted;
+    public UnityEvent onSelection;
+    public UnityEvent onCollision;
+    public UnityEvent onNoCollisions;
 
     public string Name
     {
@@ -67,13 +75,17 @@ public class Building : MonoBehaviour
     {
         get { return radius; }
     }
-    public bool IsComplete
+    public bool IsBuilt
     {
-        get { return state == BuildingState.COMPLETE; }
+        get { return state == BuildingState.BUILT; }
     }
     public BuildingResources Cost
     {
         get { return resourceCost; }
+    }
+    public bool IsColliding
+    {
+        get { return numOfCollisions > 0; }
     }
 
     private void Awake()
@@ -114,28 +126,35 @@ public class Building : MonoBehaviour
         buildingRender.material = material;
     }
 
-    public void FillUI(Sprite stateIcon, Sprite assignmentIcon)
+    // UI
+    public void SetUI(Sprite stateIcon, Sprite emptyAssignmentIcon)
     {
-        uiLevel.text = "Lv. " + level;
+        iconEmptyAsssignment = emptyAssignmentIcon;
+        uiLevel.text = "Lv. " + level.ToString();
         uiName.text = buildingName;
         uiStatus.sprite = stateIcon;
         uiAP.text = resourceCost.ap.ToString();
-        uiAsign1.sprite = assignmentIcon;
-        uiAsign2.sprite = assignmentIcon;
+        uiAsign1.sprite = iconEmptyAsssignment;
+        uiAsign2.sprite = iconEmptyAsssignment;
+        uiAsign2.transform.parent.gameObject.SetActive(false);
+    }
+    private void SetLevelUI(int level)
+    {
+        uiLevel.text = "Lv. " + level.ToString();
+    }
+    public void SetStatusIcon(Sprite stateIcon)
+    {
+        uiStatus.sprite = stateIcon;
     }
 
-    public void Place()
-    {
-        navObsticle.enabled = true;
-        state = BuildingState.WAITING_FOR_ASSIGNMENT;
-    }
+    // Requests
     public bool CanAssign()
     {
-        if(state == BuildingState.WAITING_FOR_ASSIGNMENT)
+        if (state == BuildingState.WAITING_FOR_ASSIGNMENT)
         {
             return !assignee1;
         }
-        else if (state == BuildingState.COMPLETE)
+        else if (state == BuildingState.BUILT)
         {
             return !assignee1 || !assignee2;
         }
@@ -143,58 +162,6 @@ public class Building : MonoBehaviour
         {
             Debug.LogWarning("Building is not in a state to assign");
             return false;
-        }
-    }
-    public void AssignCrewmate(Crewmate assignee)
-    {
-        onCrewmateAssigned.Raise(this, assignee);
-        // Assign
-        if(assignee1 == null)
-        {
-            assignee1 = assignee;
-        }
-        else if(assignee2 == null)
-        {
-            assignee2 = assignee;
-        }
-        assignee.GiveJob(this);
-        // Update building state
-        if(state == BuildingState.WAITING_FOR_ASSIGNMENT)
-        {
-            //buildingRender.material = components.buildingMaterial;
-            state = BuildingState.BUILDING;
-        }
-    }
-    public void CompleteBuild()
-    {
-        state = BuildingState.COMPLETE;
-        buildingRender.material = builtMaterial;
-        level = 1;
-        navObsticle.enabled = true; // maybe cache? I am not sure why this is disabled when coming back to outpost
-        FreeAssignees();
-    }
-    public string Upgrade()
-    {
-        // conditional
-        level++;
-        return GetStatus();
-    }
-    public void Demolish()
-    {
-        FreeAssignees();
-        Destroy(gameObject);
-    }
-    private void FreeAssignees()
-    {
-        if (assignee1 != null)
-        {
-            assignee1.Free();
-            assignee1 = null;
-        }
-        if (assignee2 != null)
-        {
-            assignee2.Free();
-            assignee2 = null;
         }
     }
     public string GetStatus()
@@ -208,46 +175,87 @@ public class Building : MonoBehaviour
             case BuildingState.WAITING_FOR_ASSIGNMENT:
                 value = "Needs assignment";
                 break;
-            case BuildingState.BUILDING:
+            case BuildingState.CONSTRUCTING:
                 value = "Building";
                 break;
-            case BuildingState.COMPLETE:
+            case BuildingState.BUILT:
                 value = "Level " + level.ToString();
                 break;
         }
         return value;
     }
-    public void PlacementValid()
-    {
-        if (isPlacementValid || numOfCollisions > 0) return;
 
-        switch (state)
+    // Actions
+    public void Place()
+    {
+        navObsticle.enabled = true;
+        state = BuildingState.WAITING_FOR_ASSIGNMENT;
+    }
+    public void AssignCrewmate(Crewmate assignee)
+    {
+        // Assign
+        if(assignee1 == null)
         {
-            case BuildingState.PLACING:
-                break;
-            case BuildingState.WAITING_FOR_ASSIGNMENT:
-                break;
-            case BuildingState.BUILDING:
-                break;
-            case BuildingState.COMPLETE:
-                buildingRender.material = new Material(builtMaterial);
-                break;
+            assignee1 = assignee;
+            uiAsign1.sprite = assignee.Icon;
         }
-        isPlacementValid = true;
+        else if(assignee2 == null)
+        {
+            assignee2 = assignee;
+            uiAsign2.sprite = assignee.Icon;
+        }
+        assignee.GiveJob(this);
+
+        // Update building state
+        if(state == BuildingState.WAITING_FOR_ASSIGNMENT)
+        {
+            onFirstAssignment.Invoke();
+            state = BuildingState.CONSTRUCTING;
+        }
+        onCrewmateAssigned.Invoke();
     }
-    public void PlacementInvalid()
+    public void CompleteConstruction()
     {
-        if (!isPlacementValid) return;
-
-        isPlacementValid = false;
+        state = BuildingState.BUILT;
+        buildingRender.material = matBuilt;
+        Upgrade();
+        navObsticle.enabled = true; // maybe cache? I am not sure why this is disabled when coming back to outpost
+        uiAsign2.transform.parent.gameObject.SetActive(true);
+        FreeAssignees();
+        onConstructionCompleted.Invoke();
+    }
+    public void Upgrade()
+    {
+        level++;
+        SetLevelUI(level);
+    }
+    public void Demolish()
+    {
+        FreeAssignees();
+        Destroy(gameObject);
+    }
+    private void FreeAssignees()
+    {
+        if (assignee1 != null)
+        {
+            assignee1.Free();
+            assignee1 = null;
+            uiAsign1.sprite = iconEmptyAsssignment;
+        }
+        if (assignee2 != null)
+        {
+            assignee2.Free();
+            assignee2 = null;
+            uiAsign1.sprite = iconEmptyAsssignment;
+        }
     }
 
-    // Handle
+    // Handlers
     private void HandleSelection()
     {
         if (Input.GetMouseButtonDown(0) && state != BuildingState.PLACING)
         {
-            BuildingUI.Instance.FillUI(this);
+            onSelection.Invoke();
         }
     }
     private void HandleAssignment()
@@ -258,7 +266,6 @@ public class Building : MonoBehaviour
             if (CanAssign())
             {
                 AssignCrewmate(mate);
-                BuildingUI.Instance.FillUI(this);
             }
             else
             {
@@ -273,16 +280,16 @@ public class Building : MonoBehaviour
         if (state != BuildingState.PLACING)
         {
             buildingRender.material.SetColor("_EmissionColor", hoveredEmission);
+            canvasGroup.DOFade(1.0f, animTimeInterface);
         }
-        canvasGroup.DOFade(1.0f, animTimeInterface);
     }
     private void OnMouseExit()
     {
         if (buildingRender && isHovered)
         {
             buildingRender.material.SetColor("_EmissionColor", normalEmission);
+            canvasGroup.DOFade(0.0f, animTimeInterface);
         }
-        canvasGroup.DOFade(0.0f, animTimeInterface);
         isHovered = false;
     }
     private void OnDrawGizmosSelected()
@@ -296,7 +303,7 @@ public class Building : MonoBehaviour
         {
             if(numOfCollisions == 0)
             {
-                PlacementInvalid();
+                onCollision.Invoke(); // maybe give building the collision mat, but then placement angle logic would be separate
             }
 
             numOfCollisions++;
@@ -310,7 +317,14 @@ public class Building : MonoBehaviour
 
             if (numOfCollisions == 0)
             {
-                PlacementValid();
+                if(state == BuildingState.BUILT)
+                {
+                    buildingRender.material = matBuilt;
+                }
+                else
+                {
+                    onNoCollisions.Invoke();
+                }
             }
         }
     }

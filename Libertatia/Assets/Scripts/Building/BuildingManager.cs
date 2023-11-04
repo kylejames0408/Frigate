@@ -8,8 +8,8 @@ public enum BuildingState
 {
     PLACING,
     WAITING_FOR_ASSIGNMENT,
-    BUILDING,
-    COMPLETE,
+    CONSTRUCTING,
+    BUILT,
     COUNT
 }
 
@@ -40,37 +40,21 @@ public struct BuildingResources
 
 public class BuildingManager : MonoBehaviour
 {
-    [Header("Building Data")]
-    // Placing
-    [SerializeField] private Material matPlacing;
-    // Colliding
-    [SerializeField] private Material matColliding;
-    // Recruiting
-    [SerializeField] private Sprite iconRecruiting;
-    [SerializeField] private Material matRecruiting;
-    // Constructing
-    [SerializeField] private Sprite iconConstructing;
-    [SerializeField] private Material matConstructing;
-    [SerializeField] private ParticleSystem particleConstructing;
-    // Built
-    [SerializeField] private Sprite iconBuilt;
-    [SerializeField] private ParticleSystem particleBuilt;
-    // Buildings
+    [Header("Building State Data")]
+    [SerializeField] private BuildingStateData stateData;
+    [Header("Building Types")]
     [SerializeField] private Building[] buildingPrefabs;
     [Header("Components")]
     [SerializeField] private OutpostManagementUI omui;
     [SerializeField] private ResourcesUI rui;
+    [SerializeField] private BuildingUI buildingUI;
     [Header("Tracking")]
     [SerializeField] private bool isPlacing = false;
     [SerializeField] private Building prospectiveBuilding;
-    // - Building Events
-    [Header("Events")]
-    public GameEvent onBuildingPlaced;
-    public UnityEvent placedBuilding;
-    public UnityEvent cancelBuilding;
     // Tracking
     [SerializeField] private Dictionary<int, Building> buildings;
     [SerializeField] private BuildingResources totalProduction;
+
 
     private void Start()
     {
@@ -88,7 +72,7 @@ public class BuildingManager : MonoBehaviour
             building.level = data.level;
             building.transform.position = data.position;
             building.transform.rotation = data.rotation;
-            building.CompleteBuild(); // dont keep, but is used to complete for now, will be using AP
+            building.CompleteConstruction(); // dont keep, but is used to complete for now, will be using AP
             buildings.Add(building.id, building);
         }
 
@@ -119,11 +103,12 @@ public class BuildingManager : MonoBehaviour
         Building prefab = buildingPrefabs[buildingIndex];
         prospectiveBuilding = Instantiate(prefab, Vector3.zero, prefab.transform.rotation, transform);
         prospectiveBuilding.uiIndex = buildingIndex; // stores type
+        prospectiveBuilding.SetMaterial(stateData.matPlacing);
     }
     private void SpawnBuilding(Building prospectiveBuilding)
     {
         isPlacing = false;
-        placedBuilding.Invoke();
+        omui.DeselectBuildingCard(prospectiveBuilding.uiIndex);
 
         // Subtract resources - move to Building or bring CanBuild in here
         GameManager.data.resources.wood -= prospectiveBuilding.Cost.wood;
@@ -138,6 +123,7 @@ public class BuildingManager : MonoBehaviour
         data.rotation = prospectiveBuilding.transform.rotation;
         GameManager.AddBuilding(data);
 
+        // TODO: turn into switch statement
         // Building type
         if (prospectiveBuilding.uiIndex == 0)
         {
@@ -153,22 +139,32 @@ public class BuildingManager : MonoBehaviour
         {
             // ?
         }
+        // TODO: Compile functions into one if possible
         prospectiveBuilding.Place();
+        prospectiveBuilding.SetMaterial(stateData.matRecruiting);
+        prospectiveBuilding.SetUI(stateData.iconRecruiting, stateData.iconEmptyAsssignment);
+        prospectiveBuilding.onFirstAssignment.AddListener(() => { OnFirstAssignmentCallback(prospectiveBuilding.id); });
+        prospectiveBuilding.onCrewmateAssigned.AddListener(() => { OnCrewmateAssignedCallback(prospectiveBuilding.id); });
+        prospectiveBuilding.onConstructionCompleted.AddListener(() => { OnConstructionCompletedCallback(prospectiveBuilding.id); });
+        prospectiveBuilding.onSelection.AddListener(() => { OnSelectionCallback(prospectiveBuilding.id); });
+        prospectiveBuilding.onCollision.AddListener(() => { OnCollisionCallback(prospectiveBuilding.id); });
+        prospectiveBuilding.onNoCollisions.AddListener(() => { OnNoCollisionsCallback(prospectiveBuilding.id); });
 
         buildings.Add(prospectiveBuilding.id, prospectiveBuilding);
-        onBuildingPlaced.Raise(this, prospectiveBuilding);
     }
-    internal string UpgradeBuilding(int buildingID)
+
+    internal void UpgradeBuilding(int buildingID)
     {
-        return buildings[buildingID].Upgrade();
+        buildings[buildingID].Upgrade();
+        buildingUI.SetStatusUI(buildings[buildingID].GetStatus());
     }
     internal void DemolishBuilding(int buildingID)
     {
         Building building = buildings[buildingID];
 
         // Add resources
-        BuildingResources cost = prospectiveBuilding.Cost;
-        if(building.IsComplete)
+        BuildingResources cost = prospectiveBuilding.Cost; // change to reference rules (prefabs)
+        if(building.IsBuilt)
         {
             GameManager.data.resources.wood += (cost.wood/2);
         }
@@ -200,6 +196,55 @@ public class BuildingManager : MonoBehaviour
         buildings.Remove(buildingID);
     }
 
+    // Callbacks
+    private void OnFirstAssignmentCallback(int buildingID)
+    {
+        Building building = buildings[buildingID];
+        building.SetMaterial(stateData.matConstructing);
+        building.SetStatusIcon(stateData.iconConstructing);
+        building.onFirstAssignment.RemoveAllListeners();
+    }
+    private void OnCrewmateAssignedCallback(int buildingID)
+    {
+        Building building = buildings[buildingID];
+        buildingUI.FillUI(building);
+        buildingUI.OpenMenu();
+    }
+    private void OnConstructionCompletedCallback(int buildingID)
+    {
+        Building building = buildings[buildingID];
+        building.SetStatusIcon(stateData.iconBuilt);
+    }
+    private void OnSelectionCallback(int buildingID)
+    {
+        Building building = buildings[buildingID];
+        buildingUI.FillUI(building);
+        buildingUI.OpenMenu();
+    }
+    private void OnCollisionCallback(int buildingID)
+    {
+        Building building = buildings[buildingID];
+        building.SetMaterial(stateData.matColliding);
+    }
+    private void OnNoCollisionsCallback(int buildingID)
+    {
+        Building building = buildings[buildingID];
+        Material buildingMaterial = null;
+        switch (building.state)
+        {
+            case BuildingState.PLACING:
+                buildingMaterial = stateData.matPlacing;
+                break;
+            case BuildingState.WAITING_FOR_ASSIGNMENT:
+                buildingMaterial = stateData.matRecruiting;
+                break;
+            case BuildingState.CONSTRUCTING:
+                buildingMaterial = stateData.matConstructing;
+                break;
+        }
+        building.SetMaterial(buildingMaterial);
+    }
+
     // Handlers
     private void HandlePlacing()
     {
@@ -215,11 +260,19 @@ public class BuildingManager : MonoBehaviour
             // angle of incline check
             if(info.normal.y < .9f)
             {
-                prospectiveBuilding.PlacementInvalid();
+                prospectiveBuilding.SetMaterial(stateData.matColliding);
             }
             else
             {
-                prospectiveBuilding.PlacementValid();
+                if(prospectiveBuilding.IsColliding)
+                {
+                    prospectiveBuilding.SetMaterial(stateData.matColliding);
+                }
+                else
+                {
+                    prospectiveBuilding.SetMaterial(stateData.matPlacing);
+                }
+
                 // check collision
                 if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject() && prospectiveBuilding.isPlacementValid)
                 {
@@ -228,8 +281,8 @@ public class BuildingManager : MonoBehaviour
                 if (Input.GetMouseButtonDown(1))
                 {
                     isPlacing = false;
+                    omui.DeselectBuildingCard(prospectiveBuilding.uiIndex);
                     Destroy(prospectiveBuilding.gameObject);
-                    cancelBuilding.Invoke();
                 }
             }
         }
@@ -246,7 +299,7 @@ public class BuildingManager : MonoBehaviour
     {
         foreach (Building building in buildings.Values)
         {
-            building.CompleteBuild();
+            building.CompleteConstruction();
         }
     }
 }

@@ -1,12 +1,11 @@
 using DG.Tweening;
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class BuildingUI : MonoBehaviour
 {
-    private static BuildingUI instance;
-
     [Header("Components")]
     [SerializeField] private BuildingManager bm;
 
@@ -15,39 +14,30 @@ public class BuildingUI : MonoBehaviour
     [SerializeField] private Sprite iconEmptyAssignment;
 
     [Header("Interface")] // Building information objects
-    [SerializeField] private Transform uiIcon;
-    [SerializeField] private Transform uiName;
-    [SerializeField] private Transform uiLevel;
-    [SerializeField] private Transform uiOutpost;
-    [SerializeField] private Transform uiAsign1;
-    [SerializeField] private Transform uiAsign2;
+    [SerializeField] private Image uiIcon;
+    [SerializeField] private TextMeshProUGUI uiName;
+    [SerializeField] private TextMeshProUGUI uiStatus;
+    [SerializeField] private TextMeshProUGUI uiProduction;
+    [SerializeField] private Image uiAsign1;
+    [SerializeField] private Image uiAsign2;
 
     [Header("Buttons")]
-    [SerializeField] private Button btnClose;
     [SerializeField] private Button btnUpgrade;
     [SerializeField] private Button btnDemolish;
-    
+    [SerializeField] private Button btnClose;
+
     [Header("Tracking")] // Dynamic/tracking information
     [SerializeField] private int activeBuildingID;
-    [SerializeField] private RectTransform bounds;
-
-    public static BuildingUI Instance
-    {
-        get { return instance; }
-    }
+    private RectTransform bounds;
 
     private void Awake()
     {
-        if(instance == null)
-        {
-            instance = this;
-        }
-
+        // Get component
         if(bm == null) { bm = FindObjectOfType<BuildingManager>(); }
-
-
         bounds = GetComponent<RectTransform>();
-        uiAsign2.gameObject.SetActive(false);
+
+
+        uiAsign2.transform.parent.gameObject.SetActive(false);
     }
     private void Start()
     {
@@ -65,37 +55,37 @@ public class BuildingUI : MonoBehaviour
         HandleClicking();
     }
 
-    public void FillUI(Building building)
+    internal void FillUI(Building building)
     {
-        uiIcon.GetComponent<Image>().sprite = building.Icon;
-        uiName.GetComponent<TextMeshProUGUI>().text = building.Name;
-        uiLevel.GetComponent<TextMeshProUGUI>().text = building.GetStatus();
-        uiOutpost.GetComponent<TextMeshProUGUI>().text = building.resourceProduction.ToString(); // not sure what output is yet
+        uiIcon.sprite = building.Icon;
+        uiName.text = building.Name;
+        uiStatus.text = building.GetStatus();
+        uiProduction.text = building.resourceProduction.ToString();
 
         if (building.assignee1 != null)
         {
-            uiAsign1.GetComponent<Image>().sprite = building.assignee1.Icon;
+            uiAsign1.sprite = building.assignee1.Icon;
         }
         else
         {
-            uiAsign1.GetComponent<Image>().sprite = iconEmptyAssignment;
+            uiAsign1.sprite = iconEmptyAssignment;
         }
 
-        if (building.IsComplete)
+        if (building.IsBuilt)
         {
-            uiAsign2.gameObject.SetActive(true);
+            uiAsign2.transform.parent.gameObject.SetActive(true);
             if (building.assignee2 != null)
             {
-                uiAsign2.GetComponent<Image>().sprite = building.assignee2.Icon;
+                uiAsign2.sprite = building.assignee2.Icon;
             }
             else
             {
-                uiAsign2.GetComponent<Image>().sprite = iconEmptyAssignment;
+                uiAsign2.sprite = iconEmptyAssignment;
             }
         }
         else
         {
-            uiAsign2.gameObject.SetActive(false);
+            uiAsign2.transform.parent.gameObject.SetActive(false);
         }
 
         if (!GameManager.Data.isTutorial)
@@ -105,7 +95,10 @@ public class BuildingUI : MonoBehaviour
         }
 
         activeBuildingID = building.id;
-        OpenMenu();
+    }
+    internal void SetStatusUI(string status)
+    {
+        uiStatus.text = status;
     }
 
     // Handlers
@@ -121,10 +114,10 @@ public class BuildingUI : MonoBehaviour
         }
     }
 
-    // Callbacks
+    // Callbacks - probably get dir
     private void UpgradeCallback()
     {
-        uiLevel.GetComponent<TextMeshProUGUI>().text = bm.UpgradeBuilding(activeBuildingID);
+        bm.UpgradeBuilding(activeBuildingID);
     }
     private void DemolishCallback()
     {
@@ -139,11 +132,11 @@ public class BuildingUI : MonoBehaviour
     }
 
     // Open/close
-    public void OpenMenu()
+    internal void OpenMenu()
     {
         transform.DOMoveX(680, animSpeedInterface);
     }
-    public void CloseMenu()
+    internal void CloseMenu()
     {
         transform.DOMoveX(0, animSpeedInterface); // cant get height in start
     }

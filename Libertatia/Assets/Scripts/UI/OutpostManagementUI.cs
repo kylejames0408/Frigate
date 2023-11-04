@@ -73,6 +73,7 @@ public class OutpostManagementUI : MonoBehaviour
         UpdateBuildingCardAvailability();
     }
 
+    // this should probably be in building manager
     private void UpdateBuildingCardAvailability()
     {
         for (int i = 0; i < buildingCards.Count; i++)
@@ -146,8 +147,6 @@ public class OutpostManagementUI : MonoBehaviour
         }
         buildingCards[cardIndex].GetComponent<Outline>().enabled = true;
         bm.SelectBuilding(cardIndex);
-        bm.placedBuilding.AddListener(() => { DeselectBuildingCard(cardIndex); }); // might be able to merge these 2
-        bm.cancelBuilding.AddListener(() => { DeselectBuildingCard(cardIndex); });
     }
     public void DeselectBuildingCard(int cardIndex)
     {
@@ -253,7 +252,7 @@ public class OutpostManagementUI : MonoBehaviour
     private void OpenMenu()
     {
         isOpen = true;
-        transform.DOMoveY(0, animTimeInterface);
+        transform.DOMoveY(transform.position.y + pagesUIParent.GetComponent<RectTransform>().rect.height, animTimeInterface);
         arrow.onClick.RemoveListener(OpenMenu);
         arrow.onClick.AddListener(CloseMenu);
         arrow.transform.GetChild(0).DORotate(new Vector3(0, 0, 180), animTimeArrow);
@@ -261,7 +260,7 @@ public class OutpostManagementUI : MonoBehaviour
     private void CloseMenu()
     {
         isOpen = false;
-        transform.DOMoveY(-pagesUIParent.GetComponent<RectTransform>().rect.height, animTimeInterface); // cant get height in start
+        transform.DOMoveY(transform.position.y-pagesUIParent.GetComponent<RectTransform>().rect.height, animTimeInterface); // cant get height in start
         arrow.onClick.RemoveListener(CloseMenu);
         arrow.onClick.AddListener(OpenMenu);
         arrow.transform.GetChild(0).DORotate(new Vector3(0, 0, 0), animTimeArrow);
