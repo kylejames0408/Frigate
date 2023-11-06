@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 2353038611025480390}
   - component: {fileID: 6104175053441427354}
   - component: {fileID: 4669761647284875432}
-  - component: {fileID: 7109290081642923527}
   m_Layer: 0
   m_Name: Resource Gained Text
   m_TagString: Untagged
@@ -196,19 +195,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &7109290081642923527
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4911534816955112870}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 87fbe2e164ea9a54892c36960f32a1bf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  textHeight: 0.5
 --- !u!1 &8633550456291223390
 GameObject:
   m_ObjectHideFlags: 0
@@ -218,6 +204,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4787686031372483087}
+  - component: {fileID: 9180392191402480434}
   m_Layer: 0
   m_Name: WoodResourceText
   m_TagString: Untagged
@@ -241,6 +228,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &9180392191402480434
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8633550456291223390}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87fbe2e164ea9a54892c36960f32a1bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textHeight: 0.5
 --- !u!1 &9136178519993670479
 GameObject:
   m_ObjectHideFlags: 0

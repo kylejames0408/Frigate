@@ -14,7 +14,7 @@ public class ZoneManager : MonoBehaviour
 
     public GameObject shipWaypoint;
 
-    public ResourcesUI resourceUI;
+    //public ResourcesUI resourceUI;
 
     public GameObject combatUI;
 
@@ -50,7 +50,9 @@ public class ZoneManager : MonoBehaviour
             //Decreases crewmate number by 1 if they died
             if(crewMember.currentHealth <= 0)
             {
-                resourceUI.UpdateCrewAmountUI(crewMembers.Count - 1);
+                //resourceUI.UpdateCrewAmountUI(crewMembers.Count - 1);
+                CombatResourcesUI combatResourcesUI = combatUI.GetComponent<CombatResourcesUI>();
+                combatResourcesUI.UpdateCrewAmountUI(crewMembers.Count - 1);
             }
         }
 
@@ -121,6 +123,10 @@ public class ZoneManager : MonoBehaviour
                             enemy.charAgent.SetDestination(crewMember.transform.position);
                         }
 
+                        //if(enemy.isActiveAndEnabled)
+                        //{
+                        //    crewMember.charAgent.SetDestination(enemy.transform.position);
+                        //}
                     }
                 }
             }
@@ -144,11 +150,18 @@ public class ZoneManager : MonoBehaviour
     /// </summary>
     public void Retreat()
     {
-        for(int i = 0; i < crewMembers.Count; i++)
+        for (int i = 0; i < crewMembers.Count; i++)
         {
             CrewMember crewMember = crewMembers[i].GetComponent<CrewMember>();
 
             crewMember.charAgent.SetDestination(shipWaypoint.transform.position);
+        }
+
+        //Makes marker disappear when retreating to ship
+        GameObject marker = GameObject.FindGameObjectWithTag("Marker");
+        if(GameObject.FindGameObjectWithTag("Marker"))
+        {
+            marker.SetActive(false);
         }
     }
 }

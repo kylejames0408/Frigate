@@ -13,6 +13,7 @@ public class Ship : MonoBehaviour
     private bool inRange;
 
     public GameObject combatUI;
+    [SerializeField] private GameObject battleLootUI;
 
     // Start is called before the first frame update
     void Start()
@@ -59,7 +60,10 @@ public class Ship : MonoBehaviour
                 GameManager.data.resources.wood += combatResources.woodAmount;
                 GameManager.data.resources.doubloons += combatResources.doubloonAmount;
                 GameManager.data.resources.food += combatResources.foodAmount;
-                CeneManager.LoadOutpostFromCombat();
+
+                //Opens the battle loot ui
+                battleLootUI.SetActive(true);
+                //CeneManager.LoadOutpostFromCombat();
             }
         }
 
