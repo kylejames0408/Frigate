@@ -6903,7 +6903,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 666108730}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -1.5, z: 6.89}
+  m_LocalPosition: {x: 0, y: 0, z: 6.89}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -22998,7 +22998,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   crewmatePrefab: {fileID: 3693295309995061255, guid: b66c8fd58b8a19240bd7e5b965291055, type: 3}
   crewmateSpawn: {fileID: 666108731}
-  crewmateSpawnRadius: 5
+  crewmateSpawnRadius: 6
   crewmates: []
   unitsSelected: []
 --- !u!4 &2009515020
