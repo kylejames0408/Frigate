@@ -60,7 +60,7 @@ public class CrewmateManager : MonoBehaviour
             {
                 CrewmateData data = GameManager.Data.crewmates[i];
                 //GameObject crewmateObj = Instantiate(crewmatePrefab, transform);
-                Vector3 position = new Vector3(-5 - 5, 0) + new Vector3(Random.Range(-1.0f, 1.0f) * 5, -5, Random.Range(-1.0f, 1.0f) * 5);
+                Vector3 position = new Vector3(-5 , 5, 0) + new Vector3(Random.Range(-1.0f, 1.0f) * 5, -5, Random.Range(-1.0f, 1.0f) * 5);
                 //Debug.Log(position); // this actually makes no sense
                 GameObject crewmateObj = Instantiate(crewmatePrefab, position, Quaternion.identity);
 
