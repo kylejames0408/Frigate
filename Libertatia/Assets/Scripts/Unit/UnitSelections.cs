@@ -6,6 +6,9 @@ using UnityEngine.SceneManagement;
 
 public class UnitSelections : MonoBehaviour
 {
+    // Components
+    [SerializeField] private CrewmateManager cm;
+
     public List<GameObject> unitList = new List<GameObject>();
     public List<GameObject> unitsSelected = new List<GameObject>();
 
@@ -30,6 +33,8 @@ public class UnitSelections : MonoBehaviour
 
     private void Start()
     {
+        if (cm == null) { cm = FindObjectOfType<CrewmateManager>(); }
+
         eventTriggered = false;
 
         sceneName = SceneManager.GetActiveScene().name;

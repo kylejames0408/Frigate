@@ -25,6 +25,14 @@ public class ZoneManager : MonoBehaviour
         enemyHouses = GameObject.FindGameObjectsWithTag("EnemyHouse").ToList<GameObject>();
         combatUI = GameObject.FindGameObjectWithTag("CombatUI");
         zones = Terrain.activeTerrains.ToList();
+        for(int i = 0; i < zones.Count; i++)
+        {
+            if (zones[i].tag != "Zone")
+            {
+                zones.RemoveAt(i);
+                i--;
+            }
+        }
     }
 
     // Update is called once per frame

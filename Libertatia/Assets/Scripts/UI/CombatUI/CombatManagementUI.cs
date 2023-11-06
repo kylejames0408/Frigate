@@ -1,4 +1,5 @@
 ﻿using DG.Tweening;
+using EasyDragAndDrop.Core;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -9,8 +10,8 @@ public class CombatManagementUI : MonoBehaviour
     // Components
     [SerializeField] private CrewmateManager cm;
     // Animation related
-    [SerializeField] private float arrowAnimTime = 0.5f;
-    [SerializeField] private float interfaceAnimTime = 0.6f;
+    [SerializeField] private float animTimeArrow = 0.5f;
+    [SerializeField] private float animTimeInterface = 0.6f;
     // Prefabs
     [SerializeField] private GameObject crewmateCardPrefab;
     // Interface object references
@@ -49,6 +50,8 @@ public class CombatManagementUI : MonoBehaviour
             int index = i; // needs to be destroyed after setting listener
             tabs[i].GetComponent<Button>().onClick.AddListener(() => { SelectTab(index); });
         }
+        // Init building UI as start tab
+        SelectTab(0);
         // Sets arrow initial onclick callback
         arrow.onClick.AddListener(CloseMenu);
     }
@@ -85,39 +88,43 @@ public class CombatManagementUI : MonoBehaviour
         card.GetComponent<Button>().onClick.AddListener(() => { SelectCrewmateCard(index); }); // drag + drop func
         card.GetComponentsInChildren<Image>()[1].sprite = mate.Icon;
         card.GetComponentInChildren<TextMeshProUGUI>().text = mate.Name;
+
+        card.GetComponent<DragObj2D>().onBeginDrag.AddListener(delegate { SelectCrewmateCard(index); });
+        //card.GetComponent<DragObj2D>().onEndDrag.AddListener(delegate { bm.OnCrewmateDropAssign(); });    // set the zone assign method on drop
+        card.GetComponent<DragObj2D>().onEndDrag.AddListener(delegate { DeselectCrewmateCard(index); });
     }
 
-    public void SelectCrewmateCard(int index)
+    public void SelectCrewmateCard(int cardIndex)
     {
         foreach (GameObject card in crewmateCards)
         {
             card.GetComponent<Outline>().enabled = false;
         }
-        crewmateCards[index].GetComponent<Outline>().enabled = true;
-        Crewmate crewmate = cm.SelectCrewmate(index);
-        crewmate.onAssign.AddListener(() => { DeselectCrewmateCard(index); });
+        crewmateCards[cardIndex].GetComponent<Outline>().enabled = true;
+        Crewmate crewmate = cm.SelectCrewmate(cardIndex);
+        crewmate.onAssign.AddListener(() => { DeselectCrewmateCard(cardIndex); });
     }
-    public void DeselectCrewmateCard(int index)
+    public void DeselectCrewmateCard(int cardIndex)
     {
-        crewmateCards[index].GetComponent<Outline>().enabled = false;
+        crewmateCards[cardIndex].GetComponent<Outline>().enabled = false;
     }
 
     // Minimizes menu
     private void OpenMenu()
     {
         isOpen = true;
-        transform.DOMoveY(0, interfaceAnimTime);
+        transform.DOMoveY(0, animTimeInterface);
         arrow.onClick.RemoveListener(OpenMenu);
         arrow.onClick.AddListener(CloseMenu);
-        arrow.transform.GetChild(0).DORotate(new Vector3(0, 0, 180), arrowAnimTime);
+        arrow.transform.GetChild(0).DORotate(new Vector3(0, 0, 180), animTimeArrow);
     }
     // Minimizes menu
     private void CloseMenu()
     {
         isOpen = false;
-        transform.DOMoveY(-pagesUIParent.GetComponent<RectTransform>().rect.height, interfaceAnimTime); // cant get height in start
+        transform.DOMoveY(-pagesUIParent.GetComponent<RectTransform>().rect.height, animTimeInterface); // cant get height in start
         arrow.onClick.RemoveListener(CloseMenu);
         arrow.onClick.AddListener(OpenMenu);
-        arrow.transform.GetChild(0).DORotate(new Vector3(0, 0, 0), arrowAnimTime);
+        arrow.transform.GetChild(0).DORotate(new Vector3(0, 0, 0), animTimeArrow);
     }
 }
