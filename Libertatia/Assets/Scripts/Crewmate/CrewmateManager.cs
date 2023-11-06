@@ -8,9 +8,11 @@ public class CrewmateManager : MonoBehaviour
 {
     private static CrewmateManager instance;
     // Components
-    private OutpostManagementUI omui;
-    private CombatManagementUI cmui;
-    private ResourcesUI rui;
+    [SerializeField] private OutpostManagementUI omui;
+    [SerializeField] private CombatManagementUI cmui;
+    [SerializeField] private ResourcesUI rui;
+    [SerializeField] private CrewmateUI crewmateUI;
+
     // Crewmate Data
     [SerializeField] private GameObject crewmatePrefab;
     [SerializeField] private Transform crewmateSpawn;
@@ -307,9 +309,16 @@ public class CrewmateManager : MonoBehaviour
         }
     }
 
-    internal Crewmate GetCrewmate(int id)
+    internal Crewmate GetCrewmate(int crewmateID)
     {
-        return crewmates[id];
+        return crewmates[crewmateID];
+    }
+
+    private void OnSelectionCallback(int crewmateID)
+    {
+        Crewmate mate = crewmates[crewmateID];
+        crewmateUI.FillUI(mate);
+        crewmateUI.OpenMenu();
     }
 
     // Crewmate interactions
@@ -352,13 +361,13 @@ public class CrewmateManager : MonoBehaviour
         GameManager.data.resources.foodConsumption += 10; // crewmate food consumption
         rui.UpdateFoodUI(GameManager.Data.resources);
     }
-    internal void RemoveCrewmate(int id)
+    internal void RemoveCrewmate(int crewmateID)
     {
-        DeselectCrewmateShare(id);
-        GameManager.RemoveCrewmateData(id);
-        crewmates.Remove(id);
+        DeselectCrewmateShare(crewmateID);
+        GameManager.RemoveCrewmateData(crewmateID);
+        crewmates.Remove(crewmateID);
 
-        int cardIndex = crewmates[id].cardIndex;
+        int cardIndex = crewmates[crewmateID].cardIndex;
         if (omui == null)
         {
             cmui.RemoveCrewmateCard(cardIndex);
@@ -369,10 +378,10 @@ public class CrewmateManager : MonoBehaviour
         }
     }
     // Select the crewmate and update UI (share)
-    private void ClickCrewmate(int id) // share
+    private void ClickCrewmate(int crewmateID) // share
     {
-        SelectCrewmate(id);
-        int cardIndex = crewmates[id].cardIndex;
+        SelectCrewmate(crewmateID);
+        int cardIndex = crewmates[crewmateID].cardIndex;
         if (omui == null)
         {
             cmui.SelectCrewmateCard(cardIndex);
@@ -382,20 +391,20 @@ public class CrewmateManager : MonoBehaviour
             omui.SelectCrewmateCard(cardIndex);
         }
     }
-    internal void SelectCrewmate(int id)
+    internal void SelectCrewmate(int crewmateID)
     {
-        crewmates[id].transform.GetChild(0).gameObject.SetActive(true);
-        selectedCrewmateIDs.Add(id);
+        crewmates[crewmateID].transform.GetChild(0).gameObject.SetActive(true);
+        selectedCrewmateIDs.Add(crewmateID);
     }
-    internal void DeselectCrewmate(int id)
+    internal void DeselectCrewmate(int crewmateID)
     {
-        crewmates[id].transform.GetChild(0).gameObject.SetActive(false);
-        selectedCrewmateIDs.Remove(id);
+        crewmates[crewmateID].transform.GetChild(0).gameObject.SetActive(false);
+        selectedCrewmateIDs.Remove(crewmateID);
     }
-    private void DeselectCrewmateShare(int id)
+    private void DeselectCrewmateShare(int crewmateID)
     {
-        DeselectCrewmate(id);
-        int cardIndex = crewmates[id].cardIndex;
+        DeselectCrewmate(crewmateID);
+        int cardIndex = crewmates[crewmateID].cardIndex;
         if (omui == null)
         {
             cmui.DeselectCrewmateCard(cardIndex);
