@@ -169,6 +169,9 @@ public class UnitSelections : MonoBehaviour
         Character unit = unitToAdd.GetComponent<Character>();
         unit.rend.sharedMaterial = unit.materials[1];
 
+        Crewmate crewmate = unitToAdd.GetComponent<Crewmate>();
+        cm.SelectCrewmate(crewmate.cardIndex);
+
         //sets the second child to be active: a sphere showing detection range
         //unitToAdd.transform.GetChild(1).gameObject.SetActive(true);
 

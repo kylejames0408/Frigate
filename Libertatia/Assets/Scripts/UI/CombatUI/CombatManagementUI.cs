@@ -9,6 +9,7 @@ public class CombatManagementUI : MonoBehaviour
 {
     // Components
     [SerializeField] private CrewmateManager cm;
+    [SerializeField] private ZoneManager zm;
     // Animation related
     [SerializeField] private float animTimeArrow = 0.5f;
     [SerializeField] private float animTimeInterface = 0.6f;
@@ -29,6 +30,7 @@ public class CombatManagementUI : MonoBehaviour
     private void Awake()
     {
         if(cm == null) { cm = FindObjectOfType<CrewmateManager>(); }
+        if (zm == null) { zm = FindObjectOfType<ZoneManager>(); }
 
         pages = pagesUIParent.GetComponentsInChildren<Transform>();
         if(pages.Length > 1 )
@@ -90,7 +92,7 @@ public class CombatManagementUI : MonoBehaviour
         card.GetComponentInChildren<TextMeshProUGUI>().text = mate.Name;
 
         card.GetComponent<DragObj2D>().onBeginDrag.AddListener(delegate { SelectCrewmateCard(index); });
-        //card.GetComponent<DragObj2D>().onEndDrag.AddListener(delegate { bm.OnCrewmateDropAssign(); });    // set the zone assign method on drop
+        card.GetComponent<DragObj2D>().onEndDrag.AddListener(delegate { zm.OnCrewmateDropAssign(); });    // set the zone assign method on drop
         card.GetComponent<DragObj2D>().onEndDrag.AddListener(delegate { DeselectCrewmateCard(index); });
     }
 

@@ -2,10 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.AI;
+using UnityEngine.UI;
 using UnityEngine.UIElements;
 
 public class ZoneManager : MonoBehaviour
 {
+    // Components
+    [SerializeField] private CrewmateManager cm;
+
     public List<GameObject> crewMembers;
     public List<GameObject> enemies;
     public List<GameObject> enemyHouses;
@@ -17,6 +22,11 @@ public class ZoneManager : MonoBehaviour
     //public ResourcesUI resourceUI;
 
     public GameObject combatUI;
+
+    private void Awake()
+    {
+        if (cm == null) { cm = FindObjectOfType<CrewmateManager>(); }
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -162,6 +172,26 @@ public class ZoneManager : MonoBehaviour
         if(GameObject.FindGameObjectWithTag("Marker"))
         {
             marker.SetActive(false);
+        }
+    }
+
+    public void OnCrewmateDropAssign()
+    {
+        GameObject crewmateDropped = cm.unitsSelected[0];
+
+
+        UnitMovement unitToMove = crewmateDropped.GetComponent<UnitMovement>();
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(ray, out RaycastHit hit, 500f, unitToMove.mask, QueryTriggerInteraction.Ignore))
+        {
+            //Moves units to the center of zone when it is clicked on
+            if (hit.collider.tag == "Zone")
+            {
+                Zone zone = hit.transform.gameObject.GetComponent<Zone>();
+
+                NavMeshAgent myAgent = crewmateDropped.GetComponent<NavMeshAgent>();
+                myAgent.SetDestination(zone.zoneCenter);
+            }
         }
     }
 }
