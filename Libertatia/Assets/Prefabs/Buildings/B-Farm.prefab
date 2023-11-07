@@ -11,6 +11,10 @@ GameObject:
   - component: {fileID: 6816892850869639844}
   - component: {fileID: 5646260782621091400}
   - component: {fileID: 2599534845571752854}
+  - component: {fileID: 2055071924510838990}
+  - component: {fileID: 322377653745344189}
+  - component: {fileID: 3978080551143491106}
+  - component: {fileID: 8878467512506420242}
   m_Layer: 0
   m_Name: Visual
   m_TagString: Untagged
@@ -86,6 +90,128 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!208 &2055071924510838990
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 260801732724738119}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 4.335, y: 8.205, z: 0.9760001}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
+--- !u!65 &322377653745344189
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 260801732724738119}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 8.670381, y: 16.410488, z: 1.9517677}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!54 &3978080551143491106
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 260801732724738119}
+  serializedVersion: 4
+  m_Mass: 100
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!114 &8878467512506420242
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 260801732724738119}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57faedece60f9884ea5265c1efe82d3f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: 0
+  buildingName: Farm
+  icon: {fileID: 21300000, guid: 889b7812a2d2a7242a705dd0985fdd22, type: 3}
+  output: 
+  uiIndex: 0
+  level: 0
+  state: 0
+  isHovered: 0
+  radius: 7
+  resourceCost:
+    wood: 20
+    food: 0
+    ap: 2
+  resourceProduction:
+    wood: 0
+    food: 50
+    ap: 0
+  assignee1: {fileID: 0}
+  assignee2: {fileID: 0}
+  matBuilt: {fileID: 2100000, guid: 2ed85a5525951e145ab57bc5eb35b5ba, type: 2}
+  canvasTrans: {fileID: 5316006875068179753}
+  canvasGroup: {fileID: 7666875144956937901}
+  uiLevel: {fileID: 6915381045710330052}
+  uiName: {fileID: 6480564969508528023}
+  uiStatus: {fileID: 8854806776050791536}
+  uiAP: {fileID: 8421840358446203505}
+  uiAsign1: {fileID: 5353170340738469052}
+  uiAsign2: {fileID: 4342824260370869384}
+  onCrewmateAssigned:
+    m_PersistentCalls:
+      m_Calls: []
+  onFirstAssignment:
+    m_PersistentCalls:
+      m_Calls: []
+  onConstructionCompleted:
+    m_PersistentCalls:
+      m_Calls: []
+  onSelection:
+    m_PersistentCalls:
+      m_Calls: []
+  onCollision:
+    m_PersistentCalls:
+      m_Calls: []
+  onNoCollisions:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &426591045528814091
 GameObject:
   m_ObjectHideFlags: 0
@@ -1463,10 +1589,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7052071564808663902}
-  - component: {fileID: 4471357269373654606}
-  - component: {fileID: 5470127200473146616}
-  - component: {fileID: 6128470363368173309}
-  - component: {fileID: -2009897736505970014}
   m_Layer: 6
   m_Name: B-Farm
   m_TagString: Building
@@ -1491,129 +1613,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4471357269373654606
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7068964887495377092}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 57faedece60f9884ea5265c1efe82d3f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  id: 0
-  buildingName: Farm
-  icon: {fileID: 21300000, guid: 889b7812a2d2a7242a705dd0985fdd22, type: 3}
-  output: 
-  uiIndex: 0
-  level: 0
-  state: 0
-  isHovered: 0
-  isPlacementValid: 1
-  radius: 7
-  resourceCost:
-    wood: 20
-    food: 0
-    ap: 2
-  resourceProduction:
-    wood: 0
-    food: 50
-    ap: 0
-  assignee1: {fileID: 0}
-  assignee2: {fileID: 0}
-  matBuilt: {fileID: 2100000, guid: 2ed85a5525951e145ab57bc5eb35b5ba, type: 2}
-  canvasTrans: {fileID: 5316006875068179753}
-  canvasGroup: {fileID: 7666875144956937901}
-  uiLevel: {fileID: 6915381045710330052}
-  uiName: {fileID: 6480564969508528023}
-  uiStatus: {fileID: 8854806776050791536}
-  uiAP: {fileID: 8421840358446203505}
-  uiAsign1: {fileID: 5353170340738469052}
-  uiAsign2: {fileID: 4342824260370869384}
-  onCrewmateAssigned:
-    m_PersistentCalls:
-      m_Calls: []
-  onFirstAssignment:
-    m_PersistentCalls:
-      m_Calls: []
-  onConstructionCompleted:
-    m_PersistentCalls:
-      m_Calls: []
-  onSelection:
-    m_PersistentCalls:
-      m_Calls: []
-  onCollision:
-    m_PersistentCalls:
-      m_Calls: []
-  onNoCollisions:
-    m_PersistentCalls:
-      m_Calls: []
---- !u!208 &5470127200473146616
-NavMeshObstacle:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7068964887495377092}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 5, y: 2, z: 3}
-  m_MoveThreshold: 0.1
-  m_Carve: 1
-  m_CarveOnlyStationary: 1
-  m_Center: {x: -0.5, y: 1.75, z: 1}
-  m_TimeToStationary: 0.5
---- !u!65 &6128470363368173309
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7068964887495377092}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 10, y: 4, z: 6}
-  m_Center: {x: -0.5, y: 1.75, z: 1}
---- !u!54 &-2009897736505970014
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7068964887495377092}
-  serializedVersion: 4
-  m_Mass: 100
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 0
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!1 &7872474952906136664
 GameObject:
   m_ObjectHideFlags: 0

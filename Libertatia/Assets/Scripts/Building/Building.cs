@@ -4,14 +4,12 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 // Move some individualstic data to scriptable objects, no need for prefabs atm
 // Building objects are put together upon interaction
 [Serializable]
-[RequireComponent(typeof(Rigidbody))]
-[RequireComponent(typeof(BoxCollider))]
-[RequireComponent(typeof(NavMeshObstacle))]
 public class Building : MonoBehaviour
 {
     // General Data
@@ -24,7 +22,6 @@ public class Building : MonoBehaviour
     public BuildingState state = BuildingState.PLACING;
     // Identifiers
     public bool isHovered = false;
-    public bool isPlacementValid = true;
     // In-game characteristics
     [SerializeField] private float radius = 5.0f; // for construction
     private int numOfCollisions = 0;
@@ -92,7 +89,7 @@ public class Building : MonoBehaviour
     {
         // Get/set components
         buildingRender = GetComponentInChildren<MeshRenderer>();
-        navObsticle = GetComponent<NavMeshObstacle>();
+        navObsticle = GetComponentInChildren<NavMeshObstacle>();
         navObsticle.enabled = false; // prevents moving crewmates
         canvasGroup = canvasTrans.GetComponent<CanvasGroup>();
 
@@ -253,14 +250,14 @@ public class Building : MonoBehaviour
     // Handlers
     private void HandleSelection()
     {
-        if (Input.GetMouseButtonDown(0) && state != BuildingState.PLACING)
+        if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject() && state != BuildingState.PLACING)
         {
             onSelection.Invoke();
         }
     }
     private void HandleAssignment()
     {
-        if (Input.GetMouseButtonDown(1) && CrewmateManager.Instance.selectedCrewmateIDs.Count > 0)
+        if (Input.GetMouseButtonDown(1) && !EventSystem.current.IsPointerOverGameObject() && CrewmateManager.Instance.selectedCrewmateIDs.Count > 0)
         {
             Crewmate mate = CrewmateManager.Instance.GetCrewmate(CrewmateManager.Instance.selectedCrewmateIDs[0]);
             if (CanAssign())

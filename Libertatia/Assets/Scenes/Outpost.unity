@@ -2614,10 +2614,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c037dd51df5a0542acec07d6b174438, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  omui: {fileID: 0}
+  omui: {fileID: 2331478675485732542}
   cmui: {fileID: 0}
-  rui: {fileID: 0}
-  crewmateUI: {fileID: 0}
+  rui: {fileID: 1289026105}
+  crewmateUI: {fileID: 234963690}
   crewmatePrefab: {fileID: 4279940650134947149, guid: 8f1e684d0ce15c240a73f35a690f910e, type: 3}
   crewmateSpawn: {fileID: 0}
   crewmateSpawnRadius: 10
@@ -10807,9 +10807,9 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1078224226}
-  - {fileID: 1313257458}
   - {fileID: 1219076890133093848}
   - {fileID: 234963686}
+  - {fileID: 1313257458}
   - {fileID: 746340826}
   - {fileID: 380156883}
   - {fileID: 1724596630}
@@ -16964,6 +16964,7 @@ GameObject:
   - component: {fileID: 5628436895631584835}
   - component: {fileID: 5571901838755847977}
   - component: {fileID: 2331478675485732542}
+  - component: {fileID: 6599279947691470727}
   m_Layer: 5
   m_Name: INT-Manager
   m_TagString: Untagged
@@ -16971,6 +16972,18 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!225 &6599279947691470727
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6599279947691470726}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &6635382060340714055
 GameObject:
   m_ObjectHideFlags: 0

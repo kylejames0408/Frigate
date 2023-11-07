@@ -30,10 +30,19 @@ public class CrewmateUI : MonoBehaviour
     {
         // Get component
         if(cm == null) { cm = FindObjectOfType<CrewmateManager>(); }
-    }
-    private void Start()
-    {
-
+        bounds = GetComponent<RectTransform>();
+        foreach (Image dot in dotsStrength)
+        {
+            dot.gameObject.SetActive(false);
+        }
+        foreach (Image dot in dotsAgility)
+        {
+            dot.gameObject.SetActive(false);
+        }
+        foreach (Image dot in dotsStamina)
+        {
+            dot.gameObject.SetActive(false);
+        }
     }
     private void Update()
     {
@@ -42,7 +51,22 @@ public class CrewmateUI : MonoBehaviour
 
     internal void FillUI(Crewmate mate)
     {
-
+        uiCrewmateIcon.sprite = mate.icon;
+        uiName.text = mate.name;
+        uiHealth.text = mate.health.ToString();
+        for (int i = 0; i < mate.strength; i++)
+        {
+            dotsStrength[i].gameObject.SetActive(true);
+        }
+        for (int i = 0; i < mate.agility; i++)
+        {
+            dotsAgility[i].gameObject.SetActive(true);
+        }
+        for (int i = 0; i < mate.stamina; i++)
+        {
+            dotsStamina[i].gameObject.SetActive(true);
+        }
+        //uiBuildingIcon.sprite = uiBuildingIcon;
     }
 
     // Handlers

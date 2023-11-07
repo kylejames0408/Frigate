@@ -123,7 +123,7 @@ public class OutpostManagementUI : MonoBehaviour
     }
 
     // Building (construction) cards
-    private void AddBuildingCard(BuildingManager bm, int index, Building building)
+    public void AddBuildingCard(BuildingManager bm, int index, Building building)
     {
         GameObject cardObj = Instantiate(buildingCardPrefab, pages[0]);
 

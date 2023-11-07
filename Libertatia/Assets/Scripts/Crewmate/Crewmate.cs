@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
+using UnityEngine.EventSystems;
 
 [Serializable]
 public class Crewmate : MonoBehaviour
@@ -16,6 +17,10 @@ public class Crewmate : MonoBehaviour
     private NavMeshAgent agent;
     public UnityEvent onAssign;
     public UnityEvent onSelect;
+    public int health = 100;
+    public int strength = 5;
+    public int agility = 4;
+    public int stamina = 3;
 
     public string Name
     {
@@ -66,7 +71,7 @@ public class Crewmate : MonoBehaviour
     // handlers
     private void HandleSelection()
     {
-        if (isHovered && Input.GetMouseButtonDown(0))
+        if (isHovered && Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
         {
             onSelect.Invoke();
         }
