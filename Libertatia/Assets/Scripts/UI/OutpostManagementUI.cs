@@ -31,8 +31,8 @@ public class OutpostManagementUI : MonoBehaviour
     // Data tracking
     private Tab[] tabs;
     private Transform[] pages;
-    private List<BuildingCard> buildingCards;
-    private List<CrewmateCard> crewmateCards;
+    private List<BuildingCard> buildingCards; // make into dict
+    private Dictionary<int, CrewmateCard> crewmateCards;
     private List<int> selectedCrewmateCardIndicies;
     private bool isOpen;
 
@@ -50,7 +50,7 @@ public class OutpostManagementUI : MonoBehaviour
             }
         }
         tabs = tabUIParent.GetComponentsInChildren<Tab>();
-        crewmateCards = new List<CrewmateCard>();
+        crewmateCards = new Dictionary<int, CrewmateCard>();
         selectedCrewmateCardIndicies = new List<int>();
         popupUI.GetComponent<CanvasGroup>().alpha = 0;
     }
@@ -128,7 +128,7 @@ public class OutpostManagementUI : MonoBehaviour
         GameObject cardObj = Instantiate(buildingCardPrefab, pages[0]);
 
         BuildingCard card = cardObj.GetComponent<BuildingCard>();
-        card.Init(building.resourceCost, building.resourceProduction);
+        card.Init(building.Cost, building.Production);
         card.onHover.AddListener(()=> { BuildingCardHoveredCallback(index); });
         card.onHoverExit.AddListener(BuildingCardHoveredExitCallback);
         buildingCards.Add(card);
@@ -185,28 +185,27 @@ public class OutpostManagementUI : MonoBehaviour
         GameObject cardObj = Instantiate(crewmateCardPrefab, pages[1]);
 
         CrewmateCard card = cardObj.GetComponent<CrewmateCard>();
-        card.Init(mate.id);
-        crewmateCards.Add(card);
+        card.Init(mate.ID);
+        crewmateCards.Add(card.ID, card);
 
-        int index = crewmateCards.IndexOf(card); // needs to be destroyed after setting listener
         // Callbacks
-        card.GetComponent<Button>().onClick.AddListener(() => { ClickCrewmateCard(index); }); // drag + drop func
+        card.GetComponent<Button>().onClick.AddListener(() => { ClickCrewmateCard(card.ID); }); // drag + drop func
         // Fill UI
         card.GetComponentsInChildren<Image>()[1].sprite = mate.Icon;
         card.GetComponentInChildren<TextMeshProUGUI>().text = mate.Name;
     }
-    internal void RemoveCrewmateCard(int cardIndex)
+    internal void RemoveCrewmateCard(int cardID)
     {
-        DeselectCrewmateCard(cardIndex);
-        Destroy(crewmateCards[cardIndex].gameObject);
-        crewmateCards.RemoveAt(cardIndex);
+        DeselectCrewmateCard(cardID);
+        Destroy(crewmateCards[cardID].gameObject);
+        crewmateCards.Remove(cardID);
     }
     // Clicking handler
-    private void ClickCrewmateCard(int cardIndex) // share
+    private void ClickCrewmateCard(int cardID) // share
     {
         if (Input.GetKey(KeyCode.LeftControl))
         {
-            DeselectCrewmateCardShare(cardIndex);
+            DeselectCrewmateCardShare(cardID);
         }
         else
         {
@@ -214,24 +213,24 @@ public class OutpostManagementUI : MonoBehaviour
             {
                 DeselectAllCrewmateCardsShare();
             }
-            SelectCrewmateCard(cardIndex);
-            cm.SelectCrewmate(crewmateCards[cardIndex].crewmateID);
+            SelectCrewmateCard(cardID);
+            cm.SelectCrewmate(cardID);
         }
     }
-    internal void SelectCrewmateCard(int cardIndex)
+    internal void SelectCrewmateCard(int cardID)
     {
-        crewmateCards[cardIndex].GetComponent<Outline>().enabled = true;
-        selectedCrewmateCardIndicies.Add(cardIndex);
+        crewmateCards[cardID].GetComponent<Outline>().enabled = true;
+        selectedCrewmateCardIndicies.Add(cardID);
     }
-    internal void DeselectCrewmateCard(int cardIndex)
+    internal void DeselectCrewmateCard(int cardID)
     {
-        crewmateCards[cardIndex].GetComponent<Outline>().enabled = false;
-        selectedCrewmateCardIndicies.Remove(cardIndex);
+        crewmateCards[cardID].GetComponent<Outline>().enabled = false;
+        selectedCrewmateCardIndicies.Remove(cardID);
     }
-    private void DeselectCrewmateCardShare(int cardIndex)
+    private void DeselectCrewmateCardShare(int cardID)
     {
-        DeselectCrewmateCard(cardIndex);
-        cm.DeselectCrewmate(crewmateCards[cardIndex].crewmateID);
+        DeselectCrewmateCard(cardID);
+        cm.DeselectCrewmate(cardID);
     }
     internal void DeselectAllCrewmateCards()
     {

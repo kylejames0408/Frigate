@@ -48,6 +48,10 @@ public class GameManager : MonoBehaviour
             }
         }
     }
+    public static void AddCrewmate(CrewmateData data)
+    {
+        Data.crewmates.Add(data);
+    }
 
     private void Awake()
     {

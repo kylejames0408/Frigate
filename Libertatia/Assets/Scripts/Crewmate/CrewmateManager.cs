@@ -6,20 +6,23 @@ using UnityEngine.EventSystems;
 
 public class CrewmateManager : MonoBehaviour
 {
-    private static CrewmateManager instance;
+    // Will likely have crewmate state data
+    [SerializeField] private Sprite iconEmptyAsssignment;
+    [SerializeField] private Sprite[] crewmateIcons;
     // Components
     [SerializeField] private OutpostManagementUI omui;
     [SerializeField] private CombatManagementUI cmui;
     [SerializeField] private ResourcesUI rui;
     [SerializeField] private CrewmateUI crewmateUI;
-
+    [SerializeField] private BuildingManager bm;
     // Crewmate Data
     [SerializeField] private GameObject crewmatePrefab;
     [SerializeField] private Transform crewmateSpawn;
-    public int crewmateSpawnRadius = 10;
+    [SerializeField] private int crewmateSpawnRadius = 10;
+    [SerializeField] private const int CREWMATE_FOOD_CONSUMPTION = 10;
     // Tracking
-    public Dictionary<int, Crewmate> crewmates;
-    public List<int> selectedCrewmateIDs;
+    [SerializeField] private Dictionary<int, Crewmate> crewmates;
+    [SerializeField] private List<int> selectedCrewmateIDs;
     // Selection
     [SerializeField] private RectTransform selectionBoxTrans; // I am 99% sure we can just use the rectTrans. I dont know why it is not working however
     private Rect selectionBoxRect;
@@ -28,33 +31,24 @@ public class CrewmateManager : MonoBehaviour
     private bool isDragging = false;
     private bool isUIClicked = false;
 
-    public static CrewmateManager Instance
+    public bool IsCrewmateSelected
     {
-        get
-        {
-            return instance;
-        }
+        get { return selectedCrewmateIDs.Count > 0; }
     }
 
     private void Awake()
     {
-        if(instance != null && instance != this)
-        {
-            Destroy(gameObject);
-        }
-        else
-        {
-            instance = this;
-        }
-
         if (omui == null) { omui = FindObjectOfType<OutpostManagementUI>(); }
         if (cmui == null) { cmui = FindObjectOfType<CombatManagementUI>(); }
         if (rui == null) { rui = FindObjectOfType<ResourcesUI>(); }
+        if (bm == null) { bm = FindObjectOfType<BuildingManager>(); }
 
         // Init Crewmates (make own function)
         crewmateSpawn = transform.GetChild(0);
-        crewmates = new Dictionary<int, Crewmate>(); //GameManager.Data.crewmates.Count
+        crewmates = new Dictionary<int, Crewmate>();
         selectedCrewmateIDs = new List<int>();
+
+        // Can probably move this to start - similar to building manager
         if (GameManager.Data.crewmates == null)
         {
             Debug.Log("You might need to add the game manager to the scene; likely through PlayerData scene");
@@ -69,50 +63,10 @@ public class CrewmateManager : MonoBehaviour
         }
         else
         {
+            // Spawn existing crewmates
             for (int i = 0; i < GameManager.Data.crewmates.Count; i++)
             {
-                CrewmateData data = GameManager.Data.crewmates[i];
-                //GameObject crewmateObj = Instantiate(crewmatePrefab, transform);
-                Vector3 position = new Vector3(-5 - 5, 0) + new Vector3(UnityEngine.Random.Range(-1.0f, 1.0f) * 5, -5, UnityEngine.Random.Range(-1.0f, 1.0f) * 5);
-                //Debug.Log(position); // this actually makes no sense
-                GameObject crewmateObj = Instantiate(crewmatePrefab, position, Quaternion.identity);
-
-                Crewmate crewmate = crewmateObj.GetComponent<Crewmate>();
-                crewmate.crewmateName = data.name;
-                crewmate.icon = data.icon;
-                crewmate.buildingID = data.buildingID;
-
-                // they will be freed anyways, however might be worth spawning them near the front of the building
-                if(data.buildingID != -1)
-                {
-                    // Reassign crewmate to building
-                    //foreach (Building building in buildings)
-                    //{
-                    //    if (mate.buildingID == building.id)
-                    //    {
-                    //        building.builder = mate;
-                    //        return;
-                    //    }
-                    //}
-                }
-
-                Vector2 circleLocation = UnityEngine.Random.insideUnitCircle;
-                Vector3 spawnPosition = new Vector3(circleLocation.x * crewmateSpawnRadius, 0, circleLocation.y * crewmateSpawnRadius);
-                crewmateObj.transform.position = crewmateSpawn.position + spawnPosition;
-                crewmates.Add(crewmate.id, crewmate);
-                // Update UI
-                crewmate.cardIndex = crewmates.Count - 1; // check
-                crewmate.onSelect.AddListener(() => { ClickCrewmate(crewmate.cardIndex); });
-                // Add card
-                if(omui == null)
-                {
-                    cmui.AddCrewmateCard(crewmate);
-                }
-                else
-                {
-                    omui.AddCrewmateCard(crewmate);
-                }
-
+                SpawnExistingCrewmate(GameManager.Data.crewmates[i]);
             }
         }
     }
@@ -125,9 +79,10 @@ public class CrewmateManager : MonoBehaviour
             rui.UpdateFoodUI(GameManager.Data.resources);
         }
     }
-    // TODO: make ifs into handler functions
     private void Update()
     {
+        // TODO: make ifs into handler functions
+
         // Left mouse button PRESS handler
         if (Input.GetMouseButtonDown(0))
         {
@@ -146,6 +101,8 @@ public class CrewmateManager : MonoBehaviour
             ReleaseHandler();
         }
     }
+
+    // Handlers
     private void PressHandler()
     {
         // Checks if UI is clicked
@@ -234,9 +191,9 @@ public class CrewmateManager : MonoBehaviour
                 if (selectionBoxRect.Contains(CameraManager.Instance.Camera.WorldToScreenPoint(mate.transform.position)))
                 {
                     // Checks if it will be removing an already unselected crewmate
-                    if (selectedCrewmateIDs.Contains(mate.id))
+                    if (selectedCrewmateIDs.Contains(mate.ID))
                     {
-                        DeselectCrewmateShare(mate.id);
+                        DeselectCrewmateShare(mate.ID);
                     }
                 }
             }
@@ -255,9 +212,9 @@ public class CrewmateManager : MonoBehaviour
                 if (selectionBoxRect.Contains(CameraManager.Instance.Camera.WorldToScreenPoint(mate.transform.position)))
                 {
                     // Checks if it will be adding an already selected crewmate
-                    if (!selectedCrewmateIDs.Contains(mate.id))
+                    if (!selectedCrewmateIDs.Contains(mate.ID))
                     {
-                        ClickCrewmate(mate.id);
+                        ClickCrewmate(mate.ID);
                     }
                 }
             }
@@ -273,16 +230,16 @@ public class CrewmateManager : MonoBehaviour
         // Click handle - select crewmate if clicked on
         foreach (Crewmate mate in crewmates.Values)
         {
-            if (mate.isHovered)
+            if (mate.IsHovered)
             {
                 crewmateWasClicked = true;
 
                 // Deselect crewmate if left-control is HELD
                 if (Input.GetKey(KeyCode.LeftControl))
                 {
-                    if (selectedCrewmateIDs.Contains(mate.id))
+                    if (selectedCrewmateIDs.Contains(mate.ID))
                     {
-                        DeselectCrewmateShare(mate.id);
+                        DeselectCrewmateShare(mate.ID);
                     }
                 }
                 else
@@ -293,9 +250,9 @@ public class CrewmateManager : MonoBehaviour
                         DeselectAllCrewmatesShare();
                     }
 
-                    if (!selectedCrewmateIDs.Contains(mate.id))
+                    if (!selectedCrewmateIDs.Contains(mate.ID))
                     {
-                        ClickCrewmate(mate.id);
+                        ClickCrewmate(mate.ID);
                     }
                 }
                 break; // can only hover over one crewmate
@@ -309,56 +266,89 @@ public class CrewmateManager : MonoBehaviour
         }
     }
 
+    // Utility
     internal Crewmate GetCrewmate(int crewmateID)
     {
         return crewmates[crewmateID];
     }
+    internal Crewmate[] GetSelectedCrewmates()
+    {
+        List<Crewmate> selectedCrewmates = new List<Crewmate>(selectedCrewmateIDs.Count);
+        foreach (int id in selectedCrewmateIDs)
+        {
+            selectedCrewmates.Add(crewmates[id]);
+        }
+        return selectedCrewmates.ToArray();
+    }
 
-    // Crewmate interactions
+    // Interactions
     internal void SpawnNewCrewmate()
     {
         GameObject crewmateObj = Instantiate(crewmatePrefab, transform);
 
-        Crewmate mate = crewmateObj.GetComponent<Crewmate>();
-        crewmateObj.name = mate.Name + mate.id;
-
-        // Position
+        // Set Position - maybe move to util func since same thing is in Building
         Vector2 circleLocation = UnityEngine.Random.insideUnitCircle;
         Vector3 spawnPosition = new Vector3(circleLocation.x * crewmateSpawnRadius, 0, circleLocation.y * crewmateSpawnRadius);
         crewmateObj.transform.position = crewmateSpawn.position + spawnPosition;
 
+        Crewmate mate = crewmateObj.GetComponent<Crewmate>();
+        crewmateObj.name = mate.Name + mate.ID;
+        mate.SetUI(crewmateIcons[UnityEngine.Random.Range(0, crewmateIcons.Length)], iconEmptyAsssignment);
+
         // Save Data
-        CrewmateData data = new CrewmateData();
-        data.id = mate.id;
-        data.icon = mate.Icon;
-        data.name = mate.Name;
-        data.buildingID = mate.buildingID;
-        GameManager.Data.crewmates.Add(data);
-        crewmates.Add(mate.id, mate);
+        GameManager.AddCrewmate(new CrewmateData(mate));
+
+        // Set callbacks
+        mate.onSelect.AddListener(() => { ClickCrewmate(mate.ID); });
+        mate.onAssign.AddListener(() => { OnAssignCallback(mate.ID); });
+        mate.onReassign.AddListener(() => { OnReassignCallback(mate.ID); });
+        mate.onDestroy.AddListener(() => { DeselectCard(mate.ID); });
+
+        // Tracking
+        crewmates.Add(mate.ID, mate);
 
         // Update UI
-        mate.cardIndex = crewmates.Count - 1; // check
-        mate.onSelect.AddListener(() => { ClickCrewmate(mate.id); });
+        AddCard(mate);
+        GameManager.data.resources.foodConsumption += CREWMATE_FOOD_CONSUMPTION; // will need to make functions for this sometime
+        rui.UpdateFoodUI(GameManager.Data.resources); // including this
+    }
+    private void SpawnExistingCrewmate(CrewmateData data)
+    {
+        GameObject crewmateObj = Instantiate(crewmatePrefab, transform);
+        Crewmate mate = crewmateObj.GetComponent<Crewmate>();
+        mate.Init(data);
+
+        if (data.building.id == -1)
+        {
+            // Set Position - this actually makes no sense
+            Vector2 circleLocation = UnityEngine.Random.insideUnitCircle;
+            Vector3 spawnPosition = new Vector3(circleLocation.x * crewmateSpawnRadius, 0, circleLocation.y * crewmateSpawnRadius);
+            crewmateObj.transform.position = crewmateSpawn.position + spawnPosition;
+        }
+
+        // Set callbacks
+        mate.onSelect.AddListener(() => { ClickCrewmate(mate.ID); });
+        mate.onAssign.AddListener(() => { SelectCard(mate.ID); }); // Should update UI I think... check on this
+        mate.onDestroy.AddListener(() => { DeselectCard(mate.ID); });
+
+        // Tracking
+        crewmates.Add(mate.ID, mate);
 
         // Add card
         AddCard(mate);
-
-        // Update UI
-        GameManager.data.resources.foodConsumption += 10; // crewmate food consumption
-        rui.UpdateFoodUI(GameManager.Data.resources);
     }
     internal void RemoveCrewmate(int crewmateID)
     {
         DeselectCrewmateShare(crewmateID);
         GameManager.RemoveCrewmateData(crewmateID);
         crewmates.Remove(crewmateID);
-        RemoveCard(crewmates[crewmateID].cardIndex);
+        RemoveCard(crewmateID);
     }
-    // Select the crewmate and update UI (share) // rename or create wrapper for callback 
+    // Select the crewmate and update UI (share) // rename or create wrapper for callback
     private void ClickCrewmate(int crewmateID) // share
     {
         SelectCrewmate(crewmateID);
-        SelectCard(crewmates[crewmateID].cardIndex);
+        SelectCard(crewmateID);
     }
     internal void SelectCrewmate(int crewmateID)
     {
@@ -381,7 +371,7 @@ public class CrewmateManager : MonoBehaviour
     private void DeselectCrewmateShare(int crewmateID)
     {
         DeselectCrewmate(crewmateID);
-        DeselectCard(crewmates[crewmateID].cardIndex);
+        DeselectCard(crewmateID);
 
     }
     internal void DeselectAllCrewmates()
@@ -400,15 +390,15 @@ public class CrewmateManager : MonoBehaviour
 
     // UI
     // Manager
-    private void SelectCard(int cardIndex)
+    private void SelectCard(int cardID)
     {
         if (omui == null)
         {
-            cmui.SelectCrewmateCard(cardIndex);
+            cmui.SelectCrewmateCard(cardID);
         }
         else
         {
-            omui.SelectCrewmateCard(cardIndex);
+            omui.SelectCrewmateCard(cardID);
         }
     }
     private void AddCard(Crewmate mate)
@@ -422,15 +412,15 @@ public class CrewmateManager : MonoBehaviour
             omui.AddCrewmateCard(mate);
         }
     }
-    private void DeselectCard(int cardIndex)
+    private void DeselectCard(int cardID)
     {
         if (omui == null)
         {
-            cmui.DeselectCrewmateCard(cardIndex);
+            cmui.DeselectCrewmateCard(cardID);
         }
         else
         {
-            omui.DeselectCrewmateCard(cardIndex);
+            omui.DeselectCrewmateCard(cardID);
         }
     }
     private void DeselectAllCards()
@@ -444,15 +434,15 @@ public class CrewmateManager : MonoBehaviour
             omui.DeselectAllCrewmateCards();
         }
     }
-    private void RemoveCard(int cardIndex)
+    private void RemoveCard(int cardID)
     {
         if (omui == null)
         {
-            cmui.RemoveCrewmateCard(cardIndex);
+            cmui.RemoveCrewmateCard(cardID);
         }
         else
         {
-            omui.RemoveCrewmateCard(cardIndex);
+            omui.RemoveCrewmateCard(cardID);
         }
     }
     // Slide
@@ -460,5 +450,30 @@ public class CrewmateManager : MonoBehaviour
     {
         crewmateUI.FillUI(mate);
         crewmateUI.OpenMenu();
+    }
+    internal void FreeAssignees(int assignee1ID, int assignee2ID)
+    {
+        if(assignee1ID != -1)
+        {
+            Crewmate mate1 = crewmates[assignee1ID];
+            mate1.Free(); // will UI need to be updated as well?
+        }
+        if (assignee2ID != -1)
+        {
+            Crewmate mate2 = crewmates[assignee2ID];
+            mate2.Free(); // will UI need to be updated as well?
+        }
+    }
+
+    // Callbacks
+    private void OnAssignCallback(int crewmateID)
+    {
+        Crewmate mate = crewmates[crewmateID];
+        OpenSlider(mate);
+    }
+    private void OnReassignCallback(int crewmateID)
+    {
+        Crewmate mate = crewmates[crewmateID];
+        bm.UnassignBuilding(mate.Building.id, mate.ID);
     }
 }

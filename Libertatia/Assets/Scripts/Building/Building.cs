@@ -7,42 +7,58 @@ using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-// Move some individualstic data to scriptable objects, no need for prefabs atm
-// Building objects are put together upon interaction
+public struct AssigneeCrewmateData
+{
+    public int id;
+    public Sprite icon;
+
+    public AssigneeCrewmateData(int id, Sprite icon)
+    {
+        this.id = id;
+        this.icon = icon;
+    }
+
+    public void Reset(Sprite emptyAssigneeIcon)
+    {
+        id = -1;
+        icon = emptyAssigneeIcon;
+    }
+}
+
 [Serializable]
 public class Building : MonoBehaviour
 {
-    // General Data
-    public int id;
+    // Tracking
+    [SerializeField] private int id = -1;
+    [SerializeField] private AssigneeCrewmateData assignee1;
+    [SerializeField] private AssigneeCrewmateData assignee2;
+    [SerializeField] private BuildingState state = BuildingState.PLACING;
+    [SerializeField] private BuildingResources resourceCost; // move to scriptable object as "rules", will change with level however
+    [SerializeField] private BuildingResources resourceProduction; // same here
+    // Characteristics
     [SerializeField] private string buildingName;
+    [SerializeField] private int uiIndex = -1; // Type of building
+    [SerializeField] private int level = 0;
+    [SerializeField] private string output;
+    // UI
     [SerializeField] private Sprite icon;
-    public string output;
-    public int uiIndex;
-    public int level;
-    public BuildingState state = BuildingState.PLACING;
-    // Identifiers
-    public bool isHovered = false;
+    [SerializeField] private bool isHovered = false;
     // In-game characteristics
     [SerializeField] private float radius = 5.0f; // for construction
-    private int numOfCollisions = 0;
-    // Building
-    public BuildingResources resourceCost;
-    public BuildingResources resourceProduction;
-    public Crewmate assignee1;
-    public Crewmate assignee2;
+    [SerializeField] private int numOfCollisions = 0;
     // Components
-    private MeshRenderer buildingRender;
-    private NavMeshObstacle navObsticle;
+    [SerializeField] private MeshRenderer buildingRender;
+    [SerializeField] private NavMeshObstacle navObsticle;
     // Emissions - move to manager or set from manager
-    private Color normalEmission = Color.black;
-    private Color hoveredEmission = new Color(0.3f, 0.3f, 0.3f);
+    [SerializeField] private Color normalEmission = Color.black;
+    [SerializeField] private Color hoveredEmission = new Color(0.3f, 0.3f, 0.3f);
     // Materials
     [SerializeField] private Material matBuilt;
     // UI
     [SerializeField] private RectTransform canvasTrans;
     [SerializeField] private CanvasGroup canvasGroup;
-    private bool isPopUpOpen = false;
-    private float animTimeInterface = 0.3f;
+    [SerializeField] private bool isPopUpOpen = false;
+    [SerializeField] private float animTimeInterface = 0.3f;
     [SerializeField] private TextMeshProUGUI uiLevel;
     [SerializeField] private TextMeshProUGUI uiName;
     [SerializeField] private Image uiStatus;
@@ -50,35 +66,65 @@ public class Building : MonoBehaviour
     [SerializeField] private Image uiAsign1;
     [SerializeField] private Image uiAsign2;
     // Cache
-    private Sprite iconEmptyAsssignment;
+    [SerializeField] private Sprite iconEmptyAsssignment;
 
     [Header("Events")]
     public UnityEvent onCrewmateAssigned;
+    public UnityEvent onDemolish;
+    public UnityEvent onFreeAssignees;
     public UnityEvent onFirstAssignment;
     public UnityEvent onConstructionCompleted;
     public UnityEvent onSelection;
     public UnityEvent onCollision;
     public UnityEvent onNoCollisions;
 
+    public int ID
+    {
+        get { return id; }
+    }
+    public AssigneeCrewmateData Assignee1
+    {
+        get { return assignee1; }
+    }
+    public AssigneeCrewmateData Assignee2
+    {
+        get { return assignee2; }
+    }
+    public BuildingState State
+    {
+        get { return state; }
+    }
+    public BuildingResources Cost
+    {
+        get { return resourceCost; }
+    }
+    public BuildingResources Production
+    {
+        get { return resourceProduction; }
+    }
     public string Name
     {
         get { return buildingName; }
+    }
+    public int Type
+    {
+        get { return uiIndex; }
+    }
+    public int Level
+    {
+        get { return level; }
+    }
+    public string Output
+    {
+        get { return output; }
     }
     public Sprite Icon
     {
         get { return icon; }
     }
-    public float Radius
-    {
-        get { return radius; }
-    }
     public bool IsBuilt
     {
         get { return state == BuildingState.BUILT; }
-    }
-    public BuildingResources Cost
-    {
-        get { return resourceCost; }
     }
     public bool IsColliding
     {
@@ -95,6 +141,8 @@ public class Building : MonoBehaviour
 
         // Set variables' initial state
         id = gameObject.GetInstanceID();
+        assignee1 = new AssigneeCrewmateData(-1, iconEmptyAsssignment);
+        assignee2 = new AssigneeCrewmateData(-1, iconEmptyAsssignment);
         uiIndex = -1;
         level = 0;
         state = BuildingState.PLACING;
@@ -118,9 +166,33 @@ public class Building : MonoBehaviour
         }
     }
 
+    internal void Init(BuildingData data)
+    {
+        // Tracking / State
+        id = data.id;
+        assignee1 = data.crewmate1ID;
+        assignee2 = data.crewmate2ID;
+        state = data.state;
+        // Characteristics
+        buildingName = data.name;
+        uiIndex = data.uiIndex;
+        level = data.level;
+        output = data.output;
+        // UI
+        icon = data.icon;
+        // Spacial
+        transform.position = data.position;
+        transform.rotation = data.rotation;
+    }
+
+    // Setters
     public void SetMaterial(Material material)
     {
         buildingRender.material = material;
+    }
+    public void SetType(int type)
+    {
+        uiIndex = type;
     }
 
     // UI
@@ -149,11 +221,11 @@ public class Building : MonoBehaviour
     {
         if (state == BuildingState.WAITING_FOR_ASSIGNMENT)
         {
-            return !assignee1;
+            return assignee1.id == -1;
         }
         else if (state == BuildingState.BUILT)
         {
-            return !assignee1 || !assignee2;
+            return assignee1.id == -1 || assignee2.id == -1;
         }
         else
         {
@@ -173,7 +245,7 @@ public class Building : MonoBehaviour
                 value = "Needs assignment";
                 break;
             case BuildingState.CONSTRUCTING:
-                value = "Building";
+                value = "Constructing";
                 break;
             case BuildingState.BUILT:
                 value = "Level " + level.ToString();
@@ -188,20 +260,22 @@ public class Building : MonoBehaviour
         navObsticle.enabled = true;
         state = BuildingState.WAITING_FOR_ASSIGNMENT;
     }
-    public void AssignCrewmate(Crewmate assignee)
+    public void AssignCrewmate(Crewmate mate)
     {
         // Assign
-        if(assignee1 == null)
+        if(assignee1.id == -1)
         {
-            assignee1 = assignee;
-            uiAsign1.sprite = assignee.Icon;
+            assignee1.id = mate.ID;
+            assignee1.icon = mate.Icon;
         }
-        else if(assignee2 == null)
+        else if(assignee2.id == -1)
         {
-            assignee2 = assignee;
-            uiAsign2.sprite = assignee.Icon;
+            assignee2.id = mate.ID;
+            assignee2.icon = mate.Icon;
         }
-        assignee.GiveJob(this);
+
+        // Calculate target destination
+        mate.Assign(id, icon,  GetDestination());
 
         // Update building state
         if(state == BuildingState.WAITING_FOR_ASSIGNMENT)
@@ -209,7 +283,10 @@ public class Building : MonoBehaviour
             onFirstAssignment.Invoke();
             state = BuildingState.CONSTRUCTING;
         }
-        onCrewmateAssigned.Invoke();
+
+        // Update UI
+        uiAsign1.sprite = assignee1.icon;
+        uiAsign2.sprite = assignee2.icon;
     }
     public void CompleteConstruction()
     {
@@ -229,22 +306,62 @@ public class Building : MonoBehaviour
     public void Demolish()
     {
         FreeAssignees();
+        onDemolish.Invoke();
         Destroy(gameObject);
     }
     private void FreeAssignees()
     {
-        if (assignee1 != null)
+        if (assignee1.id != -1)
         {
-            assignee1.Free();
-            assignee1 = null;
-            uiAsign1.sprite = iconEmptyAsssignment;
+            assignee1.Reset(iconEmptyAsssignment);
         }
-        if (assignee2 != null)
+        if (assignee2.id != -1)
         {
-            assignee2.Free();
-            assignee2 = null;
-            uiAsign1.sprite = iconEmptyAsssignment;
+            assignee2.Reset(iconEmptyAsssignment);
         }
+
+        // Update UI
+        uiAsign1.sprite = assignee1.icon;
+        uiAsign2.sprite = assignee2.icon;
+        onFreeAssignees.Invoke();
+    }
+
+    // Util
+    private Vector3 GetDestination()
+    {
+        // Get random position around unit circle
+        Vector2 circlePosition = UnityEngine.Random.insideUnitCircle.normalized;
+        Vector3 destinationOffset = new Vector3(circlePosition.x * radius, 0, -(Mathf.Abs(circlePosition.y)) * radius); // keeps crewmate in-front of the building, maybe tweak
+        return transform.position + destinationOffset;
+    }
+    internal void UnassignCrewmate(int crewmateID)
+    {
+        if (assignee1.id == crewmateID)
+        {
+            if(assignee2.id == -1)
+            {
+                assignee1.Reset(iconEmptyAsssignment);
+            }
+            else
+            {
+                assignee1 = assignee2;
+                assignee2.Reset(iconEmptyAsssignment);
+            }
+
+            // Change state if nobody is assigned
+            if (state == BuildingState.CONSTRUCTING)
+            {
+                state = BuildingState.WAITING_FOR_ASSIGNMENT;
+            }
+        }
+        else if (assignee2.id == crewmateID)
+        {
+            assignee2.Reset(iconEmptyAsssignment);
+        }
+
+        // Update UI
+        uiAsign1.sprite = assignee1.icon;
+        uiAsign2.sprite = assignee2.icon;
     }
 
     // Handlers
@@ -257,12 +374,11 @@ public class Building : MonoBehaviour
     }
     private void HandleAssignment()
     {
-        if (Input.GetMouseButtonDown(1) && !EventSystem.current.IsPointerOverGameObject() && CrewmateManager.Instance.selectedCrewmateIDs.Count > 0)
+        if (Input.GetMouseButtonDown(1) && !EventSystem.current.IsPointerOverGameObject())
         {
-            Crewmate mate = CrewmateManager.Instance.GetCrewmate(CrewmateManager.Instance.selectedCrewmateIDs[0]);
             if (CanAssign())
             {
-                AssignCrewmate(mate);
+                onCrewmateAssigned.Invoke();
             }
             else
             {

@@ -149,10 +149,6 @@ public class UnitSelections : MonoBehaviour
     {
         if(sceneName == "Outpost")
         {
-            if (unitToAdd.GetComponent<Crewmate>().IsBuilding)
-            {
-                return;
-            }
         }
 
 

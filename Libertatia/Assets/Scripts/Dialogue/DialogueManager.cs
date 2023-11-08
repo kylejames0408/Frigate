@@ -142,7 +142,7 @@ public class DialogueManager : MonoBehaviour
         if (currentDialogue.callback.GetPersistentEventCount() != 0)
             currentDialogue.callback.Invoke();
         else
-            Debug.Log("No callback here!");
+            //Debug.Log("No callback here!");
 
         if (currentDialogue.hasTasks)
         {

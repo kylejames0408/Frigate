@@ -21,6 +21,8 @@ public class CrewmateUI : MonoBehaviour
     [SerializeField] private Image[] dotsStamina;
     [SerializeField] private Image uiBuildingIcon;
 
+    [Header("Buttons")]
+    [SerializeField] private Button btnClose;
 
     [Header("Tracking")] // Dynamic/tracking information
     [SerializeField] private int activeCrewmateID;
@@ -44,6 +46,10 @@ public class CrewmateUI : MonoBehaviour
             dot.gameObject.SetActive(false);
         }
     }
+    private void Start()
+    {
+        btnClose.onClick.AddListener(CloseMenu);
+    }
     private void Update()
     {
         HandleClicking();
@@ -51,22 +57,44 @@ public class CrewmateUI : MonoBehaviour
 
     internal void FillUI(Crewmate mate)
     {
-        uiCrewmateIcon.sprite = mate.icon;
-        uiName.text = mate.name;
-        uiHealth.text = mate.health.ToString();
-        for (int i = 0; i < mate.strength; i++)
+        uiCrewmateIcon.sprite = mate.Icon;
+        uiName.text = mate.Name;
+        uiHealth.text = mate.Health.ToString();
+
+        for (int i = 0; i < 5; i++)
         {
-            dotsStrength[i].gameObject.SetActive(true);
+            if(i< mate.Strength)
+            {
+                dotsStrength[i].gameObject.SetActive(true);
+            }
+            else
+            {
+                dotsStrength[i].gameObject.SetActive(false);
+            }
         }
-        for (int i = 0; i < mate.agility; i++)
+        for (int i = 0; i < mate.Agility; i++)
         {
-            dotsAgility[i].gameObject.SetActive(true);
+            if (i < mate.Agility)
+            {
+                dotsAgility[i].gameObject.SetActive(true);
+            }
+            else
+            {
+                dotsAgility[i].gameObject.SetActive(false);
+            }
         }
-        for (int i = 0; i < mate.stamina; i++)
+        for (int i = 0; i < mate.Stamina; i++)
         {
-            dotsStamina[i].gameObject.SetActive(true);
+            if(i < mate.Stamina)
+            {
+                dotsStamina[i].gameObject.SetActive(true);
+            }
+            else
+            {
+                dotsStamina[i].gameObject.SetActive(false);
+            }
         }
-        //uiBuildingIcon.sprite = uiBuildingIcon;
+        uiBuildingIcon.sprite = mate.Building.icon;
     }
 
     // Handlers

@@ -34,8 +34,6 @@ public class BuildingUI : MonoBehaviour
         // Get component
         if(bm == null) { bm = FindObjectOfType<BuildingManager>(); }
         bounds = GetComponent<RectTransform>();
-
-
         uiAsign2.transform.parent.gameObject.SetActive(false);
     }
     private void Start()
@@ -59,11 +57,12 @@ public class BuildingUI : MonoBehaviour
         uiIcon.sprite = building.Icon;
         uiName.text = building.Name;
         uiStatus.text = building.GetStatus();
-        uiProduction.text = building.resourceProduction.ToString();
+        uiProduction.text = building.Production.ToString();
 
-        if (building.assignee1 != null)
+        // Might not need the branch here
+        if (building.Assignee1.id != -1)
         {
-            uiAsign1.sprite = building.assignee1.Icon;
+            uiAsign1.sprite = building.Assignee1.icon;
         }
         else
         {
@@ -73,9 +72,10 @@ public class BuildingUI : MonoBehaviour
         if (building.IsBuilt)
         {
             uiAsign2.transform.parent.gameObject.SetActive(true);
-            if (building.assignee2 != null)
+            // or here if crewmate
+            if (building.Assignee2.id != -1)
             {
-                uiAsign2.sprite = building.assignee2.Icon;
+                uiAsign2.sprite = building.Assignee2.icon;
             }
             else
             {
@@ -93,7 +93,7 @@ public class BuildingUI : MonoBehaviour
             btnDemolish.interactable = true;
         }
 
-        activeBuildingID = building.id;
+        activeBuildingID = building.ID;
     }
     internal void SetStatusUI(string status)
     {

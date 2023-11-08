@@ -2320,6 +2320,7 @@ MonoBehaviour:
   - {fileID: 1608439493}
   - {fileID: 318881204}
   uiBuildingIcon: {fileID: 1192102748}
+  btnClose: {fileID: 383671989}
   activeCrewmateID: 0
 --- !u!1 &238213407
 GameObject:
@@ -2614,6 +2615,58 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c037dd51df5a0542acec07d6b174438, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  iconEmptyAsssignment: {fileID: 21300000, guid: 9545935a93b348a4f9fa0b45d94d08ff, type: 3}
+  crewmateIcons:
+  - {fileID: 21300000, guid: f74072968857ea8419964fc008a14c67, type: 3}
+  - {fileID: 21300000, guid: 92ce947606254854bbdec83eeb3d6b3d, type: 3}
+  - {fileID: 21300000, guid: 107f4399307d85c44bbe15894e263257, type: 3}
+  - {fileID: 21300000, guid: 861dd684ae5fb7a40b20d0b779a45002, type: 3}
+  - {fileID: 21300000, guid: 592a4c84b813f2143aa50a49857df28b, type: 3}
+  - {fileID: 21300000, guid: 0b7e3ec8c3da32848b5e1c7367385473, type: 3}
+  - {fileID: 21300000, guid: d9d29305ab6f21844b8d1fbdab215f60, type: 3}
+  - {fileID: 21300000, guid: ee83bdff15127e946b2cde74fe47546d, type: 3}
+  - {fileID: 21300000, guid: eecd13963d7f83e4caafe1df82fdfb81, type: 3}
+  - {fileID: 21300000, guid: a91c1dec654799b4e835e37aedd5c3c7, type: 3}
+  - {fileID: 21300000, guid: 4479a90b827f6634e8738e1539635716, type: 3}
+  - {fileID: 21300000, guid: 931ad56211c860d4aaddee4659ee81b6, type: 3}
+  - {fileID: 21300000, guid: 8649c6b1c2115754fb20e34dc0f22eec, type: 3}
+  - {fileID: 21300000, guid: 33178491774ec484fbeb6bc6782fc199, type: 3}
+  - {fileID: 21300000, guid: 84cca0ede568f574eac47c3d5e176f53, type: 3}
+  - {fileID: 21300000, guid: 00a51b3181fa57443a10f5e3fb886ea7, type: 3}
+  - {fileID: 21300000, guid: 62a354333c389a644ae9391d3da0761d, type: 3}
+  - {fileID: 21300000, guid: cfa1266e5be1abb4bbddfa295592ebeb, type: 3}
+  - {fileID: 21300000, guid: a1959279e65da4a419ac6cf52a998f92, type: 3}
+  - {fileID: 21300000, guid: 1b71353db9d69da4c90f201866764d34, type: 3}
+  - {fileID: 21300000, guid: ba31359650d9a9c49999a6588cc89490, type: 3}
+  - {fileID: 21300000, guid: 8e2df057cbc53b24f9a9808244020c91, type: 3}
+  - {fileID: 21300000, guid: 26f12e1874d32ae42b8bc7e82d67c6b1, type: 3}
+  - {fileID: 21300000, guid: 4d39ca1fc51378f4abf5f6f21ebe9d72, type: 3}
+  - {fileID: 21300000, guid: e556726c86b103a49b93e2f706d80bf7, type: 3}
+  - {fileID: 21300000, guid: 74a77ab1d6f78f2458665e7e7d8c6f27, type: 3}
+  - {fileID: 21300000, guid: fc44f3b8e02732041b760386d79813f2, type: 3}
+  - {fileID: 21300000, guid: a1c79833fc89f634b8e63040d6fcd073, type: 3}
+  - {fileID: 21300000, guid: 4c94c522a37812246b03b8ad0108fe32, type: 3}
+  - {fileID: 21300000, guid: e542a2930f5b1b24db72f0a8a377d762, type: 3}
+  - {fileID: 21300000, guid: 67273065d7e468645b8b68682ec0c44b, type: 3}
+  - {fileID: 21300000, guid: e7a315d9ef2fe6b448cf259088c052e2, type: 3}
+  - {fileID: 21300000, guid: 9db891fcc19b6094f80a87207af48cf1, type: 3}
+  - {fileID: 21300000, guid: 27bd7f2febc5a5442a9f5aa4d406355f, type: 3}
+  - {fileID: 21300000, guid: 8012e35ad36e45042a5ad0e04bac1aa5, type: 3}
+  - {fileID: 21300000, guid: bda60680aacb38b4dbca79871427827c, type: 3}
+  - {fileID: 21300000, guid: d200fb519317dec41989c8258c9cb094, type: 3}
+  - {fileID: 21300000, guid: 7142ef0252873a84886f59b8d8172d87, type: 3}
+  - {fileID: 21300000, guid: be12edc7d7dcf9a43bbbdcd33e1b4c4f, type: 3}
+  - {fileID: 21300000, guid: 3715da999389cdc40bf816d0e400daf3, type: 3}
+  - {fileID: 21300000, guid: aa5aee33518530d45b0b620ac86c3cfa, type: 3}
+  - {fileID: 21300000, guid: 2d423f363276abf4bb62b9b33dfbba53, type: 3}
+  - {fileID: 21300000, guid: 962bd042a9dd1c9489d7ec84ba8fcaf9, type: 3}
+  - {fileID: 21300000, guid: ddd79171897b0834e82491b867e1487f, type: 3}
+  - {fileID: 21300000, guid: 5c5bebcaeffb0f6439bf7756afce7183, type: 3}
+  - {fileID: 21300000, guid: bf4c1451983992d438e3abe2898ec19a, type: 3}
+  - {fileID: 21300000, guid: 41b40d5e9680cd74a88958ce048f3545, type: 3}
+  - {fileID: 21300000, guid: 9691672eac69014438697422fc0c7239, type: 3}
+  - {fileID: 21300000, guid: 944a90ff1693b17409f3f81b3d9aab8a, type: 3}
+  - {fileID: 21300000, guid: 8cbe3d56d910df744a64e054dd9e58cf, type: 3}
   omui: {fileID: 2331478675485732542}
   cmui: {fileID: 0}
   rui: {fileID: 1289026105}
@@ -6352,12 +6405,14 @@ MonoBehaviour:
   omui: {fileID: 2331478675485732542}
   rui: {fileID: 1289026105}
   buildingUI: {fileID: 9116816653009409157}
+  cm: {fileID: 314619652}
   isPlacing: 0
   prospectiveBuilding: {fileID: 0}
   totalProduction:
     wood: 0
     food: 0
     ap: 0
+    space: 0
 --- !u!1 &746340825
 GameObject:
   m_ObjectHideFlags: 0

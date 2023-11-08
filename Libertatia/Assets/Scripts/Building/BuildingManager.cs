@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
 public enum BuildingState
@@ -20,6 +19,7 @@ public struct BuildingResources
     public int wood;
     public int food;
     public int ap;
+    public int space;
 
     public override string ToString()
     {
@@ -48,32 +48,27 @@ public class BuildingManager : MonoBehaviour
     [SerializeField] private OutpostManagementUI omui;
     [SerializeField] private ResourcesUI rui;
     [SerializeField] private BuildingUI buildingUI;
+    [SerializeField] private CrewmateManager cm; // need this for selection data
     [Header("Tracking")]
     [SerializeField] private bool isPlacing = false;
     [SerializeField] private Building prospectiveBuilding;
-    // Tracking
     [SerializeField] private Dictionary<int, Building> buildings;
     [SerializeField] private BuildingResources totalProduction;
 
+    private void Awake()
+    {
+        if (omui == null) { omui = FindObjectOfType<OutpostManagementUI>(); }
+        if (rui == null) { rui = FindObjectOfType<ResourcesUI>(); }
+        if (cm == null) { cm = FindObjectOfType<CrewmateManager>(); }
 
+        buildings = new Dictionary<int, Building>();
+    }
     private void Start()
     {
-        if (omui == null) { omui = FindObjectOfType<OutpostManagementUI>(); }// init both of these
-        if (rui == null) { rui = FindObjectOfType<ResourcesUI>(); }
-
         // Init Building (make own function)
-        buildings = new Dictionary<int, Building>(); //GameManager.Data.buildings.Count
         for (int i = 0; i < GameManager.Data.buildings.Count; i ++) // cache buildings list?
         {
-            BuildingData data = GameManager.Data.buildings[i];
-            Building building = Instantiate(buildingPrefabs[data.uiIndex], transform);
-            building.id = data.id;
-            building.uiIndex = data.uiIndex;
-            building.level = data.level;
-            building.transform.position = data.position;
-            building.transform.rotation = data.rotation;
-            building.CompleteConstruction(); // dont keep, but is used to complete for now, will be using AP
-            buildings.Add(building.id, building);
+            SpawnExistingBuilding(GameManager.Data.buildings[i]);
         }
 
         // Fill UI - probably combine?
@@ -92,6 +87,52 @@ public class BuildingManager : MonoBehaviour
     }
 
     // Actions
+    private void SpawnNewBuilding(Building prospectiveBuilding)
+    {
+        isPlacing = false;
+        omui.DeselectBuildingCard(prospectiveBuilding.Type);
+
+        // TODO: Compile functions into one if possible
+        prospectiveBuilding.Place();
+        prospectiveBuilding.SetMaterial(stateData.matRecruiting);
+        prospectiveBuilding.SetUI(stateData.iconRecruiting, stateData.iconEmptyAsssignment);
+
+        // Save Data
+        GameManager.AddBuilding(new BuildingData(prospectiveBuilding));
+
+        // Set callbacks
+        prospectiveBuilding.onFirstAssignment.AddListener(() => { OnFirstAssignmentCallback(prospectiveBuilding.ID); });
+        prospectiveBuilding.onCrewmateAssigned.AddListener(() => { OnCrewmateAssignedCallback(prospectiveBuilding.ID); });
+        prospectiveBuilding.onConstructionCompleted.AddListener(() => { OnConstructionCompletedCallback(prospectiveBuilding.ID); });
+        prospectiveBuilding.onSelection.AddListener(() => { OnSelectionCallback(prospectiveBuilding.ID); });
+        prospectiveBuilding.onCollision.AddListener(() => { OnCollisionCallback(prospectiveBuilding.ID); });
+        prospectiveBuilding.onNoCollisions.AddListener(() => { OnNoCollisionsCallback(prospectiveBuilding.ID); });
+        prospectiveBuilding.onFreeAssignees.AddListener(() => { OnFreeAssigneesCallback(prospectiveBuilding.ID); });
+
+        buildings.Add(prospectiveBuilding.ID, prospectiveBuilding);
+
+        // Update Data
+        GameManager.data.resources.wood -= buildingPrefabs[prospectiveBuilding.Type].Cost.wood; // Subtract resources
+        GameManager.data.resources.foodProduction += buildingPrefabs[prospectiveBuilding.Type].Production.food; // will likely chance with level
+        GameManager.data.outpostCrewCapacity += buildingPrefabs[prospectiveBuilding.Type].Production.space; // will be 8
+
+        // Update UI - also make this one call
+        rui.UpdateWoodUI(GameManager.Data.resources.wood);
+        rui.UpdateFoodUI(GameManager.Data.resources);
+        rui.UpdateCrewCapacityUI(GameManager.Data.outpostCrewCapacity);
+    }
+    private void SpawnExistingBuilding(BuildingData data)
+    {
+        Building building = Instantiate(buildingPrefabs[data.uiIndex], transform);
+        building.Init(data);// if building, should check with resources
+
+        // Will be checking for AP consumption
+        building.CompleteConstruction(); // dont keep, but is used to complete for now, will be using AP
+
+        // Tracking
+        buildings.Add(building.ID, building);
+
+    }
     internal void SelectBuilding(int buildingIndex)
     {
         if (isPlacing)
@@ -102,57 +143,9 @@ public class BuildingManager : MonoBehaviour
 
         Building prefab = buildingPrefabs[buildingIndex];
         prospectiveBuilding = Instantiate(prefab, Vector3.zero, prefab.transform.rotation, transform);
-        prospectiveBuilding.uiIndex = buildingIndex; // stores type
+        prospectiveBuilding.SetType(buildingIndex); // stores type
         prospectiveBuilding.SetMaterial(stateData.matPlacing);
     }
-    private void SpawnBuilding(Building prospectiveBuilding)
-    {
-        isPlacing = false;
-        omui.DeselectBuildingCard(prospectiveBuilding.uiIndex);
-
-        // Subtract resources - move to Building or bring CanBuild in here
-        GameManager.data.resources.wood -= prospectiveBuilding.Cost.wood;
-        rui.UpdateWoodUI(GameManager.Data.resources.wood);
-
-        // Create Building data
-        BuildingData data = new BuildingData();
-        data.id = prospectiveBuilding.id;
-        data.uiIndex = prospectiveBuilding.uiIndex;
-        data.level = prospectiveBuilding.level;
-        data.position = prospectiveBuilding.transform.position;
-        data.rotation = prospectiveBuilding.transform.rotation;
-        GameManager.AddBuilding(data);
-
-        // TODO: turn into switch statement
-        // Building type
-        if (prospectiveBuilding.uiIndex == 0)
-        {
-            GameManager.data.resources.foodProduction += prospectiveBuilding.resourceProduction.food; // should probably use these buildingPrefabs[prospectiveBuilding.uiIndex], that would mean keeping the costs and production in the manager which might be better. This would just need the number of each type to update the UI
-            rui.UpdateFoodUI(GameManager.Data.resources);
-        }
-        else if (prospectiveBuilding.uiIndex == 1)
-        {
-            GameManager.data.outpostCrewCapacity += 8;
-            rui.UpdateCrewCapacityUI(GameManager.Data.outpostCrewCapacity);
-        }
-        else if (prospectiveBuilding.uiIndex == 2)
-        {
-            // ?
-        }
-        // TODO: Compile functions into one if possible
-        prospectiveBuilding.Place();
-        prospectiveBuilding.SetMaterial(stateData.matRecruiting);
-        prospectiveBuilding.SetUI(stateData.iconRecruiting, stateData.iconEmptyAsssignment);
-        prospectiveBuilding.onFirstAssignment.AddListener(() => { OnFirstAssignmentCallback(prospectiveBuilding.id); });
-        prospectiveBuilding.onCrewmateAssigned.AddListener(() => { OnCrewmateAssignedCallback(prospectiveBuilding.id); });
-        prospectiveBuilding.onConstructionCompleted.AddListener(() => { OnConstructionCompletedCallback(prospectiveBuilding.id); });
-        prospectiveBuilding.onSelection.AddListener(() => { OnSelectionCallback(prospectiveBuilding.id); });
-        prospectiveBuilding.onCollision.AddListener(() => { OnCollisionCallback(prospectiveBuilding.id); });
-        prospectiveBuilding.onNoCollisions.AddListener(() => { OnNoCollisionsCallback(prospectiveBuilding.id); });
-
-        buildings.Add(prospectiveBuilding.id, prospectiveBuilding);
-    }
-
     internal void UpgradeBuilding(int buildingID)
     {
         buildings[buildingID].Upgrade();
@@ -162,8 +155,8 @@ public class BuildingManager : MonoBehaviour
     {
         Building building = buildings[buildingID];
 
-        // Add resources
-        BuildingResources cost = prospectiveBuilding.Cost; // change to reference rules (prefabs)
+        // Update Data
+        BuildingResources cost = buildingPrefabs[building.Type].Cost; // will eventially change with level
         if(building.IsBuilt)
         {
             GameManager.data.resources.wood += (cost.wood/2);
@@ -172,25 +165,15 @@ public class BuildingManager : MonoBehaviour
         {
             GameManager.data.resources.wood += cost.wood;
         }
+        GameManager.data.resources.foodProduction -= buildingPrefabs[building.Type].Production.food;
+        GameManager.data.outpostCrewCapacity -= buildingPrefabs[building.Type].Production.space;
+
+        // Update UI
         rui.UpdateWoodUI(GameManager.Data.resources.wood);
+        rui.UpdateFoodUI(GameManager.Data.resources);
+        rui.UpdateCrewCapacityUI(GameManager.Data.outpostCrewCapacity);
 
-        // Building type
-        if (building.uiIndex == 0)
-        {
-
-            GameManager.data.resources.foodProduction -= building.resourceProduction.food;
-            rui.UpdateFoodUI(GameManager.Data.resources);
-        }
-        else if (building.uiIndex == 1)
-        {
-            GameManager.data.outpostCrewCapacity -= 8;
-            rui.UpdateCrewCapacityUI(GameManager.Data.outpostCrewCapacity);
-        }
-        else if (building.uiIndex == 2)
-        {
-            // ...?
-        }
-
+        // Delete building
         GameManager.RemoveBuilding(buildingID);
         buildings[buildingID].Demolish();
         buildings.Remove(buildingID);
@@ -207,8 +190,32 @@ public class BuildingManager : MonoBehaviour
     private void OnCrewmateAssignedCallback(int buildingID)
     {
         Building building = buildings[buildingID];
-        buildingUI.FillUI(building);
-        buildingUI.OpenMenu();
+
+        if (cm.IsCrewmateSelected)
+        {
+            // Open UI - removed this since the crewmate UI will already be open
+            //buildingUI.FillUI(building);
+            //buildingUI.OpenMenu();
+
+            // Get selected units
+            Crewmate[] selectedCrewmates = cm.GetSelectedCrewmates();
+            for (int i = 0; i < selectedCrewmates.Length; i++)
+            {
+                // Fill open positions
+                if(!building.CanAssign())
+                {
+                    break;
+                }
+
+                // Assign them to the building
+                building.AssignCrewmate(selectedCrewmates[i]); // assigns building to player too
+            }
+        }
+        else
+        {
+            Debug.Log("No crewmate selected");
+        }
+
     }
     private void OnConstructionCompletedCallback(int buildingID)
     {
@@ -230,7 +237,7 @@ public class BuildingManager : MonoBehaviour
     {
         Building building = buildings[buildingID];
         Material buildingMaterial = null;
-        switch (building.state)
+        switch (building.State)
         {
             case BuildingState.PLACING:
                 buildingMaterial = stateData.matPlacing;
@@ -243,6 +250,28 @@ public class BuildingManager : MonoBehaviour
                 break;
         }
         building.SetMaterial(buildingMaterial);
+    }
+    private void OnFreeAssigneesCallback(int buildingID)
+    {
+        Building building = buildings[buildingID];
+        cm.FreeAssignees(building.Assignee1.id, building.Assignee2.id);
+    }
+
+    // Utils
+    internal Building GetBuilding(int buildingID)
+    {
+        return buildings[buildingID];
+    }
+    internal void UnassignBuilding(int buildingID, int crewmateID)
+    {
+        Building building = buildings[buildingID];
+        building.UnassignCrewmate(crewmateID);
+
+        if (building.State == BuildingState.WAITING_FOR_ASSIGNMENT)
+        {
+            building.SetMaterial(stateData.matRecruiting);
+            building.onFirstAssignment.AddListener(() => { OnFirstAssignmentCallback(building.ID); }); // might be able to omit this and just embedd its func
+        }
     }
 
     // Handlers
@@ -276,12 +305,12 @@ public class BuildingManager : MonoBehaviour
                 // check collision
                 if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject() && !prospectiveBuilding.IsColliding)
                 {
-                    SpawnBuilding(prospectiveBuilding);
+                    SpawnNewBuilding(prospectiveBuilding);
                 }
                 if (Input.GetMouseButtonDown(1))
                 {
                     isPlacing = false;
-                    omui.DeselectBuildingCard(prospectiveBuilding.uiIndex);
+                    omui.DeselectBuildingCard(prospectiveBuilding.Type);
                     Destroy(prospectiveBuilding.gameObject);
                 }
             }

@@ -4,9 +4,14 @@ using UnityEngine.EventSystems;
 
 public class CrewmateCard : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-    public int crewmateID = -1;
+    [SerializeField] private int crewmateID = -1;
     public UnityEvent onHover;
     public UnityEvent onHoverExit;
+
+    public int ID
+    {
+        get { return crewmateID; }
+    }
 
     public void Init(int crewmateID)
     {

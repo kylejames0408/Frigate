@@ -18,22 +18,69 @@ public struct PlayerResourceData
 [Serializable]
 public struct BuildingData
 {
+    // Tracking / State
     public int id;
-    public int uiIndex; // type?
+    public AssigneeCrewmateData crewmate1ID;
+    public AssigneeCrewmateData crewmate2ID;
+    public BuildingState state;
+    // Characteristics
+    public string name;
+    public int uiIndex;
     public int level;
-    public int assignedCrewmateID;
+    public string output;
+    // UI
+    public Sprite icon;
+    // Spacial
     public Vector3 position;
     public Quaternion rotation;
-    public BuildingState state;
+
+    public BuildingData(Building building)
+    {
+        id = building.ID;
+        crewmate1ID = building.Assignee1;
+        crewmate2ID = building.Assignee2;
+        state = building.State;
+        name = building.Name;
+        uiIndex = building.Type;
+        level = building.Level;
+        output = building.Output;
+        icon = building.Icon;
+        position = building.transform.position;
+        rotation = building.transform.rotation;
+    }
 }
 // Necessary crewmate Data
 [Serializable]
 public struct CrewmateData
 {
+    // Tracking / State
     public int id;
+    public AssignedBuildingData building;
+    // Characteristics
     public string name;
+    public int health;
+    public int strength;
+    public int agility;
+    public int stamina;
+    // UI
     public Sprite icon;
-    public int buildingID;
+    // Spacial
+    public Vector3 position;
+    public Quaternion rotation;
+
+    public CrewmateData(Crewmate mate)
+    {
+        id = mate.ID;
+        building = mate.Building;
+        name = mate.Name;
+        health = mate.Health;
+        strength = mate.Strength;
+        agility = mate.Agility;
+        stamina = mate.Stamina;
+        icon = mate.Icon;
+        position = mate.transform.position;
+        rotation = mate.transform.rotation;
+    }
 }
 // Holds important player data that should persist when game ends
 [Serializable]
@@ -46,8 +93,8 @@ public struct PlayerData
     public PlayerResourceData resources;
     public int outpostCrewCapacity;
     // maybe make arrays or even lookup tables
-    public List<BuildingData> buildings;
-    public List<CrewmateData> crewmates;
+    public List<BuildingData> buildings; // turn into dict
+    public List<CrewmateData> crewmates; // same here
 }
 
 // Manages player data - creating and converting the data - should this be separate from data tracking?
