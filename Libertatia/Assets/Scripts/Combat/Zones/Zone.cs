@@ -144,7 +144,4 @@ public class Zone : MonoBehaviour
             RemoveUnitsInZoneList(character.gameObject);
         }
     }
-   
-
-
 }

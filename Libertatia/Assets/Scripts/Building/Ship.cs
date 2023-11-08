@@ -76,19 +76,19 @@ public class Ship : MonoBehaviour
     private void OnGUI()
     {
         // the rect that is the canvas
-        GameObject canvas = GameObject.Find("BoxSelectCanvas");
-        RectTransform canvasRect = canvas.GetComponent<RectTransform>();
+        //GameObject canvas = GameObject.Find("BoxSelectCanvas");
+        //RectTransform canvasRect = canvas.GetComponent<RectTransform>();
 
-        // the style used to set the text size and
-        GUIStyle GUIBoxStyle = new GUIStyle(GUI.skin.box);
-        GUIBoxStyle.fontSize = (int)(canvasRect.rect.height * 0.023f);
-        GUIBoxStyle.alignment = TextAnchor.MiddleCenter;
+        //// the style used to set the text size and
+        //GUIStyle GUIBoxStyle = new GUIStyle(GUI.skin.box);
+        //GUIBoxStyle.fontSize = (int)(canvasRect.rect.height * 0.023f);
+        //GUIBoxStyle.alignment = TextAnchor.MiddleCenter;
 
-        if (inRange)
-        {
-            GUI.Box(new Rect(canvasRect.rect.width * 0.35f, canvasRect.rect.height * 0.05f, canvasRect.rect.width * 0.21f, canvasRect.rect.height * 0.05f),
-                "Press E to return to outpost.", GUIBoxStyle);
-        }
+        //if (inRange)
+        //{
+        //    GUI.Box(new Rect(canvasRect.rect.width * 0.35f, canvasRect.rect.height * 0.05f, canvasRect.rect.width * 0.21f, canvasRect.rect.height * 0.05f),
+        //        "Press E to return to outpost.", GUIBoxStyle);
+        //}
 
     }
 }

@@ -2669,13 +2669,20 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 8cbe3d56d910df744a64e054dd9e58cf, type: 3}
   omui: {fileID: 2331478675485732542}
   cmui: {fileID: 0}
-  rui: {fileID: 1289026105}
+  orui: {fileID: 0}
+  crui: {fileID: 0}
   crewmateUI: {fileID: 234963690}
   bm: {fileID: 0}
   crewmatePrefab: {fileID: 4279940650134947149, guid: 8f1e684d0ce15c240a73f35a690f910e, type: 3}
-  crewmateSpawn: {fileID: 0}
+  crewmateSpawn: {fileID: 1943279233}
   crewmateSpawnRadius: 10
   selectedCrewmateIDs: 
+  isCombat: 0
+  eventTriggered: 0
+  materials:
+  - {fileID: 2100000, guid: 8e58b6f3119697b429f7ad7281411480, type: 2}
+  - {fileID: 2100000, guid: 20b8e5c0d5dd17940ab06fe53614d5cc, type: 2}
+  enemies: []
   selectionBoxTrans: {fileID: 1492379092}
 --- !u!1 &317568260
 GameObject:
@@ -8494,6 +8501,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6a9faac7fc866d4583c9654a2f48cdf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onAttack:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!4 &962263074
 Transform:
   m_ObjectHideFlags: 0

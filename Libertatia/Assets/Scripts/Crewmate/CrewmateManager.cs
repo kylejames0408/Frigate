@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 using static UnityEngine.UI.CanvasScaler;
 
 public class CrewmateManager : MonoBehaviour
@@ -24,9 +26,13 @@ public class CrewmateManager : MonoBehaviour
     [SerializeField] private const int CREWMATE_FOOD_CONSUMPTION = 10;
     // Tracking
     [SerializeField] private Dictionary<int, Crewmate> crewmates;
-    [SerializeField] private List<GameObject> enemies;
-    [SerializeField] private bool isCombat = false;
     [SerializeField] private List<int> selectedCrewmateIDs;
+    // Combat
+    [SerializeField] private bool isCombat = false;
+    [SerializeField] private bool eventTriggered = false;
+    [SerializeField] private Material[] materials;
+    [SerializeField] private List<Enemy> enemies;
+    [SerializeField] private LayerMask mask;
     // Selection
     [SerializeField] private RectTransform selectionBoxTrans; // I am 99% sure we can just use the rectTrans. I dont know why it is not working however
     private Rect selectionBoxRect;
@@ -39,7 +45,7 @@ public class CrewmateManager : MonoBehaviour
     {
         get { return selectedCrewmateIDs.Count > 0; }
     }
-    public List<GameObject> Enemies
+    public List<Enemy> Enemies
     {
         get { return enemies; }
     }
@@ -54,6 +60,10 @@ public class CrewmateManager : MonoBehaviour
         // Init Crewmates (make own function)
         crewmateSpawn = transform.GetChild(0);
         crewmates = new Dictionary<int, Crewmate>();
+        if(isCombat)
+        {
+            enemies = FindObjectsOfType<Enemy>().ToList();
+        }
         selectedCrewmateIDs = new List<int>();
 
         // Can probably move this to start - similar to building manager
@@ -89,19 +99,6 @@ public class CrewmateManager : MonoBehaviour
     }
     private void Update()
     {
-
-        //if (sceneName == "Combat")
-        //{
-        //    if (eventTriggered == false)
-        //    {
-        //        if (enemies.Count == 0)
-        //        {
-        //            allEnemiesDead.Raise(this, enemies);
-        //            eventTriggered = true;
-        //        }
-        //    }
-        //}
-
         // TODO: make ifs into handler functions
 
         // Left mouse button PRESS handler
@@ -120,6 +117,31 @@ public class CrewmateManager : MonoBehaviour
         if (Input.GetMouseButtonUp(0))
         {
             ReleaseHandler();
+        }
+
+        // Move Crewmate - TODO: move to function
+        if(isCombat && Input.GetMouseButtonDown(1))
+        {
+            Ray ray = CameraManager.Instance.Camera.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out RaycastHit hit, 500f, mask, QueryTriggerInteraction.Ignore))
+            {
+                //Moves units to the center of zone when it is clicked on
+                if (hit.collider.tag == "Zone")
+                {
+                    Zone zone = hit.transform.gameObject.GetComponent<Zone>();
+                    foreach (int id in selectedCrewmateIDs)
+                    {
+                        crewmates[id].SetDestination(zone.zoneCenter);
+                    }
+                }
+                else
+                {
+                    foreach (int id in selectedCrewmateIDs)
+                    {
+                        crewmates[id].SetDestination(hit.point);
+                    }
+                }
+            }
         }
     }
 
@@ -314,7 +336,7 @@ public class CrewmateManager : MonoBehaviour
 
         Crewmate mate = crewmateObj.GetComponent<Crewmate>();
         crewmateObj.name = mate.Name + mate.ID;
-         
+
         mate.SetUI(crewmateIcons[UnityEngine.Random.Range(0, crewmateIcons.Length)], iconEmptyAsssignment);
 
         // Save Data
@@ -378,8 +400,7 @@ public class CrewmateManager : MonoBehaviour
     }
     internal void SelectCrewmate(int crewmateID)
     {
-        crewmates[crewmateID].GetComponent<CrewMember>().rend.sharedMaterial = crewmates[crewmateID].GetComponent<CrewMember>().materials[1];
-
+        crewmates[crewmateID].GetComponent<Renderer>().sharedMaterial = materials[1];
         crewmates[crewmateID].transform.GetChild(0).gameObject.SetActive(true);
         selectedCrewmateIDs.Add(crewmateID);
 
@@ -397,6 +418,7 @@ public class CrewmateManager : MonoBehaviour
     }
     internal void DeselectCrewmate(int crewmateID)
     {
+        crewmates[crewmateID].GetComponent<Renderer>().sharedMaterial = materials[0];
         crewmates[crewmateID].transform.GetChild(0).gameObject.SetActive(false);
         selectedCrewmateIDs.Remove(crewmateID);
     }

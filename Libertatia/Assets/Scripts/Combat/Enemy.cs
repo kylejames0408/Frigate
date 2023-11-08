@@ -22,6 +22,10 @@ public class Enemy : Character
     public bool lootDropped;
     public int lootValue;
 
+    private void Awake()
+    {
+        if (cm == null) { cm = FindObjectOfType<CrewmateManager>(); }
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -84,7 +88,7 @@ public class Enemy : Character
                     charAgent.SetDestination(crewMember.transform.position);
                 }
             }
-           
+
         }
     }
 
@@ -94,8 +98,6 @@ public class Enemy : Character
 
         if(currentHealth <= 0)
         {
-            //unitSelectionList.enemies.Remove(gameObject);
-
             if(lootDropped == false)
             {
                 CombatResourcesUI combatResource = combatUI.GetComponent<CombatResourcesUI>();
@@ -111,9 +113,8 @@ public class Enemy : Character
 
                 lootDropped = true;
             }
-  
 
-            cm.Enemies.Remove(gameObject);
+            cm.Enemies.Remove(this);
         }
 
     }

@@ -95,9 +95,14 @@ public class Crewmate : MonoBehaviour
         agility = UnityEngine.Random.Range(1, 6);
         stamina = UnityEngine.Random.Range(1, 6);
     }
+    private void Start()
+    {
+        agent.Warp(transform.position);
+    }
     private void Update()
     {
         HandleSelection();
+
     }
     private void OnMouseEnter()
     {
@@ -130,12 +135,6 @@ public class Crewmate : MonoBehaviour
         transform.position = data.position;
         transform.rotation = data.rotation;
     }
-    public void SetUI(Sprite crewmateIcon, Sprite emptyBuildingAssignmentIcon) // will likely have state in future, similar to building
-    {
-        icon = crewmateIcon;
-        iconEmptyAsssignment = emptyBuildingAssignmentIcon;
-        building.icon = iconEmptyAsssignment;
-    }
     public void Assign(int buildingID, Sprite buildingIcon, Vector3 destination)
     {
         if(building.id != -1)
@@ -149,6 +148,20 @@ public class Crewmate : MonoBehaviour
     public void Free()
     {
         building.Reset();
+    }
+
+    // Util
+    public void SetDestination(Vector3 destination)
+    {
+        agent.SetDestination(destination);
+    }
+
+    // UI
+    public void SetUI(Sprite crewmateIcon, Sprite emptyBuildingAssignmentIcon) // will likely have state in future, similar to building
+    {
+        icon = crewmateIcon;
+        iconEmptyAsssignment = emptyBuildingAssignmentIcon;
+        building.icon = iconEmptyAsssignment;
     }
 
     // Handlers
