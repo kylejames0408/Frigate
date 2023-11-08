@@ -2671,6 +2671,7 @@ MonoBehaviour:
   cmui: {fileID: 0}
   rui: {fileID: 1289026105}
   crewmateUI: {fileID: 234963690}
+  bm: {fileID: 0}
   crewmatePrefab: {fileID: 4279940650134947149, guid: 8f1e684d0ce15c240a73f35a690f910e, type: 3}
   crewmateSpawn: {fileID: 0}
   crewmateSpawnRadius: 10
@@ -6399,7 +6400,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stateData: {fileID: 11400000, guid: f08484c117e288349814639a80257dfa, type: 2}
   buildingPrefabs:
-  - {fileID: 4471357269373654606, guid: 464be573e97f0c84a9d1788bb444d936, type: 3}
+  - {fileID: 3911053399067746306, guid: 464be573e97f0c84a9d1788bb444d936, type: 3}
   - {fileID: 7528525253285437895, guid: c1d10c38b808bca439ce275a3fe76d58, type: 3}
   - {fileID: 4471357269373654606, guid: 96f8b8e50d2808943afa86abb3c98f10, type: 3}
   omui: {fileID: 2331478675485732542}
