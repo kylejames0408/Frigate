@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
-using static UnityEngine.UI.CanvasScaler;
 
 public class Enemy : Character
 {
@@ -25,6 +24,7 @@ public class Enemy : Character
     private void Awake()
     {
         if (cm == null) { cm = FindObjectOfType<CrewmateManager>(); }
+        if (combatUI == null) { combatUI = GameObject.FindGameObjectWithTag("CombatUI"); };
     }
     // Start is called before the first frame update
     void Start()
@@ -50,10 +50,6 @@ public class Enemy : Character
             crewMembers.Add(crewMember);
         }
 
-        //unitSelection = GameObject.FindGameObjectWithTag("Unit Selections");
-        //unitSelectionList = unitSelection.GetComponent<UnitSelections>();
-
-        combatUI = GameObject.FindGameObjectWithTag("CombatUI");
         lootDropped = false;
     }
 
@@ -114,7 +110,7 @@ public class Enemy : Character
                 lootDropped = true;
             }
 
-            cm.Enemies.Remove(this);
+            crewMembers.Remove(this);
         }
 
     }

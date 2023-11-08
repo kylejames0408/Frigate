@@ -49,6 +49,10 @@ public class CrewmateManager : MonoBehaviour
     {
         get { return enemies; }
     }
+    public List<Crewmate> Crewmates
+    {
+        get { return crewmates.Values.ToList(); }
+    }
 
     private void Awake()
     {

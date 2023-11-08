@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -7,9 +6,6 @@ public abstract class Character : MonoBehaviour
 {
     public int maxHealth;
     public int currentHealth;
-
-    //public List<Character> crewMembers;
-    //public List<Character> enemies;
 
     public int attackRange;
     public float attackRate;
@@ -31,7 +27,7 @@ public abstract class Character : MonoBehaviour
         attackRate = 2;
         damage = 50;
 
-        healthbar.UpdateHealthBar(maxHealth, currentHealth); 
+        healthbar.UpdateHealthBar(maxHealth, currentHealth);
 
         rend = GetComponent<Renderer>();
         rend.enabled = true;
