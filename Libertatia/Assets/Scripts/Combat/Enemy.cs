@@ -9,6 +9,7 @@ public class Enemy : Character
 {
     public List<Character> crewMembers;
     public List<GameObject> crewMemberGameObjects;
+    public CrewmateManager cm;
 
     public float detectionRange;
 
@@ -112,7 +113,7 @@ public class Enemy : Character
             }
   
 
-            GameObject.Find("Unit Selections").GetComponent<UnitSelections>().enemies.Remove(gameObject);
+            cm.Enemies.Remove(gameObject);
         }
 
     }

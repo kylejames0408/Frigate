@@ -80,10 +80,7 @@ public class UnitSelections : MonoBehaviour
         //    }
         //}
 
-        if (sceneName == "Combat")
-        {
-            TriggerEvent();
-        }
+
 
         //Debug.Log(pData.crew.amount);
 
@@ -166,7 +163,7 @@ public class UnitSelections : MonoBehaviour
         unit.rend.sharedMaterial = unit.materials[1];
 
         Crewmate crewmate = unitToAdd.GetComponent<Crewmate>();
-        cm.SelectCrewmate(crewmate.cardIndex);
+        cm.SelectCrewmate(crewmate.ID);
 
         //sets the second child to be active: a sphere showing detection range
         //unitToAdd.transform.GetChild(1).gameObject.SetActive(true);
@@ -223,19 +220,7 @@ public class UnitSelections : MonoBehaviour
     /// <param name="enemy"></param>
     ///
     //TO BE REMOVED
-    public void TriggerEvent()
-    {
 
-        if(eventTriggered == false)
-        {
-            if (enemies.Count == 0)
-            {
-                allEnemiesDead.Raise(this, enemies);
-                eventTriggered = true;
-            }
-        }
-
-    }
 
 
 }

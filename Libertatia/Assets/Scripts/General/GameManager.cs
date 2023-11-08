@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Events;
 
 public enum GameState
 {
@@ -24,6 +25,8 @@ public class GameManager : MonoBehaviour
     public static bool MainMenuTesting = false;
     public static bool OutpostTesting = true;
     public static bool CombatTesting = true;
+
+    public UnityEvent onAttack;
 
     // starting to act like the actual data manager - read/write
     public static PlayerData Data

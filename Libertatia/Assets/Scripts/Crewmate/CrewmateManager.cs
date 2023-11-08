@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using static UnityEngine.UI.CanvasScaler;
 
 public class CrewmateManager : MonoBehaviour
 {
@@ -12,7 +13,8 @@ public class CrewmateManager : MonoBehaviour
     // Components
     [SerializeField] private OutpostManagementUI omui;
     [SerializeField] private CombatManagementUI cmui;
-    [SerializeField] private ResourcesUI rui;
+    [SerializeField] private ResourcesUI orui;
+    [SerializeField] private CombatResourcesUI crui;
     [SerializeField] private CrewmateUI crewmateUI;
     [SerializeField] private BuildingManager bm;
     // Crewmate Data
@@ -22,6 +24,8 @@ public class CrewmateManager : MonoBehaviour
     [SerializeField] private const int CREWMATE_FOOD_CONSUMPTION = 10;
     // Tracking
     [SerializeField] private Dictionary<int, Crewmate> crewmates;
+    [SerializeField] private List<GameObject> enemies;
+    [SerializeField] private bool isCombat = false;
     [SerializeField] private List<int> selectedCrewmateIDs;
     // Selection
     [SerializeField] private RectTransform selectionBoxTrans; // I am 99% sure we can just use the rectTrans. I dont know why it is not working however
@@ -35,12 +39,16 @@ public class CrewmateManager : MonoBehaviour
     {
         get { return selectedCrewmateIDs.Count > 0; }
     }
+    public List<GameObject> Enemies
+    {
+        get { return enemies; }
+    }
 
     private void Awake()
     {
         if (omui == null) { omui = FindObjectOfType<OutpostManagementUI>(); }
         if (cmui == null) { cmui = FindObjectOfType<CombatManagementUI>(); }
-        if (rui == null) { rui = FindObjectOfType<ResourcesUI>(); }
+        if (orui == null) { orui = FindObjectOfType<ResourcesUI>(); }
         if (bm == null) { bm = FindObjectOfType<BuildingManager>(); }
 
         // Init Crewmates (make own function)
@@ -72,15 +80,28 @@ public class CrewmateManager : MonoBehaviour
     }
     private void Start()
     {
-        rui.Init(); // inits here since crewmate manager inits in both outpost and combat scene
         // Update UI
-        if (rui != null)
+        if (orui != null)
         {
-            rui.UpdateFoodUI(GameManager.Data.resources);
+            orui.Init(); // inits here since crewmate manager inits in both outpost and combat scene
+            orui.UpdateFoodUI(GameManager.Data.resources);
         }
     }
     private void Update()
     {
+
+        //if (sceneName == "Combat")
+        //{
+        //    if (eventTriggered == false)
+        //    {
+        //        if (enemies.Count == 0)
+        //        {
+        //            allEnemiesDead.Raise(this, enemies);
+        //            eventTriggered = true;
+        //        }
+        //    }
+        //}
+
         // TODO: make ifs into handler functions
 
         // Left mouse button PRESS handler
@@ -293,6 +314,7 @@ public class CrewmateManager : MonoBehaviour
 
         Crewmate mate = crewmateObj.GetComponent<Crewmate>();
         crewmateObj.name = mate.Name + mate.ID;
+         
         mate.SetUI(crewmateIcons[UnityEngine.Random.Range(0, crewmateIcons.Length)], iconEmptyAsssignment);
 
         // Save Data
@@ -300,8 +322,8 @@ public class CrewmateManager : MonoBehaviour
 
         // Set callbacks
         mate.onSelect.AddListener(() => { ClickCrewmate(mate.ID); });
-        mate.onAssign.AddListener(() => { OnAssignCallback(mate.ID); });
-        mate.onReassign.AddListener(() => { OnReassignCallback(mate.ID); });
+        mate.onAssign.AddListener(() => { OnAssignCallback(mate.ID); }); // dont need for combat
+        mate.onReassign.AddListener(() => { OnReassignCallback(mate.ID); }); // dont need for combat
         mate.onDestroy.AddListener(() => { DeselectCard(mate.ID); });
 
         // Tracking
@@ -309,8 +331,11 @@ public class CrewmateManager : MonoBehaviour
 
         // Update UI
         AddCard(mate);
-        GameManager.data.resources.foodConsumption += CREWMATE_FOOD_CONSUMPTION; // will need to make functions for this sometime
-        rui.UpdateFoodUI(GameManager.Data.resources); // including this
+        if (!isCombat)
+        {
+            GameManager.data.resources.foodConsumption += CREWMATE_FOOD_CONSUMPTION; // will need to make functions for this sometime
+            orui.UpdateFoodUI(GameManager.Data.resources); // including this
+        }
     }
     private void SpawnExistingCrewmate(CrewmateData data)
     {
@@ -328,7 +353,8 @@ public class CrewmateManager : MonoBehaviour
 
         // Set callbacks
         mate.onSelect.AddListener(() => { ClickCrewmate(mate.ID); });
-        mate.onAssign.AddListener(() => { SelectCard(mate.ID); }); // Should update UI I think... check on this
+        mate.onAssign.AddListener(() => { OnAssignCallback(mate.ID); });
+        mate.onReassign.AddListener(() => { OnReassignCallback(mate.ID); });
         mate.onDestroy.AddListener(() => { DeselectCard(mate.ID); });
 
         // Tracking
@@ -352,15 +378,21 @@ public class CrewmateManager : MonoBehaviour
     }
     internal void SelectCrewmate(int crewmateID)
     {
+        crewmates[crewmateID].GetComponent<CrewMember>().rend.sharedMaterial = crewmates[crewmateID].GetComponent<CrewMember>().materials[1];
+
         crewmates[crewmateID].transform.GetChild(0).gameObject.SetActive(true);
         selectedCrewmateIDs.Add(crewmateID);
-        if(selectedCrewmateIDs.Count > 1)
+
+        if(!isCombat)
         {
-            crewmateUI.CloseMenu();
-        }
-        else
-        {
-            OpenSlider(crewmates[crewmateID]);
+            if (selectedCrewmateIDs.Count > 1)
+            {
+                crewmateUI.CloseMenu();
+            }
+            else
+            {
+                OpenSlider(crewmates[crewmateID]);
+            }
         }
     }
     internal void DeselectCrewmate(int crewmateID)

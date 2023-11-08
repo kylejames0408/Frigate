@@ -162,6 +162,7 @@ public class Building : MonoBehaviour
         if (isHovered)
         {
             HandleSelection();
+            //HandleAssignmentDragDrop();
             HandleAssignment();
         }
     }
@@ -389,13 +390,11 @@ public class Building : MonoBehaviour
 
     public void HandleAssignmentDragDrop()
     {
-        if (isHovered && CrewmateManager.Instance.unitsSelected.Count > 0)
+        if (!EventSystem.current.IsPointerOverGameObject())
         {
-            Crewmate mate = CrewmateManager.Instance.unitsSelected[0].GetComponent<Crewmate>();
             if (CanAssign())
             {
-                AssignCrewmate(mate);
-                BuildingUI.Instance.FillUI(this);
+                onCrewmateAssigned.Invoke();
             }
             else
             {

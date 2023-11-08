@@ -1296,9 +1296,8 @@ Transform:
   m_Children:
   - {fileID: 211630679}
   - {fileID: 185122324}
-  - {fileID: 1942534171}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &167413217
 GameObject:
@@ -2432,7 +2431,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6ed2b9447f471e468cae3ab5bc8ebda, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cm: {fileID: 0}
+  cm: {fileID: 2009515019}
   unitList: []
   unitsSelected: []
   enemies: []
@@ -3381,7 +3380,7 @@ Transform:
   - {fileID: 1549228872}
   - {fileID: 59076281}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &307680369
 GameObject:
@@ -4883,6 +4882,7 @@ MonoBehaviour:
   rend: {fileID: 443887580}
   crewMembers: []
   crewMemberGameObjects: []
+  cm: {fileID: 0}
   detectionRange: 0
   combatUI: {fileID: 0}
   resourceText: {fileID: 8633550456291223390, guid: f9089bcc96641064b8fb3e64d5386866, type: 3}
@@ -7184,7 +7184,7 @@ Transform:
   m_Children:
   - {fileID: 168303387}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &717765179
 GameObject:
@@ -8300,7 +8300,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2115434264094232252, guid: d49b5e950800f9f41af93a1c2015bc46, type: 3}
       propertyPath: m_RootOrder
-      value: 12
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 2115434264094232252, guid: d49b5e950800f9f41af93a1c2015bc46, type: 3}
       propertyPath: m_LocalPosition.x
@@ -8956,6 +8956,7 @@ MonoBehaviour:
   rend: {fileID: 867616226}
   crewMembers: []
   crewMemberGameObjects: []
+  cm: {fileID: 0}
   detectionRange: 0
   combatUI: {fileID: 0}
   resourceText: {fileID: 8633550456291223390, guid: f9089bcc96641064b8fb3e64d5386866, type: 3}
@@ -9726,6 +9727,7 @@ MonoBehaviour:
   rend: {fileID: 941200572}
   crewMembers: []
   crewMemberGameObjects: []
+  cm: {fileID: 0}
   detectionRange: 0
   combatUI: {fileID: 0}
   resourceText: {fileID: 8633550456291223390, guid: f9089bcc96641064b8fb3e64d5386866, type: 3}
@@ -10189,7 +10191,7 @@ PrefabInstance:
       objectReference: {fileID: 961156328}
     - target: {fileID: 6231409215963263180, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
       propertyPath: m_RootOrder
-      value: 11
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 6231409215963263180, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
       propertyPath: m_LocalPosition.x
@@ -12901,6 +12903,7 @@ MonoBehaviour:
   rend: {fileID: 1252722869}
   crewMembers: []
   crewMemberGameObjects: []
+  cm: {fileID: 0}
   detectionRange: 0
   combatUI: {fileID: 0}
   resourceText: {fileID: 8633550456291223390, guid: f9089bcc96641064b8fb3e64d5386866, type: 3}
@@ -12981,7 +12984,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1294086459
 GameObject:
@@ -13359,7 +13362,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1355149730
 GameObject:
@@ -13790,7 +13793,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1415576183
 GameObject:
@@ -17014,7 +17017,7 @@ RectTransform:
   m_Children:
   - {fileID: 769712916}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -17187,6 +17190,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6a9faac7fc866d4583c9654a2f48cdf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onAttack:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &1688697428
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17592,7 +17598,7 @@ RectTransform:
   - {fileID: 1816502845}
   - {fileID: 2125402039}
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -18092,7 +18098,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cm: {fileID: 2009515019}
-  zm: {fileID: 0}
+  zm: {fileID: 1411551668}
   animTimeArrow: 0.5
   animTimeInterface: 0.6
   crewmateCardPrefab: {fileID: 6335522714724666445, guid: a77704db073739a41b6b35c0358ba8f1, type: 3}
@@ -20100,13 +20106,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1942534170}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 164944552}
-  m_RootOrder: -1
+  m_Father: {fileID: 0}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1942534172
 MonoBehaviour:
@@ -20528,6 +20534,7 @@ MonoBehaviour:
   rend: {fileID: 1967424716}
   crewMembers: []
   crewMemberGameObjects: []
+  cm: {fileID: 0}
   detectionRange: 0
   combatUI: {fileID: 0}
   resourceText: {fileID: 8633550456291223390, guid: f9089bcc96641064b8fb3e64d5386866, type: 3}
@@ -21132,11 +21139,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c037dd51df5a0542acec07d6b174438, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  iconEmptyAsssignment: {fileID: 0}
+  crewmateIcons: []
+  omui: {fileID: 0}
+  cmui: {fileID: 1763699268}
+  orui: {fileID: 0}
+  crui: {fileID: 217143886}
+  crewmateUI: {fileID: 0}
+  bm: {fileID: 0}
   crewmatePrefab: {fileID: 3693295309995061255, guid: b66c8fd58b8a19240bd7e5b965291055, type: 3}
   crewmateSpawn: {fileID: 666108731}
   crewmateSpawnRadius: 6
-  crewmates: []
-  unitsSelected: []
+  enemies: []
+  isCombat: 1
+  selectedCrewmateIDs: 
+  selectionBoxTrans: {fileID: 1685163102}
 --- !u!4 &2009515020
 Transform:
   m_ObjectHideFlags: 0

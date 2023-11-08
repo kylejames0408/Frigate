@@ -177,8 +177,8 @@ public class ZoneManager : MonoBehaviour
 
     public void OnCrewmateDropAssign()
     {
-        GameObject crewmateDropped = cm.unitsSelected[0];
-
+        Crewmate[] selectedCrewmates = cm.GetSelectedCrewmates();
+        Crewmate crewmateDropped = selectedCrewmates[0];
 
         UnitMovement unitToMove = crewmateDropped.GetComponent<UnitMovement>();
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);

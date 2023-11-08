@@ -44,8 +44,8 @@ public class CrewMember : Character
         {
             //unitSelectionList.enemies.Remove(gameObject);
 
-            GameObject.Find("Unit Selections").GetComponent<UnitSelections>().unitList.Remove(gameObject);
-            GameManager.Data.crewmates.RemoveAt(0);
+            //GameObject.Find("Unit Selections").GetComponent<UnitSelections>().unitList.Remove(gameObject);
+            //GameManager.Data.crewmates.RemoveAt(0);
         }
 
     }
