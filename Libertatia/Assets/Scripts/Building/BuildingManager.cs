@@ -1,8 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.EventSystems;
+
+public enum BuildingState
+{
+    PLACING,
+    WAITING_FOR_ASSIGNMENT,
+    CONSTRUCTING,
+    BUILT,
+    COUNT
+}
 
 // Might need to separate into cost and production
 [Serializable]
@@ -11,6 +19,7 @@ public struct BuildingResources
     public int wood;
     public int food;
     public int ap;
+    public int space;
 
     public override string ToString()
     {
@@ -31,40 +40,35 @@ public struct BuildingResources
 
 public class BuildingManager : MonoBehaviour
 {
-    // Building Data
-    public Building[] buildingPrefabs;
-    public Transform buildingParent; // happens to be the object it is on
-    // Components
-    private OutpostManagementUI omui;
-    private ResourcesUI rui;
-    private bool isPlacing = false;
-    private Building activeBuilding;
-    // - Building Events
-    [Header("Events")]
-    public GameEvent onBuildingPlaced;
-    public UnityEvent placedBuilding;
-    public UnityEvent cancelBuilding;
-    // Tracking
-    public List<Building> buildings; // maybe make a lookup table for buildings since they have an ID
-    public BuildingResources totalProduction;
+    [Header("Building State Data")]
+    [SerializeField] private BuildingStateData stateData;
+    [Header("Building Types")]
+    [SerializeField] private Building[] buildingPrefabs;
+    [Header("Components")]
+    [SerializeField] private OutpostManagementUI omui;
+    [SerializeField] private ResourcesUI rui;
+    [SerializeField] private BuildingUI buildingUI;
+    [SerializeField] private CrewmateManager cm; // need this for selection data
+    [Header("Tracking")]
+    [SerializeField] private bool isPlacing = false;
+    [SerializeField] private Building prospectiveBuilding;
+    [SerializeField] private Dictionary<int, Building> buildings;
+    [SerializeField] private BuildingResources totalProduction;
 
+    private void Awake()
+    {
+        if (omui == null) { omui = FindObjectOfType<OutpostManagementUI>(); }
+        if (rui == null) { rui = FindObjectOfType<ResourcesUI>(); }
+        if (cm == null) { cm = FindObjectOfType<CrewmateManager>(); }
+
+        buildings = new Dictionary<int, Building>();
+    }
     private void Start()
     {
-        if (omui == null) { omui = FindObjectOfType<OutpostManagementUI>(); }// init both of these
-        if (rui == null) { rui = FindObjectOfType<ResourcesUI>(); }
-
         // Init Building (make own function)
-        buildings = new List<Building>(); //GameManager.Data.buildings.Count
         for (int i = 0; i < GameManager.Data.buildings.Count; i ++) // cache buildings list?
         {
-            Building building = Instantiate(buildingPrefabs[GameManager.Data.buildings[i].uiIndex], buildingParent);
-            building.id = GameManager.Data.buildings[i].id;
-            building.uiIndex = GameManager.Data.buildings[i].uiIndex;
-            building.level = GameManager.Data.buildings[i].level;
-            building.transform.position = GameManager.Data.buildings[i].position;
-            building.transform.rotation = GameManager.Data.buildings[i].rotation;
-            building.CompleteBuild(); // dont keep, but is used to complete for now
-            buildings.Add(building);
+            SpawnExistingBuilding(GameManager.Data.buildings[i]);
         }
 
         // Fill UI - probably combine?
@@ -74,90 +78,200 @@ public class BuildingManager : MonoBehaviour
     {
         HandlePlacing();
     }
+    private void OnDestroy()
+    {
+        // Update player data when scene is unloaded
+        //realtimeData.resources = resources; // disable for now
+        //GameManager.Instance.buildingAmount = buildings.Count;
+        //GameManager.Instance.DataManager.Update(realtimeData);
+    }
 
-    // selecting building UI
-    internal void SelectBuilding(int index)
+    // Actions
+    private void SpawnNewBuilding(Building prospectiveBuilding)
+    {
+        isPlacing = false;
+        omui.DeselectBuildingCard(prospectiveBuilding.Type);
+
+        // TODO: Compile functions into one if possible
+        prospectiveBuilding.Place();
+        prospectiveBuilding.SetMaterial(stateData.matRecruiting);
+        prospectiveBuilding.SetUI(stateData.iconRecruiting, stateData.iconEmptyAsssignment);
+
+        // Save Data
+        GameManager.AddBuilding(new BuildingData(prospectiveBuilding));
+
+        // Set callbacks
+        prospectiveBuilding.onFirstAssignment.AddListener(() => { OnFirstAssignmentCallback(prospectiveBuilding.ID); });
+        prospectiveBuilding.onCrewmateAssigned.AddListener(() => { OnCrewmateAssignedCallback(prospectiveBuilding.ID); });
+        prospectiveBuilding.onConstructionCompleted.AddListener(() => { OnConstructionCompletedCallback(prospectiveBuilding.ID); });
+        prospectiveBuilding.onSelection.AddListener(() => { OnSelectionCallback(prospectiveBuilding.ID); });
+        prospectiveBuilding.onCollision.AddListener(() => { OnCollisionCallback(prospectiveBuilding.ID); });
+        prospectiveBuilding.onNoCollisions.AddListener(() => { OnNoCollisionsCallback(prospectiveBuilding.ID); });
+        prospectiveBuilding.onFreeAssignees.AddListener(() => { OnFreeAssigneesCallback(prospectiveBuilding.ID); });
+
+        buildings.Add(prospectiveBuilding.ID, prospectiveBuilding);
+
+        // Update Data
+        GameManager.data.resources.wood -= buildingPrefabs[prospectiveBuilding.Type].Cost.wood; // Subtract resources
+        GameManager.data.resources.foodProduction += buildingPrefabs[prospectiveBuilding.Type].Production.food; // will likely chance with level
+        GameManager.data.outpostCrewCapacity += buildingPrefabs[prospectiveBuilding.Type].Production.space; // will be 8
+
+        // Update UI - also make this one call
+        rui.UpdateWoodUI(GameManager.Data.resources.wood);
+        rui.UpdateFoodUI(GameManager.Data.resources);
+        rui.UpdateCrewCapacityUI(GameManager.Data.outpostCrewCapacity);
+    }
+    private void SpawnExistingBuilding(BuildingData data)
+    {
+        Building building = Instantiate(buildingPrefabs[data.uiIndex], transform);
+        building.Init(data);// if building, should check with resources
+
+        // Will be checking for AP consumption
+        building.CompleteConstruction(); // dont keep, but is used to complete for now, will be using AP
+
+        // Tracking
+        buildings.Add(building.ID, building);
+
+    }
+    internal void SelectBuilding(int buildingIndex)
     {
         if (isPlacing)
         {
-            Destroy(activeBuilding.gameObject);
+            Destroy(prospectiveBuilding.gameObject);
         }
         isPlacing = true;
 
-        Building prefab = buildingPrefabs[index];
-        activeBuilding = Instantiate(prefab, Vector3.zero, prefab.transform.rotation, buildingParent);
-        activeBuilding.uiIndex = index; // sets type
+        Building prefab = buildingPrefabs[buildingIndex];
+        prospectiveBuilding = Instantiate(prefab, Vector3.zero, prefab.transform.rotation, transform);
+        prospectiveBuilding.SetType(buildingIndex); // stores type
+        prospectiveBuilding.SetMaterial(stateData.matPlacing);
     }
-    // placing a building
-    private void SpawnBuilding(Building building, Vector3 position)
+    internal void UpgradeBuilding(int buildingID)
     {
-        isPlacing = false;
-        placedBuilding.Invoke();
-
-        // Check if there are enough resources - possible move
-        BuildingResources cost = building.Cost;
-        if (GameManager.Data.resources.wood < cost.wood)
-        {
-            Destroy(building.gameObject);
-            Debug.Log("Cannot build; Insufficient resources"); // UI
-            return;
-        }
-
-        // Subtract resources - move to Building or bring CanBuild in here
-        GameManager.data.resources.wood -= cost.wood;
-        rui.UpdateWoodUI(GameManager.Data.resources.wood);
-
-        // Create Building
-        BuildingData data = new BuildingData();
-        data.id = building.id;
-        data.uiIndex = building.uiIndex;
-        data.level = building.level;
-        data.position = building.transform.position;
-        data.rotation = building.transform.rotation;
-        GameManager.AddBuilding(data);
-        if (building.uiIndex == 0)
-        {
-            GameManager.data.resources.foodProduction += building.resourceProduction.food;
-            rui.UpdateFoodUI(GameManager.Data.resources);
-        }
-        else if (building.uiIndex == 1)
-        {
-            GameManager.data.outpostCrewCapacity += 8;
-            rui.UpdateCrewCapacityUI(GameManager.Data.outpostCrewCapacity);
-        }
-        else if (building.uiIndex == 2)
-        {
-            // ?
-        }
-        buildings.Add(building);
-        building.Place();
-
-        onBuildingPlaced.Raise(this, building);
-    }
-    internal string UpgradeBuilding(int buildingID)
-    {
-        Building building = GetBuilding(buildingID);
-        building.Upgrade();
-        return building.GetStatus();
+        buildings[buildingID].Upgrade();
+        buildingUI.SetStatusUI(buildings[buildingID].GetStatus());
     }
     internal void DemolishBuilding(int buildingID)
     {
-        Building building = GetBuilding(buildingID);
-        GameManager.RemoveBuilding(buildingID);
-        buildings.Remove(building);
-        building.Demolish();
-    }
-    // Lookup table would be faster
-    private Building GetBuilding(int buildingID)
-    {
-        foreach (Building building in buildings)
+        Building building = buildings[buildingID];
+
+        // Update Data
+        BuildingResources cost = buildingPrefabs[building.Type].Cost; // will eventially change with level
+        if(building.IsBuilt)
         {
-            if(building.id == buildingID)
+            GameManager.data.resources.wood += (cost.wood/2);
+        }
+        else
+        {
+            GameManager.data.resources.wood += cost.wood;
+        }
+        GameManager.data.resources.foodProduction -= buildingPrefabs[building.Type].Production.food;
+        GameManager.data.outpostCrewCapacity -= buildingPrefabs[building.Type].Production.space;
+
+        // Update UI
+        rui.UpdateWoodUI(GameManager.Data.resources.wood);
+        rui.UpdateFoodUI(GameManager.Data.resources);
+        rui.UpdateCrewCapacityUI(GameManager.Data.outpostCrewCapacity);
+
+        // Delete building
+        GameManager.RemoveBuilding(buildingID);
+        buildings[buildingID].Demolish();
+        buildings.Remove(buildingID);
+    }
+
+    // Callbacks
+    private void OnFirstAssignmentCallback(int buildingID)
+    {
+        Building building = buildings[buildingID];
+        building.SetMaterial(stateData.matConstructing);
+        building.SetStatusIcon(stateData.iconConstructing);
+        building.onFirstAssignment.RemoveAllListeners();
+    }
+    private void OnCrewmateAssignedCallback(int buildingID)
+    {
+        Building building = buildings[buildingID];
+
+        if (cm.IsCrewmateSelected)
+        {
+            // Open UI - removed this since the crewmate UI will already be open
+            //buildingUI.FillUI(building);
+            //buildingUI.OpenMenu();
+
+            // Get selected units
+            Crewmate[] selectedCrewmates = cm.GetSelectedCrewmates();
+            for (int i = 0; i < selectedCrewmates.Length; i++)
             {
-                return building;
+                // Fill open positions
+                if(!building.CanAssign())
+                {
+                    break;
+                }
+
+                // Assign them to the building
+                building.AssignCrewmate(selectedCrewmates[i]); // assigns building to player too
             }
         }
-        return null;
+        else
+        {
+            Debug.Log("No crewmate selected");
+        }
+
+    }
+    private void OnConstructionCompletedCallback(int buildingID)
+    {
+        Building building = buildings[buildingID];
+        building.SetStatusIcon(stateData.iconBuilt);
+    }
+    private void OnSelectionCallback(int buildingID)
+    {
+        Building building = buildings[buildingID];
+        buildingUI.FillUI(building);
+        buildingUI.OpenMenu();
+    }
+    private void OnCollisionCallback(int buildingID)
+    {
+        Building building = buildings[buildingID];
+        building.SetMaterial(stateData.matColliding);
+    }
+    private void OnNoCollisionsCallback(int buildingID)
+    {
+        Building building = buildings[buildingID];
+        Material buildingMaterial = null;
+        switch (building.State)
+        {
+            case BuildingState.PLACING:
+                buildingMaterial = stateData.matPlacing;
+                break;
+            case BuildingState.WAITING_FOR_ASSIGNMENT:
+                buildingMaterial = stateData.matRecruiting;
+                break;
+            case BuildingState.CONSTRUCTING:
+                buildingMaterial = stateData.matConstructing;
+                break;
+        }
+        building.SetMaterial(buildingMaterial);
+    }
+    private void OnFreeAssigneesCallback(int buildingID)
+    {
+        Building building = buildings[buildingID];
+        cm.FreeAssignees(building.Assignee1.id, building.Assignee2.id);
+    }
+
+    // Utils
+    internal Building GetBuilding(int buildingID)
+    {
+        return buildings[buildingID];
+    }
+    internal void UnassignBuilding(int buildingID, int crewmateID)
+    {
+        Building building = buildings[buildingID];
+        building.UnassignCrewmate(crewmateID);
+
+        if (building.State == BuildingState.WAITING_FOR_ASSIGNMENT)
+        {
+            building.SetMaterial(stateData.matRecruiting);
+            building.onFirstAssignment.AddListener(() => { OnFirstAssignmentCallback(building.ID); }); // might be able to omit this and just embedd its func
+        }
     }
 
     // Handlers
@@ -170,43 +284,51 @@ public class BuildingManager : MonoBehaviour
             Physics.Raycast(CameraManager.Instance.Camera.ScreenPointToRay(Input.mousePosition),
                 out RaycastHit info, 300, LayerMask.GetMask("Terrain"));
 
-            activeBuilding.transform.position = info.point;
-            //Graphics.DrawMesh(buildingMesh, position, buildingRotation, placingBuildingMat, 0);
+            prospectiveBuilding.transform.position = info.point;
 
-            // check collision
-            if (Input.GetMouseButtonDown(0) && !activeBuilding.IsColliding && !EventSystem.current.IsPointerOverGameObject())
+            // angle of incline check
+            if(info.normal.y < .9f)
             {
-                SpawnBuilding(activeBuilding, info.point);
+                prospectiveBuilding.SetMaterial(stateData.matColliding);
             }
-            if(Input.GetMouseButtonDown(1) && !activeBuilding.IsColliding)
+            else
             {
-                isPlacing = false;
-                Destroy(activeBuilding.gameObject);
-                cancelBuilding.Invoke();
+                if(prospectiveBuilding.IsColliding)
+                {
+                    prospectiveBuilding.SetMaterial(stateData.matColliding);
+                }
+                else
+                {
+                    prospectiveBuilding.SetMaterial(stateData.matPlacing);
+                }
+
+                // check collision
+                if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject() && !prospectiveBuilding.IsColliding)
+                {
+                    SpawnNewBuilding(prospectiveBuilding);
+                }
+                if (Input.GetMouseButtonDown(1))
+                {
+                    isPlacing = false;
+                    omui.DeselectBuildingCard(prospectiveBuilding.Type);
+                    Destroy(prospectiveBuilding.gameObject);
+                }
             }
         }
     }
 
-    public void OnCrewmateDropAssign()
+    // UI
+    internal bool CanConstructBuilding(int buildingIndex)
     {
-        foreach(Building building in buildings)
-            building.HandleAssignmentDragDrop();
+        return GameManager.Data.resources.wood >= buildingPrefabs[buildingIndex].Cost.wood;
     }
 
     // Dev
     internal void BuildAll()
     {
-        foreach (Building building in buildings)
+        foreach (Building building in buildings.Values)
         {
-            building.CompleteBuild();
+            building.CompleteConstruction();
         }
-    }
-
-    // Update player data when scene is unloaded
-    private void OnDestroy()
-    {
-        //realtimeData.resources = resources; // disable for now
-        //GameManager.Instance.buildingAmount = buildings.Count;
-        //GameManager.Instance.DataManager.Update(realtimeData);
     }
 }

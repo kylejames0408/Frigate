@@ -122,7 +122,8 @@ public class CameraManager : MonoBehaviour
         {
             scrollingDelta.x -= edgeScrollingSensitivity * Time.deltaTime;
         }
-        if(Input.mousePosition.y > Screen.height - edgeSize - 64) // 64 is height of resource UI
+        if(Input.mousePosition.y > Screen.height - 64 - edgeSize  &&
+            Input.mousePosition.y < Screen.height - 64) // 64 is height of resource info UI - should be referenced but works for now
         {
             scrollingDelta.z += edgeScrollingSensitivity * Time.deltaTime;
         }

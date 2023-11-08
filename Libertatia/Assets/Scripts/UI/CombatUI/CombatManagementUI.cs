@@ -1,5 +1,6 @@
 ﻿using DG.Tweening;
 using EasyDragAndDrop.Core;
+using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -96,15 +97,21 @@ public class CombatManagementUI : MonoBehaviour
         card.GetComponent<DragObj2D>().onEndDrag.AddListener(delegate { DeselectCrewmateCard(index); });
     }
 
-    public void SelectCrewmateCard(int cardIndex)
+    internal void RemoveCrewmateCard(int cardIndex)
+    {
+        DeselectCrewmateCard(cardIndex);
+        Destroy(crewmateCards[cardIndex].gameObject);
+        crewmateCards.RemoveAt(cardIndex);
+    }
+    public void SelectCrewmateCard(int index)
     {
         foreach (GameObject card in crewmateCards)
         {
             card.GetComponent<Outline>().enabled = false;
         }
-        crewmateCards[cardIndex].GetComponent<Outline>().enabled = true;
-        Crewmate crewmate = cm.SelectCrewmate(cardIndex);
-        crewmate.onAssign.AddListener(() => { DeselectCrewmateCard(cardIndex); });
+        crewmateCards[index].GetComponent<Outline>().enabled = true;
+        //Crewmate crewmate = cm.SelectCrewmate(index);
+        //crewmate.onAssign.AddListener(() => { DeselectCrewmateCard(index); });
     }
     public void DeselectCrewmateCard(int cardIndex)
     {
@@ -128,5 +135,10 @@ public class CombatManagementUI : MonoBehaviour
         arrow.onClick.RemoveListener(CloseMenu);
         arrow.onClick.AddListener(OpenMenu);
         arrow.transform.GetChild(0).DORotate(new Vector3(0, 0, 0), animTimeArrow);
+    }
+
+    internal void DeselectAllCrewmateCards()
+    {
+        throw new NotImplementedException();
     }
 }

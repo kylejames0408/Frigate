@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public enum GameState
@@ -51,11 +52,18 @@ public class GameManager : MonoBehaviour
             }
         }
     }
+    public static void AddCrewmate(CrewmateData data)
+    {
+        Data.crewmates.Add(data);
+    }
 
     private void Awake()
     {
         data = PlayerDataManager.CreateNewData();
         DontDestroyOnLoad(gameObject); // Required for persistance
+#if !UNITY_EDITOR
+        Cursor.lockState = CursorLockMode.Confined;
+#endif
     }
     private void Update()
     {
@@ -82,14 +90,15 @@ public class GameManager : MonoBehaviour
         data.gameTimer = gameTimer;
     }
 
-    // Game to editor and other programs
-    void OnApplicationFocus(bool hasFocus)
+    internal static void RemoveCrewmateData(int crewmateID)
     {
-        //Debug.Log("Focus: " + hasFocus);
-    }
-    // Game to other programs
-    void OnApplicationPause(bool pauseStatus)
-    {
-        //Debug.Log("Pause: " + pauseStatus);
+        foreach(CrewmateData mateData in data.crewmates)
+        {
+            if(mateData.id == crewmateID)
+            {
+                data.crewmates.Remove(mateData);
+                return;
+            }
+        }
     }
 }
