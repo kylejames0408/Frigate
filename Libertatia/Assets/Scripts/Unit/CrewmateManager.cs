@@ -8,6 +8,7 @@ public class CrewmateManager : MonoBehaviour
     private OutpostManagementUI omui;
     private CombatManagementUI cmui;
     private ResourcesUI rui;
+    private UnitSelections uSel;
     // Crewmate Data
     [SerializeField] private GameObject crewmatePrefab;
     [SerializeField] private Transform crewmateSpawn;
@@ -38,6 +39,7 @@ public class CrewmateManager : MonoBehaviour
         if (omui == null) { omui = FindObjectOfType<OutpostManagementUI>(); }
         if (cmui == null) { cmui = FindObjectOfType<CombatManagementUI>(); }
         if (rui == null) { rui = FindObjectOfType<ResourcesUI>(); }
+        if (uSel == null) { uSel = FindObjectOfType<UnitSelections>(); }
 
         // Init Crewmates (make own function)
         crewmateSpawn = transform.GetChild(0);
@@ -60,7 +62,7 @@ public class CrewmateManager : MonoBehaviour
             {
                 CrewmateData data = GameManager.Data.crewmates[i];
                 //GameObject crewmateObj = Instantiate(crewmatePrefab, transform);
-                Vector3 position = new Vector3(-5 - 5, 0) + new Vector3(Random.Range(-1.0f, 1.0f) * 5, -5, Random.Range(-1.0f, 1.0f) * 5);
+                Vector3 position = new Vector3(-5 , 5, 0) + new Vector3(Random.Range(-1.0f, 1.0f) * 5, -5, Random.Range(-1.0f, 1.0f) * 5);
                 //Debug.Log(position); // this actually makes no sense
                 GameObject crewmateObj = Instantiate(crewmatePrefab, position, Quaternion.identity);
 
@@ -93,7 +95,7 @@ public class CrewmateManager : MonoBehaviour
                 // Add card
                 if(omui == null)
                 {
-                    //cmui.AddCrewmateCard(crewmate);
+                    cmui.AddCrewmateCard(crewmate);
                 }
                 else
                 {
@@ -176,6 +178,10 @@ public class CrewmateManager : MonoBehaviour
 
         unitsSelected.Add(unitToAdd);
         unitToAdd.transform.GetChild(0).gameObject.SetActive(true);
+
+        // Select it in the UnitSelection as well
+        if(uSel != null && !uSel.unitsSelected.Contains(unitToAdd))
+            uSel.ClickSelect(unitToAdd);
     }
     internal void RemoveSelection(GameObject unitToRemove)
     {

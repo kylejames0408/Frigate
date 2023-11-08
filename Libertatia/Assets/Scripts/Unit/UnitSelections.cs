@@ -6,6 +6,9 @@ using UnityEngine.SceneManagement;
 
 public class UnitSelections : MonoBehaviour
 {
+    // Components
+    [SerializeField] private CrewmateManager cm;
+
     public List<GameObject> unitList = new List<GameObject>();
     public List<GameObject> unitsSelected = new List<GameObject>();
 
@@ -30,6 +33,8 @@ public class UnitSelections : MonoBehaviour
 
     private void Start()
     {
+        if (cm == null) { cm = FindObjectOfType<CrewmateManager>(); }
+
         eventTriggered = false;
 
         sceneName = SceneManager.GetActiveScene().name;
@@ -163,6 +168,9 @@ public class UnitSelections : MonoBehaviour
         //Switches the character's shader when selected
         Character unit = unitToAdd.GetComponent<Character>();
         unit.rend.sharedMaterial = unit.materials[1];
+
+        Crewmate crewmate = unitToAdd.GetComponent<Crewmate>();
+        cm.SelectCrewmate(crewmate.cardIndex);
 
         //sets the second child to be active: a sphere showing detection range
         //unitToAdd.transform.GetChild(1).gameObject.SetActive(true);

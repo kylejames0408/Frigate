@@ -216,6 +216,23 @@ public class Building : MonoBehaviour
         }
     }
 
+    public void HandleAssignmentDragDrop()
+    {
+        if (isHovered && CrewmateManager.Instance.unitsSelected.Count > 0)
+        {
+            Crewmate mate = CrewmateManager.Instance.unitsSelected[0].GetComponent<Crewmate>();
+            if (CanAssign())
+            {
+                AssignCrewmate(mate);
+                BuildingUI.Instance.FillUI(this);
+            }
+            else
+            {
+                Debug.Log("Building assignments are full");
+            }
+        }
+    }
+
     private void OnMouseEnter()
     {
         isHovered = true;

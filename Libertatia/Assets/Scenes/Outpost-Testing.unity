@@ -132,6 +132,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: -759242478486736209, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
+      propertyPath: dialogue.speakerName
+      value: Tewt O' Rial
+      objectReference: {fileID: 0}
+    - target: {fileID: -759242478486736209, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
       propertyPath: tasks.tasks.Array.data[0]
       value: Gather your crew and head for the ship above. You can use the WASD keys
         to move the camera if you don't see it. Once everyone is at the ship, a promp
@@ -156,6 +160,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2004096424}
     - target: {fileID: 4051391971717010772, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
+      propertyPath: dialogue.speakerName
+      value: Tewt O' Rial
+      objectReference: {fileID: 0}
+    - target: {fileID: 4051391971717010772, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
       propertyPath: tasks.tasks.Array.data[0]
       value: Select individual crewmates by left clicking on them directly, or select
         them in a group by holding the left click and dragging over them. You can
@@ -170,16 +178,28 @@ PrefabInstance:
       propertyPath: dialogue.sentences.Array.data[3]
       value: Move em to those red pirates and they'll cut em down!
       objectReference: {fileID: 0}
+    - target: {fileID: 4137988272570579665, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
+      propertyPath: dialogue.speakerName
+      value: Tewt O' Rial
+      objectReference: {fileID: 0}
+    - target: {fileID: 4829848524955143945, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
+      propertyPath: dialogue.speakerName
+      value: Tewt O' Rial
+      objectReference: {fileID: 0}
     - target: {fileID: 4829848524955143945, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
       propertyPath: tasks.tasks.Array.data[1]
       value: '- Build a house'
+      objectReference: {fileID: 0}
+    - target: {fileID: 4829848524955143945, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
+      propertyPath: tasks.tasks.Array.data[2]
+      value: '- Build a farm'
       objectReference: {fileID: 0}
     - target: {fileID: 4829848524955143945, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
       propertyPath: dialogue.sentences.Array.data[1]
       value: 'Our crew needs a place to recover from our wounds.
 
         All we
-        have are enough resources to build a house and a tavern. If you''d help us
+        have are enough resources to build a house and a farm. If you''d help us
         we''d be mighty grateful.'
       objectReference: {fileID: 0}
     - target: {fileID: 6231409215963263180, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
@@ -226,6 +246,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6483838458676575870, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
+      propertyPath: dialogue.speakerName
+      value: Tewt O' Rial
+      objectReference: {fileID: 0}
+    - target: {fileID: 6769618784424622894, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
+      propertyPath: dialogue.speakerName
+      value: Tewt O' Rial
+      objectReference: {fileID: 0}
     - target: {fileID: 6769618784424622894, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
       propertyPath: tasks.tasks.Array.data[0]
       value: Open up the crewmate menu the same way you opened the building menu,
@@ -237,6 +265,14 @@ PrefabInstance:
     - target: {fileID: 6769618784424622894, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
       propertyPath: dialogue.sentences.Array.data[1]
       value: Assign one of yer crew to each of the buildings to build em.
+      objectReference: {fileID: 0}
+    - target: {fileID: 6785737645530700138, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
+      propertyPath: dialogue.speakerName
+      value: Tewt O' Rial
+      objectReference: {fileID: 0}
+    - target: {fileID: 7317531967827180226, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
+      propertyPath: dialogue.speakerName
+      value: Tewt O' Rial
       objectReference: {fileID: 0}
     - target: {fileID: 7845774388746979147, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
       propertyPath: m_Name
@@ -487,10 +523,10 @@ RectTransform:
   m_Father: {fileID: 746340826}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 34.5, y: -75}
-  m_SizeDelta: {x: 69, y: 150}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &47649195
 MonoBehaviour:
@@ -1322,10 +1358,10 @@ RectTransform:
   m_Father: {fileID: 1895932152}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 165.5, y: -70}
-  m_SizeDelta: {x: 291, y: 100}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &138746107
 MonoBehaviour:
@@ -3736,10 +3772,10 @@ RectTransform:
   m_Father: {fileID: 1895932152}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 165.5, y: -180}
-  m_SizeDelta: {x: 291, y: 100}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &717431541
 MonoBehaviour:
@@ -3902,7 +3938,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &746340826
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7802,10 +7838,10 @@ RectTransform:
   m_Father: {fileID: 1895932152}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 165.5, y: -510}
-  m_SizeDelta: {x: 291, y: 100}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1878293461
 MonoBehaviour:
@@ -7940,10 +7976,10 @@ RectTransform:
   m_Father: {fileID: 746340826}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 234.5, y: -300}
-  m_SizeDelta: {x: 331, y: 600}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 600}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1895932154
 MonoBehaviour:
@@ -9054,10 +9090,10 @@ RectTransform:
   m_Father: {fileID: 1895932152}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 165.5, y: -400}
-  m_SizeDelta: {x: 291, y: 100}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2038346249
 MonoBehaviour:
@@ -9176,10 +9212,10 @@ RectTransform:
   m_Father: {fileID: 1895932152}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 165.5, y: -290}
-  m_SizeDelta: {x: 291, y: 100}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2064926211
 MonoBehaviour:
@@ -10033,6 +10069,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cm: {fileID: 314619652}
+  bm: {fileID: 0}
   popupUI: {fileID: 365225364}
   buildingResourceCost: {fileID: 1557529230}
   buildingAPCost: {fileID: 845936223}

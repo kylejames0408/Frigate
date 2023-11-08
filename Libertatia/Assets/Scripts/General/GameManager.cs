@@ -17,12 +17,12 @@ public class GameManager : MonoBehaviour
     // Game Data
     private float gameTimer = 0.0f;
     private GameState state = GameState.PLAYING;
-    public static bool outpostVisited = false;
+    public static int outpostVisitNumber = 0;
+    public static int combatVisitNumber = 0;
     public static PlayerData data;
-
     public static bool MainMenuTesting = false;
     public static bool OutpostTesting = true;
-    public static bool CombatTesting = false;
+    public static bool CombatTesting = true;
 
     // starting to act like the actual data manager - read/write
     public static PlayerData Data

@@ -2,10 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.AI;
+using UnityEngine.UI;
 using UnityEngine.UIElements;
 
 public class ZoneManager : MonoBehaviour
 {
+    // Components
+    [SerializeField] private CrewmateManager cm;
+
     public List<GameObject> crewMembers;
     public List<GameObject> enemies;
     public List<GameObject> enemyHouses;
@@ -14,9 +19,14 @@ public class ZoneManager : MonoBehaviour
 
     public GameObject shipWaypoint;
 
-    public ResourcesUI resourceUI;
+    //public ResourcesUI resourceUI;
 
     public GameObject combatUI;
+
+    private void Awake()
+    {
+        if (cm == null) { cm = FindObjectOfType<CrewmateManager>(); }
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -25,6 +35,14 @@ public class ZoneManager : MonoBehaviour
         enemyHouses = GameObject.FindGameObjectsWithTag("EnemyHouse").ToList<GameObject>();
         combatUI = GameObject.FindGameObjectWithTag("CombatUI");
         zones = Terrain.activeTerrains.ToList();
+        for(int i = 0; i < zones.Count; i++)
+        {
+            if (zones[i].tag != "Zone")
+            {
+                zones.RemoveAt(i);
+                i--;
+            }
+        }
     }
 
     // Update is called once per frame
@@ -42,7 +60,9 @@ public class ZoneManager : MonoBehaviour
             //Decreases crewmate number by 1 if they died
             if(crewMember.currentHealth <= 0)
             {
-                resourceUI.UpdateCrewAmountUI(crewMembers.Count - 1);
+                //resourceUI.UpdateCrewAmountUI(crewMembers.Count - 1);
+                CombatResourcesUI combatResourcesUI = combatUI.GetComponent<CombatResourcesUI>();
+                combatResourcesUI.UpdateCrewAmountUI(crewMembers.Count - 1);
             }
         }
 
@@ -113,6 +133,10 @@ public class ZoneManager : MonoBehaviour
                             enemy.charAgent.SetDestination(crewMember.transform.position);
                         }
 
+                        //if(enemy.isActiveAndEnabled)
+                        //{
+                        //    crewMember.charAgent.SetDestination(enemy.transform.position);
+                        //}
                     }
                 }
             }
@@ -136,11 +160,38 @@ public class ZoneManager : MonoBehaviour
     /// </summary>
     public void Retreat()
     {
-        for(int i = 0; i < crewMembers.Count; i++)
+        for (int i = 0; i < crewMembers.Count; i++)
         {
             CrewMember crewMember = crewMembers[i].GetComponent<CrewMember>();
 
             crewMember.charAgent.SetDestination(shipWaypoint.transform.position);
+        }
+
+        //Makes marker disappear when retreating to ship
+        GameObject marker = GameObject.FindGameObjectWithTag("Marker");
+        if(GameObject.FindGameObjectWithTag("Marker"))
+        {
+            marker.SetActive(false);
+        }
+    }
+
+    public void OnCrewmateDropAssign()
+    {
+        GameObject crewmateDropped = cm.unitsSelected[0];
+
+
+        UnitMovement unitToMove = crewmateDropped.GetComponent<UnitMovement>();
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(ray, out RaycastHit hit, 500f, unitToMove.mask, QueryTriggerInteraction.Ignore))
+        {
+            //Moves units to the center of zone when it is clicked on
+            if (hit.collider.tag == "Zone")
+            {
+                Zone zone = hit.transform.gameObject.GetComponent<Zone>();
+
+                NavMeshAgent myAgent = crewmateDropped.GetComponent<NavMeshAgent>();
+                myAgent.SetDestination(zone.zoneCenter);
+            }
         }
     }
 }

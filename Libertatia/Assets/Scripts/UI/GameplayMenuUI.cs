@@ -13,7 +13,7 @@ public class GameplayMenuUI : MonoBehaviour
     private void Start()
     {
         resumeBtn.onClick.AddListener(() => { gameplayMenu.SetActive(false); });
-        mainMenuBtn.onClick.AddListener(() => { GameManager.outpostVisited = false; CeneManager.LoadMainMenu(); });
+        mainMenuBtn.onClick.AddListener(() => { GameManager.outpostVisitNumber = 0; GameManager.combatVisitNumber = 0; CeneManager.LoadMainMenu(); });
         gameplayMenu.SetActive(false);
     }
 

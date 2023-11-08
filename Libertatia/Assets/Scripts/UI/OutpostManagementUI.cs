@@ -1,4 +1,5 @@
 ﻿using DG.Tweening;
+using EasyDragAndDrop.Core;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -8,6 +9,7 @@ public class OutpostManagementUI : MonoBehaviour
 {
     // Components
     [SerializeField] private CrewmateManager cm;
+    [SerializeField] private BuildingManager bm;
     // popup UI - maybe separate
     [SerializeField] private GameObject popupUI;
     [SerializeField] private TextMeshProUGUI buildingResourceCost;
@@ -35,6 +37,7 @@ public class OutpostManagementUI : MonoBehaviour
     private void Awake()
     {
         if(cm == null) { cm = FindObjectOfType<CrewmateManager>(); }
+        if(bm == null) { bm = FindObjectOfType<BuildingManager>(); }
 
         pages = pagesUIParent.GetComponentsInChildren<Transform>();
         if(pages.Length > 1 )
@@ -135,6 +138,10 @@ public class OutpostManagementUI : MonoBehaviour
         card.GetComponent<Button>().onClick.AddListener(() => { SelectCrewmateCard(index); }); // drag + drop func
         card.GetComponentsInChildren<Image>()[1].sprite = mate.Icon;
         card.GetComponentInChildren<TextMeshProUGUI>().text = mate.Name;
+
+        card.GetComponent<DragObj2D>().onBeginDrag.AddListener(delegate{ SelectCrewmateCard(index); });
+        card.GetComponent<DragObj2D>().onEndDrag.AddListener(delegate { bm.OnCrewmateDropAssign(); });
+        card.GetComponent<DragObj2D>().onEndDrag.AddListener(delegate{ DeselectCrewmateCard(index); });
     }
     public void SelectCrewmateCard(int cardIndex)
     {
