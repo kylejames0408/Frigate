@@ -10058,21 +10058,34 @@ PrefabInstance:
       objectReference: {fileID: 961156328}
     - target: {fileID: 4051391971717010772, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
       propertyPath: tasks.tasks.Array.data[0]
-      value: Drag a crewmates card into a square zone of the island to assign them
-        to that zone! They'll plunder or fight whatever's there.
+      value: Drag a crewmates card into a square zone of the island, or right click
+        a zone with a crewmate selected to assign them to that zone! They'll plunder
+        or fight whatever's there. Use the WASD keys to move the camera.
       objectReference: {fileID: 0}
     - target: {fileID: 4051391971717010772, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
       propertyPath: tasks.tasks.Array.data[1]
-      value: '- Wipe out the enemy
-
-        - Claim all the resources'
+      value: '- Wipe out the enemy and claim all the resources'
       objectReference: {fileID: 0}
     - target: {fileID: 4051391971717010772, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
       propertyPath: dialogue.sentences.Array.size
-      value: 5
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4051391971717010772, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
+      propertyPath: dialogue.sentences.Array.data[2]
+      value: Ye can command your crewmates the same way you did back at the outpost,
+        or ye can select em in a group and send em all together!
+      objectReference: {fileID: 0}
+    - target: {fileID: 4051391971717010772, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
+      propertyPath: dialogue.sentences.Array.data[3]
+      value: Click and drag yer mouse cursor over yer crewmates on the island to
+        select em all at once.
       objectReference: {fileID: 0}
     - target: {fileID: 4051391971717010772, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
       propertyPath: dialogue.sentences.Array.data[4]
+      value: Move them to those red pirates and they'll cut 'em down!
+      objectReference: {fileID: 0}
+    - target: {fileID: 4051391971717010772, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
+      propertyPath: dialogue.sentences.Array.data[5]
       value: And move them to those buildings to harvest some wood!
       objectReference: {fileID: 0}
     - target: {fileID: 6231409215963263180, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
