@@ -441,7 +441,7 @@ public class CrewmateManager : MonoBehaviour
         }
         selectedCrewmateIDs.Clear();
     }
-    private void DeselectAllCrewmatesShare()
+    internal void DeselectAllCrewmatesShare()
     {
         DeselectAllCrewmates();
         DeselectAllCards();

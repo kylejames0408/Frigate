@@ -48,7 +48,7 @@ public class CrewmateUI : MonoBehaviour
     }
     private void Start()
     {
-        btnClose.onClick.AddListener(CloseMenu);
+        btnClose.onClick.AddListener(CloseMenuCallback);
     }
     private void Update()
     {
@@ -106,7 +106,7 @@ public class CrewmateUI : MonoBehaviour
             Input.mousePosition.y < bounds.offsetMin.y ||
             Input.mousePosition.y > bounds.offsetMax.y))
         {
-            CloseMenu();
+            CloseMenuCallback();
         }
     }
 
@@ -118,6 +118,10 @@ public class CrewmateUI : MonoBehaviour
     internal void CloseMenu()
     {
         transform.DOMoveX(0, animSpeedInterface); // cant get height in start
-        cm.DeselectAllCrewmates();
+    }
+    private void CloseMenuCallback()
+    {
+        CloseMenu();
+        cm.DeselectAllCrewmatesShare();
     }
 }
