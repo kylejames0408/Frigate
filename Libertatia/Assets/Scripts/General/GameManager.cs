@@ -73,6 +73,7 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
+        Debug.Log("GameManager woke up!");
         data = PlayerDataManager.CreateNewData();
         DontDestroyOnLoad(gameObject); // Required for persistance
 #if !UNITY_EDITOR
