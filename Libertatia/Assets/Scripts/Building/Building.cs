@@ -207,6 +207,10 @@ public class Building : MonoBehaviour
         uiAsign1.sprite = iconEmptyAsssignment;
         uiAsign2.sprite = iconEmptyAsssignment;
         uiAsign2.transform.parent.gameObject.SetActive(false);
+
+        // Should be moved somewhere else
+        assignee1.Reset(iconEmptyAsssignment);
+        assignee2.Reset(iconEmptyAsssignment);
     }
     private void SetLevelUI(int level)
     {
