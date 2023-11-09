@@ -8,9 +8,13 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -5178661895559278292, guid: 38ee7152caa11f645bd3d446d8526ffd, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 1290378936191206264, guid: e6f312cd63eebf943919fb0d545db2af, type: 3}
     - target: {fileID: -4216859302048453862, guid: 38ee7152caa11f645bd3d446d8526ffd, type: 3}
       propertyPath: m_RootOrder
-      value: -1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 38ee7152caa11f645bd3d446d8526ffd, type: 3}
       propertyPath: m_LocalPosition.x
@@ -58,7 +62,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -927199367670048503, guid: 38ee7152caa11f645bd3d446d8526ffd, type: 3}
       propertyPath: m_Name
-      value: Enemy_House Variant
+      value: Enemy_Farm Variant
       objectReference: {fileID: 0}
     - target: {fileID: -927199367670048503, guid: 38ee7152caa11f645bd3d446d8526ffd, type: 3}
       propertyPath: m_TagString
@@ -164,4 +168,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   resourceText: {fileID: 8633550456291223390, guid: 9be5e4e46e9a8b34ca863884408dd6e8, type: 3}
   lootValue: 0
-  resourceType: wood

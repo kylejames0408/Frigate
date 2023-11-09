@@ -536,6 +536,7 @@ Transform:
   m_Children:
   - {fileID: 1362389770}
   - {fileID: 256902080}
+  - {fileID: 1856977495}
   m_Father: {fileID: 300841468}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -16082,6 +16083,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2522857658018325564, guid: a7035284d47945c42976b053ea32e854, type: 3}
+      propertyPath: lootValue
+      value: 40
+      objectReference: {fileID: 0}
     - target: {fileID: 2879685223237186731, guid: a7035284d47945c42976b053ea32e854, type: 3}
       propertyPath: m_Name
       value: Enemy_House Variant
@@ -19246,6 +19251,76 @@ Transform:
   m_Father: {fileID: 778070325}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1856977494
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 59076281}
+    m_Modifications:
+    - target: {fileID: 1024931046121562768, guid: bcb9524294f97ec49b7e468cd22a0aca, type: 3}
+      propertyPath: m_RootOrder
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1024931046121562768, guid: bcb9524294f97ec49b7e468cd22a0aca, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -3.1427002
+      objectReference: {fileID: 0}
+    - target: {fileID: 1024931046121562768, guid: bcb9524294f97ec49b7e468cd22a0aca, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 3.1991577
+      objectReference: {fileID: 0}
+    - target: {fileID: 1024931046121562768, guid: bcb9524294f97ec49b7e468cd22a0aca, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 29.929111
+      objectReference: {fileID: 0}
+    - target: {fileID: 1024931046121562768, guid: bcb9524294f97ec49b7e468cd22a0aca, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1024931046121562768, guid: bcb9524294f97ec49b7e468cd22a0aca, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1024931046121562768, guid: bcb9524294f97ec49b7e468cd22a0aca, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1024931046121562768, guid: bcb9524294f97ec49b7e468cd22a0aca, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1024931046121562768, guid: bcb9524294f97ec49b7e468cd22a0aca, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1024931046121562768, guid: bcb9524294f97ec49b7e468cd22a0aca, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1024931046121562768, guid: bcb9524294f97ec49b7e468cd22a0aca, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5567963780692351485, guid: bcb9524294f97ec49b7e468cd22a0aca, type: 3}
+      propertyPath: lootValue
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 5850430125782171954, guid: bcb9524294f97ec49b7e468cd22a0aca, type: 3}
+      propertyPath: m_Name
+      value: Enemy_Farm Variant
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: bcb9524294f97ec49b7e468cd22a0aca, type: 3}
+--- !u!4 &1856977495 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1024931046121562768, guid: bcb9524294f97ec49b7e468cd22a0aca, type: 3}
+  m_PrefabInstance: {fileID: 1856977494}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1879614391
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -22969,6 +23044,10 @@ PrefabInstance:
     - target: {fileID: 1273933397414676152, guid: a7035284d47945c42976b053ea32e854, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2522857658018325564, guid: a7035284d47945c42976b053ea32e854, type: 3}
+      propertyPath: lootValue
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 2879685223237186731, guid: a7035284d47945c42976b053ea32e854, type: 3}
       propertyPath: m_Name

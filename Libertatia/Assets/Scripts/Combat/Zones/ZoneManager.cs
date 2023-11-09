@@ -106,9 +106,19 @@ public class ZoneManager : MonoBehaviour
                         EnemyHouse house = enemyHouse.GetComponent<EnemyHouse>();
 
                         //obtain wood from the houses
-                        combatResources.woodAmount += house.lootValue;
-                        combatResources.UpdateWoodUI(combatResources.woodAmount);
-
+                        switch (house.resourceType)
+                        {
+                            case "wood":
+                                combatResources.woodAmount += house.lootValue;
+                                combatResources.UpdateWoodUI(combatResources.woodAmount);
+                                break;
+                            case "food":
+                                combatResources.foodAmount += house.lootValue;
+                                combatResources.UpdateFoodAmountUI(combatResources.foodAmount);
+                                break;
+                            default:
+                                break;
+                        }
                         house.CreatePopUpText();
                     }
        

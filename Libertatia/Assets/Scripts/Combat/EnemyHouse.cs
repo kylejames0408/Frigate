@@ -7,11 +7,13 @@ public class EnemyHouse : MonoBehaviour
 {
     public GameObject resourceText;
     public int lootValue;
+    public string resourceType;
 
     // Start is called before the first frame update
     void Start()
     {
-        lootValue = 40;
+        //lootValue = 40;
+        //resourceType = "default";
     }
 
     public void CreatePopUpText()
