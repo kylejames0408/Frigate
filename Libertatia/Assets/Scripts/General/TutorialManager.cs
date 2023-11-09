@@ -54,25 +54,48 @@ public class TutorialManager : MonoBehaviour
 
     public void BuildingPlacedEvent(Component sender, object data)
     {
-        if(sender is BuildingManager && !secondVisit)
+        if(sender is BuildingManager && data is Building && !secondVisit)
+        {
+            Building recievedBuilding = (Building)data;
             buildingsPlaced++;
 
-        switch (buildingsPlaced)
-        {
-            case 1:
-                outpostDialogues[1].TriggerDialogue();
-                break;
-            case 2:
-                outpostDialogues[2].TriggerDialogue();
-                break;
-            default:
-                return;
+            switch (buildingsPlaced)
+            {
+                case 1:
+                    if (recievedBuilding.Name == "Farm")
+                    {
+                        outpostDialogues[1].dialogue.sentences[0] = "Yarr! Now place the house";
+                        outpostDialogues[1].tasks.tasks[0] = "- Build the house";
+                    } 
+                    if(recievedBuilding.Name == "House")
+                    {
+                        outpostDialogues[1].dialogue.sentences[0] = "Yarr! Now place the farm";
+                        outpostDialogues[1].tasks.tasks[0] = "- Build the farm";
+                    }
+                    outpostDialogues[1].TriggerDialogue();
+                    break;
+                case 2:
+                    outpostDialogues[2].TriggerDialogue();
+                    break;
+                default:
+                    return;
+            }
         }
+            
+
+
+        
     }
 
     public void CrewmateAssignedEvent(Component sender, object data)
     {
         crewmatesAssigned++;
+        if(crewmatesAssigned == 1 && !secondVisit)
+        {
+            //Hide outpost drag card text
+            OutpostManagementUI oMUI = GameObject.Find("INT-Outpost").GetComponentInChildren<OutpostManagementUI>();
+            oMUI.HideCrewmateCardArrow();
+        }
         if(crewmatesAssigned == 2 && !secondVisit)
         {
             outpostDialogues[3].TriggerDialogue();
@@ -82,7 +105,7 @@ public class TutorialManager : MonoBehaviour
 
     public void AllEnemiesDeadEvent(Component sender, object data)
     {
-        if (GameManager.combatVisitNumber == 0)
+        if (GameManager.combatVisitNumber == 1)
             combatDialogues[1].TriggerDialogue();
         GameObject.Find("Ship").GetComponent<Ship>().detectionRange = 30;
     }

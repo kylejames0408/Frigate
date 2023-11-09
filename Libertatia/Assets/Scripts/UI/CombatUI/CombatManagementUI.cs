@@ -88,7 +88,7 @@ public class CombatManagementUI : MonoBehaviour
     {
         GameObject cardObj = Instantiate(crewmateCardPrefab, pages[1]);
 
-        CrewmateCard card = cardObj.GetComponent<CrewmateCard>();
+        CrewmateCard card = cardObj.GetComponentInChildren<CrewmateCard>();
         card.Init(mate.ID);
         crewmateCards.Add(card.ID, card);
 

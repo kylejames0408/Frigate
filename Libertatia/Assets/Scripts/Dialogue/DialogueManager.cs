@@ -140,9 +140,11 @@ public class DialogueManager : MonoBehaviour
 
         // invoke the callback method of a given dialogue event if it has one
         if (currentDialogue.callback.GetPersistentEventCount() != 0)
+        {
+            if (currentDialogue.hasTasks)
+                OpenTaskList();
             currentDialogue.callback.Invoke();
-        else
-            //Debug.Log("No callback here!");
+        }  
 
         if (currentDialogue.hasTasks)
         {

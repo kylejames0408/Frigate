@@ -54,6 +54,9 @@ public class BuildingManager : MonoBehaviour
     [SerializeField] private Building prospectiveBuilding;
     [SerializeField] private Dictionary<int, Building> buildings;
     [SerializeField] private BuildingResources totalProduction;
+    [Header("Events")]
+    public GameEvent onBuildingPlaced;
+    public GameEvent onCrewmateAssigned;
 
     private void Awake()
     {
@@ -109,6 +112,8 @@ public class BuildingManager : MonoBehaviour
         prospectiveBuilding.onNoCollisions.AddListener(() => { OnNoCollisionsCallback(prospectiveBuilding.ID); });
         prospectiveBuilding.onFreeAssignees.AddListener(() => { OnFreeAssigneesCallback(prospectiveBuilding.ID); });
 
+        // Set Game Event
+        prospectiveBuilding.onCrewmateAssignedGE = onCrewmateAssigned;
         buildings.Add(prospectiveBuilding.ID, prospectiveBuilding);
 
         // Update Data
@@ -120,6 +125,7 @@ public class BuildingManager : MonoBehaviour
         rui.UpdateWoodUI(GameManager.Data.resources.wood);
         rui.UpdateFoodUI(GameManager.Data.resources);
         rui.UpdateCrewCapacityUI(GameManager.Data.outpostCrewCapacity);
+        onBuildingPlaced.Raise(this, prospectiveBuilding);
     }
     private void SpawnExistingBuilding(BuildingData data)
     {
@@ -140,6 +146,8 @@ public class BuildingManager : MonoBehaviour
 
         // Will be checking for AP consumption
         building.CompleteConstruction(); // dont keep, but is used to complete for now, will be using AP
+
+        building.onCrewmateAssignedGE = onCrewmateAssigned;
     }
     internal void SelectBuilding(int buildingIndex)
     {

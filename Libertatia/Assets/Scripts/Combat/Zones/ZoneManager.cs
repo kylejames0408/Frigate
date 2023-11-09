@@ -23,6 +23,10 @@ public class ZoneManager : MonoBehaviour
 
     public GameObject combatUI;
 
+    [SerializeField]
+    public GameEvent finishedCombat;
+    private bool finishedCombatBool;
+
     private void Awake()
     {
         if (cm == null) { cm = FindObjectOfType<CrewmateManager>(); }
@@ -43,6 +47,7 @@ public class ZoneManager : MonoBehaviour
                 i--;
             }
         }
+        finishedCombatBool = false;
     }
 
     // Update is called once per frame
@@ -112,6 +117,10 @@ public class ZoneManager : MonoBehaviour
                 }
             }
 
+            if (zone.housesInZone.Count == 0 && zone.crewMembersInZone.Count >= 1 && zone.enemiesInZone.Count <= 0)
+            {
+                zone.zoneLootCollected = true;
+            }
 
             //If there is at least one crew member and enemy in a zone
             if (zone.crewMembersInZone.Count >= 1 && zone.enemiesInZone.Count >= 1)
@@ -151,7 +160,23 @@ public class ZoneManager : MonoBehaviour
                     enemy.charAgent.speed = 0;
                 }
             }
-            
+        }
+
+        for(int i = 0; i < zones.Count; i++)
+        {
+            Zone zone = zones[i].GetComponent<Zone>();
+            if (!zones[i].GetComponent<Zone>().zoneLootCollected)
+            {
+                Debug.Log("We broke out of update");
+                return;
+            }
+        }
+        
+        if (!finishedCombatBool)
+        {
+            Debug.Log("You triggered the finished combat state!");
+            finishedCombatBool = true;
+            finishedCombat.Raise(this, 0);
         }
     }
 

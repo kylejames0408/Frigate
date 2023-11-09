@@ -69,6 +69,7 @@ public class Building : MonoBehaviour
     [SerializeField] private Sprite iconEmptyAsssignment;
 
     [Header("Events")]
+    public GameEvent onCrewmateAssignedGE;
     public UnityEvent onCrewmateAssigned;
     public UnityEvent onDemolish;
     public UnityEvent onFreeAssignees;
@@ -267,8 +268,9 @@ public class Building : MonoBehaviour
     }
     public void AssignCrewmate(Crewmate mate)
     {
+        onCrewmateAssignedGE.Raise(this, mate);
         // Assign
-        if(assignee1.id == -1)
+        if (assignee1.id == -1)
         {
             assignee1.id = mate.ID;
             assignee1.icon = mate.Icon;
@@ -395,7 +397,7 @@ public class Building : MonoBehaviour
 
     public void HandleAssignmentDragDrop()
     {
-        if (!EventSystem.current.IsPointerOverGameObject())
+        if (isHovered && !EventSystem.current.IsPointerOverGameObject())
         {
             if (CanAssign())
             {
