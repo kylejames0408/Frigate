@@ -59,6 +59,17 @@ public class GameManager : MonoBehaviour
     {
         Data.crewmates.Add(data);
     }
+    internal static void RemoveCrewmateData(int crewmateID)
+    {
+        foreach (CrewmateData mateData in data.crewmates)
+        {
+            if (mateData.id == crewmateID)
+            {
+                data.crewmates.Remove(mateData);
+                return;
+            }
+        }
+    }
 
     private void Awake()
     {
@@ -91,17 +102,5 @@ public class GameManager : MonoBehaviour
     private void OnDestroy()
     {
         data.gameTimer = gameTimer;
-    }
-
-    internal static void RemoveCrewmateData(int crewmateID)
-    {
-        foreach(CrewmateData mateData in data.crewmates)
-        {
-            if(mateData.id == crewmateID)
-            {
-                data.crewmates.Remove(mateData);
-                return;
-            }
-        }
     }
 }

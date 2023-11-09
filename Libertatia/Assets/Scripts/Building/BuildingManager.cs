@@ -126,12 +126,20 @@ public class BuildingManager : MonoBehaviour
         Building building = Instantiate(buildingPrefabs[data.uiIndex], transform);
         building.Init(data);// if building, should check with resources
 
-        // Will be checking for AP consumption
-        building.CompleteConstruction(); // dont keep, but is used to complete for now, will be using AP
+        // Maybe distro to completing construction?
+        building.SetUI(stateData.iconRecruiting, stateData.iconEmptyAsssignment);
+
+        // Set callbacks
+        building.onCrewmateAssigned.AddListener(() => { OnCrewmateAssignedCallback(building.ID); });
+        building.onConstructionCompleted.AddListener(() => { OnConstructionCompletedCallback(building.ID); });
+        building.onSelection.AddListener(() => { OnSelectionCallback(building.ID); });
+        building.onFreeAssignees.AddListener(() => { OnFreeAssigneesCallback(building.ID); });
 
         // Tracking
         buildings.Add(building.ID, building);
 
+        // Will be checking for AP consumption
+        building.CompleteConstruction(); // dont keep, but is used to complete for now, will be using AP
     }
     internal void SelectBuilding(int buildingIndex)
     {
