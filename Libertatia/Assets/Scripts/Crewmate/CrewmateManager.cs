@@ -367,7 +367,7 @@ public class CrewmateManager : MonoBehaviour
     {
         GameObject crewmateObj = Instantiate(crewmatePrefab, transform);
         Crewmate mate = crewmateObj.GetComponent<Crewmate>();
-        mate.Init(data);
+        mate.Init(data, iconEmptyAsssignment);
 
         if (data.building.id == -1)
         {

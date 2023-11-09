@@ -16,10 +16,10 @@ public struct AssignedBuildingData
         this.icon = icon;
     }
 
-    public void Reset()
+    public void Reset(Sprite iconEmptyAsssignment)
     {
         id = -1;
-        icon = null;
+        icon = iconEmptyAsssignment;
     }
 }
 
@@ -118,7 +118,7 @@ public class Crewmate : MonoBehaviour
     }
 
     // Actions
-    public void Init(CrewmateData data)
+    public void Init(CrewmateData data, Sprite emptyBuildingAssignmentIcon)
     {
         // Tracking
         id = data.id;
@@ -134,6 +134,8 @@ public class Crewmate : MonoBehaviour
 
         transform.position = data.position;
         transform.rotation = data.rotation;
+
+        iconEmptyAsssignment = emptyBuildingAssignmentIcon;
     }
     public void Assign(int buildingID, Sprite buildingIcon, Vector3 destination)
     {
@@ -147,7 +149,7 @@ public class Crewmate : MonoBehaviour
     }
     public void Free()
     {
-        building.Reset();
+        building.Reset(iconEmptyAsssignment);
     }
 
     // Util

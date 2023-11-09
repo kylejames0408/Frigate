@@ -316,6 +316,8 @@ public class Building : MonoBehaviour
     }
     private void FreeAssignees()
     {
+        onFreeAssignees.Invoke();
+
         if (assignee1.id != -1)
         {
             assignee1.Reset(iconEmptyAsssignment);
@@ -328,7 +330,6 @@ public class Building : MonoBehaviour
         // Update UI
         uiAsign1.sprite = assignee1.icon;
         uiAsign2.sprite = assignee2.icon;
-        onFreeAssignees.Invoke();
     }
 
     // Util
