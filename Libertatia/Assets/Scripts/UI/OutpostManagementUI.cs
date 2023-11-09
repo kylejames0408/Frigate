@@ -194,6 +194,10 @@ public class OutpostManagementUI : MonoBehaviour
         // Fill UI
         card.GetComponentsInChildren<Image>()[1].sprite = mate.Icon;
         card.GetComponentInChildren<TextMeshProUGUI>().text = mate.Name;
+
+        card.GetComponent<DragObj2D>().onBeginDrag.AddListener(delegate { ClickCrewmateCard(card.ID); });
+        card.GetComponent<DragObj2D>().onEndDrag.AddListener(delegate { bm.OnCrewmateDropAssign(); });
+        card.GetComponent<DragObj2D>().onEndDrag.AddListener(delegate { DeselectCrewmateCard(card.ID); });
     }
     internal void RemoveCrewmateCard(int cardID)
     {

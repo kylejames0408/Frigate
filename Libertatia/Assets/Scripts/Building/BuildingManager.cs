@@ -257,6 +257,14 @@ public class BuildingManager : MonoBehaviour
         cm.FreeAssignees(building.Assignee1.id, building.Assignee2.id);
     }
 
+    public void OnCrewmateDropAssign()
+    {
+        foreach (KeyValuePair<int, Building> kvp in buildings)
+        {
+            kvp.Value.HandleAssignmentDragDrop();
+        }
+    }
+
     // Utils
     internal Building GetBuilding(int buildingID)
     {

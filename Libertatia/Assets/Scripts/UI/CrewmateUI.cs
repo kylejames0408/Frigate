@@ -118,5 +118,6 @@ public class CrewmateUI : MonoBehaviour
     internal void CloseMenu()
     {
         transform.DOMoveX(0, animSpeedInterface); // cant get height in start
+        cm.DeselectAllCrewmates();
     }
 }

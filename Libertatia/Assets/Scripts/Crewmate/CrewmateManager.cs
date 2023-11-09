@@ -405,7 +405,7 @@ public class CrewmateManager : MonoBehaviour
     internal void SelectCrewmate(int crewmateID)
     {
         crewmates[crewmateID].GetComponent<Renderer>().sharedMaterial = materials[1];
-        crewmates[crewmateID].transform.GetChild(0).gameObject.SetActive(true);
+        //crewmates[crewmateID].transform.GetChild(0).gameObject.SetActive(true);
         selectedCrewmateIDs.Add(crewmateID);
 
         if(!isCombat)
@@ -437,6 +437,7 @@ public class CrewmateManager : MonoBehaviour
         for (int i = 0; i < selectedCrewmateIDs.Count; i++)
         {
             crewmates[selectedCrewmateIDs[i]].transform.GetChild(0).gameObject.SetActive(false);
+            crewmates[selectedCrewmateIDs[i]].GetComponent<Renderer>().sharedMaterial = materials[0];
         }
         selectedCrewmateIDs.Clear();
     }
