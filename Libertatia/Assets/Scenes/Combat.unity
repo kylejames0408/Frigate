@@ -10025,6 +10025,11 @@ PrefabInstance:
       value: Hit the "Retreat" button in the bottom right to bring your whole crew
         back to the ship. Then hit the E key to go home!
       objectReference: {fileID: 0}
+    - target: {fileID: -759242478486736209, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
+      propertyPath: dialogue.sentences.Array.data[1]
+      value: With the island clear and the resources gathered we can head back to
+        the outpost.
+      objectReference: {fileID: 0}
     - target: {fileID: 834794479261776291, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
       propertyPath: btnAttack
       value: 
