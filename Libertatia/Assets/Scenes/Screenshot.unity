@@ -313,8 +313,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 4848741693780398324}
   - {fileID: 2775213690303810207}
+  - {fileID: 3686560607657347367}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -592,24 +592,14 @@ MonoBehaviour:
     mipBias: 0
     varianceClampScale: 0.9
     contrastAdaptiveSharpening: 0
---- !u!1 &2059890652457568864
-GameObject:
+--- !u!33 &2587512587821790667
+MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4848741693780398324}
-  - component: {fileID: 2843918350614894238}
-  - component: {fileID: 6117760368087817768}
-  m_Layer: 6
-  m_Name: Farm
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_GameObject: {fileID: 7939196822423870404}
+  m_Mesh: {fileID: 1290378936191206264, guid: e6f312cd63eebf943919fb0d545db2af, type: 3}
 --- !u!4 &2775213690303810207
 Transform:
   m_ObjectHideFlags: 0
@@ -625,14 +615,6 @@ Transform:
   m_Father: {fileID: 1608981524}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &2843918350614894238
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2059890652457568864}
-  m_Mesh: {fileID: 7471814351571892295, guid: 1d9433757f5106c4d9ea649224869112, type: 3}
 --- !u!1 &3361448731082915364
 GameObject:
   m_ObjectHideFlags: 0
@@ -650,29 +632,29 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &4848741693780398324
+  m_IsActive: 0
+--- !u!4 &3686560607657347367
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2059890652457568864}
-  m_LocalRotation: {x: -0, y: 0.92387956, z: -0, w: 0.38268343}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_GameObject: {fileID: 7939196822423870404}
+  m_LocalRotation: {x: -0.6532815, y: -0.27059805, z: -0.27059805, w: 0.6532815}
+  m_LocalPosition: {x: 0, y: 2, z: 0}
+  m_LocalScale: {x: 0.9, y: 0.46956518, z: 0.7826086}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1608981524}
   m_RootOrder: -1
-  m_LocalEulerAnglesHint: {x: 0, y: 135, z: 0}
---- !u!23 &6117760368087817768
+  m_LocalEulerAnglesHint: {x: -90, y: -45, z: 0}
+--- !u!23 &5305341044776022037
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2059890652457568864}
+  m_GameObject: {fileID: 7939196822423870404}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -686,7 +668,10 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 2ed85a5525951e145ab57bc5eb35b5ba, type: 2}
+  - {fileID: 2100000, guid: 77585a5316945464c835dd1463a98f8a, type: 2}
+  - {fileID: 2100000, guid: 15ec2caf6b6c3fc40bc3a245cc5c472d, type: 2}
+  - {fileID: 2100000, guid: 44f73f81c2f2b7840afdd5141d68a3bf, type: 2}
+  - {fileID: 2100000, guid: 524daf234c79b134285ccd205372dd79, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -758,3 +743,21 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3361448731082915364}
   m_Mesh: {fileID: 175664006884404235, guid: ff094486a5e4a7843919f9b7c0eb5508, type: 3}
+--- !u!1 &7939196822423870404
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3686560607657347367}
+  - component: {fileID: 2587512587821790667}
+  - component: {fileID: 5305341044776022037}
+  m_Layer: 0
+  m_Name: Farm
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
