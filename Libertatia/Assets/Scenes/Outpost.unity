@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657737, g: 0.4964143, b: 0.5748176, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657737, g: 0.49641442, b: 0.5748176, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -267,6 +267,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: -759242478486736209, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
+      propertyPath: dialogue.speakerName
+      value: Tuto Rial
+      objectReference: {fileID: 0}
+    - target: {fileID: -759242478486736209, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
       propertyPath: tasks.tasks.Array.data[0]
       value: Gather your crew and head for the ship above. You can use the WASD keys
         to move the camera if you don't see it. Once everyone is at the ship, a promp
@@ -291,6 +295,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2004096424}
     - target: {fileID: 4051391971717010772, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
+      propertyPath: dialogue.speakerName
+      value: Tuto Rial
+      objectReference: {fileID: 0}
+    - target: {fileID: 4051391971717010772, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
       propertyPath: tasks.tasks.Array.data[0]
       value: Select individual crewmates by left clicking on them directly, or select
         them in a group by holding the left click and dragging over them. You can
@@ -308,6 +316,14 @@ PrefabInstance:
     - target: {fileID: 4137988272570579665, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
       propertyPath: tasks.taskListName
       value: Build the remaining structure
+      objectReference: {fileID: 0}
+    - target: {fileID: 4137988272570579665, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
+      propertyPath: dialogue.speakerName
+      value: Tuto Rial
+      objectReference: {fileID: 0}
+    - target: {fileID: 4829848524955143945, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
+      propertyPath: dialogue.speakerName
+      value: Tuto Rial
       objectReference: {fileID: 0}
     - target: {fileID: 4829848524955143945, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
       propertyPath: tasks.tasks.Array.data[1]
@@ -397,6 +413,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6483838458676575870, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
+      propertyPath: dialogue.speakerName
+      value: Tuto Rial
+      objectReference: {fileID: 0}
+    - target: {fileID: 6769618784424622894, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
+      propertyPath: dialogue.speakerName
+      value: Tuto Rial
+      objectReference: {fileID: 0}
     - target: {fileID: 6769618784424622894, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
       propertyPath: tasks.tasks.Array.data[0]
       value: Select the Crewmate tab in the bottom menu. Drag a crewmates card onto
@@ -434,6 +458,14 @@ PrefabInstance:
     - target: {fileID: 6769618784424622894, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
       propertyPath: dialogue.callback.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 6785737645530700138, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
+      propertyPath: dialogue.speakerName
+      value: Tuto Rial
+      objectReference: {fileID: 0}
+    - target: {fileID: 7317531967827180226, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
+      propertyPath: dialogue.speakerName
+      value: Tuto Rial
       objectReference: {fileID: 0}
     - target: {fileID: 7317531967827180226, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
       propertyPath: tasks.tasks.Array.data[0]

@@ -10016,6 +10016,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: -759242478486736209, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
+      propertyPath: dialogue.speakerName
+      value: Tuto Rial
+      objectReference: {fileID: 0}
+    - target: {fileID: -759242478486736209, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
       propertyPath: tasks.tasks.Array.data[0]
       value: Hit the "Retreat" button in the bottom right to bring your whole crew
         back to the ship. Then hit the E key to go home!
@@ -10057,6 +10061,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 961156328}
     - target: {fileID: 4051391971717010772, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
+      propertyPath: dialogue.speakerName
+      value: Tuto Rial
+      objectReference: {fileID: 0}
+    - target: {fileID: 4051391971717010772, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
       propertyPath: tasks.tasks.Array.data[0]
       value: Drag a crewmates card into a square zone of the island, or right click
         a zone with a crewmate selected to assign them to that zone! They'll plunder
@@ -10087,6 +10095,14 @@ PrefabInstance:
     - target: {fileID: 4051391971717010772, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
       propertyPath: dialogue.sentences.Array.data[5]
       value: And move them to those buildings to harvest some wood!
+      objectReference: {fileID: 0}
+    - target: {fileID: 4137988272570579665, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
+      propertyPath: dialogue.speakerName
+      value: Tuto Rial
+      objectReference: {fileID: 0}
+    - target: {fileID: 4829848524955143945, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
+      propertyPath: dialogue.speakerName
+      value: Tuto Rial
       objectReference: {fileID: 0}
     - target: {fileID: 6231409215963263180, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
       propertyPath: m_RootOrder
@@ -10131,6 +10147,22 @@ PrefabInstance:
     - target: {fileID: 6231409215963263180, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6483838458676575870, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
+      propertyPath: dialogue.speakerName
+      value: Tuto Rial
+      objectReference: {fileID: 0}
+    - target: {fileID: 6769618784424622894, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
+      propertyPath: dialogue.speakerName
+      value: Tuto Rial
+      objectReference: {fileID: 0}
+    - target: {fileID: 6785737645530700138, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
+      propertyPath: dialogue.speakerName
+      value: Tuto Rial
+      objectReference: {fileID: 0}
+    - target: {fileID: 7317531967827180226, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
+      propertyPath: dialogue.speakerName
+      value: Tuto Rial
       objectReference: {fileID: 0}
     - target: {fileID: 7845774388746979147, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
       propertyPath: m_Name
