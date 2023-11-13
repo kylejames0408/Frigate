@@ -2,7 +2,25 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-// Resources the player uses through the game
+[Serializable]
+public struct ObjectData
+{
+    public int id;
+    public Sprite icon;
+
+    public ObjectData(int id, Sprite icon)
+    {
+        this.id = id;
+        this.icon = icon;
+    }
+
+    public void Reset(Sprite emptyAssigneeIcon)
+    {
+        id = -1;
+        icon = emptyAssigneeIcon;
+    }
+}
+
 [Serializable]
 public struct PlayerResourceData
 {
@@ -14,14 +32,14 @@ public struct PlayerResourceData
     public int foodProduction;
     public int foodConsumption;
 }
-// Necessary building Data
+
 [Serializable]
 public struct BuildingData
 {
     // Tracking / State
     public int id;
-    public AssigneeCrewmateData crewmate1ID;
-    public AssigneeCrewmateData crewmate2ID;
+    public ObjectData assignee1;
+    public ObjectData assignee2;
     public BuildingState state;
     // Characteristics
     public string name;
@@ -37,8 +55,8 @@ public struct BuildingData
     public BuildingData(Building building)
     {
         id = building.ID;
-        crewmate1ID = building.Assignee1;
-        crewmate2ID = building.Assignee2;
+        assignee1 = building.Assignee1;
+        assignee2 = building.Assignee2;
         state = building.State;
         name = building.Name;
         uiIndex = building.Type;
@@ -49,13 +67,13 @@ public struct BuildingData
         rotation = building.transform.rotation;
     }
 }
-// Necessary crewmate Data
+
 [Serializable]
 public struct CrewmateData
 {
     // Tracking / State
     public int id;
-    public AssignedBuildingData building;
+    public ObjectData building;
     // Characteristics
     public string name;
     public int health;
@@ -82,7 +100,7 @@ public struct CrewmateData
         rotation = mate.transform.rotation;
     }
 }
-// Holds important player data that should persist when game ends
+
 [Serializable]
 public struct PlayerData
 {
@@ -92,12 +110,11 @@ public struct PlayerData
     // Player data
     public PlayerResourceData resources;
     public int outpostCrewCapacity;
-    // maybe make arrays or even lookup tables
-    public List<BuildingData> buildings; // turn into dict
-    public List<CrewmateData> crewmates; // same here
+    public List<BuildingData> buildings; // Maybe make array
+    public List<CrewmateData> crewmates;
 }
 
-// Manages player data - creating and converting the data - should this be separate from data tracking?
+// Manages player data - creating and converting the data
 public static class PlayerDataManager
 {
     private const string DIR_PATH = "Assets\\Scripts\\ScriptableObjects\\";
@@ -131,7 +148,7 @@ public static class PlayerDataManager
         data.crewmates = new List<CrewmateData>(STARTING_CREW_AMOUNT);
         data.outpostCrewCapacity = STARTING_CREW_CAPACITY;
         // Buildings
-        data.buildings = new List<BuildingData>();
+        data.buildings = new List<BuildingData>(0);
         return data;
     }
     // TODO:

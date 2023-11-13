@@ -7,31 +7,13 @@ using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public struct AssigneeCrewmateData
-{
-    public int id;
-    public Sprite icon;
-
-    public AssigneeCrewmateData(int id, Sprite icon)
-    {
-        this.id = id;
-        this.icon = icon;
-    }
-
-    public void Reset(Sprite emptyAssigneeIcon)
-    {
-        id = -1;
-        icon = emptyAssigneeIcon;
-    }
-}
-
 [Serializable]
 public class Building : MonoBehaviour
 {
     // Tracking
     [SerializeField] private int id = -1;
-    [SerializeField] private AssigneeCrewmateData assignee1;
-    [SerializeField] private AssigneeCrewmateData assignee2;
+    [SerializeField] private ObjectData assignee1;
+    [SerializeField] private ObjectData assignee2;
     [SerializeField] private BuildingState state = BuildingState.PLACING;
     [SerializeField] private BuildingResources resourceCost; // move to scriptable object as "rules", will change with level however
     [SerializeField] private BuildingResources resourceProduction; // same here
@@ -83,11 +65,11 @@ public class Building : MonoBehaviour
     {
         get { return id; }
     }
-    public AssigneeCrewmateData Assignee1
+    public ObjectData Assignee1
     {
         get { return assignee1; }
     }
-    public AssigneeCrewmateData Assignee2
+    public ObjectData Assignee2
     {
         get { return assignee2; }
     }
@@ -142,8 +124,8 @@ public class Building : MonoBehaviour
 
         // Set variables' initial state
         id = gameObject.GetInstanceID();
-        assignee1 = new AssigneeCrewmateData(-1, iconEmptyAsssignment);
-        assignee2 = new AssigneeCrewmateData(-1, iconEmptyAsssignment);
+        assignee1 = new ObjectData(-1, iconEmptyAsssignment);
+        assignee2 = new ObjectData(-1, iconEmptyAsssignment);
         uiIndex = -1;
         level = 0;
         state = BuildingState.PLACING;
@@ -172,8 +154,8 @@ public class Building : MonoBehaviour
     {
         // Tracking / State
         id = data.id;
-        assignee1 = data.crewmate1ID;
-        assignee2 = data.crewmate2ID;
+        assignee1 = data.assignee1;
+        assignee2 = data.assignee2;
         state = data.state;
         // Characteristics
         buildingName = data.name;

@@ -28,7 +28,7 @@ public class GameManager : MonoBehaviour
 
     public UnityEvent onAttack;
 
-    // starting to act like the actual data manager - read/write
+    // Player data management - maybe move to manager, if so, will storage persist?
     public static PlayerData Data
     {
         get
@@ -73,7 +73,7 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        Debug.Log("GameManager woke up!");
+        Debug.Log("GameManager initialized");
         data = PlayerDataManager.CreateNewData();
         DontDestroyOnLoad(gameObject); // Required for persistance
 #if !UNITY_EDITOR
@@ -97,11 +97,5 @@ public class GameManager : MonoBehaviour
                 }
                 break;
         }
-    }
-
-    // NOTE: will be necessary for when loading is implemented
-    private void OnDestroy()
-    {
-        data.gameTimer = gameTimer;
     }
 }

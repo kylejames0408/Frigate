@@ -5,24 +5,6 @@ using UnityEngine.AI;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
-public struct AssignedBuildingData
-{
-    public int id;
-    public Sprite icon;
-
-    public AssignedBuildingData(int id, Sprite icon)
-    {
-        this.id = id;
-        this.icon = icon;
-    }
-
-    public void Reset(Sprite iconEmptyAsssignment)
-    {
-        id = -1;
-        icon = iconEmptyAsssignment;
-    }
-}
-
 [Serializable]
 public class Crewmate : MonoBehaviour
 {
@@ -30,7 +12,7 @@ public class Crewmate : MonoBehaviour
     private NavMeshAgent agent;
     // Tracking
     [SerializeField] private int id = -1;
-    [SerializeField] private AssignedBuildingData building;
+    [SerializeField] private ObjectData building;
     // Characteristics
     [SerializeField] private string crewmateName;
     [SerializeField] private int health = 100;
@@ -52,7 +34,7 @@ public class Crewmate : MonoBehaviour
     {
         get { return id; }
     }
-    public AssignedBuildingData Building
+    public ObjectData Building
     {
         get { return building; }
     }
@@ -89,7 +71,7 @@ public class Crewmate : MonoBehaviour
     {
         agent = GetComponent<NavMeshAgent>();
         id = gameObject.GetInstanceID();
-        building = new AssignedBuildingData(-1, iconEmptyAsssignment); // Is there a need for a default icon?
+        building = new ObjectData(-1, iconEmptyAsssignment); // Is there a need for a default icon?
         // Update once values are set
         strength = UnityEngine.Random.Range(1, 6);
         agility = UnityEngine.Random.Range(1, 6);
@@ -143,7 +125,7 @@ public class Crewmate : MonoBehaviour
         {
             onReassign.Invoke();
         }
-        building = new AssignedBuildingData(buildingID, buildingIcon); // Assign building
+        building = new ObjectData(buildingID, buildingIcon); // Assign building
         agent.destination = destination; // Set destination
         onAssign.Invoke(); // Update UI
     }
