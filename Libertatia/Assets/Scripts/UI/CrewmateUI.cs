@@ -71,9 +71,7 @@ public class CrewmateUI : MonoBehaviour
             {
                 dotsStrength[i].gameObject.SetActive(false);
             }
-        }
-        for (int i = 0; i < mate.Agility; i++)
-        {
+
             if (i < mate.Agility)
             {
                 dotsAgility[i].gameObject.SetActive(true);
@@ -82,10 +80,8 @@ public class CrewmateUI : MonoBehaviour
             {
                 dotsAgility[i].gameObject.SetActive(false);
             }
-        }
-        for (int i = 0; i < mate.Stamina; i++)
-        {
-            if(i < mate.Stamina)
+
+            if (i < mate.Stamina)
             {
                 dotsStamina[i].gameObject.SetActive(true);
             }
