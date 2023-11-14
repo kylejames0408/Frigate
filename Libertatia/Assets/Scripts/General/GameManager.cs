@@ -1,4 +1,6 @@
+using System;
 using UnityEngine;
+using UnityEngine.Events;
 
 public enum GameState
 {
@@ -21,10 +23,12 @@ public class GameManager : MonoBehaviour
     public static int combatVisitNumber = 0;
     public static PlayerData data;
     public static bool MainMenuTesting = false;
-    public static bool OutpostTesting = true;
-    public static bool CombatTesting = true;
+    public static bool OutpostTesting = false;
+    public static bool CombatTesting = false;
 
-    // starting to act like the actual data manager - read/write
+    public UnityEvent onAttack;
+
+    // Player data management - maybe move to manager, if so, will storage persist?
     public static PlayerData Data
     {
         get
@@ -51,11 +55,30 @@ public class GameManager : MonoBehaviour
             }
         }
     }
+    public static void AddCrewmate(CrewmateData data)
+    {
+        Data.crewmates.Add(data);
+    }
+    internal static void RemoveCrewmateData(int crewmateID)
+    {
+        foreach (CrewmateData mateData in data.crewmates)
+        {
+            if (mateData.id == crewmateID)
+            {
+                data.crewmates.Remove(mateData);
+                return;
+            }
+        }
+    }
 
     private void Awake()
     {
+        Debug.Log("GameManager initialized");
         data = PlayerDataManager.CreateNewData();
         DontDestroyOnLoad(gameObject); // Required for persistance
+#if !UNITY_EDITOR
+        Cursor.lockState = CursorLockMode.Confined;
+#endif
     }
     private void Update()
     {
@@ -74,22 +97,5 @@ public class GameManager : MonoBehaviour
                 }
                 break;
         }
-    }
-
-    // NOTE: will be necessary for when loading is implemented
-    private void OnDestroy()
-    {
-        data.gameTimer = gameTimer;
-    }
-
-    // Game to editor and other programs
-    void OnApplicationFocus(bool hasFocus)
-    {
-        //Debug.Log("Focus: " + hasFocus);
-    }
-    // Game to other programs
-    void OnApplicationPause(bool pauseStatus)
-    {
-        //Debug.Log("Pause: " + pauseStatus);
     }
 }

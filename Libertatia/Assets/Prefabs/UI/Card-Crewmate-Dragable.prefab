@@ -91,6 +91,7 @@ GameObject:
   - component: {fileID: 5433463553582545347}
   - component: {fileID: 1936097422279918113}
   - component: {fileID: 390560335504653395}
+  - component: {fileID: -8414486426631038379}
   m_Layer: 5
   m_Name: Card-Crewmate-Dragable
   m_TagString: Untagged
@@ -283,6 +284,25 @@ MonoBehaviour:
       m_Calls: []
   dragState: 0
   m_dropSlot: {fileID: 0}
+--- !u!114 &-8414486426631038379
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6335522714724666445}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d46c5c9c71f072b468a86776474bca35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  crewmateID: -1
+  onHover:
+    m_PersistentCalls:
+      m_Calls: []
+  onHoverExit:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &6855926677336490678
 GameObject:
   m_ObjectHideFlags: 0

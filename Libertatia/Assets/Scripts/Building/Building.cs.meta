@@ -4,14 +4,20 @@ MonoImporter:
   externalObjects: {}
   serializedVersion: 2
   defaultReferences:
-  - placingMaterial: {fileID: 2100000, guid: d3e5e1b3c116ea947b4250ca7c8746b2, type: 2}
-  - collisionMaterial: {fileID: 2100000, guid: 233ebadc30a9dc04180a21274295cfeb, type: 2}
-  - needsAssignmentMaterial: {fileID: 2100000, guid: 171a96962a807aa41bbf86e9608f92a2, type: 2}
-  - buildingMaterial: {fileID: 2100000, guid: 9b6c03d6f347f544fae42a85b3d0e502, type: 2}
-  - builtMaterial: {instanceID: 0}
-  - buildParticle: {fileID: 7851518830807879698, guid: 8716510566006ba4089d287be4ec6d76, type: 3}
-  - finishParticle: {fileID: 7851518830807879698, guid: 8716510566006ba4089d287be4ec6d76, type: 3}
-  - onCrewmateAssigned: {instanceID: 0}
+  - icon: {instanceID: 0}
+  - buildingRender: {instanceID: 0}
+  - navObsticle: {instanceID: 0}
+  - matBuilt: {instanceID: 0}
+  - canvasTrans: {instanceID: 0}
+  - canvasGroup: {instanceID: 0}
+  - uiLevel: {instanceID: 0}
+  - uiName: {instanceID: 0}
+  - uiStatus: {instanceID: 0}
+  - uiAP: {instanceID: 0}
+  - uiAsign1: {instanceID: 0}
+  - uiAsign2: {instanceID: 0}
+  - iconEmptyAsssignment: {instanceID: 0}
+  - onCrewmateAssignedGE: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

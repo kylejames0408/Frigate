@@ -164,3 +164,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   resourceText: {fileID: 8633550456291223390, guid: 9be5e4e46e9a8b34ca863884408dd6e8, type: 3}
   lootValue: 0
+  resourceType: wood
