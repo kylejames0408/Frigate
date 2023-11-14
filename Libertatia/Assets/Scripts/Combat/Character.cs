@@ -80,4 +80,39 @@ public abstract class Character : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Gets the Vector3 of the nearest hostile unit
+    /// </summary>
+    /// <param name="units"></param>
+    /// <returns></returns>
+    public Vector3 GetClosestUnit(List<GameObject> units)
+    {
+        Transform[] unitPositions = new Transform[units.Count];
+
+        for (int i = 0; i < units.Count; i++)
+        {
+            unitPositions[i] = units[i].transform;
+        }
+
+        Transform bestTarget = null;
+        float closestDistanceSqr = Mathf.Infinity;
+        Vector3 currentPosition = transform.position;
+
+        //for each target in the zone
+        foreach (Transform potentialTarget in unitPositions)
+        {
+            Vector3 dirToTarget = potentialTarget.position - currentPosition;
+            float distSqrToTarget = dirToTarget.sqrMagnitude;
+
+            //if the distance to a unit is closer than the current shortest distance
+            if (distSqrToTarget < closestDistanceSqr)
+            {
+                //it becomes the new closest target
+                closestDistanceSqr = distSqrToTarget;
+                bestTarget = potentialTarget;
+            }
+        }
+
+        return bestTarget.position;
+    }
 }

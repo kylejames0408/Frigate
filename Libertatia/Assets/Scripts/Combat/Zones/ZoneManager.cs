@@ -72,21 +72,7 @@ public class ZoneManager : MonoBehaviour
         }
 
         //checks the number of objects in a zone when clicking on it
-        if (Input.GetMouseButtonDown(0))
-        {
-            RaycastHit hit;
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-            if (Physics.Raycast(ray, out hit, Mathf.Infinity))
-            {
-                if (hit.transform.gameObject.tag == "Zone")
-                {
-                    Zone zone = hit.transform.gameObject.GetComponent<Zone>();
-
-                    Debug.Log("Crew Members: " + zone.crewMembersInZone.Count + " Enemies: " + zone.enemiesInZone.Count + " Houses: " + zone.housesInZone.Count);
-                }
-            }
-        }
+        PrintZoneInfo();
 
         //Obtain loot from zones after beating the enemies, if there are resource deposits
         foreach(Terrain terrain in zones)
@@ -149,13 +135,18 @@ public class ZoneManager : MonoBehaviour
                         if (crewMember.isActiveAndEnabled)
                         {
                             //Enemies will go after crew members in the zone
-                            enemy.charAgent.SetDestination(crewMember.transform.position);
+                            //enemy.charAgent.SetDestination(crewMember.transform.position);
+
+                            enemy.charAgent.SetDestination(enemy.GetClosestUnit(zone.crewMembersInZone));
                         }
 
-                        //if(enemy.isActiveAndEnabled)
-                        //{
-                        //    crewMember.charAgent.SetDestination(enemy.transform.position);
-                        //}
+                        if (enemy.isActiveAndEnabled)
+                        {
+                            //Crew members will go after enemies in the zone
+                            //crewMember.charAgent.SetDestination(enemy.transform.position);
+
+                            crewMember.charAgent.SetDestination(crewMember.GetClosestUnit(zone.enemiesInZone));
+                        }
                     }
                 }
             }
@@ -177,7 +168,7 @@ public class ZoneManager : MonoBehaviour
             Zone zone = zones[i].GetComponent<Zone>();
             if (!zones[i].GetComponent<Zone>().zoneLootCollected)
             {
-                Debug.Log("We broke out of update");
+                //Debug.Log("We broke out of update");
                 return;
             }
         }
@@ -226,6 +217,28 @@ public class ZoneManager : MonoBehaviour
 
                 NavMeshAgent myAgent = crewmateDropped.GetComponent<NavMeshAgent>();
                 myAgent.SetDestination(zone.zoneCenter);
+            }
+        }
+    }
+
+    /// <summary>
+    /// Prints zone info to console when left clicking on a zone
+    /// </summary>
+    public void PrintZoneInfo()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            RaycastHit hit;
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity))
+            {
+                if (hit.transform.gameObject.tag == "Zone")
+                {
+                    Zone zone = hit.transform.gameObject.GetComponent<Zone>();
+
+                    Debug.Log("Crew Members: " + zone.crewMembersInZone.Count + " Enemies: " + zone.enemiesInZone.Count + " Houses: " + zone.housesInZone.Count);
+                }
             }
         }
     }
