@@ -417,11 +417,11 @@ public class Building : MonoBehaviour
     }
     private void OnTriggerEnter(Collider collision)
     {
-        if (collision.transform.tag == "Building")
+        if (collision.transform.tag == "Building" && state == BuildingState.PLACING)
         {
             if(numOfCollisions == 0)
             {
-                onCollision.Invoke(); // maybe give building the collision mat, but then placement angle logic would be separate
+                onCollision.Invoke();
             }
 
             numOfCollisions++;
@@ -429,20 +429,13 @@ public class Building : MonoBehaviour
     }
     private void OnTriggerExit(Collider collision)
     {
-        if (collision.transform.tag == "Building")
+        if (collision.transform.tag == "Building" && state == BuildingState.PLACING)
         {
             numOfCollisions--;
 
             if (numOfCollisions == 0)
             {
-                if(state == BuildingState.BUILT)
-                {
-                    buildingRender.material = matBuilt;
-                }
-                else
-                {
-                    onNoCollisions.Invoke();
-                }
+                onNoCollisions.Invoke();
             }
         }
     }
