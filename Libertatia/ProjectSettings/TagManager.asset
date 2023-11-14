@@ -9,6 +9,9 @@ TagManager:
   - Enemy
   - Unit Selections
   - Zone
+  - CombatUI
+  - EnemyHouse
+  - Marker
   layers:
   - Default
   - TransparentFX

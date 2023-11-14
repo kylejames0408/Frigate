@@ -2,6 +2,7 @@ using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
+// TODO: end tutorial - added to build all button, but should be its own
 public class DevUI : MonoBehaviour
 {
     private bool isOpen = false;
@@ -49,6 +50,7 @@ public class DevUI : MonoBehaviour
     private void CompleteAllBuildings()
     {
         bm.BuildAll();
+        GameManager.data.isTutorial = false;
     }
     private void NewMate()
     {
