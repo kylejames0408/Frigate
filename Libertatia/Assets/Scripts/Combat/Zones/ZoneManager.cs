@@ -27,6 +27,8 @@ public class ZoneManager : MonoBehaviour
     public GameEvent finishedCombat;
     private bool finishedCombatBool;
 
+    [SerializeField] private GameObject battleLootUI;
+
     private void Awake()
     {
         if (cm == null) { cm = FindObjectOfType<CrewmateManager>(); }
@@ -83,34 +85,7 @@ public class ZoneManager : MonoBehaviour
             if(zone.housesInZone.Count >= 1 && zone.crewMembersInZone.Count >= 1 && zone.enemiesInZone.Count <= 0)
             {
                 //if the loot has not been collected yet
-                if(zone.zoneLootCollected == false)
-                {
-                    CombatResourcesUI combatResources = combatUI.GetComponent<CombatResourcesUI>();
-
-                    foreach (GameObject enemyHouse in zone.housesInZone)
-                    {
-                        EnemyHouse house = enemyHouse.GetComponent<EnemyHouse>();
-
-                        //obtain wood from the houses
-                        switch (house.resourceType)
-                        {
-                            case "wood":
-                                combatResources.woodAmount += house.lootValue;
-                                combatResources.UpdateWoodUI(combatResources.woodAmount);
-                                break;
-                            case "food":
-                                combatResources.foodAmount += house.lootValue;
-                                combatResources.UpdateFoodAmountUI(combatResources.foodAmount);
-                                break;
-                            default:
-                                break;
-                        }
-                        house.CreatePopUpText();
-                    }
-       
-
-                    zone.zoneLootCollected = true;
-                }
+                ClearZoneLoot(zone);
             }
 
             if (zone.housesInZone.Count == 0 && zone.crewMembersInZone.Count >= 1 && zone.enemiesInZone.Count <= 0)
@@ -163,7 +138,10 @@ public class ZoneManager : MonoBehaviour
             }
         }
 
-        for(int i = 0; i < zones.Count; i++)
+        //If all the enemies are dead, automatically collect every loot and open the battle loot ui
+        CompleteIsland();
+
+        for (int i = 0; i < zones.Count; i++)
         {
             Zone zone = zones[i].GetComponent<Zone>();
             if (!zones[i].GetComponent<Zone>().zoneLootCollected)
@@ -178,6 +156,61 @@ public class ZoneManager : MonoBehaviour
             Debug.Log("You triggered the finished combat state!");
             finishedCombatBool = true;
             finishedCombat.Raise(this, 0);
+        }
+    }
+
+    //METHODS
+
+    /// <summary>
+    /// Clears every zone's loot if every enemy is dead and opens the battle loot ui
+    /// </summary>
+    public void CompleteIsland()
+    {
+        if (GameObject.FindGameObjectsWithTag("Enemy").ToList<GameObject>().Count <= 0)
+        {
+            foreach (Terrain terrain in zones)
+            {
+                Zone zone = terrain.GetComponent<Zone>();
+
+                ClearZoneLoot(zone);
+            }
+
+            battleLootUI.SetActive(true);
+        }
+    }
+
+    /// <summary>
+    /// Obtains loot from a zone
+    /// </summary>
+    /// <param name="zone"></param>
+    public void ClearZoneLoot(Zone zone)
+    {
+        if (zone.zoneLootCollected == false)
+        {
+            CombatResourcesUI combatResources = combatUI.GetComponent<CombatResourcesUI>();
+
+            foreach (GameObject enemyHouse in zone.housesInZone)
+            {
+                EnemyHouse house = enemyHouse.GetComponent<EnemyHouse>();
+
+                //obtain wood from the houses
+                switch (house.resourceType)
+                {
+                    case "wood":
+                        combatResources.woodAmount += house.lootValue;
+                        combatResources.UpdateWoodUI(combatResources.woodAmount);
+                        break;
+                    case "food":
+                        combatResources.foodAmount += house.lootValue;
+                        combatResources.UpdateFoodAmountUI(combatResources.foodAmount);
+                        break;
+                    default:
+                        break;
+                }
+                house.CreatePopUpText();
+            }
+
+            zone.zoneLootCollected = true;
         }
     }
 
