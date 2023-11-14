@@ -135,7 +135,8 @@ public class CrewmateManager : MonoBehaviour
                     Zone zone = hit.transform.gameObject.GetComponent<Zone>();
                     foreach (int id in selectedCrewmateIDs)
                     {
-                        crewmates[id].SetDestination(zone.zoneCenter);
+                        //makes crewmates move to a random position within a sphere around the center of the zone
+                        crewmates[id].SetDestination(zone.zoneCenter + (Vector3)UnityEngine.Random.insideUnitSphere * 7f);
                     }
                 }
                 else
