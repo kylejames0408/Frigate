@@ -67,13 +67,13 @@ public class OutpostManagementUI : MonoBehaviour
         // Sets tab triggers
         for ( int i = 0; i < tabs.Length; i++ )
         {
-            int index = i; // needs to be destroyed after setting listener
-            tabs[i].GetComponent<Button>().onClick.AddListener(() => { SelectTab(index); });
+            int tabIndex = i; // needs to be destroyed after setting listener
+            tabs[i].GetComponent<Button>().onClick.AddListener(() => { SelectTabCallback(tabIndex); });
         }
         // Init building UI as start tab
-        //SelectTab(0);
+        SelectTab(0);
         // Sets arrow initial onclick callback
-        if(isOpen)
+        if (isOpen)
             arrow.onClick.AddListener(CloseMenu);
         else
             arrow.onClick.AddListener(OpenMenu);
@@ -100,16 +100,11 @@ public class OutpostManagementUI : MonoBehaviour
     }
 
     // Select tab callback - changes tab interface and adds interface content
-    public void SelectTab(int index)
+    public void SelectTab(int tabIndex)
     {
-        if(!isOpen)
-        {
-            OpenMenu();
-        }
-
         for (int i = 0; i < tabs.Length; i++) // assumes tabs and pages length are equal
         {
-            if (i == index)
+            if (i == tabIndex)
             {
                 tabs[i].Select();
                 pages[i].gameObject.SetActive(true);
@@ -278,6 +273,17 @@ public class OutpostManagementUI : MonoBehaviour
         cm.DeselectAllCrewmates();
     }
 
+    // Callbacks
+    private void SelectTabCallback(int tabIndex)
+    {
+        SelectTab(tabIndex);
+
+        // Separate menu opening
+        if (!isOpen)
+        {
+            OpenMenu();
+        }
+    }
 
     // Menu Functions
     private void OpenMenu()

@@ -74,3 +74,4 @@ crashlytics-build.properties
 # Added
 # /[Pp]roject[Ss]ettings/
 # /[Pp]ackages/
+/[Pp]rojectSettings/[Ee]ditorBuildSettings.asset
