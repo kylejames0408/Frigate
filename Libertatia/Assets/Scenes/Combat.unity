@@ -13718,6 +13718,7 @@ MonoBehaviour:
   shipWaypoint: {fileID: 894041250}
   combatUI: {fileID: 1763699266}
   finishedCombat: {fileID: 11400000, guid: 652c65e12d9ed954ea0fb51627342b58, type: 2}
+  battleLootUI: {fileID: 433666660}
 --- !u!4 &1411551669
 Transform:
   m_ObjectHideFlags: 0
