@@ -1,13 +1,11 @@
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class BuildingUI : MonoBehaviour
 {
-    [Header("Components")]
-    [SerializeField] private BuildingManager bm;
-
     [Header("Static Data")]
     [SerializeField] private float animSpeedInterface = 0.6f;
     [SerializeField] private Sprite iconEmptyAssignment;
@@ -21,26 +19,24 @@ public class BuildingUI : MonoBehaviour
     [SerializeField] private Image uiAsign2;
 
     [Header("Buttons")]
-    [SerializeField] private Button btnUpgrade;
-    [SerializeField] private Button btnDemolish;
+    public Button btnUpgrade;
+    public Button btnDemolish;
     [SerializeField] private Button btnClose;
 
     [Header("Tracking")] // Dynamic/tracking information
-    [SerializeField] private int activeBuildingID;
     private RectTransform bounds;
 
     private void Awake()
     {
         // Get component
-        if(bm == null) { bm = FindObjectOfType<BuildingManager>(); }
         bounds = GetComponent<RectTransform>();
+
         uiAsign2.transform.parent.gameObject.SetActive(false);
     }
     private void Start()
     {
         btnClose.onClick.AddListener(CloseMenu);
-        btnUpgrade.onClick.AddListener(UpgradeCallback);
-        btnDemolish.onClick.AddListener(DemolishCallback);
+
         if (GameManager.Data.isTutorial)
         {
             btnUpgrade.interactable = false;
@@ -92,8 +88,6 @@ public class BuildingUI : MonoBehaviour
             //upgradeBtn.interactable = true;
             btnDemolish.interactable = true;
         }
-
-        activeBuildingID = building.ID;
     }
     internal void SetStatusUI(string status)
     {
@@ -103,7 +97,7 @@ public class BuildingUI : MonoBehaviour
     // Handlers
     private void HandleClicking()
     {
-        if(Input.GetMouseButtonDown(0) && (
+        if(Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject() && (
             Input.mousePosition.x < bounds.offsetMin.x ||
             Input.mousePosition.x > bounds.offsetMax.x ||
             Input.mousePosition.y < bounds.offsetMin.y ||
@@ -111,23 +105,6 @@ public class BuildingUI : MonoBehaviour
         {
             CloseMenu();
         }
-    }
-
-    // Callbacks - probably get dir
-    private void UpgradeCallback()
-    {
-        bm.UpgradeBuilding(activeBuildingID);
-    }
-    private void DemolishCallback()
-    {
-        bm.DemolishBuilding(activeBuildingID);
-        CloseMenu();
-    }
-    private void AssignCallback()
-    {
-        //BuildingManager.Instance.AssignBuilding(activeBuildingID);
-        // some information would need to be passed through
-        //activeBuilding.AssignBuilder();
     }
 
     // Open/close

@@ -379,7 +379,7 @@ public class Building : MonoBehaviour
 
     public void HandleAssignmentDragDrop()
     {
-        if (isHovered && !EventSystem.current.IsPointerOverGameObject())
+        if (isHovered)
         {
             if (CanAssign())
             {
@@ -394,11 +394,14 @@ public class Building : MonoBehaviour
 
     private void OnMouseEnter()
     {
-        isHovered = true;
-        if (state != BuildingState.PLACING)
+        if (!EventSystem.current.IsPointerOverGameObject())
         {
-            buildingRender.material.SetColor("_EmissionColor", hoveredEmission);
-            canvasGroup.DOFade(1.0f, animTimeInterface);
+            isHovered = true;
+            if (state != BuildingState.PLACING)
+            {
+                buildingRender.material.SetColor("_EmissionColor", hoveredEmission);
+                canvasGroup.DOFade(1.0f, animTimeInterface);
+            }
         }
     }
     private void OnMouseExit()

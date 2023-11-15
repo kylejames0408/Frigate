@@ -1,6 +1,7 @@
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class CrewmateUI : MonoBehaviour
@@ -96,7 +97,7 @@ public class CrewmateUI : MonoBehaviour
     // Handlers
     private void HandleClicking()
     {
-        if(Input.GetMouseButtonDown(0) && (
+        if(Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject() && (
             Input.mousePosition.x < bounds.offsetMin.x ||
             Input.mousePosition.x > bounds.offsetMax.x ||
             Input.mousePosition.y < bounds.offsetMin.y ||

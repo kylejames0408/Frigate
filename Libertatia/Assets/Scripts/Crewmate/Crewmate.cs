@@ -88,7 +88,10 @@ public class Crewmate : MonoBehaviour
     }
     private void OnMouseEnter()
     {
-        isHovered = true;
+        if (!EventSystem.current.IsPointerOverGameObject())
+        {
+            isHovered = true;
+        }
     }
     private void OnMouseExit()
     {
@@ -151,7 +154,7 @@ public class Crewmate : MonoBehaviour
     // Handlers
     private void HandleSelection()
     {
-        if (isHovered && Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
+        if (isHovered && Input.GetMouseButtonDown(0))
         {
             onSelect.Invoke();
         }
