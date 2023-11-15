@@ -35,7 +35,6 @@ public class OutpostManagementUI : MonoBehaviour
     private Transform[] pages;
     private List<BuildingCard> buildingCards; // make into dict
     private Dictionary<int, CrewmateCard> crewmateCards;
-    private int lastSelectedCrewmateCardID = -1;
     private List<int> selectedCrewmateCardIDs; // Im thinking this could be a stack
     private bool isOpen;
 
@@ -245,26 +244,30 @@ public class OutpostManagementUI : MonoBehaviour
             }
         }
         // Shift: selects all inbetween
-        else if ((Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)) && lastSelectedCrewmateCardID != -1)
+        else if ((Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)) && selectedCrewmateCardIDs.Count > 0)
         {
             List<int> ids = new List<int>(crewmateCards.Keys);
-
+            int prevSelectedCardID = selectedCrewmateCardIDs[selectedCrewmateCardIDs.Count - 1];
             int firstSelectedIndex = -1;
             int secondSelectedIndex = -1;
-            for (int i = 0; i < ids.Count; i++)
-            {
-                if (ids[i] == lastSelectedCrewmateCardID)
-                {
-                    firstSelectedIndex = i;
-                }
-                if (ids[i] == cardID)
-                {
-                    secondSelectedIndex = i;
-                }
-            }
 
-            if (firstSelectedIndex != secondSelectedIndex)
+            // Makes sure last selected is not itself
+            if (cardID != prevSelectedCardID)
             {
+                // Gets first and second selection indices
+                for (int i = 0; i < ids.Count; i++)
+                {
+                    if (ids[i] == prevSelectedCardID)
+                    {
+                        firstSelectedIndex = i;
+                    }
+                    else if (ids[i] == cardID)
+                    {
+                        secondSelectedIndex = i;
+                    }
+                }
+
+                // Orders selection from left to right and selects first card
                 int leftIndex = -1;
                 int rightIndex = -1;
                 // click left then right
@@ -272,33 +275,22 @@ public class OutpostManagementUI : MonoBehaviour
                 {
                     leftIndex = firstSelectedIndex;
                     rightIndex = secondSelectedIndex;
-
-                    if(!selectedCrewmateCardIDs.Contains(ids[rightIndex]))
-                    {
-                        SelectCrewmateCardShare(ids[rightIndex]);
-                    }
                 }
                 // click right then left
                 else
                 {
                     rightIndex = firstSelectedIndex;
                     leftIndex = secondSelectedIndex;
-
-                    if (!selectedCrewmateCardIDs.Contains(ids[leftIndex]))
-                    {
-                        SelectCrewmateCardShare(ids[leftIndex]);
-                    }
                 }
 
-                for (int i = leftIndex+1; i < rightIndex; i++)
+                // Selects all the cards inbetween
+                for (int i = leftIndex; i <= rightIndex; i++)
                 {
                     if (!selectedCrewmateCardIDs.Contains(ids[i]))
                     {
                         SelectCrewmateCardShare(ids[i]);
                     }
                 }
-
-                lastSelectedCrewmateCardID = cardID;
             }
         }
         else
@@ -311,7 +303,6 @@ public class OutpostManagementUI : MonoBehaviour
     {
         crewmateCards[cardID].Select();
         selectedCrewmateCardIDs.Add(cardID);
-        lastSelectedCrewmateCardID = cardID;
     }
     private void SelectCrewmateCardShare(int cardID)
     {
@@ -322,14 +313,6 @@ public class OutpostManagementUI : MonoBehaviour
     {
         crewmateCards[cardID].Deselect();
         selectedCrewmateCardIDs.Remove(cardID);
-        if(selectedCrewmateCardIDs.Count != 0)
-        {
-            lastSelectedCrewmateCardID = selectedCrewmateCardIDs[selectedCrewmateCardIDs.Count - 1];
-        }
-        else
-        {
-            lastSelectedCrewmateCardID = -1;
-        }
     }
     private void DeselectCrewmateCardShare(int cardID)
     {
@@ -343,7 +326,6 @@ public class OutpostManagementUI : MonoBehaviour
             crewmateCards[selectedCrewmateCardIDs[i]].Deselect();
         }
         selectedCrewmateCardIDs.Clear();
-        lastSelectedCrewmateCardID = -1;
     }
     private void DeselectAllCrewmateCardsShare()
     {
