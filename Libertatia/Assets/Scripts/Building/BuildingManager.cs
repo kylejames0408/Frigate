@@ -48,12 +48,14 @@ public class BuildingManager : MonoBehaviour
     [SerializeField] private OutpostManagementUI omui;
     [SerializeField] private ResourcesUI rui;
     [SerializeField] private BuildingUI buildingUI;
+    [SerializeField] private ConfirmationUI confirmationUI;
     [SerializeField] private CrewmateManager cm; // need this for selection data
     [Header("Tracking")]
     [SerializeField] private bool isPlacing = false;
     [SerializeField] private Building prospectiveBuilding;
     [SerializeField] private Dictionary<int, Building> buildings;
     [SerializeField] private BuildingResources totalProduction;
+    [SerializeField] private int selectedBuildingID;
     [Header("Events")]
     public GameEvent onBuildingPlaced;
     public GameEvent onCrewmateAssigned;
@@ -63,11 +65,17 @@ public class BuildingManager : MonoBehaviour
         if (omui == null) { omui = FindObjectOfType<OutpostManagementUI>(); }
         if (rui == null) { rui = FindObjectOfType<ResourcesUI>(); }
         if (cm == null) { cm = FindObjectOfType<CrewmateManager>(); }
+        if (buildingUI == null) { buildingUI = FindObjectOfType<BuildingUI>(); }
+        if (confirmationUI == null) { confirmationUI = FindObjectOfType<ConfirmationUI>(); }
 
+        confirmationUI.gameObject.SetActive(false);
         buildings = new Dictionary<int, Building>();
     }
     private void Start()
     {
+        buildingUI.btnUpgrade.onClick.AddListener(OnUpgradeBuildingCallback);
+        buildingUI.btnDemolish.onClick.AddListener(OnDemolishBuildingCallback);
+
         Debug.Log("Bldg Ct: " + GameManager.Data.buildings.Count);
         // Init Building (make own function)
         for (int i = 0; i < GameManager.Data.buildings.Count; i ++) // cache buildings list?
@@ -164,12 +172,12 @@ public class BuildingManager : MonoBehaviour
         prospectiveBuilding.SetType(buildingIndex); // stores type
         prospectiveBuilding.SetMaterial(stateData.matPlacing);
     }
-    internal void UpgradeBuilding(int buildingID)
+    private void UpgradeBuilding(int buildingID)
     {
         buildings[buildingID].Upgrade();
         buildingUI.SetStatusUI(buildings[buildingID].GetStatus());
     }
-    internal void DemolishBuilding(int buildingID)
+    private void DemolishBuilding(int buildingID)
     {
         Building building = buildings[buildingID];
 
@@ -243,6 +251,7 @@ public class BuildingManager : MonoBehaviour
     private void OnSelectionCallback(int buildingID)
     {
         Building building = buildings[buildingID];
+        selectedBuildingID = buildingID;
         buildingUI.FillUI(building);
         buildingUI.OpenMenu();
     }
@@ -274,7 +283,33 @@ public class BuildingManager : MonoBehaviour
         Building building = buildings[buildingID];
         cm.FreeAssignees(building.Assignee1.id, building.Assignee2.id);
     }
-
+    private void OnUpgradeBuildingCallback()
+    {
+        UpgradeBuilding(selectedBuildingID);
+    }
+    private void OnDemolishBuildingCallback()
+    {
+        Building building = buildings[selectedBuildingID];
+        confirmationUI.SetDemolishState(building.IsBuilt);
+        confirmationUI.btnApprove.onClick.AddListener(OnApproveDemolishCallback);
+        confirmationUI.btnDecline.onClick.AddListener(OnDeclineDemolishCallback);
+        confirmationUI.gameObject.SetActive(true);
+    }
+    private void OnApproveDemolishCallback() // might need the building ID as param for consistancy
+    {
+        confirmationUI.btnApprove.onClick.RemoveListener(OnApproveDemolishCallback);
+        confirmationUI.btnDecline.onClick.RemoveListener(OnDeclineDemolishCallback);
+        confirmationUI.gameObject.SetActive(false);
+        DemolishBuilding(selectedBuildingID);
+        buildingUI.CloseMenu();
+        selectedBuildingID = -1;
+    }
+    private void OnDeclineDemolishCallback()
+    {
+        confirmationUI.btnApprove.onClick.RemoveListener(OnApproveDemolishCallback);
+        confirmationUI.btnDecline.onClick.RemoveListener(OnDeclineDemolishCallback);
+        confirmationUI.gameObject.SetActive(false);
+    }
     public void OnCrewmateDropAssign()
     {
         foreach (KeyValuePair<int, Building> kvp in buildings)
