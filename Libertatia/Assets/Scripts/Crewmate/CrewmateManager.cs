@@ -123,6 +123,19 @@ public class CrewmateManager : MonoBehaviour
             ReleaseHandler();
         }
 
+        //constantly updates the movement line
+        foreach (int id in selectedCrewmateIDs)
+        {
+            CrewMember crewMember = crewmates[id].GetComponent<CrewMember>();
+
+            crewMember.lineRenderer.SetPosition(0, crewMember.transform.position);
+        }
+
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            HideLineRenderer();
+        }
+
         // Move Crewmate - TODO: move to function
         if(isCombat && Input.GetMouseButtonDown(1))
         {
@@ -135,8 +148,18 @@ public class CrewmateManager : MonoBehaviour
                     Zone zone = hit.transform.gameObject.GetComponent<Zone>();
                     foreach (int id in selectedCrewmateIDs)
                     {
+                        Vector3 movePos = (zone.zoneCenter + (Vector3)UnityEngine.Random.insideUnitSphere * 7f);
+
                         //makes crewmates move to a random position within a sphere around the center of the zone
-                        crewmates[id].SetDestination(zone.zoneCenter + (Vector3)UnityEngine.Random.insideUnitSphere * 7f);
+                        crewmates[id].SetDestination(movePos);
+
+                        //creates a line to indicate where the units are moving to
+                        CrewMember crewMember = crewmates[id].GetComponent<CrewMember>();
+                        crewMember.lineRenderer.enabled = true;
+                        crewMember.lineRenderer.SetPosition(0,crewMember.transform.position);
+
+                        Vector3 updatedMovePos = new Vector3(movePos.x, 0, movePos.z);
+                        crewMember.lineRenderer.SetPosition(1, updatedMovePos);
                     }
                 }
                 else
@@ -423,15 +446,18 @@ public class CrewmateManager : MonoBehaviour
     }
     internal void DeselectCrewmate(int crewmateID)
     {
+        HideLineRenderer();
+
         crewmates[crewmateID].GetComponent<Renderer>().sharedMaterial = materials[0];
         crewmates[crewmateID].transform.GetChild(0).gameObject.SetActive(false);
         selectedCrewmateIDs.Remove(crewmateID);
     }
     private void DeselectCrewmateShare(int crewmateID)
     {
+        HideLineRenderer();
+
         DeselectCrewmate(crewmateID);
         DeselectCard(crewmateID);
-
     }
     internal void DeselectAllCrewmates()
     {
@@ -440,12 +466,19 @@ public class CrewmateManager : MonoBehaviour
             crewmates[selectedCrewmateIDs[i]].transform.GetChild(0).gameObject.SetActive(false);
             crewmates[selectedCrewmateIDs[i]].GetComponent<Renderer>().sharedMaterial = materials[0];
         }
+
+        HideLineRenderer();
+
         selectedCrewmateIDs.Clear();
     }
     internal void DeselectAllCrewmatesShare()
     {
+
+        HideLineRenderer();
+
         DeselectAllCrewmates();
         DeselectAllCards();
+
     }
 
     // UI
@@ -535,5 +568,18 @@ public class CrewmateManager : MonoBehaviour
     {
         Crewmate mate = crewmates[crewmateID];
         bm.UnassignBuilding(mate.Building.id, mate.ID);
+    }
+
+    /// <summary>
+    /// Hides the crewmate's line renderer
+    /// </summary>
+    private void HideLineRenderer()
+    {
+        foreach (int id in selectedCrewmateIDs)
+        {
+            CrewMember crewMember = crewmates[id].GetComponent<CrewMember>();
+
+            crewMember.lineRenderer.enabled = false;
+        }
     }
 }
