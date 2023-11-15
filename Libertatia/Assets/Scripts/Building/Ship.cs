@@ -14,11 +14,12 @@ public class Ship : MonoBehaviour
 
     public GameObject combatUI;
     [SerializeField] private GameObject battleLootUI;
+    [SerializeField] private GameObject leaveButton;
 
     // Start is called before the first frame update
     void Start()
     {
-        detectionRange = 30;
+        detectionRange = 25;
         inRange = false;
 
         unitList.AddRange(GameObject.FindGameObjectsWithTag("PlayerCharacter"));
@@ -40,34 +41,49 @@ public class Ship : MonoBehaviour
                     //Debug.Log("Go home");
                     inRange = true;
 
+                    //sets the leave button to be active if within range
+                    leaveButton.SetActive(true);
+
                 }
                 else
+                {
                     inRange = false;
+                    leaveButton.SetActive(false);
+                }
+
             }
 
         }
 
-        if (inRange)
-        {
-            if (Input.GetKeyDown(KeyCode.E))
-            {
-                //GameManager.data.resources.wood += 50;
-                //GameManager.data.resources.doubloons += 10;
-                //GameManager.data.resources.food += 100;
-
-                CombatResourcesUI combatResources = combatUI.GetComponent<CombatResourcesUI>();
-
-                GameManager.data.resources.wood += combatResources.woodAmount;
-                GameManager.data.resources.doubloons += combatResources.doubloonAmount;
-                GameManager.data.resources.food += combatResources.foodAmount;
-
-                //Opens the battle loot ui
-                battleLootUI.SetActive(true);
-                //CeneManager.LoadOutpostFromCombat();
-            }
-        }
+        //if (inRange)
+        //{
+        //    //sets the leave button to be active if within range
+        //    leaveButton.SetActive(true);
+        //}
+        //else
+        //{
+        //    leaveButton.SetActive(false);
+        //}
 
     }
+
+    public void OpenBattleLootUI()
+    {
+        //GameManager.data.resources.wood += 50;
+        //GameManager.data.resources.doubloons += 10;
+        //GameManager.data.resources.food += 100;
+
+        CombatResourcesUI combatResources = combatUI.GetComponent<CombatResourcesUI>();
+
+        GameManager.data.resources.wood += combatResources.woodAmount;
+        GameManager.data.resources.doubloons += combatResources.doubloonAmount;
+        GameManager.data.resources.food += combatResources.foodAmount;
+
+        //Opens the battle loot ui
+        battleLootUI.SetActive(true);
+        //CeneManager.LoadOutpostFromCombat();
+    }
+
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
