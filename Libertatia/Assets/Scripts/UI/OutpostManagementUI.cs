@@ -36,7 +36,7 @@ public class OutpostManagementUI : MonoBehaviour
     private List<BuildingCard> buildingCards; // make into dict
     private Dictionary<int, CrewmateCard> crewmateCards;
     private int lastSelectedCrewmateCardID = -1;
-    private List<int> selectedCrewmateCardIDs;
+    private List<int> selectedCrewmateCardIDs; // Im thinking this could be a stack
     private bool isOpen;
 
     //Tutorial stuff
@@ -116,16 +116,16 @@ public class OutpostManagementUI : MonoBehaviour
                     {
                         HideBuildingTabArrow();
                         ShowBuildingCardArrow();
-                    }                    
+                    }
                 }
-                    
+
                 if (i == 1)
                 {
                     if(GameManager.outpostVisitNumber == 1)
                     {
                         HideCrewmateTabArrow();
                         ShowCrewmateCardArrow();
-                    }                    
+                    }
                 }
             }
             else
@@ -167,15 +167,15 @@ public class OutpostManagementUI : MonoBehaviour
     {
         foreach (BuildingCard card in buildingCards)
         {
-            card.GetComponent<Outline>().enabled = false;
+            card.Deselect();
         }
-        buildingCards[cardIndex].GetComponent<Outline>().enabled = true;
+        buildingCards[cardIndex].Select();
         bm.SelectBuilding(cardIndex);
         HideBuildingCardArrow();
     }
     public void DeselectBuildingCard(int cardIndex)
     {
-        buildingCards[cardIndex].GetComponent<Outline>().enabled = false;
+        buildingCards[cardIndex].Deselect();
     }
     private void BuildingCardHoveredCallback(int cardIndex)
     {
@@ -245,43 +245,60 @@ public class OutpostManagementUI : MonoBehaviour
             }
         }
         // Shift: selects all inbetween
-        else if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
+        else if ((Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)) && lastSelectedCrewmateCardID != -1)
         {
             List<int> ids = new List<int>(crewmateCards.Keys);
 
-            int lastSelectedIndex = -1;
-            int newSelectedIndex = -1;
+            int firstSelectedIndex = -1;
+            int secondSelectedIndex = -1;
             for (int i = 0; i < ids.Count; i++)
             {
                 if (ids[i] == lastSelectedCrewmateCardID)
                 {
-                    lastSelectedIndex = i;
+                    firstSelectedIndex = i;
                 }
                 if (ids[i] == cardID)
                 {
-                    newSelectedIndex = i;
+                    secondSelectedIndex = i;
                 }
             }
 
-            if (lastSelectedIndex != newSelectedIndex)
+            if (firstSelectedIndex != secondSelectedIndex)
             {
                 int leftIndex = -1;
                 int rightIndex = -1;
-                if (newSelectedIndex < lastSelectedIndex)
+                // click left then right
+                if (firstSelectedIndex < secondSelectedIndex)
                 {
-                    leftIndex = newSelectedIndex;
-                    rightIndex = lastSelectedIndex;
+                    leftIndex = firstSelectedIndex;
+                    rightIndex = secondSelectedIndex;
+
+                    if(!selectedCrewmateCardIDs.Contains(ids[rightIndex]))
+                    {
+                        SelectCrewmateCardShare(ids[rightIndex]);
+                    }
                 }
+                // click right then left
                 else
                 {
-                    leftIndex = lastSelectedIndex;
-                    rightIndex = newSelectedIndex;
+                    rightIndex = firstSelectedIndex;
+                    leftIndex = secondSelectedIndex;
+
+                    if (!selectedCrewmateCardIDs.Contains(ids[leftIndex]))
+                    {
+                        SelectCrewmateCardShare(ids[leftIndex]);
+                    }
                 }
 
-                for (int i = leftIndex; i <= rightIndex; i++)
+                for (int i = leftIndex+1; i < rightIndex; i++)
                 {
-                    SelectCrewmateCard(ids[i]);
+                    if (!selectedCrewmateCardIDs.Contains(ids[i]))
+                    {
+                        SelectCrewmateCardShare(ids[i]);
+                    }
                 }
+
+                lastSelectedCrewmateCardID = cardID;
             }
         }
         else
@@ -292,9 +309,9 @@ public class OutpostManagementUI : MonoBehaviour
     }
     internal void SelectCrewmateCard(int cardID)
     {
-        crewmateCards[cardID].GetComponent<Outline>().enabled = true;
-        lastSelectedCrewmateCardID = cardID;
+        crewmateCards[cardID].Select();
         selectedCrewmateCardIDs.Add(cardID);
+        lastSelectedCrewmateCardID = cardID;
     }
     private void SelectCrewmateCardShare(int cardID)
     {
@@ -303,8 +320,16 @@ public class OutpostManagementUI : MonoBehaviour
     }
     internal void DeselectCrewmateCard(int cardID)
     {
-        crewmateCards[cardID].GetComponent<Outline>().enabled = false;
+        crewmateCards[cardID].Deselect();
         selectedCrewmateCardIDs.Remove(cardID);
+        if(selectedCrewmateCardIDs.Count != 0)
+        {
+            lastSelectedCrewmateCardID = selectedCrewmateCardIDs[selectedCrewmateCardIDs.Count - 1];
+        }
+        else
+        {
+            lastSelectedCrewmateCardID = -1;
+        }
     }
     private void DeselectCrewmateCardShare(int cardID)
     {
@@ -315,9 +340,10 @@ public class OutpostManagementUI : MonoBehaviour
     {
         for (int i = 0; i < selectedCrewmateCardIDs.Count; i++)
         {
-            crewmateCards[selectedCrewmateCardIDs[i]].GetComponent<Outline>().enabled = false;
+            crewmateCards[selectedCrewmateCardIDs[i]].Deselect();
         }
         selectedCrewmateCardIDs.Clear();
+        lastSelectedCrewmateCardID = -1;
     }
     private void DeselectAllCrewmateCardsShare()
     {
