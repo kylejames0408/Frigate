@@ -249,7 +249,9 @@ public class ZoneManager : MonoBehaviour
                 Zone zone = hit.transform.gameObject.GetComponent<Zone>();
 
                 NavMeshAgent myAgent = crewmateDropped.GetComponent<NavMeshAgent>();
-                myAgent.SetDestination(zone.zoneCenter);
+
+                //makes crewmates move to a random position within a sphere around the center of the zone
+                myAgent.SetDestination(zone.zoneCenter + (Vector3)UnityEngine.Random.insideUnitSphere * 7f);
             }
         }
     }

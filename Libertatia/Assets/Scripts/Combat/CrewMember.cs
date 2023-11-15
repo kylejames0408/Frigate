@@ -8,6 +8,8 @@ public class CrewMember : Character
     public List<Character> enemies;
     public List<GameObject> enemyGameobjects;
 
+    public LineRenderer lineRenderer;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -26,6 +28,8 @@ public class CrewMember : Character
             Character crewMember = enemyGameobjects[i].GetComponent<Character>();
             enemies.Add(crewMember);
         }
+
+        lineRenderer = GetComponent<LineRenderer>();
     }
 
     // Update is called once per frame
