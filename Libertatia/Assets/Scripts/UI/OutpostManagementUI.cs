@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 using UnityEngine.UI;
 
 public class OutpostManagementUI : MonoBehaviour
@@ -34,7 +35,8 @@ public class OutpostManagementUI : MonoBehaviour
     private Transform[] pages;
     private List<BuildingCard> buildingCards; // make into dict
     private Dictionary<int, CrewmateCard> crewmateCards;
-    private List<int> selectedCrewmateCardIndicies;
+    private int lastSelectedCrewmateCardID = -1;
+    private List<int> selectedCrewmateCardIDs;
     private bool isOpen;
 
     //Tutorial stuff
@@ -58,7 +60,7 @@ public class OutpostManagementUI : MonoBehaviour
         }
         tabs = tabUIParent.GetComponentsInChildren<Tab>();
         crewmateCards = new Dictionary<int, CrewmateCard>();
-        selectedCrewmateCardIndicies = new List<int>();
+        selectedCrewmateCardIDs = new List<int>();
         popupUI.GetComponent<CanvasGroup>().alpha = 0;
     }
     private void Start()
@@ -230,29 +232,79 @@ public class OutpostManagementUI : MonoBehaviour
     // Clicking handler
     private void ClickCrewmateCard(int cardID) // share
     {
-        if (Input.GetKey(KeyCode.LeftControl))
+        // Ctrl: select & deselect
+        if (Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl))
         {
-            DeselectCrewmateCardShare(cardID);
+            if(selectedCrewmateCardIDs.Contains(cardID))
+            {
+                DeselectCrewmateCardShare(cardID);
+            }
+            else
+            {
+                SelectCrewmateCardShare(cardID);
+            }
+        }
+        // Shift: selects all inbetween
+        else if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
+        {
+            List<int> ids = new List<int>(crewmateCards.Keys);
+
+            int lastSelectedIndex = -1;
+            int newSelectedIndex = -1;
+            for (int i = 0; i < ids.Count; i++)
+            {
+                if (ids[i] == lastSelectedCrewmateCardID)
+                {
+                    lastSelectedIndex = i;
+                }
+                if (ids[i] == cardID)
+                {
+                    newSelectedIndex = i;
+                }
+            }
+
+            if (lastSelectedIndex != newSelectedIndex)
+            {
+                int leftIndex = -1;
+                int rightIndex = -1;
+                if (newSelectedIndex < lastSelectedIndex)
+                {
+                    leftIndex = newSelectedIndex;
+                    rightIndex = lastSelectedIndex;
+                }
+                else
+                {
+                    leftIndex = lastSelectedIndex;
+                    rightIndex = newSelectedIndex;
+                }
+
+                for (int i = leftIndex; i <= rightIndex; i++)
+                {
+                    SelectCrewmateCard(ids[i]);
+                }
+            }
         }
         else
         {
-            if (!Input.GetKey(KeyCode.LeftShift))
-            {
-                DeselectAllCrewmateCardsShare();
-            }
-            SelectCrewmateCard(cardID);
-            cm.SelectCrewmate(cardID);
+            DeselectAllCrewmateCardsShare(); // might not want it to deselect if clicking on selected card
+            SelectCrewmateCardShare(cardID);
         }
     }
     internal void SelectCrewmateCard(int cardID)
     {
         crewmateCards[cardID].GetComponent<Outline>().enabled = true;
-        selectedCrewmateCardIndicies.Add(cardID);
+        lastSelectedCrewmateCardID = cardID;
+        selectedCrewmateCardIDs.Add(cardID);
+    }
+    private void SelectCrewmateCardShare(int cardID)
+    {
+        SelectCrewmateCard(cardID);
+        cm.SelectCrewmate(cardID);
     }
     internal void DeselectCrewmateCard(int cardID)
     {
         crewmateCards[cardID].GetComponent<Outline>().enabled = false;
-        selectedCrewmateCardIndicies.Remove(cardID);
+        selectedCrewmateCardIDs.Remove(cardID);
     }
     private void DeselectCrewmateCardShare(int cardID)
     {
@@ -261,11 +313,11 @@ public class OutpostManagementUI : MonoBehaviour
     }
     internal void DeselectAllCrewmateCards()
     {
-        for (int i = 0; i < selectedCrewmateCardIndicies.Count; i++)
+        for (int i = 0; i < selectedCrewmateCardIDs.Count; i++)
         {
-            crewmateCards[selectedCrewmateCardIndicies[i]].GetComponent<Outline>().enabled = false;
+            crewmateCards[selectedCrewmateCardIDs[i]].GetComponent<Outline>().enabled = false;
         }
-        selectedCrewmateCardIndicies.Clear();
+        selectedCrewmateCardIDs.Clear();
     }
     private void DeselectAllCrewmateCardsShare()
     {

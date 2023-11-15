@@ -59,6 +59,7 @@ public class CrewmateManager : MonoBehaviour
         if (omui == null) { omui = FindObjectOfType<OutpostManagementUI>(); }
         if (cmui == null) { cmui = FindObjectOfType<CombatManagementUI>(); }
         if (orui == null) { orui = FindObjectOfType<ResourcesUI>(); }
+        if (crewmateUI == null) { crewmateUI = FindObjectOfType<CrewmateUI>(); }
         if (bm == null) { bm = FindObjectOfType<BuildingManager>(); }
 
         // Init Crewmates (make own function)
@@ -103,7 +104,7 @@ public class CrewmateManager : MonoBehaviour
     }
     private void Update()
     {
-        // TODO: make ifs into handler functions
+        // TODO: make ifs into handler functions?
 
         // Left mouse button PRESS handler
         if (Input.GetMouseButtonDown(0))

@@ -18,6 +18,7 @@ public class CrewmateCard : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         this.crewmateID = crewmateID;
     }
 
+    // Stays if we are adding hovering for crewmates
     public void OnPointerEnter(PointerEventData eventData)
     {
         //onHover.Invoke();
