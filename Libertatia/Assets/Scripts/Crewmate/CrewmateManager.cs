@@ -1,7 +1,11 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
+using static UnityEngine.UI.CanvasScaler;
 
 public class CrewmateManager : MonoBehaviour
 {
@@ -55,7 +59,6 @@ public class CrewmateManager : MonoBehaviour
         if (omui == null) { omui = FindObjectOfType<OutpostManagementUI>(); }
         if (cmui == null) { cmui = FindObjectOfType<CombatManagementUI>(); }
         if (orui == null) { orui = FindObjectOfType<ResourcesUI>(); }
-        if (crewmateUI == null) { crewmateUI = FindObjectOfType<CrewmateUI>(); }
         if (bm == null) { bm = FindObjectOfType<BuildingManager>(); }
 
         // Init Crewmates (make own function)
@@ -100,7 +103,7 @@ public class CrewmateManager : MonoBehaviour
     }
     private void Update()
     {
-        // TODO: make ifs into handler functions?
+        // TODO: make ifs into handler functions
 
         // Left mouse button PRESS handler
         if (Input.GetMouseButtonDown(0))
@@ -124,10 +127,8 @@ public class CrewmateManager : MonoBehaviour
         foreach (int id in selectedCrewmateIDs)
         {
             CrewMember crewMember = crewmates[id].GetComponent<CrewMember>();
-            if(crewMember)
-            {
-                crewMember.lineRenderer.SetPosition(0, crewMember.transform.position);
-            }
+
+            crewMember.lineRenderer.SetPosition(0, crewMember.transform.position);
         }
 
         if(Input.GetKeyDown(KeyCode.Space))
@@ -543,10 +544,18 @@ public class CrewmateManager : MonoBehaviour
         crewmateUI.FillUI(mate);
         crewmateUI.OpenMenu();
     }
-    internal void UnassignCrewmate(int crewmateID)
+    internal void FreeAssignees(int assignee1ID, int assignee2ID)
     {
-        Crewmate mate = crewmates[crewmateID];
-        mate.Unassign(); // will UI need to be updated as well?
+        if(assignee1ID != -1)
+        {
+            Crewmate mate1 = crewmates[assignee1ID];
+            mate1.Free(); // will UI need to be updated as well?
+        }
+        if (assignee2ID != -1)
+        {
+            Crewmate mate2 = crewmates[assignee2ID];
+            mate2.Free(); // will UI need to be updated as well?
+        }
     }
 
     // Callbacks
@@ -569,10 +578,8 @@ public class CrewmateManager : MonoBehaviour
         foreach (int id in selectedCrewmateIDs)
         {
             CrewMember crewMember = crewmates[id].GetComponent<CrewMember>();
-            if(crewMember)
-            {
-                crewMember.lineRenderer.enabled = false;
-            }
+
+            crewMember.lineRenderer.enabled = false;
         }
     }
 }

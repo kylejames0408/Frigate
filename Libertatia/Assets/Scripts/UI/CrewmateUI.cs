@@ -26,6 +26,7 @@ public class CrewmateUI : MonoBehaviour
     [SerializeField] private Button btnClose;
 
     [Header("Tracking")] // Dynamic/tracking information
+    [SerializeField] private int activeCrewmateID;
     private RectTransform bounds; // for clicking off
 
     private void Awake()
