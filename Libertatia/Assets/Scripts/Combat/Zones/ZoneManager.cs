@@ -55,9 +55,18 @@ public class ZoneManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //Initializes crew members
         if (crewMembers.Count == 0)
         {
             crewMembers = GameObject.FindGameObjectsWithTag("PlayerCharacter").ToList<GameObject>();
+
+            //start by having each crew member's target position point to themselves
+            foreach (GameObject cm in crewMembers)
+            {
+                CrewMember crewMember = cm.GetComponent<CrewMember>();
+
+                crewMember.targetPos = crewMember.transform.position;
+            }
         }
 
         foreach(GameObject cm in crewMembers)
@@ -121,6 +130,8 @@ public class ZoneManager : MonoBehaviour
                             //crewMember.charAgent.SetDestination(enemy.transform.position);
 
                             crewMember.charAgent.SetDestination(crewMember.GetClosestUnit(zone.enemiesInZone));
+
+                            crewMember.lineRenderer.SetPosition(1, crewMember.GetClosestUnit(zone.enemiesInZone));
                         }
                     }
                 }
@@ -224,6 +235,8 @@ public class ZoneManager : MonoBehaviour
             CrewMember crewMember = crewMembers[i].GetComponent<CrewMember>();
 
             crewMember.charAgent.SetDestination(shipWaypoint.transform.position);
+
+            crewMember.lineRenderer.SetPosition(1, shipWaypoint.transform.position);
         }
 
         //Makes marker disappear when retreating to ship

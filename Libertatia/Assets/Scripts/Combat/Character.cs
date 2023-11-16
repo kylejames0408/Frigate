@@ -18,6 +18,9 @@ public abstract class Character : MonoBehaviour
     public Material[] materials;
     public Renderer rend;
 
+    //where the character is moving to
+    public Vector3 targetPos;
+
     // Start is called before the first frame update
     void Start()
     {

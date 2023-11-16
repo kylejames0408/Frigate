@@ -131,11 +131,6 @@ public class CrewmateManager : MonoBehaviour
             crewMember.lineRenderer.SetPosition(0, crewMember.transform.position);
         }
 
-        if(Input.GetKeyDown(KeyCode.Space))
-        {
-            HideLineRenderer();
-        }
-
         // Move Crewmate - TODO: move to function
         if(isCombat && Input.GetMouseButtonDown(1))
         {
@@ -155,11 +150,10 @@ public class CrewmateManager : MonoBehaviour
 
                         //creates a line to indicate where the units are moving to
                         CrewMember crewMember = crewmates[id].GetComponent<CrewMember>();
-                        crewMember.lineRenderer.enabled = true;
-                        crewMember.lineRenderer.SetPosition(0,crewMember.transform.position);
-
                         Vector3 updatedMovePos = new Vector3(movePos.x, 0, movePos.z);
-                        crewMember.lineRenderer.SetPosition(1, updatedMovePos);
+
+                        crewMember.targetPos = updatedMovePos;
+                        ShowLineRenderer(updatedMovePos, id);
                     }
                 }
                 else
@@ -432,6 +426,10 @@ public class CrewmateManager : MonoBehaviour
         //crewmates[crewmateID].transform.GetChild(0).gameObject.SetActive(true);
         selectedCrewmateIDs.Add(crewmateID);
 
+        //unit line renderer
+        CrewMember crewMember = crewmates[crewmateID].GetComponent<CrewMember>();
+        ShowLineRenderer(crewMember.targetPos, crewmateID);
+
         if(!isCombat)
         {
             if (selectedCrewmateIDs.Count > 1)
@@ -581,5 +579,21 @@ public class CrewmateManager : MonoBehaviour
 
             crewMember.lineRenderer.enabled = false;
         }
+    }
+
+    /// <summary>
+    /// Shows and updates unit's line renderer
+    /// </summary>
+    /// <param name="targetPos"></param>
+    /// <param name="crewMemberID"></param>
+    private void ShowLineRenderer(Vector3 targetPos, int crewMemberID)
+    {
+        CrewMember crewMember = crewmates[crewMemberID].GetComponent<CrewMember>();
+
+        crewMember.lineRenderer.enabled = true;
+
+        crewMember.lineRenderer.SetPosition(0, crewMember.transform.position);
+        crewMember.lineRenderer.SetPosition(1, targetPos);
+        
     }
 }
