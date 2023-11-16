@@ -1,9 +1,16 @@
 ﻿using System;
-using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
+
+public enum CrewmateState
+{
+    IDLE,
+    BUILDING,
+    ATTACKING,
+    MOVING
+}
 
 [Serializable]
 public class Crewmate : MonoBehaviour
@@ -12,18 +19,26 @@ public class Crewmate : MonoBehaviour
     private NavMeshAgent agent;
     // Tracking
     [SerializeField] private int id = -1;
+    [SerializeField] private CrewmateState state = CrewmateState.IDLE;
     [SerializeField] private ObjectData building;
     // Characteristics
-    [SerializeField] private string crewmateName;
+    [SerializeField] private string fullName;
+    [SerializeField] private string firstName;
+    [SerializeField] private string lastName;
     [SerializeField] private int health = 100;
     [SerializeField] private int strength = -1;
     [SerializeField] private int agility = -1;
     [SerializeField] private int stamina = -1;
     // UI
-    [SerializeField] private Sprite icon;
+    [SerializeField] private Sprite iconCrewmate;
+    [SerializeField] private Sprite iconStatus;
     [SerializeField] private bool isHovered = false;
     // Cache
-    [SerializeField] private Sprite iconEmptyAsssignment;
+    [SerializeField] private Sprite iconDefaultBuilding;
+    [SerializeField] private Sprite iconStatusIdle;
+    [SerializeField] private Sprite iconStatusBuilding;
+    [SerializeField] private Sprite iconStatusAttaching;
+    [SerializeField] private Sprite iconStatusMoving;
     // Events
     public UnityEvent onAssign;
     public UnityEvent onReassign;
@@ -38,9 +53,13 @@ public class Crewmate : MonoBehaviour
     {
         get { return building; }
     }
-    public string Name
+    public string FullName
     {
-        get { return crewmateName; }
+        get { return fullName; }
+    }
+    public string FirstName
+    {
+        get { return firstName; }
     }
     public int Health
     {
@@ -60,18 +79,22 @@ public class Crewmate : MonoBehaviour
     }
     public Sprite Icon
     {
-        get { return icon; }
+        get { return iconCrewmate; }
     }
     public bool IsHovered
     {
         get { return isHovered; }
+    }
+    public Sprite StatusIcon
+    {
+        get { return iconStatus; }
     }
 
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
         id = gameObject.GetInstanceID();
-        building = new ObjectData(-1, iconEmptyAsssignment); // Is there a need for a default icon?
+        building = new ObjectData(-1, iconDefaultBuilding); // Is there a need for a default icon?
         // Update once values are set
         strength = UnityEngine.Random.Range(1, 6);
         agility = UnityEngine.Random.Range(1, 6);
@@ -84,7 +107,6 @@ public class Crewmate : MonoBehaviour
     private void Update()
     {
         HandleSelection();
-
     }
     private void OnMouseEnter()
     {
@@ -97,30 +119,29 @@ public class Crewmate : MonoBehaviour
     {
         isHovered = false;
     }
+    // Implement
     private void OnDestroy()
     {
         //onDestroy.Invoke();
     }
 
     // Actions
-    public void Init(CrewmateData data, Sprite emptyBuildingAssignmentIcon)
+    public void Set(CrewmateData data)
     {
         // Tracking
         id = data.id;
         building = data.building;
         // Characteristics
-        crewmateName = data.name;
+        fullName = data.name;
         health = data.health;
         strength = data.strength;
         agility = data.agility;
         stamina = data.stamina;
         // UI
-        icon = data.icon;
-
+        iconCrewmate = data.icon;
+        // Spacial
         transform.position = data.position;
         transform.rotation = data.rotation;
-
-        iconEmptyAsssignment = emptyBuildingAssignmentIcon;
     }
     public void Assign(int buildingID, Sprite buildingIcon, Vector3 destination)
     {
@@ -134,7 +155,7 @@ public class Crewmate : MonoBehaviour
     }
     public void Unassign()
     {
-        building.Reset(iconEmptyAsssignment);
+        building.Reset(iconDefaultBuilding);
     }
 
     // Util
@@ -146,9 +167,9 @@ public class Crewmate : MonoBehaviour
     // UI
     public void SetUI(Sprite crewmateIcon, Sprite emptyBuildingAssignmentIcon) // will likely have state in future, similar to building
     {
-        icon = crewmateIcon;
-        iconEmptyAsssignment = emptyBuildingAssignmentIcon;
-        building.icon = iconEmptyAsssignment;
+        iconCrewmate = crewmateIcon;
+        iconDefaultBuilding = emptyBuildingAssignmentIcon;
+        building.icon = iconDefaultBuilding;
     }
 
     // Handlers

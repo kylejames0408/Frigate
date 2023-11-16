@@ -357,14 +357,14 @@ public class CrewmateManager : MonoBehaviour
         GameObject crewmateObj = Instantiate(crewmatePrefab, transform);
 
         // Set Position - maybe move to util func since same thing is in Building
-        Vector2 circleLocation = UnityEngine.Random.insideUnitCircle;
+        Vector2 circleLocation = Random.insideUnitCircle;
         Vector3 spawnPosition = new Vector3(circleLocation.x * crewmateSpawnRadius, 0, circleLocation.y * crewmateSpawnRadius);
         crewmateObj.transform.position = crewmateSpawn.position + spawnPosition;
 
         Crewmate mate = crewmateObj.GetComponent<Crewmate>();
-        crewmateObj.name = mate.Name + mate.ID;
+        crewmateObj.name = mate.FirstName + mate.ID;
 
-        mate.SetUI(crewmateIcons[UnityEngine.Random.Range(0, crewmateIcons.Length)], iconEmptyAsssignment);
+        mate.SetUI(crewmateIcons[Random.Range(0, crewmateIcons.Length)], iconEmptyAsssignment);
 
         // Save Data
         GameManager.AddCrewmate(new CrewmateData(mate));
@@ -390,7 +390,7 @@ public class CrewmateManager : MonoBehaviour
     {
         GameObject crewmateObj = Instantiate(crewmatePrefab, transform);
         Crewmate mate = crewmateObj.GetComponent<Crewmate>();
-        mate.Init(data, iconEmptyAsssignment);
+        mate.Set(data);
 
         if (data.building.id == -1)
         {

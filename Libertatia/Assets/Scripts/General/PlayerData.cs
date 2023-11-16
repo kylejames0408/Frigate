@@ -95,7 +95,7 @@ public struct CrewmateData
     {
         id = mate.ID;
         building = mate.Building;
-        name = mate.Name;
+        name = mate.FirstName;
         health = mate.Health;
         strength = mate.Strength;
         agility = mate.Agility;

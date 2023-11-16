@@ -89,14 +89,14 @@ public class CombatManagementUI : MonoBehaviour
         GameObject cardObj = Instantiate(crewmateCardPrefab, pages[1]);
 
         CrewmateCard card = cardObj.GetComponentInChildren<CrewmateCard>();
-        card.Init(mate.ID);
+        card.Init(mate);
         crewmateCards.Add(card.ID, card);
 
         // Callbacks
         card.GetComponent<Button>().onClick.AddListener(() => { ClickCrewmateCard(card.ID); }); // drag + drop func
         // Fill UI
         card.GetComponentsInChildren<Image>()[1].sprite = mate.Icon;
-        card.GetComponentInChildren<TextMeshProUGUI>().text = mate.Name;
+        card.GetComponentInChildren<TextMeshProUGUI>().text = mate.FirstName;
 
         card.GetComponent<DragObj2D>().onBeginDrag.AddListener(delegate { ClickCrewmateCard(card.ID); });
         card.GetComponent<DragObj2D>().onEndDrag.AddListener(delegate { zm.OnCrewmateDropAssign(); });

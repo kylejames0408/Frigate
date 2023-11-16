@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -7,6 +8,12 @@ public class CrewmateCard : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 {
     [SerializeField] private int crewmateID = -1;
     private Outline outline;
+    // Crewmate UI Components
+    [SerializeField] private Image iconCrewmate;
+    [SerializeField] private string firstName;
+    [SerializeField] private Image iconsStatus;
+    [SerializeField] private Slider sliderHealth;
+    // Events
     public UnityEvent onHover;
     public UnityEvent onHoverExit;
 
@@ -15,11 +22,20 @@ public class CrewmateCard : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         get { return crewmateID; }
     }
 
-    public void Init(int crewmateID)
+    public void Init(Crewmate mate)
     {
-        this.crewmateID = crewmateID;
         outline = GetComponent<Outline>();
+        Set(mate);
         Deselect();
+    }
+    internal void Set(Crewmate mate)
+    {
+        crewmateID = mate.ID;
+        iconCrewmate.sprite = mate.Icon;
+        firstName = mate.FirstName;
+        iconsStatus.sprite = mate.StatusIcon;
+        sliderHealth.value = mate.Health;
+
     }
 
     public void Select()
@@ -41,4 +57,5 @@ public class CrewmateCard : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     {
         //onHoverExit.Invoke();
     }
+
 }
