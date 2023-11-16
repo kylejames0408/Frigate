@@ -26,6 +26,10 @@ public class GameManager : MonoBehaviour
     public static bool OutpostTesting = false;
     public static bool CombatTesting = false;
 
+    // UI
+    [SerializeField] private PauseMenu pauseMenu;
+
+    // Events
     public UnityEvent onAttack;
 
     // Player data management - maybe move to manager, if so, will storage persist?
@@ -76,6 +80,7 @@ public class GameManager : MonoBehaviour
         Debug.Log("GameManager initialized");
         data = PlayerDataManager.CreateNewData();
         DontDestroyOnLoad(gameObject); // Required for persistance
+
 #if !UNITY_EDITOR
         Cursor.lockState = CursorLockMode.Confined;
 #endif
@@ -84,18 +89,27 @@ public class GameManager : MonoBehaviour
     {
         gameTimer += Time.deltaTime;
 
-        switch (state)
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
-            case GameState.PLAYING:
-                {
-                    // Gameplay
-                }
-                break;
-            case GameState.PAUSED:
-                {
-                    // Bypass gameplay
-                }
-                break;
+            if(state == GameState.PLAYING)
+            {
+                Pause();
+            }
+            else if(state == GameState.PAUSED)
+            {
+                Unpause();
+            }
         }
+    }
+
+    private void Pause()
+    {
+        state = GameState.PAUSED;
+        pauseMenu.Open();
+    }
+    private void Unpause()
+    {
+        state = GameState.PLAYING;
+        pauseMenu.Close();
     }
 }

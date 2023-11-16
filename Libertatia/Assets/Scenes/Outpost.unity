@@ -4252,8 +4252,9 @@ GameObject:
   - component: {fileID: 380156885}
   - component: {fileID: 380156884}
   - component: {fileID: 380156886}
+  - component: {fileID: 380156887}
   m_Layer: 5
-  m_Name: INT-Menu
+  m_Name: INT-Pause
   m_TagString: Untagged
   m_Icon: {fileID: 1206586993520771344, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -4331,6 +4332,22 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &380156887
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 380156882}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c071d555998d774e81cb13736c50f4c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameplayMenu: {fileID: 380156882}
+  resumeBtn: {fileID: 346252959}
+  optionsBtn: {fileID: 317568262}
+  mainMenuBtn: {fileID: 1823155592}
 --- !u!1 &383671986
 GameObject:
   m_ObjectHideFlags: 0
@@ -7408,8 +7425,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 746340826}
+  - component: {fileID: 746340829}
   - component: {fileID: 746340828}
-  - component: {fileID: 746340827}
   m_Layer: 5
   m_Name: INT-Dev
   m_TagString: Untagged
@@ -7439,26 +7456,6 @@ RectTransform:
   m_AnchoredPosition: {x: 331, y: -226}
   m_SizeDelta: {x: 400, y: 600}
   m_Pivot: {x: 1, y: 0.5}
---- !u!114 &746340827
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 746340825}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 045b48780e2768f4c8b30f3bafab0b2c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bm: {fileID: 745434448}
-  cm: {fileID: 314619652}
-  rui: {fileID: 1078224227}
-  btnArrow: {fileID: 47649196}
-  btnBuildAll: {fileID: 138746107}
-  btnAddWood: {fileID: 717431541}
-  btnAddGold: {fileID: 2064926211}
-  btnNewMate: {fileID: 2038346249}
 --- !u!114 &746340828
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7485,6 +7482,26 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &746340829
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 746340825}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85583754922f2fe47b45fed2a4128915, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bm: {fileID: 745434448}
+  cm: {fileID: 314619652}
+  rui: {fileID: 1078224227}
+  btnArrow: {fileID: 47649196}
+  btnBuildAll: {fileID: 138746107}
+  btnAddWood: {fileID: 717431541}
+  btnAddGold: {fileID: 2064926211}
+  btnNewMate: {fileID: 2038346249}
 --- !u!1 &748335029
 GameObject:
   m_ObjectHideFlags: 0
@@ -9679,6 +9696,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6a9faac7fc866d4583c9654a2f48cdf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  devMenu: {fileID: 746340829}
+  pauseMenu: {fileID: 380156887}
   onAttack:
     m_PersistentCalls:
       m_Calls: []
@@ -11132,7 +11151,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 50, y: -125}
+  m_AnchoredPosition: {x: 50, y: 0}
   m_SizeDelta: {x: 600, y: 400}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &1313257459
@@ -12615,7 +12634,6 @@ GameObject:
   - component: {fileID: 1542354888}
   - component: {fileID: 1542354887}
   - component: {fileID: 1542354886}
-  - component: {fileID: 1542354891}
   m_Layer: 5
   m_Name: Interface
   m_TagString: Untagged
@@ -12716,22 +12734,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &1542354891
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1542354885}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0c071d555998d774e81cb13736c50f4c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gameplayMenu: {fileID: 380156882}
-  resumeBtn: {fileID: 346252959}
-  optionsBtn: {fileID: 317568262}
-  mainMenuBtn: {fileID: 1823155592}
 --- !u!1 &1549463121
 GameObject:
   m_ObjectHideFlags: 0
@@ -16141,7 +16143,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1542354891}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: GameplayMenuUI, Assembly-CSharp
         m_MethodName: OpenMenu
         m_Mode: 1
