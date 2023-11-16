@@ -2799,8 +2799,10 @@ MonoBehaviour:
   healthbar: {fileID: 506170226}
   materials: []
   rend: {fileID: 0}
+  targetPos: {x: 0, y: 0, z: 0}
   enemies: []
   enemyGameobjects: []
+  lineRenderer: {fileID: 0}
 --- !u!114 &217854478
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3092,8 +3094,10 @@ MonoBehaviour:
   healthbar: {fileID: 322517878}
   materials: []
   rend: {fileID: 0}
+  targetPos: {x: 0, y: 0, z: 0}
   enemies: []
   enemyGameobjects: []
+  lineRenderer: {fileID: 0}
 --- !u!114 &228254982
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3280,7 +3284,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 45, y: 0, z: 0}
 --- !u!114 &274630024
 MonoBehaviour:
@@ -3382,7 +3386,7 @@ Transform:
   - {fileID: 59076281}
   - {fileID: 1879614392}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &307680369
 GameObject:
@@ -3883,8 +3887,10 @@ MonoBehaviour:
   healthbar: {fileID: 877310701}
   materials: []
   rend: {fileID: 0}
+  targetPos: {x: 0, y: 0, z: 0}
   enemies: []
   enemyGameobjects: []
+  lineRenderer: {fileID: 0}
 --- !u!114 &348037778
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4240,8 +4246,10 @@ MonoBehaviour:
   healthbar: {fileID: 737809456}
   materials: []
   rend: {fileID: 0}
+  targetPos: {x: 0, y: 0, z: 0}
   enemies: []
   enemyGameobjects: []
+  lineRenderer: {fileID: 0}
 --- !u!114 &388982661
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4492,6 +4500,69 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 406583363}
   m_CullTransparentMesh: 1
+--- !u!1001 &409338697
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -4216859302048453862, guid: 288a42e6b35c81446a49858f8dcaa6cd, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -4216859302048453862, guid: 288a42e6b35c81446a49858f8dcaa6cd, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 15.062429
+      objectReference: {fileID: 0}
+    - target: {fileID: -4216859302048453862, guid: 288a42e6b35c81446a49858f8dcaa6cd, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.6983633
+      objectReference: {fileID: 0}
+    - target: {fileID: -4216859302048453862, guid: 288a42e6b35c81446a49858f8dcaa6cd, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 20.333015
+      objectReference: {fileID: 0}
+    - target: {fileID: -4216859302048453862, guid: 288a42e6b35c81446a49858f8dcaa6cd, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -4216859302048453862, guid: 288a42e6b35c81446a49858f8dcaa6cd, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -4216859302048453862, guid: 288a42e6b35c81446a49858f8dcaa6cd, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -4216859302048453862, guid: 288a42e6b35c81446a49858f8dcaa6cd, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -4216859302048453862, guid: 288a42e6b35c81446a49858f8dcaa6cd, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -4216859302048453862, guid: 288a42e6b35c81446a49858f8dcaa6cd, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -4216859302048453862, guid: 288a42e6b35c81446a49858f8dcaa6cd, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 288a42e6b35c81446a49858f8dcaa6cd, type: 3}
+      propertyPath: m_Name
+      value: Lightpost
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects:
+    - {fileID: -4748874672442389124, guid: 288a42e6b35c81446a49858f8dcaa6cd, type: 3}
+    - {fileID: -2994569234417419163, guid: 288a42e6b35c81446a49858f8dcaa6cd, type: 3}
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 288a42e6b35c81446a49858f8dcaa6cd, type: 3}
 --- !u!1 &416892775
 GameObject:
   m_ObjectHideFlags: 0
@@ -4882,6 +4953,7 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 0438259f38ba9794db820959803e42ef, type: 2}
   - {fileID: 2100000, guid: fd851714455af25489190b5554dfaba0, type: 2}
   rend: {fileID: 443887580}
+  targetPos: {x: 0, y: 0, z: 0}
   crewMembers: []
   crewMemberGameObjects: []
   cm: {fileID: 0}
@@ -6330,8 +6402,10 @@ MonoBehaviour:
   healthbar: {fileID: 2012164508}
   materials: []
   rend: {fileID: 0}
+  targetPos: {x: 0, y: 0, z: 0}
   enemies: []
   enemyGameobjects: []
+  lineRenderer: {fileID: 0}
 --- !u!114 &641981759
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7552,7 +7626,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
 --- !u!114 &739669717
 MonoBehaviour:
@@ -8303,7 +8377,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2115434264094232252, guid: d49b5e950800f9f41af93a1c2015bc46, type: 3}
       propertyPath: m_RootOrder
-      value: 8
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 2115434264094232252, guid: d49b5e950800f9f41af93a1c2015bc46, type: 3}
       propertyPath: m_LocalPosition.x
@@ -8957,6 +9031,7 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 0438259f38ba9794db820959803e42ef, type: 2}
   - {fileID: 2100000, guid: fd851714455af25489190b5554dfaba0, type: 2}
   rend: {fileID: 867616226}
+  targetPos: {x: 0, y: 0, z: 0}
   crewMembers: []
   crewMemberGameObjects: []
   cm: {fileID: 0}
@@ -9728,6 +9803,7 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 0438259f38ba9794db820959803e42ef, type: 2}
   - {fileID: 2100000, guid: fd851714455af25489190b5554dfaba0, type: 2}
   rend: {fileID: 941200572}
+  targetPos: {x: 0, y: 0, z: 0}
   crewMembers: []
   crewMemberGameObjects: []
   cm: {fileID: 0}
@@ -10247,7 +10323,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6231409215963263180, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 6231409215963263180, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
       propertyPath: m_LocalPosition.x
@@ -10560,8 +10636,10 @@ MonoBehaviour:
   healthbar: {fileID: 671023626}
   materials: []
   rend: {fileID: 0}
+  targetPos: {x: 0, y: 0, z: 0}
   enemies: []
   enemyGameobjects: []
+  lineRenderer: {fileID: 0}
 --- !u!114 &967286128
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12333,8 +12411,10 @@ MonoBehaviour:
   healthbar: {fileID: 1439090914}
   materials: []
   rend: {fileID: 0}
+  targetPos: {x: 0, y: 0, z: 0}
   enemies: []
   enemyGameobjects: []
+  lineRenderer: {fileID: 0}
 --- !u!114 &1138835301
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12973,6 +13053,7 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 0438259f38ba9794db820959803e42ef, type: 2}
   - {fileID: 2100000, guid: fd851714455af25489190b5554dfaba0, type: 2}
   rend: {fileID: 1252722869}
+  targetPos: {x: 0, y: 0, z: 0}
   crewMembers: []
   crewMemberGameObjects: []
   cm: {fileID: 0}
@@ -13056,7 +13137,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1294086459
 GameObject:
@@ -13569,7 +13650,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1355149730
 GameObject:
@@ -14002,7 +14083,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1415576183
 GameObject:
@@ -14894,8 +14975,10 @@ MonoBehaviour:
   healthbar: {fileID: 204846174}
   materials: []
   rend: {fileID: 0}
+  targetPos: {x: 0, y: 0, z: 0}
   enemies: []
   enemyGameobjects: []
+  lineRenderer: {fileID: 0}
 --- !u!114 &1467598189
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17711,7 +17794,7 @@ RectTransform:
   - {fileID: 2125402039}
   - {fileID: 447492983}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -18058,8 +18141,10 @@ MonoBehaviour:
   healthbar: {fileID: 226092657}
   materials: []
   rend: {fileID: 0}
+  targetPos: {x: 0, y: 0, z: 0}
   enemies: []
   enemyGameobjects: []
+  lineRenderer: {fileID: 0}
 --- !u!114 &1754147573
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19404,8 +19489,10 @@ MonoBehaviour:
   healthbar: {fileID: 2092591698}
   materials: []
   rend: {fileID: 0}
+  targetPos: {x: 0, y: 0, z: 0}
   enemies: []
   enemyGameobjects: []
+  lineRenderer: {fileID: 0}
 --- !u!114 &1823225489
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20736,6 +20823,7 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 0438259f38ba9794db820959803e42ef, type: 2}
   - {fileID: 2100000, guid: fd851714455af25489190b5554dfaba0, type: 2}
   rend: {fileID: 1967424716}
+  targetPos: {x: 0, y: 0, z: 0}
   crewMembers: []
   crewMemberGameObjects: []
   cm: {fileID: 0}
@@ -22164,8 +22252,10 @@ MonoBehaviour:
   healthbar: {fileID: 17712094}
   materials: []
   rend: {fileID: 0}
+  targetPos: {x: 0, y: 0, z: 0}
   enemies: []
   enemyGameobjects: []
+  lineRenderer: {fileID: 0}
 --- !u!114 &2056102857
 MonoBehaviour:
   m_ObjectHideFlags: 0
