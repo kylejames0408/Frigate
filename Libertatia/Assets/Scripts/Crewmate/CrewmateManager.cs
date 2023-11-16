@@ -1,11 +1,7 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
-using static UnityEngine.UI.CanvasScaler;
 
 public class CrewmateManager : MonoBehaviour
 {
@@ -128,8 +124,10 @@ public class CrewmateManager : MonoBehaviour
         foreach (int id in selectedCrewmateIDs)
         {
             CrewMember crewMember = crewmates[id].GetComponent<CrewMember>();
-
-            crewMember.lineRenderer.SetPosition(0, crewMember.transform.position);
+            if(crewMember)
+            {
+                crewMember.lineRenderer.SetPosition(0, crewMember.transform.position);
+            }
         }
 
         if(Input.GetKeyDown(KeyCode.Space))
@@ -545,18 +543,10 @@ public class CrewmateManager : MonoBehaviour
         crewmateUI.FillUI(mate);
         crewmateUI.OpenMenu();
     }
-    internal void FreeAssignees(int assignee1ID, int assignee2ID)
+    internal void UnassignCrewmate(int crewmateID)
     {
-        if(assignee1ID != -1)
-        {
-            Crewmate mate1 = crewmates[assignee1ID];
-            mate1.Free(); // will UI need to be updated as well?
-        }
-        if (assignee2ID != -1)
-        {
-            Crewmate mate2 = crewmates[assignee2ID];
-            mate2.Free(); // will UI need to be updated as well?
-        }
+        Crewmate mate = crewmates[crewmateID];
+        mate.Unassign(); // will UI need to be updated as well?
     }
 
     // Callbacks
@@ -579,8 +569,10 @@ public class CrewmateManager : MonoBehaviour
         foreach (int id in selectedCrewmateIDs)
         {
             CrewMember crewMember = crewmates[id].GetComponent<CrewMember>();
-
-            crewMember.lineRenderer.enabled = false;
+            if(crewMember)
+            {
+                crewMember.lineRenderer.enabled = false;
+            }
         }
     }
 }
