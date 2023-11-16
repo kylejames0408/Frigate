@@ -100,6 +100,7 @@ public class ZoneManager : MonoBehaviour
             if (zone.housesInZone.Count == 0 && zone.crewMembersInZone.Count >= 1 && zone.enemiesInZone.Count <= 0)
             {
                 zone.zoneLootCollected = true;
+                zone.centerObject.SetActive(true);
             }
 
             //If there is at least one crew member and enemy in a zone
@@ -222,6 +223,7 @@ public class ZoneManager : MonoBehaviour
             }
 
             zone.zoneLootCollected = true;
+            zone.centerObject.SetActive(true);
         }
     }
 
