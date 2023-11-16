@@ -207,7 +207,7 @@ public class Building : MonoBehaviour
     // Requests
     public bool CanAssign()
     {
-        if (state == BuildingState.WAITING_FOR_ASSIGNMENT)
+        if (state == BuildingState.RECRUIT)
         {
             return assignee1.id == -1;
         }
@@ -229,8 +229,8 @@ public class Building : MonoBehaviour
             case BuildingState.PLACING:
                 value = "Placing";
                 break;
-            case BuildingState.WAITING_FOR_ASSIGNMENT:
-                value = "Needs assignment";
+            case BuildingState.RECRUIT:
+                value = "Recruit";
                 break;
             case BuildingState.CONSTRUCTING:
                 value = "Constructing";
@@ -246,7 +246,7 @@ public class Building : MonoBehaviour
     public void Place()
     {
         navObsticle.enabled = true;
-        state = BuildingState.WAITING_FOR_ASSIGNMENT;
+        state = BuildingState.RECRUIT;
     }
     public void AssignCrewmate(Crewmate mate)
     {
@@ -267,7 +267,7 @@ public class Building : MonoBehaviour
         mate.Assign(id, icon,  GetDestination());
 
         // Update building state
-        if(state == BuildingState.WAITING_FOR_ASSIGNMENT)
+        if(state == BuildingState.RECRUIT)
         {
             onFirstAssignment.Invoke();
             state = BuildingState.CONSTRUCTING;
@@ -341,7 +341,7 @@ public class Building : MonoBehaviour
             // Change state if nobody is assigned
             if (state == BuildingState.CONSTRUCTING)
             {
-                state = BuildingState.WAITING_FOR_ASSIGNMENT;
+                state = BuildingState.RECRUIT;
             }
         }
         else if (assignee2.id == crewmateID)

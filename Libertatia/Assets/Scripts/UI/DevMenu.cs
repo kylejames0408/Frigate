@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 // TODO: end tutorial - added to build all button, but should be its own
-public class DevUI : MonoBehaviour
+public class DevMenu : MonoBehaviour
 {
     private bool isOpen = false;
     private float interfaceAnimSpeed = 0.6f;
@@ -31,6 +31,12 @@ public class DevUI : MonoBehaviour
         btnAddWood.onClick.AddListener(AddWood);
         btnAddGold.onClick.AddListener(AddGold);
         btnNewMate.onClick.AddListener(NewMate);
+
+#if UNITY_EDITOR
+        gameObject.SetActive(true);
+#else
+        gameObject.SetActive(false);
+#endif
     }
 
     private void OpenCloseMenu()
