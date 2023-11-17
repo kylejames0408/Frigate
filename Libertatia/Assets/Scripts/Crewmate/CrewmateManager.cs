@@ -166,6 +166,7 @@ public class CrewmateManager : MonoBehaviour
                         crewmates[id].SetDestination(hit.point);
 
                         CrewMember crewMember = crewmates[id].GetComponent<CrewMember>();
+                        crewMember.targetPos = hit.point;
                         crewMember.characterState = Character.State.Moving;
                     }
                 }

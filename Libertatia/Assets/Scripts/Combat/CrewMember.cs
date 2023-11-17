@@ -41,10 +41,10 @@ public class CrewMember : Character
         Death();
 
         //if the crew member is within a certain distance to the target pos, makes them idle
-        //if (Vector3.Distance(transform.position, targetPos) < 1.0f)
-        //{
-        //    characterState = State.Idle;
-        //}
+        if (Vector3.Distance(transform.position, targetPos) < 1.0f)
+        {
+            characterState = State.Idle;
+        }
 
         //controls agent speed based on state
         switch (characterState)

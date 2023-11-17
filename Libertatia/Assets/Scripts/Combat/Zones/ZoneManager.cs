@@ -155,6 +155,7 @@ public class ZoneManager : MonoBehaviour
                             //crewMember.charAgent.SetDestination(enemy.transform.position);
 
                             crewMember.charAgent.SetDestination(crewMember.GetClosestUnit(zone.enemiesInZone));
+                            crewMember.targetPos = crewMember.GetClosestUnit(zone.enemiesInZone);
 
                             crewMember.lineRenderer.SetPosition(1, crewMember.GetClosestUnit(zone.enemiesInZone));
 
@@ -262,6 +263,7 @@ public class ZoneManager : MonoBehaviour
         {
             CrewMember crewMember = crewMembers[i].GetComponent<CrewMember>();
 
+            crewMember.targetPos = shipWaypoint.transform.position;
             crewMember.charAgent.SetDestination(shipWaypoint.transform.position);
 
             crewMember.lineRenderer.SetPosition(1, shipWaypoint.transform.position);
@@ -297,6 +299,7 @@ public class ZoneManager : MonoBehaviour
                 myAgent.SetDestination(zone.zoneCenter + (Vector3)UnityEngine.Random.insideUnitSphere * 7f);
 
                 CrewMember crewMember = crewmateDropped.GetComponent<CrewMember>();
+                crewMember.targetPos = zone.zoneCenter + (Vector3)UnityEngine.Random.insideUnitSphere * 7f;
                 crewMember.characterState = Character.State.Moving;
 
                 ShowLineRenderer(zone.zoneCenter + (Vector3)UnityEngine.Random.insideUnitSphere * 7f, crewMember);
