@@ -1,11 +1,8 @@
 ﻿using DG.Tweening;
 using EasyDragAndDrop.Core;
-using System;
 using System.Collections.Generic;
 using TMPro;
-using Unity.Mathematics;
 using UnityEngine;
-using UnityEngine.Rendering.Universal;
 using UnityEngine.UI;
 
 public class OutpostManagementUI : MonoBehaviour

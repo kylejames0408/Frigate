@@ -92,7 +92,7 @@ GameObject:
   - component: {fileID: 1936097422279918113}
   - component: {fileID: 4186429871366399445}
   m_Layer: 5
-  m_Name: CARD-Crewmate-1
+  m_Name: CARD-Crewmate-Original
   m_TagString: Untagged
   m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0

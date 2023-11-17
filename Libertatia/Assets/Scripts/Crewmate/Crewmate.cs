@@ -22,9 +22,9 @@ public class Crewmate : MonoBehaviour
     [SerializeField] private CrewmateState state = CrewmateState.IDLE;
     [SerializeField] private ObjectData building;
     // Characteristics
-    [SerializeField] private string fullName;
-    [SerializeField] private string firstName;
-    [SerializeField] private string lastName;
+    [SerializeField] private string fullName = "Jack Sparrow";
+    private string firstName;
+    private string lastName;
     [SerializeField] private int health = 100;
     [SerializeField] private int strength = -1;
     [SerializeField] private int agility = -1;
@@ -94,15 +94,27 @@ public class Crewmate : MonoBehaviour
     {
         agent = GetComponent<NavMeshAgent>();
         id = gameObject.GetInstanceID();
+
+        if (fullName.Length > 0)
+        {
+            string[] name = fullName.Split(' ');
+            firstName = name[0];
+            lastName = name[1];
+        }
+        else
+        {
+            firstName = "Joe";
+            lastName = "Shmoe";
+        }
+    }
+    private void Start()
+    {
+        agent.Warp(transform.position);
         building = new ObjectData(-1, iconDefaultBuilding); // Is there a need for a default icon?
         // Update once values are set
         strength = UnityEngine.Random.Range(1, 6);
         agility = UnityEngine.Random.Range(1, 6);
         stamina = UnityEngine.Random.Range(1, 6);
-    }
-    private void Start()
-    {
-        agent.Warp(transform.position);
     }
     private void Update()
     {

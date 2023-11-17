@@ -66,8 +66,9 @@ public class CrewmateManager : MonoBehaviour
             enemies = FindObjectsOfType<Enemy>().ToList();
         }
         selectedCrewmateIDs = new List<int>();
-
-        // Can probably move this to start - similar to building manager
+    }
+    private void Start()
+    {
         if (GameManager.Data.crewmates == null)
         {
             Debug.Log("You might need to add the game manager to the scene; likely through PlayerData scene");
@@ -88,9 +89,8 @@ public class CrewmateManager : MonoBehaviour
                 SpawnExistingCrewmate(GameManager.Data.crewmates[i]);
             }
         }
-    }
-    private void Start()
-    {
+
+
         // Update UI
         if (orui != null)
         {

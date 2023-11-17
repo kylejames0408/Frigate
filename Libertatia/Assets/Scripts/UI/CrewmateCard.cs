@@ -1,4 +1,4 @@
-﻿using System;
+﻿using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
@@ -10,7 +10,7 @@ public class CrewmateCard : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     private Outline outline;
     // Crewmate UI Components
     [SerializeField] private Image iconCrewmate;
-    [SerializeField] private string firstName;
+    [SerializeField] private TextMeshProUGUI firstName;
     [SerializeField] private Image iconsStatus;
     [SerializeField] private Slider sliderHealth;
     // Events
@@ -22,17 +22,17 @@ public class CrewmateCard : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         get { return crewmateID; }
     }
 
-    public void Init(Crewmate mate)
+    private void Awake()
     {
         outline = GetComponent<Outline>();
-        Set(mate);
         Deselect();
     }
+
     internal void Set(Crewmate mate)
     {
         crewmateID = mate.ID;
         iconCrewmate.sprite = mate.Icon;
-        firstName = mate.FirstName;
+        firstName.text = mate.FirstName;
         iconsStatus.sprite = mate.StatusIcon;
         sliderHealth.value = mate.Health;
 
