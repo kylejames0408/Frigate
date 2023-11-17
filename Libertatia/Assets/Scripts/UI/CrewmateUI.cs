@@ -109,11 +109,11 @@ public class CrewmateUI : MonoBehaviour
     // Open/close
     internal void OpenMenu()
     {
-        transform.DOMoveX(680, animSpeedInterface);
+        transform.DOMoveX(690, animSpeedInterface);
     }
     internal void CloseMenu()
     {
-        transform.DOMoveX(0, animSpeedInterface); // cant get height in start
+        transform.DOMoveX(-10, animSpeedInterface); // make relative
     }
     private void CloseMenuCallback()
     {
