@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
+using TMPro;
 
 public class ZoneManager : MonoBehaviour
 {
@@ -31,6 +32,12 @@ public class ZoneManager : MonoBehaviour
 
     //Zone information ui
     [SerializeField] private GameObject zoneInfoUI;
+    [SerializeField] private TextMeshProUGUI crewmateCountUI;
+    [SerializeField] private TextMeshProUGUI enemyCountUI;
+    [SerializeField] private TextMeshProUGUI resourceCountUI;
+
+    //current zone that is displaying information
+    private Zone selectedZone;
 
     private void Awake()
     {
@@ -93,6 +100,15 @@ public class ZoneManager : MonoBehaviour
         foreach(Terrain terrain in zones)
         {
             Zone zone = terrain.GetComponent<Zone>();
+
+            //if a zone has been clicked on and the zone info ui is open
+            if(selectedZone != null && zoneInfoUI.activeSelf)
+            {
+                //continously updates the information
+                crewmateCountUI.text = selectedZone.crewMembersInZone.Count.ToString();
+                enemyCountUI.text = selectedZone.enemiesInZone.Count.ToString();
+                resourceCountUI.text = selectedZone.housesInZone.Count.ToString();
+            }
 
             //if there is a resource depot & the zone has at least 1 crew member & the zone has no enemies left
             if(zone.housesInZone.Count >= 1 && zone.crewMembersInZone.Count >= 1 && zone.enemiesInZone.Count <= 0)
@@ -282,6 +298,8 @@ public class ZoneManager : MonoBehaviour
 
                 CrewMember crewMember = crewmateDropped.GetComponent<CrewMember>();
                 crewMember.characterState = Character.State.Moving;
+
+                ShowLineRenderer(zone.zoneCenter + (Vector3)UnityEngine.Random.insideUnitSphere * 7f, crewMember);
             }
         }
     }
@@ -291,6 +309,7 @@ public class ZoneManager : MonoBehaviour
     /// </summary>
     public void PrintZoneInfo()
     {
+        //left click
         if (Input.GetMouseButtonDown(0))
         {
             RaycastHit hit;
@@ -298,20 +317,47 @@ public class ZoneManager : MonoBehaviour
 
             if (Physics.Raycast(ray, out hit, Mathf.Infinity))
             {
+                //if clicking on a zone
                 if (hit.transform.gameObject.tag == "Zone")
                 {
                     Zone zone = hit.transform.gameObject.GetComponent<Zone>();
 
+                    //selects the current zone
+                    selectedZone = zone;
+
                     Debug.Log("Crew Members: " + zone.crewMembersInZone.Count + " Enemies: " + zone.enemiesInZone.Count + " Houses: " + zone.housesInZone.Count);
 
                     //opens the zone info ui when clicking on a zone
-                    zoneInfoUI.SetActive(true);
+                    UpdateZoneTextInfo(zone);
                 }
                 else
                 {
+                    //deactivates the zone info ui when not clicking on a zone
                     zoneInfoUI.SetActive(false);
                 }
             }
         }
+    }
+
+    /// <summary>
+    /// Updates the zone info text
+    /// </summary>
+    /// <param name="zone"></param>
+    public void UpdateZoneTextInfo(Zone zone)
+    {
+        zoneInfoUI.SetActive(true);
+
+        crewmateCountUI.text = zone.crewMembersInZone.Count.ToString();
+        enemyCountUI.text = zone.enemiesInZone.Count.ToString();
+        resourceCountUI.text = zone.housesInZone.Count.ToString();
+    }
+
+    private void ShowLineRenderer(Vector3 targetPos, CrewMember crewMember)
+    {
+        crewMember.lineRenderer.enabled = true;
+
+        crewMember.lineRenderer.SetPosition(0, crewMember.transform.position);
+        crewMember.lineRenderer.SetPosition(1, targetPos);
+
     }
 }
