@@ -144,16 +144,19 @@ public class CrewmateManager : MonoBehaviour
                     foreach (int id in selectedCrewmateIDs)
                     {
                         Vector3 movePos = (zone.zoneCenter + (Vector3)UnityEngine.Random.insideUnitSphere * 7f);
+                        Vector3 updatedMovePos = new Vector3(movePos.x, 0, movePos.z);
 
                         //makes crewmates move to a random position within a sphere around the center of the zone
-                        crewmates[id].SetDestination(movePos);
+                        crewmates[id].SetDestination(updatedMovePos);
 
                         //creates a line to indicate where the units are moving to
                         CrewMember crewMember = crewmates[id].GetComponent<CrewMember>();
-                        Vector3 updatedMovePos = new Vector3(movePos.x, 0, movePos.z);
+
 
                         crewMember.targetPos = updatedMovePos;
                         ShowLineRenderer(updatedMovePos, id);
+
+                        crewMember.characterState = Character.State.Moving;
                     }
                 }
                 else
@@ -161,6 +164,9 @@ public class CrewmateManager : MonoBehaviour
                     foreach (int id in selectedCrewmateIDs)
                     {
                         crewmates[id].SetDestination(hit.point);
+
+                        CrewMember crewMember = crewmates[id].GetComponent<CrewMember>();
+                        crewMember.characterState = Character.State.Moving;
                     }
                 }
             }

@@ -36,6 +36,7 @@ public class Enemy : Character
         attackRate = 4;
         damage = 10;
         detectionRange = 10;
+        maxSpeed = 3.5f;
 
         lootValue = 5;
 
@@ -67,6 +68,24 @@ public class Enemy : Character
             //DetectCrewMember();
         }
 
+        if (Vector3.Distance(transform.position, targetPos) < 1.0f)
+        {
+            characterState = State.Idle;
+        }
+
+        //controls agent speed based on state
+        switch (characterState)
+        {
+            case State.Idle:
+                charAgent.speed = 0;
+                break;
+            case State.Moving:
+                charAgent.speed = maxSpeed;
+                break;
+            case State.Attacking:
+                charAgent.speed = 0;
+                break;
+        }
     }
 
     /// <summary>

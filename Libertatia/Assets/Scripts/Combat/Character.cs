@@ -1,10 +1,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using static UnityEngine.UI.CanvasScaler;
 
 public abstract class Character : MonoBehaviour
 {
-    public int maxHealth;
+    [SerializeField] protected int maxHealth;
     public int currentHealth;
 
     public int attackRange;
@@ -21,6 +22,19 @@ public abstract class Character : MonoBehaviour
     //where the character is moving to
     public Vector3 targetPos;
 
+    public State characterState;
+
+    public float maxSpeed;
+
+    //enum for the state of the unit
+    public enum State
+    {
+        Idle,
+        Moving,
+        Attacking,
+        Dead,
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -29,12 +43,16 @@ public abstract class Character : MonoBehaviour
         attackRange = 2;
         attackRate = 2;
         damage = 50;
+        maxSpeed = 3.5f;
 
         healthbar.UpdateHealthBar(maxHealth, currentHealth);
 
         rend = GetComponent<Renderer>();
         rend.enabled = true;
         rend.sharedMaterial = materials[0];
+
+        //sets characters to be idle by default
+        characterState = State.Idle;
     }
 
     // Update is called once per frame
@@ -56,6 +74,8 @@ public abstract class Character : MonoBehaviour
             {
                 if(unit.currentHealth > 0)
                 {
+                    characterState = State.Attacking;
+
                     //attacks and decreases their health based on attack rate
                     attackRate -= Time.deltaTime;
                     if (attackRate <= 0)
@@ -79,6 +99,7 @@ public abstract class Character : MonoBehaviour
         //if(currentHealth <= 0)
         if(healthbar.healthBarSprite.fillAmount <= 0)
         {
+            characterState = State.Dead;
             gameObject.SetActive(false);
         }
     }
