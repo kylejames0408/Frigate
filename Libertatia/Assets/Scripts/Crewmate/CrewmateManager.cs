@@ -74,22 +74,33 @@ public class CrewmateManager : MonoBehaviour
             Debug.Log("You might need to add the game manager to the scene; likely through PlayerData scene");
             return;
         }
-        if (GameManager.Data.crewmates.Count == 0)
+
+        if (isCombat)
         {
-            for (int i = 0; i < GameManager.Data.crewmates.Capacity; i++)
+            // Spawn existing crewmates
+            for (int i = 0; i < GameManager.Data.combatCrew.Count; i++)
             {
-                SpawnNewCrewmate();
+                SpawnExistingCrewmate(GameManager.Data.combatCrew[i]);
             }
         }
         else
         {
-            // Spawn existing crewmates
-            for (int i = 0; i < GameManager.Data.crewmates.Count; i++)
+            if (GameManager.Data.outpostCrew.Count == 0)
             {
-                SpawnExistingCrewmate(GameManager.Data.crewmates[i]);
+                for (int i = 0; i < GameManager.Data.outpostCrew.Capacity; i++)
+                {
+                    SpawnNewCrewmate();
+                }
+            }
+            else
+            {
+                // Spawn existing crewmates
+                for (int i = 0; i < GameManager.Data.outpostCrew.Count; i++)
+                {
+                    SpawnExistingCrewmate(GameManager.Data.outpostCrew[i]);
+                }
             }
         }
-
 
         // Update UI
         if (orui != null)
@@ -169,6 +180,19 @@ public class CrewmateManager : MonoBehaviour
                     }
                 }
             }
+        }
+    }
+    private void OnDestroy()
+    {
+        if(isCombat)
+        {
+            GameManager.UpdateCombatCrew(crewmates.Values.ToArray());
+            GameManager.UpdateCrewmateData();
+        }
+        else
+        {
+            GameManager.UpdateCrewmateData(crewmates.Values.ToArray());
+            GameManager.SeparateCrew();
         }
     }
 
@@ -367,7 +391,7 @@ public class CrewmateManager : MonoBehaviour
         mate.SetUI(crewmateIcons[Random.Range(0, crewmateIcons.Length)], iconEmptyAsssignment);
 
         // Save Data
-        GameManager.AddCrewmate(new CrewmateData(mate));
+        GameManager.AddCrewmate(mate);
 
         // Set callbacks
         mate.onSelect.AddListener(() => { ClickCrewmate(mate.ID); });
@@ -392,19 +416,19 @@ public class CrewmateManager : MonoBehaviour
         Crewmate mate = crewmateObj.GetComponent<Crewmate>();
         mate.Set(data);
 
-        if (data.building.id == -1)
-        {
-            // Set Position - this actually makes no sense
-            Vector2 circleLocation = UnityEngine.Random.insideUnitCircle;
-            Vector3 spawnPosition = new Vector3(circleLocation.x * crewmateSpawnRadius, 0, circleLocation.y * crewmateSpawnRadius);
-            crewmateObj.transform.position = crewmateSpawn.position + spawnPosition;
-        }
-
         // Set callbacks
         mate.onSelect.AddListener(() => { ClickCrewmate(mate.ID); });
         mate.onAssign.AddListener(() => { OnAssignCallback(mate.ID); });
         mate.onReassign.AddListener(() => { OnReassignCallback(mate.ID); });
         mate.onDestroy.AddListener(() => { DeselectCard(mate.ID); });
+
+        // If they are not assigned - move to random pos around spawn
+        if (data.building.id == -1)
+        {
+            Vector2 circleLocation = Random.insideUnitCircle;
+            Vector3 spawnPosition = new Vector3(circleLocation.x * crewmateSpawnRadius, 0, circleLocation.y * crewmateSpawnRadius);
+            crewmateObj.transform.position = crewmateSpawn.position + spawnPosition;
+        }
 
         // Tracking
         crewmates.Add(mate.ID, mate);

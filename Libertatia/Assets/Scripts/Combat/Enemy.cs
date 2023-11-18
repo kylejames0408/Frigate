@@ -18,6 +18,7 @@ public class Enemy : Character
 
     public GameObject combatUI;
     public GameObject resourceText;
+    public CombatResourcesUI resourceUI;
 
     public bool lootDropped;
     public int lootValue;
@@ -25,6 +26,7 @@ public class Enemy : Character
     private void Awake()
     {
         if (cm == null) { cm = FindObjectOfType<CrewmateManager>(); }
+        if (resourceUI == null) { resourceUI = FindObjectOfType<CombatResourcesUI>(); }
         if (combatUI == null) { combatUI = GameObject.FindGameObjectWithTag("CombatUI"); };
     }
     // Start is called before the first frame update
@@ -97,11 +99,9 @@ public class Enemy : Character
         {
             if(lootDropped == false)
             {
-                CombatResourcesUI combatResource = combatUI.GetComponent<CombatResourcesUI>();
-
                 //increase doubloon amount upon killing an enemy
-                combatResource.doubloonAmount += lootValue;
-                combatResource.UpdateDubloonUI(combatResource.doubloonAmount);
+                resourceUI.doubloonAmount += lootValue;
+                resourceUI.UpdateDubloonUI(resourceUI.doubloonAmount);
 
                 //Create a pop up message for resources gained
                 Vector3 messagePos = transform.position + new Vector3(0, 1.5f, 0);

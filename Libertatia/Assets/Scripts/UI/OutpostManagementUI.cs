@@ -372,47 +372,39 @@ public class OutpostManagementUI : MonoBehaviour
         if (!ClickHereBuildingTab.activeSelf)
             ClickHereBuildingTab.SetActive(true);
     }
-
     public void HideBuildingTabArrow()
     {
         if (ClickHereBuildingTab.activeSelf)
             ClickHereBuildingTab.SetActive(false);
     }
-
     public void ShowBuildingCardArrow()
     {
         if (!ClickHereBuildingCard.activeSelf)
             ClickHereBuildingCard.SetActive(true);
     }
-
     public void HideBuildingCardArrow()
     {
         if (ClickHereBuildingCard.activeSelf)
             ClickHereBuildingCard.SetActive(false);
     }
-
     public void ShowCrewmateTabArrow()
     {
         if (!ClickHereCrewmateTab.activeSelf)
             ClickHereCrewmateTab.SetActive(true);
     }
-
     public void HideCrewmateTabArrow()
     {
         if (ClickHereCrewmateTab.activeSelf)
             ClickHereCrewmateTab.SetActive(false);
     }
-
     public void ShowCrewmateCardArrow()
     {
         if (!DragHereCrewmateCard.activeSelf)
             DragHereCrewmateCard.SetActive(true);
     }
-
     public void HideCrewmateCardArrow()
     {
         if (DragHereCrewmateCard.activeSelf)
             DragHereCrewmateCard.SetActive(false);
     }
-
 }

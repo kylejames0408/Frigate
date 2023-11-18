@@ -1,4 +1,5 @@
 using System;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -44,24 +45,24 @@ public class GameManager : MonoBehaviour
             data = value;
         }
     }
-    public static void AddBuilding(BuildingData data)
+    internal static void AddBuilding(BuildingData data)
     {
         Data.buildings.Add(data); // why is this.data not working???
     }
-    public static void RemoveBuilding(int buildingID)
+    internal static void RemoveBuilding(int buildingID)
     {
         foreach (BuildingData data in Data.buildings)
         {
-            if(data.id == buildingID)
+            if (data.id == buildingID)
             {
                 Data.buildings.Remove(data);
                 return;
             }
         }
     }
-    public static void AddCrewmate(CrewmateData data)
+    internal static void AddCrewmate(Crewmate mate)
     {
-        Data.crewmates.Add(data);
+        Data.crewmates.Add(new CrewmateData(mate));
     }
     internal static void RemoveCrewmateData(int crewmateID)
     {
@@ -74,6 +75,46 @@ public class GameManager : MonoBehaviour
             }
         }
     }
+    // Update from Outpost
+    internal static void UpdateCrewmateData(Crewmate[] crewmates)
+    {
+        data.crewmates.Clear();
+        for (int i = 0; i < crewmates.Length; i++)
+        {
+            Data.crewmates.Add(new CrewmateData(crewmates[i]));
+        }
+    }
+    internal static void SeparateCrew()
+    {
+        data.outpostCrew.Clear();
+        for (int i = 0; i < data.crewmates.Count; i++)
+        {
+            if (data.crewmates[i].building.id == -1)
+            {
+                data.combatCrew.Add(data.crewmates[i]);
+            }
+            else
+            {
+                data.outpostCrew.Add(data.crewmates[i]);
+            }
+        }
+    }
+    // Update from Combat
+    internal static void UpdateCombatCrew(Crewmate[] crewmates)
+    {
+        data.combatCrew.Clear();
+        for (int i = 0; i < crewmates.Length; i++)
+        {
+            data.combatCrew.Add(new CrewmateData(crewmates[i]));
+        }
+    }
+    internal static void UpdateCrewmateData()
+    {
+        for (int i = 0; i < data.combatCrew.Count; i++)
+        {
+            data.outpostCrew.Add(data.combatCrew[i]);
+        }
+    }
 
     private void Awake()
     {
@@ -84,6 +125,7 @@ public class GameManager : MonoBehaviour
 #if !UNITY_EDITOR
         Cursor.lockState = CursorLockMode.Confined;
 #endif
+
     }
     private void Update()
     {
@@ -91,11 +133,11 @@ public class GameManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if(state == GameState.PLAYING)
+            if (state == GameState.PLAYING)
             {
                 Pause();
             }
-            else if(state == GameState.PAUSED)
+            else if (state == GameState.PAUSED)
             {
                 Unpause();
             }
@@ -112,4 +154,5 @@ public class GameManager : MonoBehaviour
         state = GameState.PLAYING;
         pauseMenu.Close();
     }
+
 }
