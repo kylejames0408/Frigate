@@ -1314,7 +1314,7 @@ GameObject:
   - component: {fileID: 6128470363368173309}
   - component: {fileID: -2009897736505970014}
   m_Layer: 6
-  m_Name: B-Tavern
+  m_Name: Tavern
   m_TagString: Building
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

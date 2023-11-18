@@ -1468,7 +1468,7 @@ GameObject:
   - component: {fileID: 3350751048444177607}
   - component: {fileID: 5583911580005570526}
   m_Layer: 6
-  m_Name: B-Farm
+  m_Name: Farm
   m_TagString: Building
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
