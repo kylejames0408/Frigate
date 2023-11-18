@@ -1,5 +1,6 @@
 ﻿using DG.Tweening;
 using EasyDragAndDrop.Core;
+using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -225,6 +226,12 @@ public class OutpostManagementUI : MonoBehaviour
         Destroy(crewmateCards[cardID].gameObject);
         crewmateCards.Remove(cardID);
     }
+    internal void UpdateCard(int cardID, Sprite stateIcon)
+    {
+        CrewmateCard card = crewmateCards[cardID];
+        card.SetStatus(stateIcon);
+    }
+
     // Clicking handler
     private void ClickCrewmateCard(int cardID) // share
     {
@@ -407,4 +414,5 @@ public class OutpostManagementUI : MonoBehaviour
         if (DragHereCrewmateCard.activeSelf)
             DragHereCrewmateCard.SetActive(false);
     }
+
 }

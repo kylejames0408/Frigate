@@ -9,7 +9,8 @@ public enum CrewmateState
     IDLE,
     BUILDING,
     ATTACKING,
-    MOVING
+    MOVING,
+    COUNT
 }
 
 [Serializable]
@@ -24,21 +25,17 @@ public class Crewmate : MonoBehaviour
     // Characteristics
     [SerializeField] private string fullName = "Jack Sparrow";
     private string firstName;
-    private string lastName;
     [SerializeField] private int health = 100;
     [SerializeField] private int strength = -1;
     [SerializeField] private int agility = -1;
     [SerializeField] private int stamina = -1;
     // UI
     [SerializeField] private Sprite iconCrewmate;
-    [SerializeField] private Sprite iconStatus;
+    [SerializeField] private Sprite iconState;
     [SerializeField] private bool isHovered = false;
     // Cache
     [SerializeField] private Sprite iconDefaultBuilding;
-    [SerializeField] private Sprite iconStatusIdle;
-    [SerializeField] private Sprite iconStatusBuilding;
-    [SerializeField] private Sprite iconStatusAttaching;
-    [SerializeField] private Sprite iconStatusMoving;
+    [SerializeField] private Sprite[] iconsStates = new Sprite[(int)CrewmateState.COUNT];
     // Events
     public UnityEvent onAssign;
     public UnityEvent onReassign;
@@ -85,9 +82,16 @@ public class Crewmate : MonoBehaviour
     {
         get { return isHovered; }
     }
-    public Sprite StatusIcon
+    public Sprite StateIcon
     {
-        get { return iconStatus; }
+        get
+        {
+            return iconsStates[(int)state];
+        }
+    }
+    public CrewmateState State
+    {
+        get { return state; }
     }
 
     private void Awake()
@@ -99,12 +103,10 @@ public class Crewmate : MonoBehaviour
         {
             string[] name = fullName.Split(' ');
             firstName = name[0];
-            lastName = name[1];
         }
         else
         {
             firstName = "Joe";
-            lastName = "Shmoe";
         }
     }
     private void Start()
@@ -155,18 +157,24 @@ public class Crewmate : MonoBehaviour
         transform.position = data.position;
         transform.rotation = data.rotation;
     }
+    public void SetStatusIcon(Sprite icon)
+    {
+        iconState = icon;
+    }
     public void Assign(int buildingID, Sprite buildingIcon, Vector3 destination)
     {
         if(building.id != -1)
         {
             onReassign.Invoke();
         }
+        state = CrewmateState.BUILDING;
         building = new ObjectData(buildingID, buildingIcon); // Assign building
         agent.destination = destination; // Set destination
         onAssign.Invoke(); // Update UI
     }
     public void Unassign()
     {
+        state = CrewmateState.IDLE;
         building.Reset(iconDefaultBuilding);
     }
 

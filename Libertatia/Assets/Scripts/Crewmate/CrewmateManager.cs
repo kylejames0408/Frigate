@@ -554,6 +554,7 @@ public class CrewmateManager : MonoBehaviour
     {
         Crewmate mate = crewmates[crewmateID];
         OpenSlider(mate);
+        omui.UpdateCard(crewmateID, mate.StateIcon);
     }
     private void OnReassignCallback(int crewmateID)
     {

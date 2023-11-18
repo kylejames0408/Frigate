@@ -58,7 +58,7 @@ public class CrewmateUI : MonoBehaviour
     internal void FillUI(Crewmate mate)
     {
         uiCrewmateIcon.sprite = mate.Icon;
-        uiName.text = mate.FirstName;
+        uiName.text = mate.FullName;
         uiHealth.text = mate.Health.ToString();
 
         for (int i = 0; i < 5; i++)

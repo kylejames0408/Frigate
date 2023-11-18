@@ -9,15 +9,15 @@ public class CrewmateCard : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     [SerializeField] private int crewmateID = -1;
     private Outline outline;
     // Crewmate UI Components
-    [SerializeField] private Image iconCrewmate;
     [SerializeField] private TextMeshProUGUI firstName;
+    [SerializeField] private Image iconCrewmate;
     [SerializeField] private Image iconsStatus;
     [SerializeField] private Slider sliderHealth;
     // Events
     public UnityEvent onHover;
     public UnityEvent onHoverExit;
 
-    public int ID
+    internal int ID
     {
         get { return crewmateID; }
     }
@@ -33,9 +33,13 @@ public class CrewmateCard : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         crewmateID = mate.ID;
         iconCrewmate.sprite = mate.Icon;
         firstName.text = mate.FirstName;
-        iconsStatus.sprite = mate.StatusIcon;
+        iconsStatus.sprite = mate.StateIcon;
         sliderHealth.value = mate.Health;
+    }
 
+    internal void SetStatus(Sprite statusIcon)
+    {
+        iconsStatus.sprite = statusIcon;
     }
 
     public void Select()
