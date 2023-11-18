@@ -90,9 +90,10 @@ GameObject:
   - component: {fileID: 1598911952046702291}
   - component: {fileID: 5433463553582545347}
   - component: {fileID: 1936097422279918113}
-  - component: {fileID: 4186429871366399445}
+  - component: {fileID: 390560335504653395}
+  - component: {fileID: -8414486426631038379}
   m_Layer: 5
-  m_Name: Card-Crewmate
+  m_Name: CARD-Crewmate-Dragable
   m_TagString: Untagged
   m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -243,7 +244,47 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
---- !u!114 &4186429871366399445
+--- !u!114 &390560335504653395
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6335522714724666445}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5c5a67a86006eb4db4571d5cda7bf85, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mainCanvasName: Interface
+  isReturnPosition: 1
+  isDropSwap: 0
+  dropAsFirstSibling: 0
+  m_ObjInfoComponent: {fileID: 0}
+  onBeginDrag:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onDrag:
+    m_PersistentCalls:
+      m_Calls: []
+  onEndDrag:
+    m_PersistentCalls:
+      m_Calls: []
+  dragState: 0
+  m_dropSlot: {fileID: 0}
+--- !u!114 &-8414486426631038379
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -255,7 +296,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d46c5c9c71f072b468a86776474bca35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  crewmateID: 0
+  crewmateID: -1
   onHover:
     m_PersistentCalls:
       m_Calls: []

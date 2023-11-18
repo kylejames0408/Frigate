@@ -76,7 +76,7 @@ public class BuildingManager : MonoBehaviour
         buildingUI.btnUpgrade.onClick.AddListener(OnUpgradeBuildingCallback);
         buildingUI.btnDemolish.onClick.AddListener(OnDemolishBuildingCallback);
 
-        Debug.Log("Bldg Ct: " + GameManager.Data.buildings.Count);
+        //Debug.Log("Bldg Ct: " + GameManager.Data.buildings.Count);
         // Init Building (make own function)
         for (int i = 0; i < GameManager.Data.buildings.Count; i ++) // cache buildings list?
         {
@@ -111,7 +111,7 @@ public class BuildingManager : MonoBehaviour
 
         // Save Data
         GameManager.AddBuilding(new BuildingData(prospectiveBuilding));
-        Debug.Log("Ct Incr: "+ GameManager.Data.buildings.Count);
+        //Debug.Log("Ct Incr: "+ GameManager.Data.buildings.Count);
 
         // Set callbacks
         prospectiveBuilding.onFirstAssignment.AddListener(() => { OnFirstAssignmentCallback(prospectiveBuilding.ID); });

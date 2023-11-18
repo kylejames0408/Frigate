@@ -3,7 +3,6 @@ using EasyDragAndDrop.Core;
 using System;
 using System.Collections.Generic;
 using TMPro;
-using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -208,14 +207,14 @@ public class OutpostManagementUI : MonoBehaviour
         GameObject cardObj = Instantiate(crewmateCardPrefab, pages[1]);
 
         CrewmateCard card = cardObj.GetComponentInChildren<CrewmateCard>();
-        card.Init(mate.ID);
+        card.Set(mate);
         crewmateCards.Add(card.ID, card);
 
         // Callbacks
         card.GetComponent<Button>().onClick.AddListener(() => { ClickCrewmateCard(card.ID); }); // drag + drop func
         // Fill UI
         card.GetComponentsInChildren<Image>()[1].sprite = mate.Icon;
-        card.GetComponentInChildren<TextMeshProUGUI>().text = mate.Name;
+        card.GetComponentInChildren<TextMeshProUGUI>().text = mate.FirstName;
 
         card.GetComponent<DragObj2D>().onBeginDrag.AddListener(delegate { ClickCrewmateCard(card.ID); });
         card.GetComponent<DragObj2D>().onEndDrag.AddListener(delegate { bm.OnCrewmateDropAssign(); });
@@ -227,6 +226,12 @@ public class OutpostManagementUI : MonoBehaviour
         Destroy(crewmateCards[cardID].gameObject);
         crewmateCards.Remove(cardID);
     }
+    internal void UpdateCard(int cardID, Sprite stateIcon)
+    {
+        CrewmateCard card = crewmateCards[cardID];
+        card.SetStatus(stateIcon);
+    }
+
     // Clicking handler
     private void ClickCrewmateCard(int cardID) // share
     {
@@ -308,43 +313,36 @@ public class OutpostManagementUI : MonoBehaviour
         if (!ClickHereBuildingTab.activeSelf)
             ClickHereBuildingTab.SetActive(true);
     }
-
     public void HideBuildingTabArrow()
     {
         if (ClickHereBuildingTab.activeSelf)
             ClickHereBuildingTab.SetActive(false);
     }
-
     public void ShowBuildingCardArrow()
     {
         if (!ClickHereBuildingCard.activeSelf)
             ClickHereBuildingCard.SetActive(true);
     }
-
     public void HideBuildingCardArrow()
     {
         if (ClickHereBuildingCard.activeSelf)
             ClickHereBuildingCard.SetActive(false);
     }
-
     public void ShowCrewmateTabArrow()
     {
         if (!ClickHereCrewmateTab.activeSelf)
             ClickHereCrewmateTab.SetActive(true);
     }
-
     public void HideCrewmateTabArrow()
     {
         if (ClickHereCrewmateTab.activeSelf)
             ClickHereCrewmateTab.SetActive(false);
     }
-
     public void ShowCrewmateCardArrow()
     {
         if (!DragHereCrewmateCard.activeSelf)
             DragHereCrewmateCard.SetActive(true);
     }
-
     public void HideCrewmateCardArrow()
     {
         if (DragHereCrewmateCard.activeSelf)

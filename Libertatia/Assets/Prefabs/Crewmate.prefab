@@ -253,14 +253,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 0
-  crewmateName: Crewmate
+  state: 0
+  building:
+    id: 0
+    icon: {fileID: 0}
+  fullName: Jack Sparrow
   health: 100
   strength: -1
   agility: -1
   stamina: -1
-  icon: {fileID: 21300000, guid: 06a976d8406c58d47a072ec8bdfd09e3, type: 3}
+  iconCrewmate: {fileID: 21300000, guid: 06a976d8406c58d47a072ec8bdfd09e3, type: 3}
+  iconState: {fileID: 0}
   isHovered: 0
-  iconEmptyAsssignment: {fileID: 0}
+  iconDefaultBuilding: {fileID: 21300000, guid: 9545935a93b348a4f9fa0b45d94d08ff, type: 3}
+  iconsStates:
+  - {fileID: 21300000, guid: 7fc897f482c918d4c935d6157d1b9510, type: 3}
+  - {fileID: 21300000, guid: 74f6def7c72d2fa43a19c4414959b496, type: 3}
+  - {fileID: 21300000, guid: fc8c4bde6b59a444291698c3e62f85e1, type: 3}
+  - {fileID: 21300000, guid: d9d5827e2849db24f8775d93b9af7d8b, type: 3}
   onAssign:
     m_PersistentCalls:
       m_Calls: []

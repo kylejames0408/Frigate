@@ -44,7 +44,6 @@ public class Building : MonoBehaviour
     [SerializeField] private TextMeshProUGUI uiLevel;
     [SerializeField] private TextMeshProUGUI uiName;
     [SerializeField] private Image uiStatus;
-    [SerializeField] private TextMeshProUGUI uiAP;
     [SerializeField] private Image uiAsign1;
     [SerializeField] private Image uiAsign2;
     // Cache
@@ -145,7 +144,6 @@ public class Building : MonoBehaviour
         if (isHovered)
         {
             HandleSelection();
-            //HandleAssignmentDragDrop();
             HandleAssignment();
         }
     }
@@ -186,7 +184,6 @@ public class Building : MonoBehaviour
         uiLevel.text = "Lv. " + level.ToString();
         uiName.text = buildingName;
         uiStatus.sprite = stateIcon;
-        uiAP.text = resourceCost.ap.ToString();
         uiAsign1.sprite = iconEmptyAsssignment;
         uiAsign2.sprite = iconEmptyAsssignment;
         uiAsign2.transform.parent.gameObject.SetActive(false);
