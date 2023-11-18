@@ -19,7 +19,7 @@ public class CameraManager : MonoBehaviour
     [SerializeField] private float keyboardSensitivity = 50.0f;
     [SerializeField] private float shiftSensitivity = 20.0f;
     // Edge Scrolling
-    [SerializeField] private float edgeSize = 30.0f;
+    [SerializeField] private float edgeSize = 1.0f;
     [SerializeField] private float edgeScrollingSensitivity = 30.0f;
     // Bounds
     [SerializeField] private bool useBounds = true;
@@ -122,8 +122,8 @@ public class CameraManager : MonoBehaviour
         {
             scrollingDelta.x -= edgeScrollingSensitivity * Time.deltaTime;
         }
-        if(Input.mousePosition.y > Screen.height - 64 - edgeSize  &&
-            Input.mousePosition.y < Screen.height - 64) // 64 is height of resource info UI - should be referenced but works for now
+        if(Input.mousePosition.y > Screen.height - edgeSize  &&
+            Input.mousePosition.y < Screen.height) // 64 is height of resource info UI - should be referenced but works for now
         {
             scrollingDelta.z += edgeScrollingSensitivity * Time.deltaTime;
         }
