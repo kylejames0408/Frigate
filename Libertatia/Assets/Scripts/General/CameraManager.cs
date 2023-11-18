@@ -14,13 +14,13 @@ public class CameraManager : MonoBehaviour
     // Zooming
     [SerializeField] private const float MINIMUM_ZOOM = 4;
     [SerializeField] private const float MAXIMUM_ZOOM = 20;
-    [SerializeField] private float zoomSensitivity = 40.0f;
+    [SerializeField] private float zoomSensitivity = 50.0f;
     // Keyboard
-    [SerializeField] private float keyboardSensitivity = 50.0f;
-    [SerializeField] private float shiftSensitivity = 20.0f;
+    [SerializeField] private float keyboardSensitivity = 40.0f;
+    [SerializeField] private float shiftSensitivity = 30.0f;
     // Edge Scrolling
     [SerializeField] private float edgeSize = 1.0f;
-    [SerializeField] private float edgeScrollingSensitivity = 30.0f;
+    [SerializeField] private float edgeScrollingSensitivity = 20.0f;
     // Bounds
     [SerializeField] private bool useBounds = true;
     [SerializeField] private Vector2 maxWorldBounds; // could be set with size
@@ -113,20 +113,23 @@ public class CameraManager : MonoBehaviour
     {
         Vector3 scrollingDelta = Vector3.zero;
 
+        // Right
         if(Input.mousePosition.x > Screen.width - edgeSize)
         {
             scrollingDelta.x += edgeScrollingSensitivity * Time.deltaTime;
 
         }
+        // Left
         if (Input.mousePosition.x < edgeSize)
         {
             scrollingDelta.x -= edgeScrollingSensitivity * Time.deltaTime;
         }
-        if(Input.mousePosition.y > Screen.height - edgeSize  &&
-            Input.mousePosition.y < Screen.height) // 64 is height of resource info UI - should be referenced but works for now
+        // Top
+        if(Input.mousePosition.y > Screen.height - edgeSize)
         {
             scrollingDelta.z += edgeScrollingSensitivity * Time.deltaTime;
         }
+        // Bottom
         if (Input.mousePosition.y < edgeSize)
         {
             scrollingDelta.z -= edgeScrollingSensitivity * Time.deltaTime;
