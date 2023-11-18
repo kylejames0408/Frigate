@@ -89,11 +89,15 @@ public class OutpostManagementUI : MonoBehaviour
         {
             if(bm.CanConstructBuilding(i))
             {
-                buildingCards[i].GetComponent<Button>().interactable = true;
+                buildingCards[i].GetComponentInChildren<Button>().interactable = true;
+
+                buildingCards[i].GetComponent<DragObj2D>().currentlyDragable = true;
             }
             else
             {
-                buildingCards[i].GetComponent<Button>().interactable = false;
+                buildingCards[i].GetComponentInChildren<Button>().interactable = false;
+
+                buildingCards[i].GetComponent<DragObj2D>().currentlyDragable = false;
             }
         }
     }
@@ -148,17 +152,21 @@ public class OutpostManagementUI : MonoBehaviour
     {
         GameObject cardObj = Instantiate(buildingCardPrefab, pages[0]);
 
-        BuildingCard card = cardObj.GetComponent<BuildingCard>();
+        BuildingCard card = cardObj.GetComponentInChildren<BuildingCard>();
         card.Init(building.Cost, building.Production);
         card.onHover.AddListener(()=> { BuildingCardHoveredCallback(index); });
         card.onHoverExit.AddListener(BuildingCardHoveredExitCallback);
         buildingCards.Add(card);
 
         // Callbacks
-        cardObj.GetComponent<Button>().onClick.AddListener(() => { ClickBuildingCard(bm, index); });
+        cardObj.GetComponentInChildren<Button>().onClick.AddListener(() => { ClickBuildingCard(bm, index); });
         // Fill UI
-        cardObj.GetComponentsInChildren<Image>()[1].sprite = building.Icon;
+        cardObj.GetComponentsInChildren<Image>()[2].sprite = building.Icon;
         cardObj.GetComponentInChildren<TextMeshProUGUI>().text = building.Name;
+
+        cardObj.GetComponentInChildren<DragObj2D>().onBeginDrag.AddListener(delegate { ClickBuildingCard(bm, index); });
+        cardObj.GetComponentInChildren<DragObj2D>().onEndDrag.AddListener(delegate { bm.HandlePlacingDragDrop(); });
+        cardObj.GetComponentInChildren<DragObj2D>().onEndDrag.AddListener(delegate { DeselectBuildingCard(index); });
     }
     private void ClickBuildingCard(BuildingManager bm, int cardIndex)
     {

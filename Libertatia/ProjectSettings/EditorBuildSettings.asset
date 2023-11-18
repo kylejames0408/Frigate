@@ -14,9 +14,9 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/Combat-Testing.unity
     guid: 570f374ce32683f4bab9e2f4e5d0bafb
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Outpost-Testing.unity
-    guid: e92b24e27cafaa341989ebc32ca0f3b4
+    guid: d260090c6431f84419d9cc098014b1f0
   - enabled: 1
     path: Assets/Scenes/Combat.unity
     guid: 670b77d4c981a65469300b01dc291b14

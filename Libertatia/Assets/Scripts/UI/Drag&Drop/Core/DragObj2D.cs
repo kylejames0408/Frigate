@@ -9,6 +9,7 @@ namespace EasyDragAndDrop.Core
         public bool isReturnPosition = true;
         public bool isDropSwap = true;
         public bool dropAsFirstSibling = false;
+        public bool currentlyDragable = true;
         public Component m_ObjInfoComponent;
         
         [Header("Drag Event")] 
@@ -51,52 +52,61 @@ namespace EasyDragAndDrop.Core
 
         public void OnBeginDrag(PointerEventData eventData)
         {
-            m_dropSlot = null;
-            dragState = DragState.OnBeginDrag;
-            m_CanvasGroup.alpha = .6f;
-            m_CanvasGroup.blocksRaycasts = false;
-            transform.SetParent(m_Canvas.transform);
-            isReturnPosition = _initialIsReturnPos;
-            m_InitialPosition = _rectTransform.position;
-            onBeginDrag?.Invoke(this);
+            if (currentlyDragable)
+            {
+                m_dropSlot = null;
+                dragState = DragState.OnBeginDrag;
+                m_CanvasGroup.alpha = .6f;
+                m_CanvasGroup.blocksRaycasts = false;
+                transform.SetParent(m_Canvas.transform);
+                isReturnPosition = _initialIsReturnPos;
+                m_InitialPosition = _rectTransform.position;
+                onBeginDrag?.Invoke(this);
+            }  
         }
 
         public void OnDrag(PointerEventData eventData)
         {
-            if(m_Canvas.renderMode == RenderMode.ScreenSpaceOverlay)
+            if (currentlyDragable)
             {
-                dragState = DragState.OnDrag;
-                _rectTransform.anchoredPosition += eventData.delta / m_Canvas.scaleFactor;
-                onDrag?.Invoke(this);
-                //Debug.Log("Delta: " + eventData.delta);
-            }
-            else if(m_Canvas.renderMode == RenderMode.WorldSpace)
-            {
-                Vector2 pos;
-                RectTransformUtility.ScreenPointToLocalPointInRectangle(m_Canvas.transform as RectTransform, eventData.delta, null, out pos);
-                Vector3 v3Pos = m_Canvas.transform.TransformPoint(pos);
-                
-                _rectTransform.anchoredPosition += new Vector2(v3Pos.x, v3Pos.y) / 1.8f /*m_Canvas.scaleFactor*/;
-                onDrag?.Invoke(this);
-            }   
+                if (m_Canvas.renderMode == RenderMode.ScreenSpaceOverlay)
+                {
+                    dragState = DragState.OnDrag;
+                    _rectTransform.anchoredPosition += eventData.delta / m_Canvas.scaleFactor;
+                    onDrag?.Invoke(this);
+                    //Debug.Log("Delta: " + eventData.delta);
+                }
+                else if (m_Canvas.renderMode == RenderMode.WorldSpace)
+                {
+                    Vector2 pos;
+                    RectTransformUtility.ScreenPointToLocalPointInRectangle(m_Canvas.transform as RectTransform, eventData.delta, null, out pos);
+                    Vector3 v3Pos = m_Canvas.transform.TransformPoint(pos);
+
+                    _rectTransform.anchoredPosition += new Vector2(v3Pos.x, v3Pos.y) / 1.8f /*m_Canvas.scaleFactor*/;
+                    onDrag?.Invoke(this);
+                }
+            }         
         }
     
 
         public void OnEndDrag(PointerEventData eventData)
         {
-            dragState = DragState.OnEndDrag;
+            if (currentlyDragable)
+            {
+                dragState = DragState.OnEndDrag;
 
-            if (isReturnPosition)
-                SetInitialPosition();
+                if (isReturnPosition)
+                    SetInitialPosition();
 
-            m_CanvasGroup.alpha = 1f;
-            m_CanvasGroup.blocksRaycasts = true;
-            transform.SetParent(_dropParent);
-            transform.SetAsLastSibling();
-            if (dropAsFirstSibling)
-                transform.SetAsFirstSibling();
+                m_CanvasGroup.alpha = 1f;
+                m_CanvasGroup.blocksRaycasts = true;
+                transform.SetParent(_dropParent);
+                transform.SetAsLastSibling();
+                if (dropAsFirstSibling)
+                    transform.SetAsFirstSibling();
 
-            onEndDrag?.Invoke(this);
+                onEndDrag?.Invoke(this);
+            }  
         }
 
         public void OnDrop(PointerEventData eventData)
