@@ -2,7 +2,6 @@
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
 public class CrewmateCard : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
