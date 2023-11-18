@@ -547,6 +547,7 @@ public class CrewmateManager : MonoBehaviour
     {
         Crewmate mate = crewmates[crewmateID];
         mate.Unassign(); // will UI need to be updated as well?
+        omui.UpdateCard(crewmateID, mate.StateIcon);
     }
 
     // Callbacks
