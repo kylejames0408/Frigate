@@ -132,7 +132,7 @@ public class Crewmate : MonoBehaviour
         agent.destination = destination; // Set destination
         onAssign.Invoke(); // Update UI
     }
-    public void Unassign()
+    public void Free()
     {
         building.Reset(iconEmptyAsssignment);
     }

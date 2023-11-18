@@ -1,7 +1,6 @@
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
@@ -16,7 +15,8 @@ public class BuildingUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI uiName;
     [SerializeField] private TextMeshProUGUI uiStatus;
     [SerializeField] private TextMeshProUGUI uiProduction;
-    [SerializeField] private AssigneeCard[] assigneeCards;
+    [SerializeField] private Image uiAsign1;
+    [SerializeField] private Image uiAsign2;
 
     [Header("Buttons")]
     public Button btnUpgrade;
@@ -26,15 +26,12 @@ public class BuildingUI : MonoBehaviour
     [Header("Tracking")] // Dynamic/tracking information
     private RectTransform bounds;
 
-    // Events
-    public UnityEvent<int> onUnassign;
-
     private void Awake()
     {
         // Get component
         bounds = GetComponent<RectTransform>();
 
-        assigneeCards[1].Disable();
+        uiAsign2.transform.parent.gameObject.SetActive(false);
     }
     private void Start()
     {
@@ -59,37 +56,36 @@ public class BuildingUI : MonoBehaviour
         uiProduction.text = building.Production.ToString();
 
         // Might not need the branch here
-        if (!building.Assignee1.IsEmpty())
+        if (building.Assignee1.id != -1)
         {
-            assigneeCards[0].Set(building.Assignee1);
-            assigneeCards[0].btnUnassign.onClick.AddListener(() => { UnassignCallback(0, building.Assignee1.id); });
+            uiAsign1.sprite = building.Assignee1.icon;
         }
         else
         {
-            assigneeCards[0].ResetCard(iconEmptyAssignment);
+            uiAsign1.sprite = iconEmptyAssignment;
         }
 
         if (building.IsBuilt)
         {
-            assigneeCards[1].Enable();
+            uiAsign2.transform.parent.gameObject.SetActive(true);
             // or here if crewmate
-            if (!building.Assignee2.IsEmpty())
+            if (building.Assignee2.id != -1)
             {
-                assigneeCards[1].Set(building.Assignee2);
-                assigneeCards[1].btnUnassign.onClick.AddListener(() => { UnassignCallback(1, building.Assignee2.id); });
+                uiAsign2.sprite = building.Assignee2.icon;
             }
             else
             {
-                assigneeCards[1].ResetCard(iconEmptyAssignment);
+                uiAsign2.sprite = iconEmptyAssignment;
             }
         }
         else
         {
-            assigneeCards[1].Disable();
+            uiAsign2.transform.parent.gameObject.SetActive(false);
         }
 
         if (!GameManager.Data.isTutorial)
         {
+            //upgradeBtn.interactable = true;
             btnDemolish.interactable = true;
         }
     }
@@ -109,25 +105,6 @@ public class BuildingUI : MonoBehaviour
         {
             CloseMenu();
         }
-    }
-
-    // Callbacks
-    private void UnassignCallback(int assigneeIndex, int crewmateID)
-    {
-        // Shift UI if crewmate is still in the second slot
-        if(assigneeIndex == 0 && !assigneeCards[1].IsEmpty())
-        {
-            assigneeCards[0].Set(assigneeCards[1].CrewmateData);
-            int tempCrewmateID = assigneeCards[1].CrewmateData.id;
-            assigneeCards[0].btnUnassign.onClick.AddListener(() => { UnassignCallback(0, tempCrewmateID); });
-            assigneeCards[1].ResetCard(iconEmptyAssignment);
-        }
-        else
-        {
-            assigneeCards[assigneeIndex].ResetCard(iconEmptyAssignment);
-        }
-
-        onUnassign.Invoke(crewmateID);
     }
 
     // Open/close

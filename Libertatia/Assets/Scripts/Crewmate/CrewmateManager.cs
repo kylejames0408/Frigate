@@ -1,7 +1,11 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
+using static UnityEngine.UI.CanvasScaler;
 
 public class CrewmateManager : MonoBehaviour
 {
@@ -55,7 +59,6 @@ public class CrewmateManager : MonoBehaviour
         if (omui == null) { omui = FindObjectOfType<OutpostManagementUI>(); }
         if (cmui == null) { cmui = FindObjectOfType<CombatManagementUI>(); }
         if (orui == null) { orui = FindObjectOfType<ResourcesUI>(); }
-        if (crewmateUI == null) { crewmateUI = FindObjectOfType<CrewmateUI>(); }
         if (bm == null) { bm = FindObjectOfType<BuildingManager>(); }
 
         // Init Crewmates (make own function)
@@ -100,7 +103,7 @@ public class CrewmateManager : MonoBehaviour
     }
     private void Update()
     {
-        // TODO: make ifs into handler functions?
+        // TODO: make ifs into handler functions
 
         // Left mouse button PRESS handler
         if (Input.GetMouseButtonDown(0))
@@ -124,15 +127,8 @@ public class CrewmateManager : MonoBehaviour
         foreach (int id in selectedCrewmateIDs)
         {
             CrewMember crewMember = crewmates[id].GetComponent<CrewMember>();
-            if(crewMember)
-            {
-                crewMember.lineRenderer.SetPosition(0, crewMember.transform.position);
-            }
-        }
 
-        if(Input.GetKeyDown(KeyCode.Space))
-        {
-            HideLineRenderer();
+            crewMember.lineRenderer.SetPosition(0, crewMember.transform.position);
         }
 
         // Move Crewmate - TODO: move to function
@@ -148,17 +144,19 @@ public class CrewmateManager : MonoBehaviour
                     foreach (int id in selectedCrewmateIDs)
                     {
                         Vector3 movePos = (zone.zoneCenter + (Vector3)UnityEngine.Random.insideUnitSphere * 7f);
+                        Vector3 updatedMovePos = new Vector3(movePos.x, 0, movePos.z);
 
                         //makes crewmates move to a random position within a sphere around the center of the zone
-                        crewmates[id].SetDestination(movePos);
+                        crewmates[id].SetDestination(updatedMovePos);
 
                         //creates a line to indicate where the units are moving to
                         CrewMember crewMember = crewmates[id].GetComponent<CrewMember>();
-                        crewMember.lineRenderer.enabled = true;
-                        crewMember.lineRenderer.SetPosition(0,crewMember.transform.position);
 
-                        Vector3 updatedMovePos = new Vector3(movePos.x, 0, movePos.z);
-                        crewMember.lineRenderer.SetPosition(1, updatedMovePos);
+
+                        crewMember.targetPos = updatedMovePos;
+                        ShowLineRenderer(updatedMovePos, id);
+
+                        crewMember.characterState = Character.State.Moving;
                     }
                 }
                 else
@@ -166,6 +164,10 @@ public class CrewmateManager : MonoBehaviour
                     foreach (int id in selectedCrewmateIDs)
                     {
                         crewmates[id].SetDestination(hit.point);
+
+                        CrewMember crewMember = crewmates[id].GetComponent<CrewMember>();
+                        crewMember.targetPos = hit.point;
+                        crewMember.characterState = Character.State.Moving;
                     }
                 }
             }
@@ -431,6 +433,10 @@ public class CrewmateManager : MonoBehaviour
         //crewmates[crewmateID].transform.GetChild(0).gameObject.SetActive(true);
         selectedCrewmateIDs.Add(crewmateID);
 
+        //unit line renderer
+        CrewMember crewMember = crewmates[crewmateID].GetComponent<CrewMember>();
+        ShowLineRenderer(crewMember.targetPos, crewmateID);
+
         if(!isCombat)
         {
             if (selectedCrewmateIDs.Count > 1)
@@ -543,10 +549,18 @@ public class CrewmateManager : MonoBehaviour
         crewmateUI.FillUI(mate);
         crewmateUI.OpenMenu();
     }
-    internal void UnassignCrewmate(int crewmateID)
+    internal void FreeAssignees(int assignee1ID, int assignee2ID)
     {
-        Crewmate mate = crewmates[crewmateID];
-        mate.Unassign(); // will UI need to be updated as well?
+        if(assignee1ID != -1)
+        {
+            Crewmate mate1 = crewmates[assignee1ID];
+            mate1.Free(); // will UI need to be updated as well?
+        }
+        if (assignee2ID != -1)
+        {
+            Crewmate mate2 = crewmates[assignee2ID];
+            mate2.Free(); // will UI need to be updated as well?
+        }
     }
 
     // Callbacks
@@ -569,10 +583,24 @@ public class CrewmateManager : MonoBehaviour
         foreach (int id in selectedCrewmateIDs)
         {
             CrewMember crewMember = crewmates[id].GetComponent<CrewMember>();
-            if(crewMember)
-            {
-                crewMember.lineRenderer.enabled = false;
-            }
+
+            crewMember.lineRenderer.enabled = false;
         }
+    }
+
+    /// <summary>
+    /// Shows and updates unit's line renderer
+    /// </summary>
+    /// <param name="targetPos"></param>
+    /// <param name="crewMemberID"></param>
+    private void ShowLineRenderer(Vector3 targetPos, int crewMemberID)
+    {
+        CrewMember crewMember = crewmates[crewMemberID].GetComponent<CrewMember>();
+
+        crewMember.lineRenderer.enabled = true;
+
+        crewMember.lineRenderer.SetPosition(0, crewMember.transform.position);
+        crewMember.lineRenderer.SetPosition(1, targetPos);
+        
     }
 }

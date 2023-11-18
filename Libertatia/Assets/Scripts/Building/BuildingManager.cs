@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 public enum BuildingState
 {
     PLACING,
-    RECRUIT,
+    WAITING_FOR_ASSIGNMENT,
     CONSTRUCTING,
     BUILT,
     COUNT
@@ -73,7 +73,6 @@ public class BuildingManager : MonoBehaviour
     }
     private void Start()
     {
-        buildingUI.onUnassign.AddListener(OnUnassignCrewmate);
         buildingUI.btnUpgrade.onClick.AddListener(OnUpgradeBuildingCallback);
         buildingUI.btnDemolish.onClick.AddListener(OnDemolishBuildingCallback);
 
@@ -121,7 +120,7 @@ public class BuildingManager : MonoBehaviour
         prospectiveBuilding.onSelection.AddListener(() => { OnSelectionCallback(prospectiveBuilding.ID); });
         prospectiveBuilding.onCollision.AddListener(() => { OnCollisionCallback(prospectiveBuilding.ID); });
         prospectiveBuilding.onNoCollisions.AddListener(() => { OnNoCollisionsCallback(prospectiveBuilding.ID); });
-        prospectiveBuilding.onFreeAssignees.AddListener(() => { OnUnassignCrewmatesCallback(prospectiveBuilding.ID); });
+        prospectiveBuilding.onFreeAssignees.AddListener(() => { OnFreeAssigneesCallback(prospectiveBuilding.ID); });
 
         // Set Game Event
         prospectiveBuilding.onCrewmateAssignedGE = onCrewmateAssigned;
@@ -150,7 +149,7 @@ public class BuildingManager : MonoBehaviour
         building.onCrewmateAssigned.AddListener(() => { OnCrewmateAssignedCallback(building.ID); });
         building.onConstructionCompleted.AddListener(() => { OnConstructionCompletedCallback(building.ID); });
         building.onSelection.AddListener(() => { OnSelectionCallback(building.ID); });
-        building.onFreeAssignees.AddListener(() => { OnUnassignCrewmatesCallback(building.ID); });
+        building.onFreeAssignees.AddListener(() => { OnFreeAssigneesCallback(building.ID); });
 
         // Tracking
         buildings.Add(building.ID, building);
@@ -270,7 +269,7 @@ public class BuildingManager : MonoBehaviour
             case BuildingState.PLACING:
                 buildingMaterial = stateData.matPlacing;
                 break;
-            case BuildingState.RECRUIT:
+            case BuildingState.WAITING_FOR_ASSIGNMENT:
                 buildingMaterial = stateData.matRecruiting;
                 break;
             case BuildingState.CONSTRUCTING:
@@ -279,17 +278,10 @@ public class BuildingManager : MonoBehaviour
         }
         building.SetMaterial(buildingMaterial);
     }
-    private void OnUnassignCrewmatesCallback(int buildingID)
+    private void OnFreeAssigneesCallback(int buildingID)
     {
         Building building = buildings[buildingID];
-        if(!building.Assignee1.IsEmpty())
-        {
-            cm.UnassignCrewmate(building.Assignee1.id);
-        }
-        if (!building.Assignee2.IsEmpty())
-        {
-            cm.UnassignCrewmate(building.Assignee2.id);
-        }
+        cm.FreeAssignees(building.Assignee1.id, building.Assignee2.id);
     }
     private void OnUpgradeBuildingCallback()
     {
@@ -325,11 +317,7 @@ public class BuildingManager : MonoBehaviour
             kvp.Value.HandleAssignmentDragDrop();
         }
     }
-    private void OnUnassignCrewmate(int crewmateID)
-    {
-        UnassignBuilding(selectedBuildingID, crewmateID);
-        cm.UnassignCrewmate(crewmateID);
-    }
+
     // Utils
     internal Building GetBuilding(int buildingID)
     {
@@ -340,7 +328,7 @@ public class BuildingManager : MonoBehaviour
         Building building = buildings[buildingID];
         building.UnassignCrewmate(crewmateID);
 
-        if (building.State == BuildingState.RECRUIT)
+        if (building.State == BuildingState.WAITING_FOR_ASSIGNMENT)
         {
             building.SetMaterial(stateData.matRecruiting);
             building.onFirstAssignment.AddListener(() => { OnFirstAssignmentCallback(building.ID); }); // might be able to omit this and just embedd its func

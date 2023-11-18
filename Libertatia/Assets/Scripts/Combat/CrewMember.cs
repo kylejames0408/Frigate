@@ -18,6 +18,7 @@ public class CrewMember : Character
         attackRange = 3;
         attackRate = 2;
         damage = 25;
+        maxSpeed = 3.5f;
 
         charAgent = GetComponent<NavMeshAgent>();
 
@@ -38,6 +39,27 @@ public class CrewMember : Character
         Attack(enemies);
         healthbar.UpdateHealthBar(maxHealth, currentHealth);
         Death();
+
+        //if the crew member is within a certain distance to the target pos, makes them idle
+        if (Vector3.Distance(transform.position, targetPos) < 1.0f)
+        {
+            characterState = State.Idle;
+        }
+
+        //controls agent speed based on state
+        switch (characterState)
+        {
+            case State.Idle:
+                charAgent.speed = 0;
+                break;
+            case State.Moving:
+                charAgent.speed = maxSpeed;
+                break;
+            case State.Attacking:
+                charAgent.speed = 0;
+                break;
+        }
+
     }
 
     public override void Death()

@@ -19,11 +19,6 @@ public struct ObjectData
         id = -1;
         icon = emptyAssigneeIcon;
     }
-
-    internal bool IsEmpty()
-    {
-        return id == -1;
-    }
 }
 
 [Serializable]
