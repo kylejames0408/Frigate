@@ -26,7 +26,7 @@ public class CombatManagementUI : MonoBehaviour
     private Transform[] pages;
 
     private Dictionary<int, CrewmateCard> crewmateCards;
-    private List<int> selectedCrewmateCardIndicies;
+    private List<int> selectedCrewmateCardIDs;
     private bool isOpen;
 
     private void Awake()
@@ -43,7 +43,7 @@ public class CombatManagementUI : MonoBehaviour
         }
         tabs = tabUIParent.GetComponentsInChildren<Tab>();
         crewmateCards = new Dictionary<int, CrewmateCard>();
-        selectedCrewmateCardIndicies = new List<int>();
+        selectedCrewmateCardIDs = new List<int>();
     }
     private void Start()
     {
@@ -89,14 +89,14 @@ public class CombatManagementUI : MonoBehaviour
         GameObject cardObj = Instantiate(crewmateCardPrefab, pages[1]);
 
         CrewmateCard card = cardObj.GetComponentInChildren<CrewmateCard>();
-        card.Init(mate.ID);
+        card.Set(mate);
         crewmateCards.Add(card.ID, card);
 
         // Callbacks
         card.GetComponent<Button>().onClick.AddListener(() => { ClickCrewmateCard(card.ID); }); // drag + drop func
         // Fill UI
         card.GetComponentsInChildren<Image>()[1].sprite = mate.Icon;
-        card.GetComponentInChildren<TextMeshProUGUI>().text = mate.Name;
+        card.GetComponentInChildren<TextMeshProUGUI>().text = mate.FirstName;
 
         card.GetComponent<DragObj2D>().onBeginDrag.AddListener(delegate { ClickCrewmateCard(card.ID); });
         card.GetComponent<DragObj2D>().onEndDrag.AddListener(delegate { zm.OnCrewmateDropAssign(); });
@@ -108,32 +108,97 @@ public class CombatManagementUI : MonoBehaviour
         Destroy(crewmateCards[cardID].gameObject);
         crewmateCards.Remove(cardID);
     }
+    internal void UpdateCard(int cardID, Sprite stateIcon)
+    {
+        CrewmateCard card = crewmateCards[cardID];
+        card.SetStatus(stateIcon);
+    }
+
     // Clicking handler
     private void ClickCrewmateCard(int cardID) // share
     {
-        if (Input.GetKey(KeyCode.LeftControl))
+        // Ctrl: select & deselect
+        if (Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl))
         {
-            DeselectCrewmateCardShare(cardID);
+            if (selectedCrewmateCardIDs.Contains(cardID))
+            {
+                DeselectCrewmateCardShare(cardID);
+            }
+            else
+            {
+                SelectCrewmateCardShare(cardID);
+            }
+        }
+        // Shift: selects all inbetween
+        else if ((Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)) && selectedCrewmateCardIDs.Count > 0)
+        {
+            List<int> ids = new List<int>(crewmateCards.Keys);
+            int prevSelectedCardID = selectedCrewmateCardIDs[selectedCrewmateCardIDs.Count - 1];
+            int firstSelectedIndex = -1;
+            int secondSelectedIndex = -1;
+
+            // Makes sure last selected is not itself
+            if (cardID != prevSelectedCardID)
+            {
+                // Gets first and second selection indices
+                for (int i = 0; i < ids.Count; i++)
+                {
+                    if (ids[i] == prevSelectedCardID)
+                    {
+                        firstSelectedIndex = i;
+                    }
+                    else if (ids[i] == cardID)
+                    {
+                        secondSelectedIndex = i;
+                    }
+                }
+
+                // Orders selection from left to right and selects first card
+                int leftIndex = -1;
+                int rightIndex = -1;
+                // click left then right
+                if (firstSelectedIndex < secondSelectedIndex)
+                {
+                    leftIndex = firstSelectedIndex;
+                    rightIndex = secondSelectedIndex;
+                }
+                // click right then left
+                else
+                {
+                    rightIndex = firstSelectedIndex;
+                    leftIndex = secondSelectedIndex;
+                }
+
+                // Selects all the cards inbetween
+                for (int i = leftIndex; i <= rightIndex; i++)
+                {
+                    if (!selectedCrewmateCardIDs.Contains(ids[i]))
+                    {
+                        SelectCrewmateCardShare(ids[i]);
+                    }
+                }
+            }
         }
         else
         {
-            if (!Input.GetKey(KeyCode.LeftShift))
-            {
-                DeselectAllCrewmateCardsShare();
-            }
-            SelectCrewmateCard(cardID);
-            cm.SelectCrewmate(cardID);
+            DeselectAllCrewmateCardsShare(); // might not want it to deselect if clicking on selected card
+            SelectCrewmateCardShare(cardID);
         }
     }
     internal void SelectCrewmateCard(int cardID)
     {
-        crewmateCards[cardID].GetComponent<Outline>().enabled = true;
-        selectedCrewmateCardIndicies.Add(cardID);
+        crewmateCards[cardID].Select();
+        selectedCrewmateCardIDs.Add(cardID);
+    }
+    private void SelectCrewmateCardShare(int cardID)
+    {
+        SelectCrewmateCard(cardID);
+        cm.SelectCrewmate(cardID);
     }
     internal void DeselectCrewmateCard(int cardID)
     {
-        crewmateCards[cardID].GetComponent<Outline>().enabled = false;
-        selectedCrewmateCardIndicies.Remove(cardID);
+        crewmateCards[cardID].Deselect();
+        selectedCrewmateCardIDs.Remove(cardID);
     }
     private void DeselectCrewmateCardShare(int cardID)
     {
@@ -142,18 +207,17 @@ public class CombatManagementUI : MonoBehaviour
     }
     internal void DeselectAllCrewmateCards()
     {
-        for (int i = 0; i < selectedCrewmateCardIndicies.Count; i++)
+        for (int i = 0; i < selectedCrewmateCardIDs.Count; i++)
         {
-            crewmateCards[selectedCrewmateCardIndicies[i]].GetComponent<Outline>().enabled = false;
+            crewmateCards[selectedCrewmateCardIDs[i]].Deselect();
         }
-        selectedCrewmateCardIndicies.Clear();
+        selectedCrewmateCardIDs.Clear();
     }
     private void DeselectAllCrewmateCardsShare()
     {
         DeselectAllCrewmateCards();
         cm.DeselectAllCrewmates();
     }
-
 
     // Menu Functions
     private void OpenMenu()

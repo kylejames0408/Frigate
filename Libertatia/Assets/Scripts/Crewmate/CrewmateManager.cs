@@ -1,11 +1,7 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
-using static UnityEngine.UI.CanvasScaler;
 
 public class CrewmateManager : MonoBehaviour
 {
@@ -59,6 +55,7 @@ public class CrewmateManager : MonoBehaviour
         if (omui == null) { omui = FindObjectOfType<OutpostManagementUI>(); }
         if (cmui == null) { cmui = FindObjectOfType<CombatManagementUI>(); }
         if (orui == null) { orui = FindObjectOfType<ResourcesUI>(); }
+        if (crewmateUI == null) { crewmateUI = FindObjectOfType<CrewmateUI>(); }
         if (bm == null) { bm = FindObjectOfType<BuildingManager>(); }
 
         // Init Crewmates (make own function)
@@ -69,31 +66,42 @@ public class CrewmateManager : MonoBehaviour
             enemies = FindObjectsOfType<Enemy>().ToList();
         }
         selectedCrewmateIDs = new List<int>();
-
-        // Can probably move this to start - similar to building manager
+    }
+    private void Start()
+    {
         if (GameManager.Data.crewmates == null)
         {
             Debug.Log("You might need to add the game manager to the scene; likely through PlayerData scene");
             return;
         }
-        if (GameManager.Data.crewmates.Count == 0)
+
+        if (isCombat)
         {
-            for (int i = 0; i < GameManager.Data.crewmates.Capacity; i++)
+            // Spawn existing crewmates
+            for (int i = 0; i < GameManager.Data.combatCrew.Count; i++)
             {
-                SpawnNewCrewmate();
+                SpawnExistingCrewmate(GameManager.Data.combatCrew[i]);
             }
         }
         else
         {
-            // Spawn existing crewmates
-            for (int i = 0; i < GameManager.Data.crewmates.Count; i++)
+            if (GameManager.Data.outpostCrew.Count == 0)
             {
-                SpawnExistingCrewmate(GameManager.Data.crewmates[i]);
+                for (int i = 0; i < GameManager.Data.outpostCrew.Capacity; i++)
+                {
+                    SpawnNewCrewmate();
+                }
+            }
+            else
+            {
+                // Spawn existing crewmates
+                for (int i = 0; i < GameManager.Data.outpostCrew.Count; i++)
+                {
+                    SpawnExistingCrewmate(GameManager.Data.outpostCrew[i]);
+                }
             }
         }
-    }
-    private void Start()
-    {
+
         // Update UI
         if (orui != null)
         {
@@ -103,7 +111,7 @@ public class CrewmateManager : MonoBehaviour
     }
     private void Update()
     {
-        // TODO: make ifs into handler functions
+        // TODO: make ifs into handler functions?
 
         // Left mouse button PRESS handler
         if (Input.GetMouseButtonDown(0))
@@ -127,8 +135,15 @@ public class CrewmateManager : MonoBehaviour
         foreach (int id in selectedCrewmateIDs)
         {
             CrewMember crewMember = crewmates[id].GetComponent<CrewMember>();
+            if(crewMember)
+            {
+                crewMember.lineRenderer.SetPosition(0, crewMember.transform.position);
+            }
+        }
 
-            crewMember.lineRenderer.SetPosition(0, crewMember.transform.position);
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            HideLineRenderer();
         }
 
         // Move Crewmate - TODO: move to function
@@ -144,19 +159,17 @@ public class CrewmateManager : MonoBehaviour
                     foreach (int id in selectedCrewmateIDs)
                     {
                         Vector3 movePos = (zone.zoneCenter + (Vector3)UnityEngine.Random.insideUnitSphere * 7f);
-                        Vector3 updatedMovePos = new Vector3(movePos.x, 0, movePos.z);
 
                         //makes crewmates move to a random position within a sphere around the center of the zone
-                        crewmates[id].SetDestination(updatedMovePos);
+                        crewmates[id].SetDestination(movePos);
 
                         //creates a line to indicate where the units are moving to
                         CrewMember crewMember = crewmates[id].GetComponent<CrewMember>();
+                        crewMember.lineRenderer.enabled = true;
+                        crewMember.lineRenderer.SetPosition(0,crewMember.transform.position);
 
-
-                        crewMember.targetPos = updatedMovePos;
-                        ShowLineRenderer(updatedMovePos, id);
-
-                        crewMember.characterState = Character.State.Moving;
+                        Vector3 updatedMovePos = new Vector3(movePos.x, 0, movePos.z);
+                        crewMember.lineRenderer.SetPosition(1, updatedMovePos);
                     }
                 }
                 else
@@ -164,13 +177,22 @@ public class CrewmateManager : MonoBehaviour
                     foreach (int id in selectedCrewmateIDs)
                     {
                         crewmates[id].SetDestination(hit.point);
-
-                        CrewMember crewMember = crewmates[id].GetComponent<CrewMember>();
-                        crewMember.targetPos = hit.point;
-                        crewMember.characterState = Character.State.Moving;
                     }
                 }
             }
+        }
+    }
+    private void OnDestroy()
+    {
+        if(isCombat)
+        {
+            GameManager.UpdateCombatCrew(crewmates.Values.ToArray());
+            GameManager.UpdateCrewmateData();
+        }
+        else
+        {
+            GameManager.UpdateCrewmateData(crewmates.Values.ToArray());
+            GameManager.SeparateCrew();
         }
     }
 
@@ -359,17 +381,17 @@ public class CrewmateManager : MonoBehaviour
         GameObject crewmateObj = Instantiate(crewmatePrefab, transform);
 
         // Set Position - maybe move to util func since same thing is in Building
-        Vector2 circleLocation = UnityEngine.Random.insideUnitCircle;
+        Vector2 circleLocation = Random.insideUnitCircle;
         Vector3 spawnPosition = new Vector3(circleLocation.x * crewmateSpawnRadius, 0, circleLocation.y * crewmateSpawnRadius);
         crewmateObj.transform.position = crewmateSpawn.position + spawnPosition;
 
         Crewmate mate = crewmateObj.GetComponent<Crewmate>();
-        crewmateObj.name = mate.Name + mate.ID;
+        crewmateObj.name = mate.FirstName + mate.ID;
 
-        mate.SetUI(crewmateIcons[UnityEngine.Random.Range(0, crewmateIcons.Length)], iconEmptyAsssignment);
+        mate.SetUI(crewmateIcons[Random.Range(0, crewmateIcons.Length)], iconEmptyAsssignment);
 
         // Save Data
-        GameManager.AddCrewmate(new CrewmateData(mate));
+        GameManager.AddCrewmate(mate);
 
         // Set callbacks
         mate.onSelect.AddListener(() => { ClickCrewmate(mate.ID); });
@@ -392,21 +414,21 @@ public class CrewmateManager : MonoBehaviour
     {
         GameObject crewmateObj = Instantiate(crewmatePrefab, transform);
         Crewmate mate = crewmateObj.GetComponent<Crewmate>();
-        mate.Init(data, iconEmptyAsssignment);
-
-        if (data.building.id == -1)
-        {
-            // Set Position - this actually makes no sense
-            Vector2 circleLocation = UnityEngine.Random.insideUnitCircle;
-            Vector3 spawnPosition = new Vector3(circleLocation.x * crewmateSpawnRadius, 0, circleLocation.y * crewmateSpawnRadius);
-            crewmateObj.transform.position = crewmateSpawn.position + spawnPosition;
-        }
+        mate.Set(data);
 
         // Set callbacks
         mate.onSelect.AddListener(() => { ClickCrewmate(mate.ID); });
         mate.onAssign.AddListener(() => { OnAssignCallback(mate.ID); });
         mate.onReassign.AddListener(() => { OnReassignCallback(mate.ID); });
         mate.onDestroy.AddListener(() => { DeselectCard(mate.ID); });
+
+        // If they are not assigned - move to random pos around spawn
+        if (data.building.id == -1)
+        {
+            Vector2 circleLocation = Random.insideUnitCircle;
+            Vector3 spawnPosition = new Vector3(circleLocation.x * crewmateSpawnRadius, 0, circleLocation.y * crewmateSpawnRadius);
+            crewmateObj.transform.position = crewmateSpawn.position + spawnPosition;
+        }
 
         // Tracking
         crewmates.Add(mate.ID, mate);
@@ -432,10 +454,6 @@ public class CrewmateManager : MonoBehaviour
         crewmates[crewmateID].GetComponent<Renderer>().sharedMaterial = materials[1];
         //crewmates[crewmateID].transform.GetChild(0).gameObject.SetActive(true);
         selectedCrewmateIDs.Add(crewmateID);
-
-        //unit line renderer
-        CrewMember crewMember = crewmates[crewmateID].GetComponent<CrewMember>();
-        ShowLineRenderer(crewMember.targetPos, crewmateID);
 
         if(!isCombat)
         {
@@ -549,18 +567,11 @@ public class CrewmateManager : MonoBehaviour
         crewmateUI.FillUI(mate);
         crewmateUI.OpenMenu();
     }
-    internal void FreeAssignees(int assignee1ID, int assignee2ID)
+    internal void UnassignCrewmate(int crewmateID)
     {
-        if(assignee1ID != -1)
-        {
-            Crewmate mate1 = crewmates[assignee1ID];
-            mate1.Free(); // will UI need to be updated as well?
-        }
-        if (assignee2ID != -1)
-        {
-            Crewmate mate2 = crewmates[assignee2ID];
-            mate2.Free(); // will UI need to be updated as well?
-        }
+        Crewmate mate = crewmates[crewmateID];
+        mate.Unassign(); // will UI need to be updated as well?
+        omui.UpdateCard(crewmateID, mate.StateIcon);
     }
 
     // Callbacks
@@ -568,6 +579,7 @@ public class CrewmateManager : MonoBehaviour
     {
         Crewmate mate = crewmates[crewmateID];
         OpenSlider(mate);
+        omui.UpdateCard(crewmateID, mate.StateIcon);
     }
     private void OnReassignCallback(int crewmateID)
     {
@@ -583,24 +595,10 @@ public class CrewmateManager : MonoBehaviour
         foreach (int id in selectedCrewmateIDs)
         {
             CrewMember crewMember = crewmates[id].GetComponent<CrewMember>();
-
-            crewMember.lineRenderer.enabled = false;
+            if(crewMember)
+            {
+                crewMember.lineRenderer.enabled = false;
+            }
         }
-    }
-
-    /// <summary>
-    /// Shows and updates unit's line renderer
-    /// </summary>
-    /// <param name="targetPos"></param>
-    /// <param name="crewMemberID"></param>
-    private void ShowLineRenderer(Vector3 targetPos, int crewMemberID)
-    {
-        CrewMember crewMember = crewmates[crewMemberID].GetComponent<CrewMember>();
-
-        crewMember.lineRenderer.enabled = true;
-
-        crewMember.lineRenderer.SetPosition(0, crewMember.transform.position);
-        crewMember.lineRenderer.SetPosition(1, targetPos);
-        
     }
 }
