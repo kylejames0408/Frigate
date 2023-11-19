@@ -2953,7 +2953,6 @@ MonoBehaviour:
   - {fileID: 318881204}
   uiBuildingIcon: {fileID: 1192102748}
   btnClose: {fileID: 2020924265}
-  activeCrewmateID: 0
 --- !u!114 &234963691
 MonoBehaviour:
   m_ObjectHideFlags: 0
