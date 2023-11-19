@@ -57,7 +57,7 @@ public class CameraManager : MonoBehaviour
         if(HandleMouseValidation())
         {
             HandleZoom();
-            HandleEdgeScrolling();
+            //HandleEdgeScrolling();
             HandleKeyboardInput();
             HandleMouseInput();
             if (useBounds)
