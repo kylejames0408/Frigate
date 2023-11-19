@@ -147,6 +147,11 @@ public class ZoneManager : MonoBehaviour
                             enemy.targetPos = enemy.GetClosestUnit(zone.crewMembersInZone);
 
                             enemy.characterState = Character.State.Moving;
+
+                            if (Vector3.Distance(enemy.transform.position, crewMember.transform.position) < enemy.attackRange)
+                            {
+                                enemy.characterState = Character.State.Attacking;
+                            }
                         }
 
                         if (enemy.isActiveAndEnabled)
