@@ -141,10 +141,10 @@ public class CrewmateManager : MonoBehaviour
             }
         }
 
-        if(Input.GetKeyDown(KeyCode.Space))
-        {
-            HideLineRenderer();
-        }
+        //if(Input.GetKeyDown(KeyCode.Space))
+        //{
+        //    HideLineRenderer();
+        //}
 
         // Move Crewmate - TODO: move to function
         if(isCombat && Input.GetMouseButtonDown(1))
@@ -159,17 +159,17 @@ public class CrewmateManager : MonoBehaviour
                     foreach (int id in selectedCrewmateIDs)
                     {
                         Vector3 movePos = (zone.zoneCenter + (Vector3)UnityEngine.Random.insideUnitSphere * 7f);
+                        Vector3 updatedMovePos = new Vector3(movePos.x, 0, movePos.z);
 
                         //makes crewmates move to a random position within a sphere around the center of the zone
-                        crewmates[id].SetDestination(movePos);
+                        crewmates[id].SetDestination(updatedMovePos);
 
                         //creates a line to indicate where the units are moving to
                         CrewMember crewMember = crewmates[id].GetComponent<CrewMember>();
-                        crewMember.lineRenderer.enabled = true;
-                        crewMember.lineRenderer.SetPosition(0,crewMember.transform.position);
+                        crewMember.targetPos = updatedMovePos;
+                        ShowLineRenderer(updatedMovePos, id);
 
-                        Vector3 updatedMovePos = new Vector3(movePos.x, 0, movePos.z);
-                        crewMember.lineRenderer.SetPosition(1, updatedMovePos);
+                        crewMember.characterState = Character.State.Moving;
                     }
                 }
                 else
@@ -177,6 +177,10 @@ public class CrewmateManager : MonoBehaviour
                     foreach (int id in selectedCrewmateIDs)
                     {
                         crewmates[id].SetDestination(hit.point);
+
+                        CrewMember crewMember = crewmates[id].GetComponent<CrewMember>();
+                        crewMember.targetPos = hit.point;
+                        crewMember.characterState = Character.State.Moving;
                     }
                 }
             }
@@ -455,7 +459,11 @@ public class CrewmateManager : MonoBehaviour
         //crewmates[crewmateID].transform.GetChild(0).gameObject.SetActive(true);
         selectedCrewmateIDs.Add(crewmateID);
 
-        if(!isCombat)
+        //unit line renderer
+        CrewMember crewMember = crewmates[crewmateID].GetComponent<CrewMember>();
+        ShowLineRenderer(crewMember.targetPos, crewmateID);
+
+        if (!isCombat)
         {
             if (selectedCrewmateIDs.Count > 1)
             {
@@ -600,5 +608,21 @@ public class CrewmateManager : MonoBehaviour
                 crewMember.lineRenderer.enabled = false;
             }
         }
+    }
+
+    /// <summary>
+    /// Shows and updates unit's line renderer
+    /// </summary>
+    /// <param name="targetPos"></param>
+    /// <param name="crewMemberID"></param>
+    private void ShowLineRenderer(Vector3 targetPos, int crewMemberID)
+    {
+        CrewMember crewMember = crewmates[crewMemberID].GetComponent<CrewMember>();
+
+        crewMember.lineRenderer.enabled = true;
+
+        crewMember.lineRenderer.SetPosition(0, crewMember.transform.position);
+        crewMember.lineRenderer.SetPosition(1, targetPos);
+
     }
 }
