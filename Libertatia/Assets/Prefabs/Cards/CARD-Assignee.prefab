@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4920480466933074929}
   - component: {fileID: 5584671597295141303}
   - component: {fileID: 2726107660305362678}
-  - component: {fileID: 7255835854446085921}
+  - component: {fileID: -5185386512456471080}
   m_Layer: 5
   m_Name: CARD-Assignee
   m_TagString: Untagged
@@ -143,7 +143,7 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
---- !u!114 &7255835854446085921
+--- !u!114 &-5185386512456471080
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -152,7 +152,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 935564554598961210}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 64be3b096eeefbd4b9c682628e9fd0e5, type: 3}
+  m_Script: {fileID: 11500000, guid: cb4eb3a9956b6484899f7c539f48e746, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   crewmateID: -1

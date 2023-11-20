@@ -168,7 +168,7 @@ public class Crewmate : MonoBehaviour
         agent.destination = destination; // Set destination
         onAssign.Invoke(); // Update UI
     }
-    public void Free()
+    public void Unassign()
     {
         state = CrewmateState.IDLE;
         building.Reset(iconDefaultBuilding);

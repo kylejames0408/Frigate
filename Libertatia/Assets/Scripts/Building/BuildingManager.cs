@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 public enum BuildingState
 {
     PLACING,
-    WAITING_FOR_ASSIGNMENT,
+    RECRUIT,
     CONSTRUCTING,
     BUILT,
     COUNT
@@ -23,11 +24,11 @@ public struct BuildingResources
 
     public override string ToString()
     {
-        if(wood > 0)
+        if (wood > 0)
         {
             return wood + " wood";
         }
-        else if(food > 0)
+        else if (food > 0)
         {
             return food + " wood";
         }
@@ -73,12 +74,13 @@ public class BuildingManager : MonoBehaviour
     }
     private void Start()
     {
+        buildingUI.onUnassign.AddListener(OnUnassignCrewmate);
         buildingUI.btnUpgrade.onClick.AddListener(OnUpgradeBuildingCallback);
         buildingUI.btnDemolish.onClick.AddListener(OnDemolishBuildingCallback);
 
         //Debug.Log("Bldg Ct: " + GameManager.Data.buildings.Count);
         // Init Building (make own function)
-        for (int i = 0; i < GameManager.Data.buildings.Count; i ++) // cache buildings list?
+        for (int i = 0; i < GameManager.Data.buildings.Count; i++) // cache buildings list?
         {
             SpawnExistingBuilding(GameManager.Data.buildings[i]);
         }
@@ -94,8 +96,7 @@ public class BuildingManager : MonoBehaviour
     {
         // Update player data when scene is unloaded
         //realtimeData.resources = resources; // disable for now
-        //GameManager.Instance.buildingAmount = buildings.Count;
-        //GameManager.Instance.DataManager.Update(realtimeData);
+        //GameManager.UpdateBuildingData(buildings.Values.ToArray());
     }
 
     // Actions
@@ -120,7 +121,7 @@ public class BuildingManager : MonoBehaviour
         prospectiveBuilding.onSelection.AddListener(() => { OnSelectionCallback(prospectiveBuilding.ID); });
         prospectiveBuilding.onCollision.AddListener(() => { OnCollisionCallback(prospectiveBuilding.ID); });
         prospectiveBuilding.onNoCollisions.AddListener(() => { OnNoCollisionsCallback(prospectiveBuilding.ID); });
-        prospectiveBuilding.onFreeAssignees.AddListener(() => { OnFreeAssigneesCallback(prospectiveBuilding.ID); });
+        prospectiveBuilding.onFreeAssignees.AddListener(() => { OnUnassignCrewmatesCallback(prospectiveBuilding.ID); });
 
         // Set Game Event
         prospectiveBuilding.onCrewmateAssignedGE = onCrewmateAssigned;
@@ -149,7 +150,7 @@ public class BuildingManager : MonoBehaviour
         building.onCrewmateAssigned.AddListener(() => { OnCrewmateAssignedCallback(building.ID); });
         building.onConstructionCompleted.AddListener(() => { OnConstructionCompletedCallback(building.ID); });
         building.onSelection.AddListener(() => { OnSelectionCallback(building.ID); });
-        building.onFreeAssignees.AddListener(() => { OnFreeAssigneesCallback(building.ID); });
+        building.onFreeAssignees.AddListener(() => { OnUnassignCrewmatesCallback(building.ID); });
 
         // Tracking
         buildings.Add(building.ID, building);
@@ -183,9 +184,9 @@ public class BuildingManager : MonoBehaviour
 
         // Update Data
         BuildingResources cost = buildingPrefabs[building.Type].Cost; // will eventially change with level
-        if(building.IsBuilt)
+        if (building.IsBuilt)
         {
-            GameManager.data.resources.wood += (cost.wood/2);
+            GameManager.data.resources.wood += (cost.wood / 2);
         }
         else
         {
@@ -228,7 +229,7 @@ public class BuildingManager : MonoBehaviour
             for (int i = 0; i < selectedCrewmates.Length; i++)
             {
                 // Fill open positions
-                if(!building.CanAssign())
+                if (!building.CanAssign())
                 {
                     break;
                 }
@@ -269,7 +270,7 @@ public class BuildingManager : MonoBehaviour
             case BuildingState.PLACING:
                 buildingMaterial = stateData.matPlacing;
                 break;
-            case BuildingState.WAITING_FOR_ASSIGNMENT:
+            case BuildingState.RECRUIT:
                 buildingMaterial = stateData.matRecruiting;
                 break;
             case BuildingState.CONSTRUCTING:
@@ -278,10 +279,17 @@ public class BuildingManager : MonoBehaviour
         }
         building.SetMaterial(buildingMaterial);
     }
-    private void OnFreeAssigneesCallback(int buildingID)
+    private void OnUnassignCrewmatesCallback(int buildingID)
     {
         Building building = buildings[buildingID];
-        cm.FreeAssignees(building.Assignee1.id, building.Assignee2.id);
+        if (!building.Assignee1.IsEmpty())
+        {
+            cm.UnassignCrewmate(building.Assignee1.id);
+        }
+        if (!building.Assignee2.IsEmpty())
+        {
+            cm.UnassignCrewmate(building.Assignee2.id);
+        }
     }
     private void OnUpgradeBuildingCallback()
     {
@@ -317,7 +325,11 @@ public class BuildingManager : MonoBehaviour
             kvp.Value.HandleAssignmentDragDrop();
         }
     }
-
+    private void OnUnassignCrewmate(int crewmateID)
+    {
+        UnassignBuilding(selectedBuildingID, crewmateID);
+        cm.UnassignCrewmate(crewmateID);
+    }
     // Utils
     internal Building GetBuilding(int buildingID)
     {
@@ -328,7 +340,7 @@ public class BuildingManager : MonoBehaviour
         Building building = buildings[buildingID];
         building.UnassignCrewmate(crewmateID);
 
-        if (building.State == BuildingState.WAITING_FOR_ASSIGNMENT)
+        if (building.State == BuildingState.RECRUIT)
         {
             building.SetMaterial(stateData.matRecruiting);
             building.onFirstAssignment.AddListener(() => { OnFirstAssignmentCallback(building.ID); }); // might be able to omit this and just embedd its func
@@ -348,13 +360,13 @@ public class BuildingManager : MonoBehaviour
             prospectiveBuilding.transform.position = info.point;
 
             // angle of incline check
-            if(info.normal.y < .9f)
+            if (info.normal.y < .9f)
             {
                 prospectiveBuilding.SetMaterial(stateData.matColliding);
             }
             else
             {
-                if(prospectiveBuilding.IsColliding)
+                if (prospectiveBuilding.IsColliding)
                 {
                     prospectiveBuilding.SetMaterial(stateData.matColliding);
                 }
