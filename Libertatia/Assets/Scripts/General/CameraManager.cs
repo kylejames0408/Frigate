@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -208,5 +209,15 @@ public class CameraManager : MonoBehaviour
             cameraPos.z = minWorldBounds.y;
         }
         transform.position = cameraPos;
+    }
+    internal void PanTo(Vector3 lookAtPosition)
+    {
+        Vector3 cameraPos = transform.position;
+        float cameraPitch = transform.rotation.eulerAngles.x * Mathf.Deg2Rad;
+
+        float deltaY = cameraPos.y - lookAtPosition.y;
+        float deltaZ = deltaY / Mathf.Tan(cameraPitch);
+
+        transform.position = new Vector3(lookAtPosition.x, cameraPos.y, lookAtPosition.z - deltaZ);
     }
 }

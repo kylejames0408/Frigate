@@ -14,7 +14,7 @@ public class CrewmateManager : MonoBehaviour
     [SerializeField] private ResourcesUI orui;
     [SerializeField] private CombatResourcesUI crui;
     [SerializeField] private CrewmateUI crewmateUI;
-    [SerializeField] private BuildingManager bm;
+    [SerializeField] private BuildingManager bm; // replace with events
     // Crewmate Data
     [SerializeField] private GameObject crewmatePrefab;
     [SerializeField] private Transform crewmateSpawn;
@@ -66,6 +66,10 @@ public class CrewmateManager : MonoBehaviour
             enemies = FindObjectsOfType<Enemy>().ToList();
         }
         selectedCrewmateIDs = new List<int>();
+
+        crewmateUI.onClose.AddListener(OnCloseIbterfaceCallback);
+        crewmateUI.onClickCrewmate.AddListener(OnClickCrewmateIconCallback);
+        crewmateUI.onClickLocation.AddListener(OnClickBuildingIconCallback);
     }
     private void Start()
     {
@@ -140,11 +144,6 @@ public class CrewmateManager : MonoBehaviour
                 crewMember.lineRenderer.SetPosition(0, crewMember.transform.position);
             }
         }
-
-        //if(Input.GetKeyDown(KeyCode.Space))
-        //{
-        //    HideLineRenderer();
-        //}
 
         // Move Crewmate - TODO: move to function
         if(isCombat && Input.GetMouseButtonDown(1))
@@ -595,6 +594,23 @@ public class CrewmateManager : MonoBehaviour
     {
         Crewmate mate = crewmates[crewmateID];
         bm.UnassignBuilding(mate.Building.id, mate.ID);
+    }
+    private void OnCloseIbterfaceCallback()
+    {
+        DeselectAllCrewmatesShare();
+    }
+    private void OnClickCrewmateIconCallback(int crewmateID)
+    {
+        Crewmate mate = crewmates[crewmateID];
+        CameraManager.Instance.PanTo(mate.transform.position);
+    }
+    private void OnClickBuildingIconCallback(int crewmateID)
+    {
+        Crewmate mate = crewmates[crewmateID];
+        if(mate.IsAssigned)
+        {
+            bm.OnClickBuildingIconCallback(mate.Building.id);
+        }
     }
 
     /// <summary>

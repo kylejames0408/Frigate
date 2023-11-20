@@ -330,6 +330,11 @@ public class BuildingManager : MonoBehaviour
         UnassignBuilding(selectedBuildingID, crewmateID);
         cm.UnassignCrewmate(crewmateID);
     }
+    internal void OnClickBuildingIconCallback(int buildingID)
+    {
+        Building building = buildings[buildingID];
+        CameraManager.Instance.PanTo(building.transform.position);
+    }
     // Utils
     internal Building GetBuilding(int buildingID)
     {

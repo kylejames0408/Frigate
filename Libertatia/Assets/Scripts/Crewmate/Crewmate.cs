@@ -93,6 +93,10 @@ public class Crewmate : MonoBehaviour
     {
         get { return state; }
     }
+    public bool IsAssigned
+    {
+        get { return state == CrewmateState.BUILDING; }
+    }
 
     private void Awake()
     {
