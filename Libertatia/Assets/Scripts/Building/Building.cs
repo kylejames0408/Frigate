@@ -12,8 +12,7 @@ public class Building : MonoBehaviour
 {
     // Tracking
     [SerializeField] private int id = -1;
-    [SerializeField] private ObjectData assignee1;
-    [SerializeField] private ObjectData assignee2;
+    [SerializeField] private ObjectData[] assignees = new ObjectData[2];
     [SerializeField] private BuildingState state = BuildingState.PLACING;
     [SerializeField] private BuildingResources resourceCost; // move to scriptable object as "rules", will change with level however
     [SerializeField] private BuildingResources resourceProduction; // same here
@@ -64,13 +63,17 @@ public class Building : MonoBehaviour
     {
         get { return id; }
     }
+    public ObjectData[] Assignees
+    {
+        get { return assignees; }
+    }
     public ObjectData Assignee1
     {
-        get { return assignee1; }
+        get { return assignees[0]; }
     }
     public ObjectData Assignee2
     {
-        get { return assignee2; }
+        get { return assignees[1]; }
     }
     public BuildingState State
     {
@@ -123,8 +126,8 @@ public class Building : MonoBehaviour
 
         // Set variables' initial state
         id = gameObject.GetInstanceID();
-        assignee1 = new ObjectData(-1, iconEmptyAsssignment);
-        assignee2 = new ObjectData(-1, iconEmptyAsssignment);
+        assignees[0] = new ObjectData(-1, iconEmptyAsssignment);
+        assignees[1] = new ObjectData(-1, iconEmptyAsssignment);
         uiIndex = -1;
         level = 0;
         state = BuildingState.PLACING;
@@ -152,8 +155,8 @@ public class Building : MonoBehaviour
     {
         // Tracking / State
         id = data.id;
-        assignee1 = data.assignee1;
-        assignee2 = data.assignee2;
+        assignees[0] = data.assignee1;
+        assignees[1] = data.assignee2;
         state = data.state;
         // Characteristics
         buildingName = data.name;
@@ -189,8 +192,8 @@ public class Building : MonoBehaviour
         uiAsign2.transform.parent.gameObject.SetActive(false);
 
         // Should be moved somewhere else
-        assignee1.Reset(iconEmptyAsssignment);
-        assignee2.Reset(iconEmptyAsssignment);
+        assignees[0].Reset(iconEmptyAsssignment);
+        assignees[1].Reset(iconEmptyAsssignment);
     }
     private void SetLevelUI(int level)
     {
@@ -206,11 +209,11 @@ public class Building : MonoBehaviour
     {
         if (state == BuildingState.RECRUIT)
         {
-            return assignee1.id == -1;
+            return assignees[0].id == -1;
         }
         else if (state == BuildingState.BUILT)
         {
-            return assignee1.id == -1 || assignee2.id == -1;
+            return assignees[0].id == -1 || assignees[1].id == -1;
         }
         else
         {
@@ -249,15 +252,15 @@ public class Building : MonoBehaviour
     {
         onCrewmateAssignedGE.Raise(this, mate);
         // Assign
-        if (assignee1.id == -1)
+        if (assignees[0].id == -1)
         {
-            assignee1.id = mate.ID;
-            assignee1.icon = mate.Icon;
+            assignees[0].id = mate.ID;
+            assignees[0].icon = mate.Icon;
         }
-        else if(assignee2.id == -1)
+        else if(assignees[1].id == -1)
         {
-            assignee2.id = mate.ID;
-            assignee2.icon = mate.Icon;
+            assignees[1].id = mate.ID;
+            assignees[1].icon = mate.Icon;
         }
 
         // Calculate target destination
@@ -271,8 +274,8 @@ public class Building : MonoBehaviour
         }
 
         // Update UI
-        uiAsign1.sprite = assignee1.icon;
-        uiAsign2.sprite = assignee2.icon;
+        uiAsign1.sprite = assignees[0].icon;
+        uiAsign2.sprite = assignees[1].icon;
     }
     public void CompleteConstruction()
     {
@@ -299,18 +302,18 @@ public class Building : MonoBehaviour
     {
         onFreeAssignees.Invoke();
 
-        if (assignee1.id != -1)
+        if (assignees[0].id != -1)
         {
-            assignee1.Reset(iconEmptyAsssignment);
+            assignees[0].Reset(iconEmptyAsssignment);
         }
-        if (assignee2.id != -1)
+        if (assignees[1].id != -1)
         {
-            assignee2.Reset(iconEmptyAsssignment);
+            assignees[1].Reset(iconEmptyAsssignment);
         }
 
         // Update UI
-        uiAsign1.sprite = assignee1.icon;
-        uiAsign2.sprite = assignee2.icon;
+        uiAsign1.sprite = assignees[0].icon;
+        uiAsign2.sprite = assignees[1].icon;
     }
 
     // Util
@@ -323,16 +326,16 @@ public class Building : MonoBehaviour
     }
     internal void UnassignCrewmate(int crewmateID)
     {
-        if (assignee1.id == crewmateID)
+        if (assignees[0].id == crewmateID)
         {
-            if(assignee2.id == -1)
+            if(assignees[1].id == -1)
             {
-                assignee1.Reset(iconEmptyAsssignment);
+                assignees[0].Reset(iconEmptyAsssignment);
             }
             else
             {
-                assignee1 = assignee2;
-                assignee2.Reset(iconEmptyAsssignment);
+                assignees[0] = assignees[1];
+                assignees[1].Reset(iconEmptyAsssignment);
             }
 
             // Change state if nobody is assigned
@@ -341,14 +344,14 @@ public class Building : MonoBehaviour
                 state = BuildingState.RECRUIT;
             }
         }
-        else if (assignee2.id == crewmateID)
+        else if (assignees[1].id == crewmateID)
         {
-            assignee2.Reset(iconEmptyAsssignment);
+            assignees[1].Reset(iconEmptyAsssignment);
         }
 
         // Update UI
-        uiAsign1.sprite = assignee1.icon;
-        uiAsign2.sprite = assignee2.icon;
+        uiAsign1.sprite = assignees[0].icon;
+        uiAsign2.sprite = assignees[1].icon;
     }
 
     // Handlers

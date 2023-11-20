@@ -77,6 +77,8 @@ public class BuildingManager : MonoBehaviour
         buildingUI.onUnassign.AddListener(OnUnassignCrewmate);
         buildingUI.btnUpgrade.onClick.AddListener(OnUpgradeBuildingCallback);
         buildingUI.btnDemolish.onClick.AddListener(OnDemolishBuildingCallback);
+        buildingUI.onClickBuilding.AddListener(OnClickBuildingIconCallback);
+        buildingUI.onClickAssignee.AddListener(OnClickAssigneeIconCallback);
 
         //Debug.Log("Bldg Ct: " + GameManager.Data.buildings.Count);
         // Init Building (make own function)
@@ -334,6 +336,11 @@ public class BuildingManager : MonoBehaviour
     {
         Building building = buildings[buildingID];
         CameraManager.Instance.PanTo(building.transform.position);
+    }
+    internal void OnClickAssigneeIconCallback(int buildingID, int assigneeIndex)
+    {
+        Building building = buildings[buildingID];
+        cm.OnClickCrewmateIconCallback(building.Assignees[assigneeIndex].id);
     }
     // Utils
     internal Building GetBuilding(int buildingID)

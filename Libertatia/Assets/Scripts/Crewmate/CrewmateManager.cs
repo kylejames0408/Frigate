@@ -66,13 +66,13 @@ public class CrewmateManager : MonoBehaviour
             enemies = FindObjectsOfType<Enemy>().ToList();
         }
         selectedCrewmateIDs = new List<int>();
-
-        crewmateUI.onClose.AddListener(OnCloseIbterfaceCallback);
-        crewmateUI.onClickCrewmate.AddListener(OnClickCrewmateIconCallback);
-        crewmateUI.onClickLocation.AddListener(OnClickBuildingIconCallback);
     }
     private void Start()
     {
+        crewmateUI.onClose.AddListener(OnCloseIbterfaceCallback);
+        crewmateUI.onClickCrewmate.AddListener(OnClickCrewmateIconCallback);
+        crewmateUI.onClickLocation.AddListener(OnClickBuildingIconCallback);
+
         if (GameManager.Data.crewmates == null)
         {
             Debug.Log("You might need to add the game manager to the scene; likely through PlayerData scene");
@@ -599,7 +599,7 @@ public class CrewmateManager : MonoBehaviour
     {
         DeselectAllCrewmatesShare();
     }
-    private void OnClickCrewmateIconCallback(int crewmateID)
+    internal void OnClickCrewmateIconCallback(int crewmateID)
     {
         Crewmate mate = crewmates[crewmateID];
         CameraManager.Instance.PanTo(mate.transform.position);
