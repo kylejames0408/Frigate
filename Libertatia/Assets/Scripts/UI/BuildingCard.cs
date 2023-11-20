@@ -11,12 +11,16 @@ public class BuildingCard : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     public BuildingResources resourceCost;
     public BuildingResources resourceProduction;
 
-    public void Init(BuildingResources buildingCost, BuildingResources buildingProduction)
+    private void Awake()
+    {
+        outline = GetComponent<Outline>();
+        Deselect();
+    }
+
+    public void Set(BuildingResources buildingCost, BuildingResources buildingProduction)
     {
         resourceCost = buildingCost;
         resourceProduction = buildingProduction;
-        outline = GetComponent<Outline>();
-        Deselect();
     }
     public void Select()
     {

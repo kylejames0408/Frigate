@@ -459,10 +459,6 @@ public class CrewmateManager : MonoBehaviour
         //crewmates[crewmateID].transform.GetChild(0).gameObject.SetActive(true);
         selectedCrewmateIDs.Add(crewmateID);
 
-        //unit line renderer
-        CrewMember crewMember = crewmates[crewmateID].GetComponent<CrewMember>();
-        ShowLineRenderer(crewMember.targetPos, crewmateID);
-
         if (!isCombat)
         {
             if (selectedCrewmateIDs.Count > 1)
@@ -473,6 +469,12 @@ public class CrewmateManager : MonoBehaviour
             {
                 OpenSlider(crewmates[crewmateID]);
             }
+        }
+        else
+        {
+            //unit line renderer
+            CrewMember crewMember = crewmates[crewmateID].GetComponent<CrewMember>();
+            ShowLineRenderer(crewMember.targetPos, crewmateID);
         }
     }
     internal void DeselectCrewmate(int crewmateID)

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -95,8 +96,7 @@ public class BuildingManager : MonoBehaviour
     {
         // Update player data when scene is unloaded
         //realtimeData.resources = resources; // disable for now
-        //GameManager.Instance.buildingAmount = buildings.Count;
-        //GameManager.Instance.DataManager.Update(realtimeData);
+        //GameManager.UpdateBuildingData(buildings.Values.ToArray());
     }
 
     // Actions

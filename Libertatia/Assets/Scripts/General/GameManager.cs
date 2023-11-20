@@ -114,13 +114,29 @@ public class GameManager : MonoBehaviour
         {
             data.outpostCrew.Add(data.combatCrew[i]);
         }
+        data.combatCrew.Clear();
+    }
+    internal static void UpdateBuildingData(Building[] buildings)
+    {
+        data.buildings.Clear();
+        for (int i = 0; i < buildings.Length; i++)
+        {
+            data.buildings.Add(new BuildingData(buildings[i]));
+        }
     }
 
     private void Awake()
     {
         Debug.Log("GameManager initialized");
-        data = PlayerDataManager.CreateNewData();
-        DontDestroyOnLoad(gameObject); // Required for persistance
+        if(data.Equals(default(PlayerData))) // Prevents reinit when debugging
+        {
+            data = PlayerDataManager.CreateNewData();
+            DontDestroyOnLoad(gameObject); // Required for persistance
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
 
 #if !UNITY_EDITOR
         Cursor.lockState = CursorLockMode.Confined;
@@ -143,6 +159,10 @@ public class GameManager : MonoBehaviour
             }
         }
     }
+    private void OnDestroy()
+    {
+        data.gameTimer = gameTimer;
+    }
 
     private void Pause()
     {
@@ -154,5 +174,4 @@ public class GameManager : MonoBehaviour
         state = GameState.PLAYING;
         pauseMenu.Close();
     }
-
 }
