@@ -1,6 +1,6 @@
-using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using DG.Tweening;
 
 // TODO: Move calculations to a non-monobehavior class
 public class CameraManager : MonoBehaviour
@@ -26,6 +26,8 @@ public class CameraManager : MonoBehaviour
     [SerializeField] private bool useBounds = true;
     [SerializeField] private Vector2 maxWorldBounds; // could be set with size
     [SerializeField] private Vector2 minWorldBounds;
+    // Pan
+    [SerializeField] private float panSpeed = 1.0f; // I think we could make our own that is a consistant speed rather than time
 
     public static CameraManager Instance
     {
@@ -218,6 +220,6 @@ public class CameraManager : MonoBehaviour
         float deltaY = cameraPos.y - lookAtPosition.y;
         float deltaZ = deltaY / Mathf.Tan(cameraPitch);
 
-        transform.position = new Vector3(lookAtPosition.x, cameraPos.y, lookAtPosition.z - deltaZ);
+        transform.DOMove(new Vector3(lookAtPosition.x, cameraPos.y, lookAtPosition.z - deltaZ), panSpeed);
     }
 }
