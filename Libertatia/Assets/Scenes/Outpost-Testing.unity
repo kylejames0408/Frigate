@@ -8902,6 +8902,7 @@ MonoBehaviour:
   confirmationUI: {fileID: 888449053}
   cm: {fileID: 314619652}
   isPlacing: 0
+  droppedBuilding: 0
   prospectiveBuilding: {fileID: 0}
   totalProduction:
     wood: 0
@@ -10538,10 +10539,10 @@ RectTransform:
   m_Father: {fileID: 1608288114}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 76.965004, y: -19}
-  m_SizeDelta: {x: 20.1, y: 38}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &877541726
 MonoBehaviour:
@@ -11548,7 +11549,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &962263072
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13594,7 +13595,7 @@ MonoBehaviour:
   animTimeArrow: 0.5
   animTimeInterface: 0.6
   buildingCardPrefab: {fileID: 251873779958588848, guid: 91d0531e95f5c9b429617bb9f2593dba, type: 3}
-  crewmateCardPrefab: {fileID: 6335522714724666445, guid: 17bc90cb65cc5f4478efe6d2b2563f0a, type: 3}
+  crewmateCardPrefab: {fileID: 7274663092254128746, guid: 0e178bb3c7a9fc14a9b731fc07dd6cd2, type: 3}
   arrow: {fileID: 476263300966870331}
   tabUIParent: {fileID: 2584835497597247581}
   pagesUIParent: {fileID: 5893328723937594164}
@@ -19540,10 +19541,10 @@ RectTransform:
   m_Father: {fileID: 1608288114}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 108.55, y: -19}
-  m_SizeDelta: {x: 33.07, y: 38}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1933864645
 MonoBehaviour:

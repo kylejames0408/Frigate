@@ -159,7 +159,7 @@ public class OutpostManagementUI : MonoBehaviour
         buildingCards.Add(card);
 
         // Callbacks
-        cardObj.GetComponentInChildren<Button>().onClick.AddListener(() => { ClickBuildingCard(bm, index); });
+        //cardObj.GetComponentInChildren<Button>().onClick.AddListener(() => { ClickBuildingCard(bm, index); });
         // Fill UI
         cardObj.GetComponentsInChildren<Image>()[2].sprite = building.Icon;
         cardObj.GetComponentInChildren<TextMeshProUGUI>().text = building.Name;
@@ -219,14 +219,15 @@ public class OutpostManagementUI : MonoBehaviour
         crewmateCards.Add(card.ID, card);
 
         // Callbacks
-        card.GetComponent<Button>().onClick.AddListener(() => { ClickCrewmateCard(card.ID); }); // drag + drop func
+        card.GetComponentInChildren<Button>().onClick.AddListener(() => { ClickCrewmateCard(card.ID); }); // drag + drop func
         // Fill UI
-        card.GetComponentsInChildren<Image>()[1].sprite = mate.Icon;
+        card.GetComponentsInChildren<Image>()[2].sprite = mate.Icon;
         card.GetComponentInChildren<TextMeshProUGUI>().text = mate.FirstName;
 
-        card.GetComponent<DragObj2D>().onBeginDrag.AddListener(delegate { ClickCrewmateCard(card.ID); });
-        card.GetComponent<DragObj2D>().onEndDrag.AddListener(delegate { bm.OnCrewmateDropAssign(); });
-        card.GetComponent<DragObj2D>().onEndDrag.AddListener(delegate { DeselectCrewmateCard(card.ID); });
+        cardObj.GetComponentInChildren<DragObj2D>().onBeginDrag.AddListener(delegate { DragCrewmateCard(card.ID); });
+        cardObj.GetComponentInChildren<DragObj2D>().onEndDrag.AddListener(delegate { bm.OnCrewmateDropAssign(); });
+        cardObj.GetComponentInChildren<DragObj2D>().onEndDrag.AddListener(delegate { DeselectAllCrewmateCardsShare(); });
+        //cardObj.GetComponentInChildren<DragObj2D>().onEndDrag.AddListener(delegate { DeselectAllCrewmateCardsShare(); });
     }
     internal void RemoveCrewmateCard(int cardID)
     {
@@ -238,6 +239,12 @@ public class OutpostManagementUI : MonoBehaviour
     {
         CrewmateCard card = crewmateCards[cardID];
         card.SetStatus(stateIcon);
+    }
+
+    private void DragCrewmateCard(int cardID)
+    {
+        DeselectAllCrewmateCardsShare();
+        SelectCrewmateCardShare(cardID);
     }
 
     // Clicking handler
