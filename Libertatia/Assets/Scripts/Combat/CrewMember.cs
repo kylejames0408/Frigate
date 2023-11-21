@@ -46,6 +46,10 @@ public class CrewMember : Character
             characterState = State.Idle;
         }
 
+        Crewmate crewmate = GetComponent<Crewmate>();
+        Debug.Log(crewmate.State);
+
+
         //controls agent speed based on state
         switch (characterState)
         {

@@ -372,6 +372,9 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 8e58b6f3119697b429f7ad7281411480, type: 2}
   - {fileID: 2100000, guid: 20b8e5c0d5dd17940ab06fe53614d5cc, type: 2}
   rend: {fileID: 7283512582683049553}
+  targetPos: {x: 0, y: 0, z: 0}
+  characterState: 0
+  maxSpeed: 0
   enemies: []
   enemyGameobjects: []
   lineRenderer: {fileID: 0}
@@ -388,17 +391,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 0
+  state: 0
   building:
     id: 0
     icon: {fileID: 0}
-  crewmateName: 
+  fullName: Jack Sparrow
   health: 100
   strength: -1
   agility: -1
   stamina: -1
-  icon: {fileID: 0}
+  iconCrewmate: {fileID: 0}
+  iconState: {fileID: 0}
   isHovered: 0
-  iconEmptyAsssignment: {fileID: 0}
+  iconDefaultBuilding: {fileID: 0}
+  iconsStates:
+  - {fileID: 21300000, guid: 7fc897f482c918d4c935d6157d1b9510, type: 3}
+  - {fileID: 21300000, guid: 74f6def7c72d2fa43a19c4414959b496, type: 3}
+  - {fileID: 21300000, guid: fc8c4bde6b59a444291698c3e62f85e1, type: 3}
+  - {fileID: 21300000, guid: d9d5827e2849db24f8775d93b9af7d8b, type: 3}
   onAssign:
     m_PersistentCalls:
       m_Calls: []
