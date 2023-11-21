@@ -11,6 +11,7 @@ public class ZoneManager : MonoBehaviour
 {
     // Components
     [SerializeField] private CrewmateManager cm;
+    [SerializeField] private OutpostManagementUI omui;
     [SerializeField] private CombatManagementUI cmui;
 
     public List<GameObject> crewMembers;
@@ -165,10 +166,13 @@ public class ZoneManager : MonoBehaviour
 
                             crewMember.lineRenderer.SetPosition(1, crewMember.GetClosestUnit(zone.enemiesInZone));
 
+                            //updates state enums
                             crewMember.characterState = Character.State.Moving;
-
                             Crewmate crewmate = crewMember.GetComponent<Crewmate>();
                             crewmate.State = CrewmateState.MOVING;
+
+                            //updates state on cards
+                            omui.UpdateCard(crewmate.ID, crewmate.StateIcon);
                         }
                     }
                 }
@@ -281,6 +285,8 @@ public class ZoneManager : MonoBehaviour
 
             Crewmate crewmate = crewMember.GetComponent<Crewmate>();
             crewmate.State = CrewmateState.MOVING;
+
+            omui.UpdateCard(crewmate.ID, crewmate.StateIcon);
         }
 
         //Makes marker disappear when retreating to ship
@@ -316,6 +322,8 @@ public class ZoneManager : MonoBehaviour
 
                 Crewmate crewmate = crewMember.GetComponent<Crewmate>();
                 crewmate.State = CrewmateState.MOVING;
+
+                omui.UpdateCard(crewmate.ID, crewmate.StateIcon);
 
                 ShowLineRenderer(zone.zoneCenter + (Vector3)UnityEngine.Random.insideUnitSphere * 7f, crewMember);
             }

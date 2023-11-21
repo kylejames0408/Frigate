@@ -55,6 +55,8 @@ public class Enemy : Character
         }
 
         lootDropped = false;
+
+        omuiGameObject = GameObject.FindGameObjectWithTag("ManagementUI");
     }
 
     // Update is called once per frame

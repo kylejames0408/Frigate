@@ -10,8 +10,6 @@ public class CrewMember : Character
 
     public LineRenderer lineRenderer;
 
-    [SerializeField] private GameObject omuiGameObject;
-
     // Start is called before the first frame update
     void Start()
     {
