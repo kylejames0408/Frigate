@@ -68,6 +68,6 @@ public class BattleLootManager : MonoBehaviour
 
     public void ReturnToOutpost()
     {
-        CeneManager.LoadOutpostFromCombat();
+        SeaneManager.LoadOutpostFromCombat();
     }
 }

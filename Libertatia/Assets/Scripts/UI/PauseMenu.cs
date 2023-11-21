@@ -28,6 +28,6 @@ public class PauseMenu : MonoBehaviour
     {
         GameManager.outpostVisitNumber = 0;
         GameManager.combatVisitNumber = 0;
-        CeneManager.LoadMainMenu();
+        SeaneManager.LoadMainMenu();
     }
 }

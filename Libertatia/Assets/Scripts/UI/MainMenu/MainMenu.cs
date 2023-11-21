@@ -1,13 +1,22 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.PackageManager.UI;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class MainMenuManager : MonoBehaviour
+public class MainMenu : MonoBehaviour
 {
     [SerializeField] GameObject mainMenuInterface;
     [SerializeField] GameObject optionsInterface;
     [SerializeField] GameObject creditsInterface;
+
+    [SerializeField] private Button btnFan;
+    [SerializeField] private Button btnJames;
+    [SerializeField] private Button btnJaradat;
+    [SerializeField] private Button btnWeng;
+    [SerializeField] private Button btnZaffram;
+
+    public void OpenPortfolio(string url)
+    {
+        Application.OpenURL(url);
+    }
 
     public void ShowMainMenu()
     {

@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class CeneManager : MonoBehaviour
+public class SeaneManager : MonoBehaviour
 {
     // Gets usable build index by "clearning" it. Parses the index into our possible indexes.
     private static int GetBuildIndex(int buildIndex)
