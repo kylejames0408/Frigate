@@ -4856,6 +4856,7 @@ MonoBehaviour:
   enemies: []
   enemyGameobjects: []
   lineRenderer: {fileID: 0}
+  omuiGameObject: {fileID: 0}
 --- !u!114 &217854478
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5222,6 +5223,7 @@ MonoBehaviour:
   enemies: []
   enemyGameobjects: []
   lineRenderer: {fileID: 0}
+  omuiGameObject: {fileID: 0}
 --- !u!114 &228254982
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6248,6 +6250,7 @@ MonoBehaviour:
   enemies: []
   enemyGameobjects: []
   lineRenderer: {fileID: 0}
+  omuiGameObject: {fileID: 0}
 --- !u!114 &348037778
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7117,6 +7120,7 @@ MonoBehaviour:
   enemies: []
   enemyGameobjects: []
   lineRenderer: {fileID: 0}
+  omuiGameObject: {fileID: 0}
 --- !u!114 &388982661
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11383,6 +11387,7 @@ MonoBehaviour:
   enemies: []
   enemyGameobjects: []
   lineRenderer: {fileID: 0}
+  omuiGameObject: {fileID: 0}
 --- !u!114 &641981759
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14048,7 +14053,7 @@ GameObject:
   - component: {fileID: 790469873}
   m_Layer: 5
   m_Name: INT-Combat
-  m_TagString: Untagged
+  m_TagString: ManagementUI
   m_Icon: {fileID: 2488908585195742037, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -18668,6 +18673,7 @@ MonoBehaviour:
   enemies: []
   enemyGameobjects: []
   lineRenderer: {fileID: 0}
+  omuiGameObject: {fileID: 0}
 --- !u!114 &967286128
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22298,6 +22304,7 @@ MonoBehaviour:
   enemies: []
   enemyGameobjects: []
   lineRenderer: {fileID: 0}
+  omuiGameObject: {fileID: 0}
 --- !u!114 &1138835301
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25892,6 +25899,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cm: {fileID: 2009515019}
+  cmui: {fileID: 790469873}
   crewMembers: []
   enemies: []
   enemyHouses: []
@@ -27075,6 +27083,7 @@ MonoBehaviour:
   enemies: []
   enemyGameobjects: []
   lineRenderer: {fileID: 0}
+  omuiGameObject: {fileID: 0}
 --- !u!114 &1467598189
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -32224,6 +32233,7 @@ MonoBehaviour:
   enemies: []
   enemyGameobjects: []
   lineRenderer: {fileID: 0}
+  omuiGameObject: {fileID: 0}
 --- !u!114 &1754147573
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -33983,6 +33993,7 @@ MonoBehaviour:
   enemies: []
   enemyGameobjects: []
   lineRenderer: {fileID: 0}
+  omuiGameObject: {fileID: 0}
 --- !u!114 &1823225489
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -38821,6 +38832,7 @@ MonoBehaviour:
   enemies: []
   enemyGameobjects: []
   lineRenderer: {fileID: 0}
+  omuiGameObject: {fileID: 0}
 --- !u!114 &2056102857
 MonoBehaviour:
   m_ObjectHideFlags: 0

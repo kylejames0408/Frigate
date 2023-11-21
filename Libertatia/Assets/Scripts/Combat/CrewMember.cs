@@ -10,6 +10,8 @@ public class CrewMember : Character
 
     public LineRenderer lineRenderer;
 
+    [SerializeField] private GameObject omuiGameObject;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -31,6 +33,8 @@ public class CrewMember : Character
         }
 
         lineRenderer = GetComponent<LineRenderer>();
+
+        omuiGameObject = GameObject.FindGameObjectWithTag("ManagementUI");
     }
 
     // Update is called once per frame
@@ -40,14 +44,21 @@ public class CrewMember : Character
         healthbar.UpdateHealthBar(maxHealth, currentHealth);
         Death();
 
+        Crewmate crewmate = GetComponent<Crewmate>();
+
         //if the crew member is within a certain distance to the target pos, makes them idle
         if (Vector3.Distance(transform.position, targetPos) < 1.0f)
         {
             characterState = State.Idle;
+            crewmate.State = CrewmateState.IDLE;
+
+            OutpostManagementUI omui = omuiGameObject.GetComponent<OutpostManagementUI>();
+            omui.UpdateCard(crewmate.ID, crewmate.StateIcon);
+       
         }
 
-        Crewmate crewmate = GetComponent<Crewmate>();
-        Debug.Log(crewmate.State);
+
+        //Debug.Log(crewmate.StateIcon);
 
 
         //controls agent speed based on state
