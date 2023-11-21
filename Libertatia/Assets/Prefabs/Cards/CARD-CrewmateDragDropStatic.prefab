@@ -234,7 +234,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   crewmateID: 0
   firstName: {fileID: 8121830928587909853}
-  iconCrewmate: {fileID: 2648310590965474819}
+  icon: {fileID: 2648310590965474819}
   iconsStatus: {fileID: 6548899302653539410}
   sliderHealth: {fileID: 914344302092478289}
   onHover:
@@ -990,7 +990,7 @@ GameObject:
   - component: {fileID: 2973870450900330809}
   - component: {fileID: 2443508288874369794}
   - component: {fileID: 3071848203494235032}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: CARD-CrewmateDragDropStatic
   m_TagString: Untagged
   m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}

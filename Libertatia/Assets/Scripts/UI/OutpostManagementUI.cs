@@ -152,7 +152,7 @@ public class OutpostManagementUI : MonoBehaviour
     {
         GameObject cardObj = Instantiate(buildingCardPrefab, pages[0]);
 
-        BuildingCard card = cardObj.GetComponent<BuildingCard>();
+        BuildingCard card = cardObj.GetComponentInChildren<BuildingCard>();
         card.Set(building.Cost, building.Production);
         card.onHover.AddListener(() => { BuildingCardHoveredCallback(index); });
         card.onHoverExit.AddListener(BuildingCardHoveredExitCallback);
