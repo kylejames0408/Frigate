@@ -117,6 +117,8 @@ public struct PlayerData
     public int outpostCrewCapacity;
     public List<BuildingData> buildings; // Maybe make array
     public List<CrewmateData> crewmates;
+    public List<CrewmateData> outpostCrew;
+    public List<CrewmateData> combatCrew;
 }
 
 // Manages player data - creating and converting the data
@@ -150,7 +152,9 @@ public static class PlayerDataManager
         data.resources.food = STARTING_FOOD_AMOUNT;
         data.resources.loyalty = STARTING_LOYALTY_AMOUNT;
         // Crewmates
-        data.crewmates = new List<CrewmateData>(STARTING_CREW_AMOUNT);
+        data.crewmates = new List<CrewmateData>();
+        data.outpostCrew = new List<CrewmateData>(STARTING_CREW_AMOUNT);
+        data.combatCrew = new List<CrewmateData>();
         data.outpostCrewCapacity = STARTING_CREW_CAPACITY;
         // Buildings
         data.buildings = new List<BuildingData>(0);

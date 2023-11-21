@@ -12,11 +12,15 @@ public class Ship : MonoBehaviour
     public int detectionRange;
     private bool inRange;
 
-    public GameObject combatUI;
+    public CombatResourcesUI resourceUI;
     [SerializeField] private GameObject battleLootUI;
     [SerializeField] private GameObject leaveButton;
 
-    // Start is called before the first frame update
+    private void Awake()
+    {
+        if (resourceUI == null) { resourceUI = FindObjectOfType<CombatResourcesUI>(); }
+    }
+
     void Start()
     {
         detectionRange = 25;
@@ -24,8 +28,6 @@ public class Ship : MonoBehaviour
 
         unitList.AddRange(GameObject.FindGameObjectsWithTag("PlayerCharacter"));
         enemyList.AddRange(GameObject.FindGameObjectsWithTag("Enemy"));
-
-        combatUI = GameObject.FindGameObjectWithTag("CombatUI");
     }
 
     // Update is called once per frame
@@ -73,11 +75,9 @@ public class Ship : MonoBehaviour
         //GameManager.data.resources.doubloons += 10;
         //GameManager.data.resources.food += 100;
 
-        CombatResourcesUI combatResources = combatUI.GetComponent<CombatResourcesUI>();
-
-        GameManager.data.resources.wood += combatResources.woodAmount;
-        GameManager.data.resources.doubloons += combatResources.doubloonAmount;
-        GameManager.data.resources.food += combatResources.foodAmount;
+        GameManager.data.resources.wood += resourceUI.woodAmount;
+        GameManager.data.resources.doubloons += resourceUI.doubloonAmount;
+        GameManager.data.resources.food += resourceUI.foodAmount;
 
         //Opens the battle loot ui
         battleLootUI.SetActive(true);

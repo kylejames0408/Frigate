@@ -22,12 +22,18 @@ public class BuildingUI : MonoBehaviour
     public Button btnUpgrade;
     public Button btnDemolish;
     [SerializeField] private Button btnClose;
+    [SerializeField] private Button btnBuilding;
+    [SerializeField] private Button btnAssignee1;
+    [SerializeField] private Button btnAssignee2;
 
     [Header("Tracking")] // Dynamic/tracking information
     private RectTransform bounds;
+    private int buildingID = -1;
 
     // Events
     public UnityEvent<int> onUnassign;
+    public UnityEvent<int> onClickBuilding;
+    public UnityEvent<int, int> onClickAssignee;
 
     private void Awake()
     {
@@ -39,6 +45,9 @@ public class BuildingUI : MonoBehaviour
     private void Start()
     {
         btnClose.onClick.AddListener(CloseMenu);
+        btnBuilding.onClick.AddListener(OnClickCrewmateCallback);
+        btnAssignee1.onClick.AddListener(() =>{ OnClickAssigneeCallback(0); });
+        btnAssignee2.onClick.AddListener(() =>{ OnClickAssigneeCallback(1); });
 
         if (GameManager.Data.isTutorial)
         {
@@ -53,6 +62,7 @@ public class BuildingUI : MonoBehaviour
 
     internal void FillUI(Building building)
     {
+        buildingID = building.ID;
         uiIcon.sprite = building.Icon;
         uiName.text = building.Name;
         uiStatus.text = building.GetStatus();
@@ -101,7 +111,7 @@ public class BuildingUI : MonoBehaviour
     // Handlers
     private void HandleClicking()
     {
-        if(Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject() && (
+        if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject() && (
             Input.mousePosition.x < bounds.offsetMin.x ||
             Input.mousePosition.x > bounds.offsetMax.x ||
             Input.mousePosition.y < bounds.offsetMin.y ||
@@ -115,7 +125,7 @@ public class BuildingUI : MonoBehaviour
     private void UnassignCallback(int assigneeIndex, int crewmateID)
     {
         // Shift UI if crewmate is still in the second slot
-        if(assigneeIndex == 0 && !assigneeCards[1].IsEmpty())
+        if (assigneeIndex == 0 && !assigneeCards[1].IsEmpty())
         {
             assigneeCards[0].Set(assigneeCards[1].CrewmateData);
             int tempCrewmateID = assigneeCards[1].CrewmateData.id;
@@ -128,6 +138,17 @@ public class BuildingUI : MonoBehaviour
         }
 
         onUnassign.Invoke(crewmateID);
+    }
+    private void OnClickCrewmateCallback()
+    {
+        onClickBuilding.Invoke(buildingID);
+    }
+    private void OnClickAssigneeCallback(int assigneeIndex)
+    {
+        if (!assigneeCards[assigneeIndex].IsEmpty())
+        {
+            onClickAssignee.Invoke(buildingID, assigneeIndex);
+        }
     }
 
     // Open/close

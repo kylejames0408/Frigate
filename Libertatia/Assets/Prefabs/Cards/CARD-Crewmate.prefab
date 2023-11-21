@@ -724,7 +724,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   crewmateID: 0
   firstName: {fileID: 5721852423740694169}
-  iconCrewmate: {fileID: 899656781940043670}
+  icon: {fileID: 899656781940043670}
   iconsStatus: {fileID: 2803749412166498656}
   sliderHealth: {fileID: 720639919247309470}
   onHover:

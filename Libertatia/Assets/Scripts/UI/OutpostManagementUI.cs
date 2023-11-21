@@ -44,13 +44,13 @@ public class OutpostManagementUI : MonoBehaviour
 
     private void Awake()
     {
-        if(cm == null) { cm = FindObjectOfType<CrewmateManager>(); }
-        if(bm == null) { bm = FindObjectOfType<BuildingManager>(); }
+        if (cm == null) { cm = FindObjectOfType<CrewmateManager>(); }
+        if (bm == null) { bm = FindObjectOfType<BuildingManager>(); }
 
         pages = pagesUIParent.GetComponentsInChildren<Transform>();
-        if(pages.Length > 1 )
+        if (pages.Length > 1)
         {
-            for( int i = 1; i < pages.Length; i++ )
+            for (int i = 1; i < pages.Length; i++)
             {
                 pages[i - 1] = pages[i];
             }
@@ -64,7 +64,7 @@ public class OutpostManagementUI : MonoBehaviour
     {
         isOpen = false;
         // Sets tab triggers
-        for ( int i = 0; i < tabs.Length; i++ )
+        for (int i = 0; i < tabs.Length; i++)
         {
             int tabIndex = i; // needs to be destroyed after setting listener
             tabs[i].GetComponent<Button>().onClick.AddListener(() => { SelectTabCallback(tabIndex); });
@@ -87,7 +87,7 @@ public class OutpostManagementUI : MonoBehaviour
     {
         for (int i = 0; i < buildingCards.Count; i++)
         {
-            if(bm.CanConstructBuilding(i))
+            if (bm.CanConstructBuilding(i))
             {
                 buildingCards[i].GetComponentInChildren<Button>().interactable = true;
 
@@ -122,7 +122,7 @@ public class OutpostManagementUI : MonoBehaviour
 
                 if (i == 1)
                 {
-                    if(GameManager.outpostVisitNumber == 1)
+                    if (GameManager.outpostVisitNumber == 1)
                     {
                         HideCrewmateTabArrow();
                         ShowCrewmateCardArrow();
@@ -152,9 +152,9 @@ public class OutpostManagementUI : MonoBehaviour
     {
         GameObject cardObj = Instantiate(buildingCardPrefab, pages[0]);
 
-        BuildingCard card = cardObj.GetComponentInChildren<BuildingCard>();
-        card.Init(building.Cost, building.Production);
-        card.onHover.AddListener(()=> { BuildingCardHoveredCallback(index); });
+        BuildingCard card = cardObj.GetComponent<BuildingCard>();
+        card.Set(building.Cost, building.Production);
+        card.onHover.AddListener(() => { BuildingCardHoveredCallback(index); });
         card.onHoverExit.AddListener(BuildingCardHoveredExitCallback);
         buildingCards.Add(card);
 
@@ -253,7 +253,7 @@ public class OutpostManagementUI : MonoBehaviour
         // Ctrl: select & deselect
         if (Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl))
         {
-            if(selectedCrewmateCardIDs.Contains(cardID))
+            if (selectedCrewmateCardIDs.Contains(cardID))
             {
                 DeselectCrewmateCardShare(cardID);
             }
@@ -376,7 +376,7 @@ public class OutpostManagementUI : MonoBehaviour
     private void CloseMenu()
     {
         isOpen = false;
-        transform.DOMoveY(transform.position.y-pagesUIParent.GetComponent<RectTransform>().rect.height, animTimeInterface); // cant get height in start
+        transform.DOMoveY(transform.position.y - pagesUIParent.GetComponent<RectTransform>().rect.height, animTimeInterface); // cant get height in start
         arrow.onClick.RemoveListener(CloseMenu);
         arrow.onClick.AddListener(OpenMenu);
         arrow.transform.GetChild(0).DORotate(new Vector3(0, 0, 0), animTimeArrow);
@@ -387,47 +387,39 @@ public class OutpostManagementUI : MonoBehaviour
         if (!ClickHereBuildingTab.activeSelf)
             ClickHereBuildingTab.SetActive(true);
     }
-
     public void HideBuildingTabArrow()
     {
         if (ClickHereBuildingTab.activeSelf)
             ClickHereBuildingTab.SetActive(false);
     }
-
     public void ShowBuildingCardArrow()
     {
         if (!ClickHereBuildingCard.activeSelf)
             ClickHereBuildingCard.SetActive(true);
     }
-
     public void HideBuildingCardArrow()
     {
         if (ClickHereBuildingCard.activeSelf)
             ClickHereBuildingCard.SetActive(false);
     }
-
     public void ShowCrewmateTabArrow()
     {
         if (!ClickHereCrewmateTab.activeSelf)
             ClickHereCrewmateTab.SetActive(true);
     }
-
     public void HideCrewmateTabArrow()
     {
         if (ClickHereCrewmateTab.activeSelf)
             ClickHereCrewmateTab.SetActive(false);
     }
-
     public void ShowCrewmateCardArrow()
     {
         if (!DragHereCrewmateCard.activeSelf)
             DragHereCrewmateCard.SetActive(true);
     }
-
     public void HideCrewmateCardArrow()
     {
         if (DragHereCrewmateCard.activeSelf)
             DragHereCrewmateCard.SetActive(false);
     }
-
 }

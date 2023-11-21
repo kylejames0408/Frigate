@@ -16,6 +16,8 @@ public class Zone : MonoBehaviour
     float onMeshThreshold = 3;
 
     public Vector3 zoneCenter;
+
+    //zone center empty gameobject + flag prefab
     public GameObject centerObject;
 
     public bool zoneLootCollected;
