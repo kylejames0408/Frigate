@@ -144,6 +144,7 @@ public class Building : MonoBehaviour
     }
     private void Update()
     {
+        // Maybe move back to OnMouseOver
         if (isHovered)
         {
             HandleSelection();
