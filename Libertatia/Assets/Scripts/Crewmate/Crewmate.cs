@@ -92,6 +92,7 @@ public class Crewmate : MonoBehaviour
     public CrewmateState State
     {
         get { return state; }
+        set { state = value; }
     }
     public bool IsAssigned
     {

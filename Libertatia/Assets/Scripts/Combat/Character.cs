@@ -26,6 +26,8 @@ public abstract class Character : MonoBehaviour
 
     public float maxSpeed;
 
+    [SerializeField] protected GameObject omuiGameObject;
+
     //enum for the state of the unit
     public enum State
     {
@@ -53,6 +55,8 @@ public abstract class Character : MonoBehaviour
 
         //sets characters to be idle by default
         characterState = State.Idle;
+
+        omuiGameObject = GameObject.FindGameObjectWithTag("ManagementUI");
     }
 
     // Update is called once per frame
@@ -75,6 +79,15 @@ public abstract class Character : MonoBehaviour
                 if(unit.currentHealth > 0)
                 {
                     characterState = State.Attacking;
+
+                    if(gameObject.tag == "PlayerCharacter")
+                    {
+                        Crewmate crewmate = GetComponent<Crewmate>();
+                        crewmate.State = CrewmateState.ATTACKING;
+
+                        OutpostManagementUI omui = omuiGameObject.GetComponent<OutpostManagementUI>();
+                        omui.UpdateCard(crewmate.ID, crewmate.StateIcon);
+                    }
 
                     //attacks and decreases their health based on attack rate
                     attackRate -= Time.deltaTime;

@@ -168,7 +168,10 @@ public class CrewmateManager : MonoBehaviour
                         crewMember.targetPos = updatedMovePos;
                         ShowLineRenderer(updatedMovePos, id);
 
+                        //updates "BOTH" enum states and updates card status in combat
                         crewMember.characterState = Character.State.Moving;
+                        crewmates[id].State = CrewmateState.MOVING;
+                        omui.UpdateCard(id, crewmates[id].StateIcon);
                     }
                 }
                 else
@@ -179,7 +182,11 @@ public class CrewmateManager : MonoBehaviour
 
                         CrewMember crewMember = crewmates[id].GetComponent<CrewMember>();
                         crewMember.targetPos = hit.point;
+
+                        //updates "BOTH" enum states and updates card status in combat
                         crewMember.characterState = Character.State.Moving;
+                        crewmates[id].State = CrewmateState.MOVING;
+                        omui.UpdateCard(id, crewmates[id].StateIcon);
                     }
                 }
             }
