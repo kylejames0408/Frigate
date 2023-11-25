@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.EventSystems;
 
 public class Zone : MonoBehaviour
 {
@@ -20,7 +21,17 @@ public class Zone : MonoBehaviour
     //zone center empty gameobject + flag prefab
     public GameObject centerObject;
 
+    private LineRenderer outlineRenderer;
+
+    private GradientAlphaKey[] gradientAlphaKey;
+    private GradientColorKey[] redColorKey;
+    private GradientColorKey[] blueColorKey;
+    private GradientColorKey[] greenColorKey;
+    private GradientColorKey[] yellowColorKey;
+
     public bool zoneLootCollected;
+
+    public bool mouseHoveringZone;
 
     // Start is called before the first frame update
     void Start()
@@ -30,6 +41,14 @@ public class Zone : MonoBehaviour
         TerrainCollider tCollider = gameObject.GetComponent<TerrainCollider>();
 
         BoxCollider boxCollider = gameObject.GetComponent<BoxCollider>();
+
+        outlineRenderer = gameObject.GetComponent<LineRenderer>();
+
+        gradientAlphaKey = new GradientAlphaKey[] { new GradientAlphaKey(0.5f, 0.0f), new GradientAlphaKey(0.5f, 1.0f) };
+        redColorKey = new GradientColorKey[] { new GradientColorKey(Color.red, 0.0f), new GradientColorKey(Color.red, 1.0f) };
+        blueColorKey = new GradientColorKey[] { new GradientColorKey(Color.blue, 0.0f), new GradientColorKey(Color.blue, 1.0f) };
+        greenColorKey = new GradientColorKey[] { new GradientColorKey(Color.green, 0.0f), new GradientColorKey(Color.green, 1.0f) };
+        yellowColorKey = new GradientColorKey[] { new GradientColorKey(Color.yellow, 0.0f), new GradientColorKey(Color.yellow, 1.0f) };
 
         //zoneCenter = boxCollider.center;
 
@@ -48,6 +67,23 @@ public class Zone : MonoBehaviour
         foreach(GameObject enemy in enemiesInZone.ToList())
         {
             CheckUnitHealth(enemy);
+        }
+
+        if (mouseHoveringZone)
+        {
+            DrawOutline(blueColorKey);
+        }
+        else if((zoneLootCollected && enemiesInZone.Count == 0) || zoneName == "Safe Zone")
+        {
+            DrawOutline(greenColorKey);
+        }
+        else if(crewMembersInZone.Count > 0 && (!zoneLootCollected || enemiesInZone.Count > 0))
+        {
+            DrawOutline(yellowColorKey);
+        }
+        else
+        {
+            DrawOutline(redColorKey);
         }
 
     }
@@ -145,5 +181,25 @@ public class Zone : MonoBehaviour
         {
             RemoveUnitsInZoneList(character.gameObject);
         }
+    }
+
+    public void DrawOutline(GradientColorKey[] colorKey)
+    {
+        Gradient gradient = new Gradient();
+        gradient.SetKeys(colorKey, gradientAlphaKey);
+        outlineRenderer.colorGradient = gradient;
+    }
+
+    private void OnMouseEnter()
+    {
+        if (!EventSystem.current.IsPointerOverGameObject())
+        {
+            mouseHoveringZone = true;
+        }
+    }
+
+    private void OnMouseExit()
+    {
+        mouseHoveringZone = false;
     }
 }
