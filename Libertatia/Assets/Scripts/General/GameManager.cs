@@ -25,7 +25,7 @@ public class GameManager : MonoBehaviour
     public static PlayerData data;
     public static bool MainMenuTesting = false;
     public static bool OutpostTesting = true;
-    public static bool CombatTesting = false;
+    public static bool CombatTesting = true;
 
     // UI
     [SerializeField] private PauseMenu pauseMenu;

@@ -171,7 +171,7 @@ public class CrewmateManager : MonoBehaviour
                         //updates "BOTH" enum states and updates card status in combat
                         crewMember.characterState = Character.State.Moving;
                         crewmates[id].State = CrewmateState.MOVING;
-                        omui.UpdateCard(id, crewmates[id].StateIcon);
+                        cmui.UpdateCard(id, crewmates[id].StateIcon);
                     }
                 }
                 else
@@ -186,7 +186,7 @@ public class CrewmateManager : MonoBehaviour
                         //updates "BOTH" enum states and updates card status in combat
                         crewMember.characterState = Character.State.Moving;
                         crewmates[id].State = CrewmateState.MOVING;
-                        omui.UpdateCard(id, crewmates[id].StateIcon);
+                        cmui.UpdateCard(id, crewmates[id].StateIcon);
                     }
                 }
             }
@@ -524,57 +524,57 @@ public class CrewmateManager : MonoBehaviour
     // Manager
     private void SelectCard(int cardID)
     {
-        if (omui == null)
+        if (cmui == null)
         {
-            cmui.SelectCrewmateCard(cardID);
+            omui.SelectCrewmateCard(cardID);
         }
         else
         {
-            omui.SelectCrewmateCard(cardID);
+            cmui.SelectCrewmateCard(cardID);
         }
     }
     private void AddCard(Crewmate mate)
     {
-        if (omui == null)
+        if (cmui == null)
         {
-            cmui.AddCrewmateCard(mate);
+            omui.AddCrewmateCard(mate);
         }
         else
         {
-            omui.AddCrewmateCard(mate);
+            cmui.AddCrewmateCard(mate);
         }
     }
     private void DeselectCard(int cardID)
     {
-        if (omui == null)
+        if (cmui == null)
         {
-            cmui.DeselectCrewmateCard(cardID);
+            omui.DeselectCrewmateCard(cardID);
         }
         else
         {
-            omui.DeselectCrewmateCard(cardID);
+            cmui.DeselectCrewmateCard(cardID);
         }
     }
     private void DeselectAllCards()
     {
-        if (omui == null)
+        if (cmui == null)
         {
-            cmui.DeselectAllCrewmateCards();
+            omui.DeselectAllCrewmateCards();
         }
         else
         {
-            omui.DeselectAllCrewmateCards();
+            cmui.DeselectAllCrewmateCards();
         }
     }
     private void RemoveCard(int cardID)
     {
-        if (omui == null)
+        if (cmui == null)
         {
-            cmui.RemoveCrewmateCard(cardID);
+            omui.RemoveCrewmateCard(cardID);
         }
         else
         {
-            omui.RemoveCrewmateCard(cardID);
+            cmui.RemoveCrewmateCard(cardID);
         }
     }
     // Slide
@@ -587,7 +587,15 @@ public class CrewmateManager : MonoBehaviour
     {
         Crewmate mate = crewmates[crewmateID];
         mate.Unassign(); // will UI need to be updated as well?
-        omui.UpdateCard(crewmateID, mate.StateIcon);
+        if (cmui == null)
+        {
+            omui.UpdateCard(crewmateID, mate.StateIcon);
+        }
+        else
+        {
+            cmui.UpdateCard(crewmateID, mate.StateIcon);
+        }
+        
     }
 
     // Callbacks
@@ -595,7 +603,14 @@ public class CrewmateManager : MonoBehaviour
     {
         Crewmate mate = crewmates[crewmateID];
         OpenSlider(mate);
-        omui.UpdateCard(crewmateID, mate.StateIcon);
+        if (cmui == null)
+        {
+            omui.UpdateCard(crewmateID, mate.StateIcon);
+        }
+        else
+        {
+            cmui.UpdateCard(crewmateID, mate.StateIcon);
+        }
     }
     private void OnReassignCallback(int crewmateID)
     {
