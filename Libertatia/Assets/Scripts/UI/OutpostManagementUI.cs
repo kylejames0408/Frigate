@@ -89,11 +89,15 @@ public class OutpostManagementUI : MonoBehaviour
         {
             if (bm.CanConstructBuilding(i))
             {
-                buildingCards[i].GetComponent<Button>().interactable = true;
+                buildingCards[i].GetComponentInChildren<Button>().interactable = true;
+
+                buildingCards[i].GetComponent<DragObj2D>().currentlyDragable = true;
             }
             else
             {
-                buildingCards[i].GetComponent<Button>().interactable = false;
+                buildingCards[i].GetComponentInChildren<Button>().interactable = false;
+
+                buildingCards[i].GetComponent<DragObj2D>().currentlyDragable = false;
             }
         }
     }
@@ -148,17 +152,21 @@ public class OutpostManagementUI : MonoBehaviour
     {
         GameObject cardObj = Instantiate(buildingCardPrefab, pages[0]);
 
-        BuildingCard card = cardObj.GetComponent<BuildingCard>();
+        BuildingCard card = cardObj.GetComponentInChildren<BuildingCard>();
         card.Set(building.Cost, building.Production);
         card.onHover.AddListener(() => { BuildingCardHoveredCallback(index); });
         card.onHoverExit.AddListener(BuildingCardHoveredExitCallback);
         buildingCards.Add(card);
 
         // Callbacks
-        cardObj.GetComponent<Button>().onClick.AddListener(() => { ClickBuildingCard(bm, index); });
+        //cardObj.GetComponentInChildren<Button>().onClick.AddListener(() => { ClickBuildingCard(bm, index); });
         // Fill UI
-        cardObj.GetComponentsInChildren<Image>()[1].sprite = building.Icon;
+        cardObj.GetComponentsInChildren<Image>()[2].sprite = building.Icon;
         cardObj.GetComponentInChildren<TextMeshProUGUI>().text = building.Name;
+
+        cardObj.GetComponentInChildren<DragObj2D>().onBeginDrag.AddListener(delegate { ClickBuildingCard(bm, index); });
+        cardObj.GetComponentInChildren<DragObj2D>().onEndDrag.AddListener(delegate { bm.HandlePlacingDragDrop(); });
+        cardObj.GetComponentInChildren<DragObj2D>().onEndDrag.AddListener(delegate { DeselectBuildingCard(index); });
     }
     private void ClickBuildingCard(BuildingManager bm, int cardIndex)
     {
@@ -211,14 +219,15 @@ public class OutpostManagementUI : MonoBehaviour
         crewmateCards.Add(card.ID, card);
 
         // Callbacks
-        card.GetComponent<Button>().onClick.AddListener(() => { ClickCrewmateCard(card.ID); }); // drag + drop func
+        card.GetComponentInChildren<Button>().onClick.AddListener(() => { ClickCrewmateCard(card.ID); }); // drag + drop func
         // Fill UI
-        card.GetComponentsInChildren<Image>()[1].sprite = mate.Icon;
+        card.GetComponentsInChildren<Image>()[2].sprite = mate.Icon;
         card.GetComponentInChildren<TextMeshProUGUI>().text = mate.FirstName;
 
-        card.GetComponent<DragObj2D>().onBeginDrag.AddListener(delegate { ClickCrewmateCard(card.ID); });
-        card.GetComponent<DragObj2D>().onEndDrag.AddListener(delegate { bm.OnCrewmateDropAssign(); });
-        card.GetComponent<DragObj2D>().onEndDrag.AddListener(delegate { DeselectCrewmateCard(card.ID); });
+        cardObj.GetComponentInChildren<DragObj2D>().onBeginDrag.AddListener(delegate { DragCrewmateCard(card.ID); });
+        cardObj.GetComponentInChildren<DragObj2D>().onEndDrag.AddListener(delegate { bm.OnCrewmateDropAssign(); });
+        cardObj.GetComponentInChildren<DragObj2D>().onEndDrag.AddListener(delegate { DeselectAllCrewmateCardsShare(); });
+        //cardObj.GetComponentInChildren<DragObj2D>().onEndDrag.AddListener(delegate { DeselectAllCrewmateCardsShare(); });
     }
     internal void RemoveCrewmateCard(int cardID)
     {
@@ -230,6 +239,12 @@ public class OutpostManagementUI : MonoBehaviour
     {
         CrewmateCard card = crewmateCards[cardID];
         card.SetStatus(stateIcon);
+    }
+
+    private void DragCrewmateCard(int cardID)
+    {
+        DeselectAllCrewmateCardsShare();
+        SelectCrewmateCardShare(cardID);
     }
 
     // Clicking handler

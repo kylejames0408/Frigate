@@ -52,6 +52,7 @@ public class BuildingManager : MonoBehaviour
     [SerializeField] private CrewmateManager cm; // need this for selection data
     [Header("Tracking")]
     [SerializeField] private bool isPlacing = false;
+    [SerializeField] private bool droppedBuilding = false;
     [SerializeField] private Building prospectiveBuilding;
     [SerializeField] private Dictionary<int, Building> buildings;
     [SerializeField] private BuildingResources totalProduction;
@@ -387,18 +388,25 @@ public class BuildingManager : MonoBehaviour
                 }
 
                 // check collision
-                if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject() && !prospectiveBuilding.IsColliding)
+                if ((Input.GetMouseButtonDown(0) || droppedBuilding) && !EventSystem.current.IsPointerOverGameObject() && !prospectiveBuilding.IsColliding)
                 {
                     SpawnNewBuilding(prospectiveBuilding);
+                    droppedBuilding = false;
                 }
-                if (Input.GetMouseButtonDown(1))
+                if (Input.GetMouseButtonDown(1) || (droppedBuilding && prospectiveBuilding.IsColliding))
                 {
                     isPlacing = false;
                     omui.DeselectBuildingCard(prospectiveBuilding.Type);
                     Destroy(prospectiveBuilding.gameObject);
+                    droppedBuilding = false;
                 }
             }
         }
+    }
+
+    public void HandlePlacingDragDrop()
+    {
+        droppedBuilding = true;
     }
 
     // UI
