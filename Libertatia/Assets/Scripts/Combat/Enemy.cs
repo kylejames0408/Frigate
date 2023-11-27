@@ -62,6 +62,17 @@ public class Enemy : Character
     // Update is called once per frame
     void Update()
     {
+        if(crewMemberGameObjects.Count == 0)
+        {
+            crewMemberGameObjects.AddRange(GameObject.FindGameObjectsWithTag("PlayerCharacter"));
+
+            for (int i = 0; i < crewMemberGameObjects.Count; i++)
+            {
+                Character crewMember = crewMemberGameObjects[i].GetComponent<Character>();
+                crewMembers.Add(crewMember);
+            }
+        }
+
         Attack(crewMembers);
 
         healthbar.UpdateHealthBar(maxHealth, currentHealth);
