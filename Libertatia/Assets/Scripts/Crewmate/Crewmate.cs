@@ -161,6 +161,7 @@ public class Crewmate : MonoBehaviour
         transform.position = data.position;
         transform.rotation = data.rotation;
     }
+    // Make inputs into a ObjectData item?
     public void Assign(int buildingID, Sprite buildingIcon, Vector3 destination)
     {
         if(building.id != -1)

@@ -28,6 +28,7 @@ public class CrewmateUI : MonoBehaviour
     [Header("Tracking")] // Dynamic/tracking information
     private RectTransform bounds; // for clicking off
     private int crewmateID = -1;
+    [SerializeField] private bool isOpen = false;
 
     // Events
     public UnityEvent onClose;
@@ -56,10 +57,14 @@ public class CrewmateUI : MonoBehaviour
         btnClose.onClick.AddListener(CloseMenuCallback);
         btnCrewmate.onClick.AddListener(OnClickCrewmateCallback);
         btnLocation.onClick.AddListener(OnClickLocationCallback);
+        isOpen = false;
     }
     private void Update()
     {
-        HandleClicking();
+        if (isOpen)
+        {
+            HandleClicking();
+        }
     }
 
     internal void FillUI(Crewmate mate)
@@ -133,9 +138,11 @@ public class CrewmateUI : MonoBehaviour
     internal void OpenMenu()
     {
         transform.DOMoveX(690, animSpeedInterface);
+        isOpen = true;
     }
     internal void CloseMenu()
     {
         transform.DOMoveX(-10, animSpeedInterface); // make relative
+        isOpen = false;
     }
 }

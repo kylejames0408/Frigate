@@ -29,6 +29,7 @@ public class BuildingUI : MonoBehaviour
     [Header("Tracking")] // Dynamic/tracking information
     private RectTransform bounds;
     private int buildingID = -1;
+    [SerializeField] private bool isOpen = false;
 
     // Events
     public UnityEvent<int> onUnassign;
@@ -54,10 +55,14 @@ public class BuildingUI : MonoBehaviour
             btnUpgrade.interactable = false;
             btnDemolish.interactable = false;
         }
+        isOpen = false;
     }
     private void Update()
     {
-        HandleClicking();
+        if (isOpen)
+        {
+            HandleClicking();
+        }
     }
 
     internal void FillUI(Building building)
@@ -155,9 +160,11 @@ public class BuildingUI : MonoBehaviour
     internal void OpenMenu()
     {
         transform.DOMoveX(690, animSpeedInterface);
+        isOpen = true;
     }
     internal void CloseMenu()
     {
         transform.DOMoveX(-10, animSpeedInterface); // make relative
+        isOpen = false;
     }
 }

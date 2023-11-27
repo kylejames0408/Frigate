@@ -7,19 +7,23 @@ using UnityEngine.UI;
 
 public class ShipUI : MonoBehaviour
 {
-    [Header("Tracking")] // Dynamic/tracking information
-    private RectTransform bounds;
+    // References
+    [SerializeField] private GameObject prefabAssigneeCard;
+    [SerializeField] private Transform assigneeContainer;
+    [SerializeField] private Ship ship;
 
     [Header("Static Data")]
     [SerializeField] private float animSpeedInterface = 0.6f;
     [SerializeField] private Sprite iconEmptyAssignment;
 
-    [SerializeField] private GameObject prefabAssigneeCard;
-    [SerializeField] private Transform assigneeContainer;
+    [Header("Tracking")] // Dynamic/tracking information
+    private RectTransform bounds;
     [SerializeField] private int rowAmt = 2;
     [SerializeField] private int colAmt = 6;
-    // UI
+    [SerializeField] private bool isOpen = false;
     [SerializeField] private AssigneeCard[] assigneeCards;
+
+    // UI
     [SerializeField] private Button btnClose;
     [SerializeField] private Button btnDepart;
 
@@ -31,10 +35,14 @@ public class ShipUI : MonoBehaviour
     private void Start()
     {
         btnClose.onClick.AddListener(CloseMenu);
+        isOpen = false;
     }
     private void Update()
     {
-        HandleClicking();
+        if(isOpen)
+        {
+            HandleClicking();
+        }
     }
 
     internal void Set(int crewSize)
@@ -52,12 +60,14 @@ public class ShipUI : MonoBehaviour
     internal void AddCrewmate(int index, ObjectData crewmate)
     {
         assigneeCards[index].Set(crewmate);
+        assigneeCards[index].btnUnassign.onClick.AddListener(() => { UnassignCallback(index, crewmate.id); }); //assigneeCards[assigneeIndex].CrewmateID
     }
     public void AddRow()
     {
         rowAmt++;
-        GameObject row = Instantiate(new GameObject(), assigneeContainer);
-        row.name = "Row" + rowAmt;
+        // could probably turn into prefab
+        GameObject row = new GameObject("Row" + rowAmt);
+        row.transform.parent = assigneeContainer;
         HorizontalLayoutGroup horizontal = row.AddComponent<HorizontalLayoutGroup>();
         horizontal.childAlignment = TextAnchor.MiddleCenter;
         horizontal.childForceExpandHeight = false;
@@ -71,27 +81,49 @@ public class ShipUI : MonoBehaviour
         }
     }
 
+    // Callbacks
+    private void UnassignCallback(int assigneeIndex, int crewmateID)
+    {
+        // Shift UI if crewmate is still in the second slot
+        if (assigneeCards[assigneeIndex].IsEmpty())
+        {
+            //assigneeCards[assigneeIndex].Set(assigneeCards[1].CrewmateData);
+            //int tempCrewmateID = assigneeCards[1].CrewmateData.id;
+            //assigneeCards[0].btnUnassign.onClick.AddListener(() => { UnassignCallback(assigneeIndex, tempCrewmateID); });
+            //assigneeCards[1].ResetCard(iconEmptyAssignment);
+        }
+        else
+        {
+            assigneeCards[assigneeIndex].ResetCard(iconEmptyAssignment);
+        }
+
+        //onUnassign.Invoke(crewmateID);
+    }
+
+    // Callbacks
     private void HandleClicking()
     {
-        if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject() && (
+        if (Input.GetMouseButtonDown(0) && 
+            !EventSystem.current.IsPointerOverGameObject() && 
+            !ship.IsHovered && (
             Input.mousePosition.x < bounds.offsetMin.x ||
             Input.mousePosition.x > bounds.offsetMax.x ||
             Input.mousePosition.y < bounds.offsetMin.y ||
             Input.mousePosition.y > bounds.offsetMax.y))
         {
-            //CloseMenu();
+            CloseMenu();
         }
     }
 
     internal void OpenMenu()
     {
         transform.DOMoveX(690, animSpeedInterface);
-        Debug.Log("Open");
+        isOpen = true;
     }
     internal void CloseMenu()
     {
         transform.DOMoveX(-10, animSpeedInterface);
-        Debug.Log("Close");
+        isOpen = false;
     }
 }
 
