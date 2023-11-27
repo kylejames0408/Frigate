@@ -12,6 +12,8 @@ TagManager:
   - CombatUI
   - EnemyHouse
   - Marker
+  - ManagementUI
+  - CrewmateManager
   layers:
   - Default
   - TransparentFX

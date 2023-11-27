@@ -9043,6 +9043,7 @@ MonoBehaviour:
   confirmationUI: {fileID: 888449053}
   cm: {fileID: 314619652}
   isPlacing: 0
+  droppedBuilding: 0
   prospectiveBuilding: {fileID: 0}
   totalProduction:
     wood: 0

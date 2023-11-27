@@ -11,13 +11,13 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Outpost.unity
     guid: d3de042f7c8457e4786c20178673206d
-  - enabled: 0
-    path: Assets/Scenes/Combat-Testing.unity
-    guid: 570f374ce32683f4bab9e2f4e5d0bafb
-  - enabled: 0
-    path: Assets/Scenes/Outpost-Testing.unity
-    guid: e92b24e27cafaa341989ebc32ca0f3b4
   - enabled: 1
     path: Assets/Scenes/Combat.unity
     guid: 670b77d4c981a65469300b01dc291b14
+  - enabled: 1
+    path: Assets/Scenes/Outpost-Testing.unity
+    guid: 66b46de2c5ec6e848a9f3d89ab7538f5
+  - enabled: 0
+    path: Assets/Scenes/Combat-Testing.unity
+    guid: 570f374ce32683f4bab9e2f4e5d0bafb
   m_configObjects: {}
