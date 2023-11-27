@@ -16,19 +16,10 @@ public class PlayerPathfind : MonoBehaviour
     private int targetIndex;            // the target in the path to move toward
 
     public GameObject targetPrefab;
-    private Queue<Transform> targetQueue;
     private Transform currentTarget;
     #endregion
 
     #region Unity Methods
-    /// <summary>
-    /// Request the path when the unit wakes up.
-    /// </summary>
-    void Start()
-    {
-        targetQueue = new Queue<Transform>();
-    }
-
     void Update()
     {
         AddTargets();
@@ -69,12 +60,9 @@ public class PlayerPathfind : MonoBehaviour
             Physics.Raycast(ray, out hit);
             hit.point = new Vector3(hit.point.x, 0, hit.point.z);
 
-            GameObject tempTarget = Instantiate(targetPrefab, hit.point, Quaternion.identity);
-            targetQueue.Enqueue(tempTarget.transform);
-
             if (currentTarget == null)
             {
-                currentTarget = targetQueue.Dequeue();
+                currentTarget = Instantiate(targetPrefab, hit.point, Quaternion.identity).transform;
                 PathRequestManager.RequestPath(transform.position, currentTarget.position, OnPathFound);
             }
         }
@@ -122,17 +110,6 @@ public class PlayerPathfind : MonoBehaviour
             {
                 Destroy(currentTarget.gameObject);
 
-                switch (targetQueue.Count)
-                {
-                    case 0:
-                        currentTarget = null;
-                        break;
-                    default:
-                        currentTarget = targetQueue.Dequeue();
-                        PathRequestManager.RequestPath(transform.position, currentTarget.position, OnPathFound);
-                        break;
-                }
-
                 yield break;
             }
 
@@ -160,4 +137,9 @@ public class PlayerPathfind : MonoBehaviour
 
     }
     #endregion
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        Debug.Log("PLS");
+    }
 }
