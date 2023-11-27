@@ -30,6 +30,8 @@ public class Building : MonoBehaviour
     // Components
     [SerializeField] private MeshRenderer buildingRender;
     [SerializeField] private NavMeshObstacle navObsticle;
+    [SerializeField] private BoxCollider collider;
+    [SerializeField] private LineRenderer lineRenderer;
     // Emissions - move to manager or set from manager
     [SerializeField] private Color normalEmission = Color.black;
     [SerializeField] private Color hoveredEmission = new Color(0.3f, 0.3f, 0.3f);
@@ -121,6 +123,8 @@ public class Building : MonoBehaviour
         // Get/set components
         buildingRender = GetComponentInChildren<MeshRenderer>();
         navObsticle = GetComponentInChildren<NavMeshObstacle>();
+        collider = GetComponent<BoxCollider>();
+        lineRenderer = GetComponent<LineRenderer>();
         navObsticle.enabled = false; // prevents moving crewmates
         canvasGroup = canvasTrans.GetComponent<CanvasGroup>();
 
@@ -141,6 +145,28 @@ public class Building : MonoBehaviour
         lookARotation.x = CameraManager.Instance.Camera.transform.eulerAngles.x;
         canvasTrans.eulerAngles = lookARotation;
         canvasGroup.alpha = 0;
+
+        // Render line - bounds.extent calculations are off?
+        float halfWidth = collider.size.x/2.0f;
+        float halfDepth = collider.size.z/2.0f;
+        float lineOffestHeight = 1.0f;
+        Vector3 topRight = new Vector3(halfWidth + collider.center.x, lineOffestHeight, halfDepth + collider.center.z);
+        Vector3 topLeft = new Vector3(-halfWidth + collider.center.x, lineOffestHeight, halfDepth + collider.center.z);
+        Vector3 bottomLeft = new Vector3(-halfWidth + collider.center.x, lineOffestHeight, -halfDepth + collider.center.z);
+        Vector3 bottomRight = new Vector3(halfWidth + collider.center.x, lineOffestHeight, -halfDepth + collider.center.z);
+        Vector3[] boarderPositions =
+        {
+            topRight, topLeft, bottomLeft, bottomRight
+        };
+        lineRenderer.positionCount = 4;
+        lineRenderer.loop = true;
+        lineRenderer.useWorldSpace = false;
+        lineRenderer.SetPositions(boarderPositions);
+        float lineThickness = 0.1f;
+        lineRenderer.startWidth = lineThickness;
+        lineRenderer.endWidth = lineThickness;
+        lineRenderer.startColor = Color.green;
+        lineRenderer.endColor = Color.green;
     }
     private void Update()
     {
