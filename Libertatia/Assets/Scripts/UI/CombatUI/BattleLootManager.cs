@@ -10,6 +10,8 @@ public class BattleLootManager : MonoBehaviour
     public int initWoodValue;
     public int initStoneValue;
 
+    [SerializeField] private GameObject battleLootUI;
+
     [SerializeField] private CombatResourcesUI combatResources;
 
     [SerializeField] private TextMeshProUGUI initDoubloonText;
@@ -51,6 +53,29 @@ public class BattleLootManager : MonoBehaviour
         CurrentResourceValue(increasedDoubloonValue, combatResources.doubloonAmount, currentDoubloonText, initDoubloonValue);
         CurrentResourceValue(increasedFoodValue, combatResources.foodAmount, currentFoodText, initFoodValue);
         CurrentResourceValue(increasedWoodValue, combatResources.woodAmount, currentWoodText, initWoodValue);
+
+        if(battleLootUI.activeSelf)
+        {
+            //for(int i = 0; i < combatResources.doubloonAmount; i++)
+            //{
+            //    combatResources.doubloonAmount -= 1;
+            //    initDoubloonValue += 1;
+
+            //    initDoubloonText.text = initDoubloonValue.ToString();
+            //    CurrentResourceValue(increasedDoubloonValue, combatResources.doubloonAmount, currentDoubloonText, initDoubloonValue);
+            //}
+
+            //for(int i = 0; i < combatResources.woodAmount; i++)
+            //{
+            //    combatResources.woodAmount -= 1;
+            //    initWoodValue += 1;
+
+            //    initWoodText.text = initWoodValue.ToString();
+            //    CurrentResourceValue(increasedWoodValue, combatResources.woodAmount, currentWoodText, initWoodValue);
+            //}
+            StartCoroutine(UpdateResourceValues());
+
+        }
     }
 
     /// <summary>
@@ -69,5 +94,48 @@ public class BattleLootManager : MonoBehaviour
     public void ReturnToOutpost()
     {
         CeneManager.LoadOutpostFromCombat();
+    }
+
+    IEnumerator UpdateResourceValues()
+    {
+        //https://discussions.unity.com/t/why-does-yield-waitforseconds-only-run-once/63290
+
+        float timer = 1f;
+
+        if(battleLootUI.activeSelf)
+        {
+            yield return new WaitForSeconds(1f);
+            for (int i = 0; i < combatResources.doubloonAmount; i++)
+            {
+          
+                if (combatResources.doubloonAmount == 0)
+                {
+                    break;
+                }
+                combatResources.doubloonAmount -= 1;
+                initDoubloonValue += 1;
+
+                initDoubloonText.text = initDoubloonValue.ToString();
+                CurrentResourceValue(increasedDoubloonValue, combatResources.doubloonAmount, currentDoubloonText, initDoubloonValue);
+
+                yield return new WaitForSeconds(1.5f);
+            }
+
+            for (int i = 0; i < combatResources.woodAmount; i++)
+            {
+                //yield return new WaitForSeconds(1.5f);
+                if(combatResources.woodAmount == 0)
+                {
+                    break;
+                }
+                combatResources.woodAmount -= 1;
+                initWoodValue += 1;
+
+                initWoodText.text = initWoodValue.ToString();
+                CurrentResourceValue(increasedWoodValue, combatResources.woodAmount, currentWoodText, initWoodValue);
+
+                yield return new WaitForSeconds(1.5f);
+            }
+        }
     }
 }
