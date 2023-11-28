@@ -32,10 +32,10 @@ public class Enemy : Character
     // Start is called before the first frame update
     void Start()
     {
-        maxHealth = 50;
-        currentHealth = 50;
+        maxHealth = 70;
+        currentHealth = 70;
         attackRange = 3;
-        attackRate = 4;
+        attackRate = 3;
         damage = 10;
         detectionRange = 10;
         maxSpeed = 3.5f;
