@@ -219,4 +219,37 @@ public class Ship : MonoBehaviour
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, detectionRange);
     }
+
+    public void OnCrewmateDropAssign()
+    {
+        if (isHovered)
+        {
+            if (crewmates.Count < capacity)
+            {
+                // Get selected units
+                Crewmate[] selectedCrewmates = cm.GetSelectedCrewmates();
+                // Assign - move to function
+                for (int i = 0; i < selectedCrewmates.Length; i++)
+                {
+                    if (crewmates.Count >= capacity)
+                    {
+                        Debug.Log("Ship is full");
+                        return;
+                    }
+                     
+                    Crewmate mate = selectedCrewmates[i];
+                    CrewmateData crewmateData = new CrewmateData(mate);
+                    shipUI.SetCrewmate(crewmates.Count, new ObjectData(crewmateData.id, crewmateData.icon));
+                    crewmates.Add(crewmateData);
+                    mate.Assign(id, icon, GetDestination());
+                }
+                
+                //onCrewmateShipAssigned.Invoke();
+            }
+            else
+            {
+                Debug.Log("Ship assignments are full");
+            }
+        }
+    }
 }

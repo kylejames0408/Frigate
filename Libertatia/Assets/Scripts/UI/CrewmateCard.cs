@@ -51,11 +51,18 @@ public class CrewmateCard : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
     public void Select()
     {
+        outline.effectColor = new Color(255, 187, 00);
         outline.enabled = true;
     }
     public void Deselect()
     {
         outline.enabled = false;
+    }
+
+    public void Highlight()
+    {
+        outline.effectColor = new Color(0, 217, 255);
+        outline.enabled = true;
     }
 
     // Stays if we are adding hovering for crewmates

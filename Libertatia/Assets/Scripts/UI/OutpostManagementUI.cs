@@ -11,6 +11,7 @@ public class OutpostManagementUI : MonoBehaviour
     // Components
     [SerializeField] private CrewmateManager cm;
     [SerializeField] private BuildingManager bm;
+    [SerializeField] private Ship sm;
     // popup UI - maybe separate
     [SerializeField] private GameObject popupUI;
     [SerializeField] private TextMeshProUGUI buildingResourceCost;
@@ -202,8 +203,8 @@ public class OutpostManagementUI : MonoBehaviour
 
         cardObj.GetComponentInChildren<DragObj2D>().onBeginDrag.AddListener(delegate { DragCrewmateCard(card.ID); });
         cardObj.GetComponentInChildren<DragObj2D>().onEndDrag.AddListener(delegate { bm.OnCrewmateDropAssign(); });
+        cardObj.GetComponentInChildren<DragObj2D>().onEndDrag.AddListener(delegate { sm.OnCrewmateDropAssign(); });
         cardObj.GetComponentInChildren<DragObj2D>().onEndDrag.AddListener(delegate { DeselectAllCrewmateCardsShare(); });
-        //cardObj.GetComponentInChildren<DragObj2D>().onEndDrag.AddListener(delegate { DeselectAllCrewmateCardsShare(); });
     }
     internal void RemoveCrewmateCard(int cardID)
     {
@@ -219,8 +220,9 @@ public class OutpostManagementUI : MonoBehaviour
 
     private void DragCrewmateCard(int cardID)
     {
-        DeselectAllCrewmateCardsShare();
+        //DeselectAllCrewmateCardsShare();
         SelectCrewmateCardShare(cardID);
+        
     }
 
     // Clicking handler
