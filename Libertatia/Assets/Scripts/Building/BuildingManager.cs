@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -60,6 +61,11 @@ public class BuildingManager : MonoBehaviour
     [Header("Events")]
     public GameEvent onBuildingPlaced;
     public GameEvent onCrewmateAssigned;
+
+    public Building[] Buildings
+    {
+        get { return buildings.Values.ToArray(); }
+    }
 
     private void Awake()
     {
