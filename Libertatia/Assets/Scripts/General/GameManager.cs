@@ -84,6 +84,14 @@ public class GameManager : MonoBehaviour
             Data.crewmates.Add(new CrewmateData(crewmates[i]));
         }
     }
+    internal static void UpdateCrewmateData(CrewmateData[] crewmates)
+    {
+        data.crewmates.Clear();
+        for (int i = 0; i < crewmates.Length; i++)
+        {
+            Data.crewmates.Add(crewmates[i]);
+        }
+    }
     internal static void SeparateCrew()
     {
         data.outpostCrew.Clear();
@@ -106,6 +114,14 @@ public class GameManager : MonoBehaviour
         for (int i = 0; i < crewmates.Length; i++)
         {
             data.combatCrew.Add(new CrewmateData(crewmates[i]));
+        }
+    }
+    internal static void UpdateCombatCrew(CrewmateData[] crewmates)
+    {
+        data.combatCrew.Clear();
+        for (int i = 0; i < crewmates.Length; i++)
+        {
+            data.combatCrew.Add(crewmates[i]);
         }
     }
     internal static void UpdateCrewmateData()

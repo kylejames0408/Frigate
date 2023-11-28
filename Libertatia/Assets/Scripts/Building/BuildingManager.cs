@@ -50,6 +50,7 @@ public class BuildingManager : MonoBehaviour
     [SerializeField] private BuildingUI buildingUI;
     [SerializeField] private ConfirmationUI confirmationUI;
     [SerializeField] private CrewmateManager cm; // need this for selection data
+    [SerializeField] private Ship ship; // need this for selection data
     [Header("Tracking")]
     [SerializeField] private bool isPlacing = false;
     [SerializeField] private Building prospectiveBuilding;
@@ -335,6 +336,10 @@ public class BuildingManager : MonoBehaviour
     {
         Building building = buildings[buildingID];
         CameraManager.Instance.PanTo(building.transform.position);
+    }
+    internal void PanToShip()
+    {
+        CameraManager.Instance.PanTo(ship.transform.position);
     }
     internal void OnClickAssigneeIconCallback(int buildingID, int assigneeIndex)
     {

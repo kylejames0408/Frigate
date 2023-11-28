@@ -7,6 +7,10 @@ using UnityEngine.UI;
 
 public class BuildingUI : MonoBehaviour
 {
+    // References
+    [SerializeField] private ShipUI shipUI;
+    [SerializeField] private CrewmateUI crewmateUI;
+
     [Header("Static Data")]
     [SerializeField] private float animSpeedInterface = 0.6f;
     [SerializeField] private Sprite iconEmptyAssignment;
@@ -161,6 +165,8 @@ public class BuildingUI : MonoBehaviour
     {
         transform.DOMoveX(690, animSpeedInterface);
         isOpen = true;
+        crewmateUI.CloseMenu();
+        shipUI.CloseMenu();
     }
     internal void CloseMenu()
     {

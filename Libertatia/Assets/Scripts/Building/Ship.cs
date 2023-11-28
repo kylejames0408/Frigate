@@ -24,9 +24,10 @@ public class Ship : MonoBehaviour
     [SerializeField] private ShipUI shipUI;
     [SerializeField] private MeshRenderer[] renderers;
     // Tracking
+    [SerializeField] private bool isCombat = false;
     [SerializeField] private int id = -1;
     [SerializeField] private int capacity = 12;
-    [SerializeField] private List<ObjectData> crewmates;
+    [SerializeField] private List<CrewmateData> crewmates;
     [SerializeField] private int level = 0;
     // Characteristics
     [SerializeField] private string buildingName = "Ship";
@@ -38,10 +39,16 @@ public class Ship : MonoBehaviour
     [SerializeField] private Color normalEmission = Color.black;
     [SerializeField] private Color hoveredEmission = new Color(0.3f, 0.3f, 0.3f);
 
+    public int ID
+    {
+        get { return id; }
+    }
     public bool IsHovered
     {
         get { return isHovered; }
     }
+    public List<CrewmateData> CrewmateData
+    { get { return crewmates; } }
 
     private void Awake()
     {
@@ -57,7 +64,8 @@ public class Ship : MonoBehaviour
     }
     void Start()
     {
-        crewmates = new List<ObjectData>(capacity); // new ObjectData(-1, iconEmptyAsssignment)
+        crewmates = new List<CrewmateData>(capacity); // new ObjectData(-1, iconEmptyAsssignment)
+        shipUI.onUnassign.AddListener(UnassignCrewmateCallback);
         shipUI.Set(capacity);
 
         detectionRange = 25;
@@ -72,21 +80,22 @@ public class Ship : MonoBehaviour
         if(isHovered)
         {
             // move to handlers
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
             {
                 shipUI.OpenMenu();
             }
-            if (Input.GetMouseButtonDown(1))
+            if (Input.GetMouseButtonDown(1) && !EventSystem.current.IsPointerOverGameObject())
             {
                 if (cm.IsCrewmateSelected && crewmates.Count < crewmates.Capacity)
                 {
                     // Get selected units
                     Crewmate[] selectedCrewmates = cm.GetSelectedCrewmates();
+                    // Assign - move to function
                     for (int i = 0; i < selectedCrewmates.Length; i++)
                     {
                         Crewmate mate = selectedCrewmates[i];
-                        ObjectData crewmateData = new ObjectData(mate.ID, mate.Icon);
-                        shipUI.AddCrewmate(crewmates.Count, crewmateData);
+                        CrewmateData crewmateData = new CrewmateData(mate);
+                        shipUI.SetCrewmate(crewmates.Count, new ObjectData(crewmateData.id, crewmateData.icon));
                         crewmates.Add(crewmateData);
                         mate.Assign(id, icon, GetDestination());
                     }
@@ -117,21 +126,8 @@ public class Ship : MonoBehaviour
                     inRange = false;
                     leaveButton.SetActive(false);
                 }
-
             }
-
         }
-
-        //if (inRange)
-        //{
-        //    //sets the leave button to be active if within range
-        //    leaveButton.SetActive(true);
-        //}
-        //else
-        //{
-        //    leaveButton.SetActive(false);
-        //}
-
     }
     private void OnMouseEnter()
     {
@@ -162,6 +158,19 @@ public class Ship : MonoBehaviour
         }
         isHovered = false;
     }
+    private void OnDestroy()
+    {
+        if (isCombat)
+        {
+            GameManager.UpdateCombatCrew(crewmates.ToArray());
+            GameManager.UpdateCrewmateData();
+        }
+        else
+        {
+            GameManager.UpdateCrewmateData(crewmates.ToArray());
+            GameManager.SeparateCrew();
+        }
+    }
 
     private Vector3 GetDestination()
     {
@@ -183,6 +192,26 @@ public class Ship : MonoBehaviour
         //Opens the battle loot ui
         battleLootUI.SetActive(true);
         //CeneManager.LoadOutpostFromCombat();
+    }
+
+    // Callback
+    private void UnassignCrewmateCallback(int crewmateID)
+    {
+        for (int i = 0; i < crewmates.Count; i++)
+        {
+            if (crewmates[i].id == crewmateID)
+            {
+                crewmates.RemoveAt(i);
+                break;
+            }
+        }
+
+        for (int i = 0; i < crewmates.Count; i++)
+        {
+            shipUI.SetCrewmate(i, new ObjectData(crewmates[i].id, crewmates[i].icon));
+        }
+        shipUI.ResetCard(crewmates.Count);
+        cm.UnassignCrewmate(crewmateID);
     }
 
     private void OnDrawGizmosSelected()

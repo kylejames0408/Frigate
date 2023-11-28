@@ -2,12 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class TutorialManager : MonoBehaviour
 {
     public List<DialogueTrigger> outpostDialogues;
     public List<DialogueTrigger> combatDialogues;
-    public GameObject btnAttack;
+    public GameObject btnAttack; // this will ideally be the button from the ship menu
     private bool secondVisit = false;
 
     int buildingsPlaced = 0;
@@ -44,7 +45,7 @@ public class TutorialManager : MonoBehaviour
             {
                 combatDialogues[0].TriggerDialogue();
                 GameManager.combatVisitNumber++;
-            }    
+            }
         }
         else
         {
@@ -66,7 +67,7 @@ public class TutorialManager : MonoBehaviour
                     {
                         outpostDialogues[1].dialogue.sentences[0] = "Yarr! Now place the house";
                         outpostDialogues[1].tasks.tasks[0] = "- Build the house";
-                    } 
+                    }
                     if(recievedBuilding.Name == "House")
                     {
                         outpostDialogues[1].dialogue.sentences[0] = "Yarr! Now place the farm";
@@ -81,10 +82,10 @@ public class TutorialManager : MonoBehaviour
                     return;
             }
         }
-            
 
 
-        
+
+
     }
 
     public void CrewmateAssignedEvent(Component sender, object data)

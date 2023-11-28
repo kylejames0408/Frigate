@@ -1,7 +1,9 @@
 using DG.Tweening;
 using System;
+using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
@@ -11,6 +13,8 @@ public class ShipUI : MonoBehaviour
     [SerializeField] private GameObject prefabAssigneeCard;
     [SerializeField] private Transform assigneeContainer;
     [SerializeField] private Ship ship;
+    [SerializeField] private CrewmateUI crewmateUI;
+    [SerializeField] private BuildingUI buildingUI;
 
     [Header("Static Data")]
     [SerializeField] private float animSpeedInterface = 0.6f;
@@ -27,6 +31,9 @@ public class ShipUI : MonoBehaviour
     [SerializeField] private Button btnClose;
     [SerializeField] private Button btnDepart;
 
+    // Events
+    public UnityEvent<int> onUnassign;
+
 
     private void Awake()
     {
@@ -34,6 +41,7 @@ public class ShipUI : MonoBehaviour
     }
     private void Start()
     {
+        btnDepart.onClick.AddListener(CeneManager.LoadCombatFromOutpost);
         btnClose.onClick.AddListener(CloseMenu);
         isOpen = false;
     }
@@ -42,6 +50,16 @@ public class ShipUI : MonoBehaviour
         if(isOpen)
         {
             HandleClicking();
+
+            // Player must assign at least one crewmate to leave
+            if(ship.CrewmateData.Count > 0)
+            {
+                btnDepart.interactable = true;
+            }
+            else
+            {
+                btnDepart.interactable = false;
+            }
         }
     }
 
@@ -57,12 +75,12 @@ public class ShipUI : MonoBehaviour
         }
     }
 
-    internal void AddCrewmate(int index, ObjectData crewmate)
+    internal void SetCrewmate(int index, ObjectData crewmate)
     {
         assigneeCards[index].Set(crewmate);
         assigneeCards[index].btnUnassign.onClick.AddListener(() => { UnassignCallback(index, crewmate.id); }); //assigneeCards[assigneeIndex].CrewmateID
     }
-    public void AddRow()
+    internal void AddRow()
     {
         rowAmt++;
         // could probably turn into prefab
@@ -84,27 +102,22 @@ public class ShipUI : MonoBehaviour
     // Callbacks
     private void UnassignCallback(int assigneeIndex, int crewmateID)
     {
-        // Shift UI if crewmate is still in the second slot
-        if (assigneeCards[assigneeIndex].IsEmpty())
-        {
-            //assigneeCards[assigneeIndex].Set(assigneeCards[1].CrewmateData);
-            //int tempCrewmateID = assigneeCards[1].CrewmateData.id;
-            //assigneeCards[0].btnUnassign.onClick.AddListener(() => { UnassignCallback(assigneeIndex, tempCrewmateID); });
-            //assigneeCards[1].ResetCard(iconEmptyAssignment);
-        }
-        else
-        {
-            assigneeCards[assigneeIndex].ResetCard(iconEmptyAssignment);
-        }
-
-        //onUnassign.Invoke(crewmateID);
+        // Reset UI
+        assigneeCards[assigneeIndex].ResetCard(iconEmptyAssignment);
+        assigneeCards[assigneeIndex].btnUnassign.onClick.RemoveAllListeners();
+        onUnassign.Invoke(crewmateID);
+    }
+    internal void ResetCard(int assigneeIndex)
+    {
+        assigneeCards[assigneeIndex].ResetCard(iconEmptyAssignment);
+        assigneeCards[assigneeIndex].btnUnassign.onClick.RemoveAllListeners();
     }
 
     // Callbacks
     private void HandleClicking()
     {
-        if (Input.GetMouseButtonDown(0) && 
-            !EventSystem.current.IsPointerOverGameObject() && 
+        if (Input.GetMouseButtonDown(0) &&
+            !EventSystem.current.IsPointerOverGameObject() &&
             !ship.IsHovered && (
             Input.mousePosition.x < bounds.offsetMin.x ||
             Input.mousePosition.x > bounds.offsetMax.x ||
@@ -119,6 +132,8 @@ public class ShipUI : MonoBehaviour
     {
         transform.DOMoveX(690, animSpeedInterface);
         isOpen = true;
+        crewmateUI.CloseMenu();
+        buildingUI.CloseMenu();
     }
     internal void CloseMenu()
     {

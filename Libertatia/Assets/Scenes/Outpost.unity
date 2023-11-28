@@ -3629,6 +3629,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d9a1a18ee6173b4d95457cac8e17d01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shipUI: {fileID: 1795504960}
+  buildingUI: {fileID: 9116816653009409157}
   animSpeedInterface: 0.6
   iconBuildingAssignedTo: {fileID: 21300000, guid: 9545935a93b348a4f9fa0b45d94d08ff, type: 3}
   uiCrewmateIcon: {fileID: 1656743357}
@@ -4460,6 +4462,7 @@ MonoBehaviour:
   crui: {fileID: 0}
   crewmateUI: {fileID: 234963690}
   bm: {fileID: 745434448}
+  ship: {fileID: 1707051410}
   crewmatePrefab: {fileID: 4279940650134947149, guid: 8f1e684d0ce15c240a73f35a690f910e, type: 3}
   crewmateSpawn: {fileID: 1943279233}
   crewmateSpawnRadius: 10
@@ -10289,6 +10292,7 @@ MonoBehaviour:
   buildingUI: {fileID: 9116816653009409157}
   confirmationUI: {fileID: 888449053}
   cm: {fileID: 314619652}
+  ship: {fileID: 1707051410}
   isPlacing: 0
   prospectiveBuilding: {fileID: 0}
   totalProduction:
@@ -10379,7 +10383,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bm: {fileID: 745434448}
   cm: {fileID: 314619652}
-  rui: {fileID: 0}
+  rui: {fileID: 1078224227}
   btnArrow: {fileID: 47649196}
   btnBuildAll: {fileID: 138746107}
   btnAddWood: {fileID: 717431541}
@@ -19856,6 +19860,7 @@ MonoBehaviour:
   cm: {fileID: 314619652}
   shipUI: {fileID: 1795504960}
   renderers: []
+  isCombat: 0
   id: -1
   capacity: 12
   crewmates: []
@@ -20685,6 +20690,8 @@ MonoBehaviour:
   prefabAssigneeCard: {fileID: 935564554598961210, guid: 215357ea847fa4b41883fc49a57b4c11, type: 3}
   assigneeContainer: {fileID: 1179973139}
   ship: {fileID: 1707051410}
+  crewmateUI: {fileID: 234963690}
+  buildingUI: {fileID: 9116816653009409157}
   animSpeedInterface: 0.6
   iconEmptyAssignment: {fileID: 21300000, guid: 352bd3b255cdb8540aa3455efeb7b45f, type: 3}
   rowAmt: 2
@@ -20693,6 +20700,9 @@ MonoBehaviour:
   assigneeCards: []
   btnClose: {fileID: 1107038245}
   btnDepart: {fileID: 811765206}
+  onUnassign:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1800764066
 GameObject:
   m_ObjectHideFlags: 0
@@ -31587,6 +31597,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87fb766de676a8f4db651145a73fc4ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shipUI: {fileID: 1795504960}
+  crewmateUI: {fileID: 234963690}
   animSpeedInterface: 0.6
   iconEmptyAssignment: {fileID: 21300000, guid: 352bd3b255cdb8540aa3455efeb7b45f, type: 3}
   uiIcon: {fileID: 9049778308035437787}

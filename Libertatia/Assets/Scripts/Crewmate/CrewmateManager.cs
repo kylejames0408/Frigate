@@ -15,6 +15,7 @@ public class CrewmateManager : MonoBehaviour
     [SerializeField] private CombatResourcesUI crui;
     [SerializeField] private CrewmateUI crewmateUI;
     [SerializeField] private BuildingManager bm; // replace with events
+    [SerializeField] private Ship ship;
     // Crewmate Data
     [SerializeField] private GameObject crewmatePrefab;
     [SerializeField] private Transform crewmateSpawn;
@@ -187,16 +188,17 @@ public class CrewmateManager : MonoBehaviour
     }
     private void OnDestroy()
     {
-        if(isCombat)
-        {
-            GameManager.UpdateCombatCrew(crewmates.Values.ToArray());
-            GameManager.UpdateCrewmateData();
-        }
-        else
-        {
-            GameManager.UpdateCrewmateData(crewmates.Values.ToArray());
-            GameManager.SeparateCrew();
-        }
+        // Moved to ship
+        //if(isCombat)
+        //{
+        //    GameManager.UpdateCombatCrew(crewmates.Values.ToArray());
+        //    GameManager.UpdateCrewmateData();
+        //}
+        //else
+        //{
+        //    GameManager.UpdateCrewmateData(crewmates.Values.ToArray());
+        //    GameManager.SeparateCrew();
+        //}
     }
 
     // Handlers
@@ -609,13 +611,18 @@ public class CrewmateManager : MonoBehaviour
         Crewmate mate = crewmates[crewmateID];
         if(mate.IsAssigned)
         {
-            bm.OnClickBuildingIconCallback(mate.Building.id);
+            if(mate.Building.id != ship.ID)
+            {
+                bm.OnClickBuildingIconCallback(mate.Building.id);
+            }
+            else
+            {
+                bm.PanToShip();
+            }
         }
     }
 
-    /// <summary>
-    /// Hides the crewmate's line renderer
-    /// </summary>
+    // Hides the crewmate's line renderer
     private void HideLineRenderer()
     {
         foreach (int id in selectedCrewmateIDs)

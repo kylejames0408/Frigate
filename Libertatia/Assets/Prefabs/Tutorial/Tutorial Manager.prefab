@@ -62,11 +62,10 @@ MonoBehaviour:
   - {fileID: 7317531967827180226}
   - {fileID: 6785737645530700138}
   - {fileID: 6483838458676575870}
-  outpostTaskLists: []
   combatDialogues:
   - {fileID: 4051391971717010772}
   - {fileID: -759242478486736209}
-  combatTaskLists: []
+  btnAttack: {fileID: 0}
 --- !u!114 &8631642408441138930
 MonoBehaviour:
   m_ObjectHideFlags: 0

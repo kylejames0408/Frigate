@@ -164,14 +164,23 @@ public class Crewmate : MonoBehaviour
     // Make inputs into a ObjectData item?
     public void Assign(int buildingID, Sprite buildingIcon, Vector3 destination)
     {
-        if(building.id != -1)
+        // Checks if already assigned to the building
+        if(building.id != buildingID)
         {
-            onReassign.Invoke();
+            // Checks if is already assigned to a building
+            if (building.id != -1)
+            {
+                onReassign.Invoke();
+            }
+            state = CrewmateState.BUILDING;
+            building = new ObjectData(buildingID, buildingIcon); // Assign building
+            agent.destination = destination; // Set destination
+            onAssign.Invoke(); // Update UI
         }
-        state = CrewmateState.BUILDING;
-        building = new ObjectData(buildingID, buildingIcon); // Assign building
-        agent.destination = destination; // Set destination
-        onAssign.Invoke(); // Update UI
+        else
+        {
+            Debug.Log("assigned to same building");
+        }
     }
     public void Unassign()
     {
