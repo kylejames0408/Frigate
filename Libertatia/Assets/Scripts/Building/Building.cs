@@ -148,12 +148,12 @@ public class Building : MonoBehaviour
 
         // Render line - bounds.extent calculations are off?
         float halfWidth = collider.size.x/2.0f;
+        float halfHeight = collider.size.y/2.0f;
         float halfDepth = collider.size.z/2.0f;
-        float lineOffestHeight = 1.0f;
-        Vector3 topRight = new Vector3(halfWidth + collider.center.x, lineOffestHeight, halfDepth + collider.center.z);
-        Vector3 topLeft = new Vector3(-halfWidth + collider.center.x, lineOffestHeight, halfDepth + collider.center.z);
-        Vector3 bottomLeft = new Vector3(-halfWidth + collider.center.x, lineOffestHeight, -halfDepth + collider.center.z);
-        Vector3 bottomRight = new Vector3(halfWidth + collider.center.x, lineOffestHeight, -halfDepth + collider.center.z);
+        Vector3 topRight = new Vector3(halfWidth + collider.center.x, halfHeight + collider.center.y, halfDepth + collider.center.z);
+        Vector3 topLeft = new Vector3(-halfWidth + collider.center.x, halfHeight + collider.center.y, halfDepth + collider.center.z);
+        Vector3 bottomLeft = new Vector3(-halfWidth + collider.center.x, halfHeight + collider.center.y, -halfDepth + collider.center.z);
+        Vector3 bottomRight = new Vector3(halfWidth + collider.center.x, halfHeight + collider.center.y, -halfDepth + collider.center.z);
         Vector3[] boarderPositions =
         {
             topRight, topLeft, bottomLeft, bottomRight

@@ -678,9 +678,9 @@ MonoBehaviour:
   output: 
   icon: {fileID: 21300000, guid: 604a78f51e4c753429599ecb32046ef5, type: 3}
   isHovered: 0
-  radius: 5
+  radius: 6
   numOfCollisions: 0
-  buildingRender: {fileID: 0}
+  buildingRenderer: {fileID: 0}
   navObsticle: {fileID: 0}
   collider: {fileID: 0}
   lineRenderer: {fileID: 0}
@@ -757,8 +757,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 14, y: 6, z: 14}
-  m_Center: {x: -1, y: 2.75, z: 1}
+  m_Size: {x: 14, y: 0.5, z: 14}
+  m_Center: {x: -1, y: 0.25, z: 1}
 --- !u!54 &2931440292170239302
 Rigidbody:
   m_ObjectHideFlags: 0
