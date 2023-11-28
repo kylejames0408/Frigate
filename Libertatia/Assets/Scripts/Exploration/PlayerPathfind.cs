@@ -15,11 +15,19 @@ public class PlayerPathfind : MonoBehaviour
     private Vector3[] path;             // the path to follow
     private int targetIndex;            // the target in the path to move toward
 
+    public GameObject pathfindManager;
+    private Grid grid;
+
     public GameObject targetPrefab;
     private Transform currentTarget;
     #endregion
 
     #region Unity Methods
+    private void Awake()
+    {
+        grid = pathfindManager.GetComponent<Grid>();
+    }
+
     void Update()
     {
         AddTargets();
@@ -63,6 +71,12 @@ public class PlayerPathfind : MonoBehaviour
             if (currentTarget == null)
             {
                 currentTarget = Instantiate(targetPrefab, hit.point, Quaternion.identity).transform;
+
+                if (!grid.NodeFromWorldPoint(currentTarget.position).walkable)
+                {
+                    Destroy(currentTarget.gameObject);
+                }
+
                 PathRequestManager.RequestPath(transform.position, currentTarget.position, OnPathFound);
             }
         }
@@ -137,9 +151,4 @@ public class PlayerPathfind : MonoBehaviour
 
     }
     #endregion
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        Debug.Log("PLS");
-    }
 }
