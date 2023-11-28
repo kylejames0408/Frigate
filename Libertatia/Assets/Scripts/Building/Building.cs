@@ -28,7 +28,7 @@ public class Building : MonoBehaviour
     [SerializeField] private float radius = 5.0f; // for construction
     [SerializeField] private int numOfCollisions = 0;
     // Components
-    [SerializeField] private MeshRenderer buildingRender;
+    [SerializeField] private MeshRenderer buildingRenderer;
     [SerializeField] private NavMeshObstacle navObsticle;
     [SerializeField] private BoxCollider collider;
     [SerializeField] private LineRenderer lineRenderer;
@@ -121,7 +121,7 @@ public class Building : MonoBehaviour
     private void Awake()
     {
         // Get/set components
-        buildingRender = GetComponentInChildren<MeshRenderer>();
+        buildingRenderer = GetComponentInChildren<MeshRenderer>();
         navObsticle = GetComponentInChildren<NavMeshObstacle>();
         collider = GetComponent<BoxCollider>();
         lineRenderer = GetComponent<LineRenderer>();
@@ -199,7 +199,7 @@ public class Building : MonoBehaviour
     // Setters
     public void SetMaterial(Material material)
     {
-        buildingRender.material = material;
+        buildingRenderer.material = material;
     }
     public void SetType(int type)
     {
@@ -306,7 +306,7 @@ public class Building : MonoBehaviour
     public void CompleteConstruction()
     {
         state = BuildingState.BUILT;
-        buildingRender.material = matBuilt;
+        buildingRenderer.material = matBuilt;
         Upgrade();
         navObsticle.enabled = true; // maybe cache? I am not sure why this is disabled when coming back to outpost
         uiAsign2.transform.parent.gameObject.SetActive(true);
@@ -425,16 +425,16 @@ public class Building : MonoBehaviour
             isHovered = true;
             if (state != BuildingState.PLACING)
             {
-                buildingRender.material.SetColor("_EmissionColor", hoveredEmission);
+                buildingRenderer.material.SetColor("_EmissionColor", hoveredEmission);
                 canvasGroup.DOFade(1.0f, animTimeInterface);
             }
         }
     }
     private void OnMouseExit()
     {
-        if (buildingRender && isHovered)
+        if (buildingRenderer && isHovered)
         {
-            buildingRender.material.SetColor("_EmissionColor", normalEmission);
+            buildingRenderer.material.SetColor("_EmissionColor", normalEmission);
             canvasGroup.DOFade(0.0f, animTimeInterface);
         }
         isHovered = false;

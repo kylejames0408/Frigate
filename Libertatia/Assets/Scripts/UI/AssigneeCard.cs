@@ -8,6 +8,10 @@ public class AssigneeCard : MonoBehaviour
     [SerializeField] private Image icon;
     public Button btnUnassign;
 
+    public int CrewmateID
+    {
+        get { return crewmateID; }
+    }
     public ObjectData CrewmateData
     {
         get

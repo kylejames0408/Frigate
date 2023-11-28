@@ -1,7 +1,9 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using UnityEngine.AI;
+using UnityEngine.EventSystems;
 
 public class Ship : MonoBehaviour
 {
@@ -16,23 +18,95 @@ public class Ship : MonoBehaviour
     [SerializeField] private GameObject battleLootUI;
     [SerializeField] private GameObject leaveButton;
 
+    // Components
+    [SerializeField] private ResourcesUI rUI;
+    [SerializeField] private CrewmateManager cm;
+    [SerializeField] private ShipUI shipUI;
+    [SerializeField] private MeshRenderer[] renderers;
+    // Tracking
+    [SerializeField] private bool isCombat = false;
+    [SerializeField] private int id = -1;
+    [SerializeField] private int capacity = 12;
+    [SerializeField] private List<CrewmateData> crewmates;
+    [SerializeField] private int level = 0;
+    // Characteristics
+    [SerializeField] private string buildingName = "Ship";
+    [SerializeField] private float radius = 10.0f;
+    // UI
+    [SerializeField] private Sprite icon;
+    [SerializeField] private bool isHovered = false;
+    // Emissions
+    [SerializeField] private Color normalEmission = Color.black;
+    [SerializeField] private Color hoveredEmission = new Color(0.3f, 0.3f, 0.3f);
+
+    public int ID
+    {
+        get { return id; }
+    }
+    public bool IsHovered
+    {
+        get { return isHovered; }
+    }
+    public List<CrewmateData> CrewmateData
+    { get { return crewmates; } }
+
     private void Awake()
     {
+        if(renderers == null) { renderers = GetComponentsInChildren<MeshRenderer>(); }
         if (resourceUI == null) { resourceUI = FindObjectOfType<CombatResourcesUI>(); }
-    }
+        if (cm == null) { cm = FindObjectOfType<CrewmateManager>(); }
+        if (rUI == null) { rUI = FindObjectOfType<ResourcesUI>(); }
+        if (shipUI == null) { shipUI = FindObjectOfType<ShipUI>(); }
 
+        id = gameObject.GetInstanceID();
+        level = 0;
+        isHovered = false;
+    }
     void Start()
     {
+        crewmates = new List<CrewmateData>(capacity); // new ObjectData(-1, iconEmptyAsssignment)
+        shipUI.onUnassign.AddListener(UnassignCrewmateCallback);
+        shipUI.Set(capacity);
+
         detectionRange = 25;
         inRange = false;
 
         unitList.AddRange(GameObject.FindGameObjectsWithTag("PlayerCharacter"));
         enemyList.AddRange(GameObject.FindGameObjectsWithTag("Enemy"));
     }
-
     // Update is called once per frame
     void Update()
     {
+        if(isHovered)
+        {
+            // move to handlers
+            if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
+            {
+                shipUI.OpenMenu();
+            }
+            if (Input.GetMouseButtonDown(1) && !EventSystem.current.IsPointerOverGameObject())
+            {
+                if (cm.IsCrewmateSelected && crewmates.Count < crewmates.Capacity)
+                {
+                    // Get selected units
+                    Crewmate[] selectedCrewmates = cm.GetSelectedCrewmates();
+                    // Assign - move to function
+                    for (int i = 0; i < selectedCrewmates.Length; i++)
+                    {
+                        Crewmate mate = selectedCrewmates[i];
+                        CrewmateData crewmateData = new CrewmateData(mate);
+                        shipUI.SetCrewmate(crewmates.Count, new ObjectData(crewmateData.id, crewmateData.icon));
+                        crewmates.Add(crewmateData);
+                        mate.Assign(id, icon, GetDestination());
+                    }
+                }
+                else
+                {
+                    Debug.Log("Ship assignments are full");
+                }
+            }
+        }
+
         foreach (GameObject unit in unitList)
         {
             if (unit.activeSelf != false)
@@ -52,23 +126,59 @@ public class Ship : MonoBehaviour
                     inRange = false;
                     leaveButton.SetActive(false);
                 }
-
             }
-
         }
-
-        //if (inRange)
-        //{
-        //    //sets the leave button to be active if within range
-        //    leaveButton.SetActive(true);
-        //}
-        //else
-        //{
-        //    leaveButton.SetActive(false);
-        //}
-
+    }
+    private void OnMouseEnter()
+    {
+        if (!EventSystem.current.IsPointerOverGameObject())
+        {
+            isHovered = true;
+            foreach(MeshRenderer renderer in renderers)
+            {
+                foreach (Material mat in renderer.materials)
+                {
+                    mat.SetColor("_EmissionColor", hoveredEmission);
+                }
+            }
+        }
+    }
+    private void OnMouseExit()
+    {
+        if (isHovered)
+        {
+            // should validate that renderers exists
+            foreach (MeshRenderer renderer in renderers)
+            {
+                foreach (Material mat in renderer.materials)
+                {
+                    mat.SetColor("_EmissionColor", normalEmission);
+                }
+            }
+        }
+        isHovered = false;
+    }
+    private void OnDestroy()
+    {
+        if (isCombat)
+        {
+            GameManager.UpdateCombatCrew(crewmates.ToArray());
+            GameManager.UpdateCrewmateData();
+        }
+        else
+        {
+            GameManager.UpdateCrewmateData(crewmates.ToArray());
+            GameManager.SeparateCrew();
+        }
     }
 
+    private Vector3 GetDestination()
+    {
+        // Get random position around unit circle
+        Vector2 circlePosition = UnityEngine.Random.insideUnitCircle.normalized;
+        Vector3 destinationOffset = new Vector3(circlePosition.x * radius, 0, Mathf.Abs(circlePosition.y) * radius); // keeps crewmate in-front of the building, maybe tweak
+        return transform.position + destinationOffset;
+    }
     public void OpenBattleLootUI()
     {
         //GameManager.data.resources.wood += 50;
@@ -84,27 +194,29 @@ public class Ship : MonoBehaviour
         //CeneManager.LoadOutpostFromCombat();
     }
 
+    // Callback
+    private void UnassignCrewmateCallback(int crewmateID)
+    {
+        for (int i = 0; i < crewmates.Count; i++)
+        {
+            if (crewmates[i].id == crewmateID)
+            {
+                crewmates.RemoveAt(i);
+                break;
+            }
+        }
+
+        for (int i = 0; i < crewmates.Count; i++)
+        {
+            shipUI.SetCrewmate(i, new ObjectData(crewmates[i].id, crewmates[i].icon));
+        }
+        shipUI.ResetCard(crewmates.Count);
+        cm.UnassignCrewmate(crewmateID);
+    }
+
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, detectionRange);
-    }
-    private void OnGUI()
-    {
-        // the rect that is the canvas
-        //GameObject canvas = GameObject.Find("BoxSelectCanvas");
-        //RectTransform canvasRect = canvas.GetComponent<RectTransform>();
-
-        //// the style used to set the text size and
-        //GUIStyle GUIBoxStyle = new GUIStyle(GUI.skin.box);
-        //GUIBoxStyle.fontSize = (int)(canvasRect.rect.height * 0.023f);
-        //GUIBoxStyle.alignment = TextAnchor.MiddleCenter;
-
-        //if (inRange)
-        //{
-        //    GUI.Box(new Rect(canvasRect.rect.width * 0.35f, canvasRect.rect.height * 0.05f, canvasRect.rect.width * 0.21f, canvasRect.rect.height * 0.05f),
-        //        "Press E to return to outpost.", GUIBoxStyle);
-        //}
-
     }
 }
