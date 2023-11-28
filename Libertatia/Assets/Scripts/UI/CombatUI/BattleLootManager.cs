@@ -32,6 +32,10 @@ public class BattleLootManager : MonoBehaviour
 
     PlayerData data = GameManager.Data;
 
+    private bool updateResourceBool;
+
+    private int doubloonAmount, foodAmount, woodAmount;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -44,6 +48,7 @@ public class BattleLootManager : MonoBehaviour
         initWoodValue = data.resources.wood;
         initWoodText.text = initWoodValue.ToString();
 
+        updateResourceBool = false;
     }
 
     // Update is called once per frame
@@ -54,28 +59,11 @@ public class BattleLootManager : MonoBehaviour
         CurrentResourceValue(increasedFoodValue, combatResources.foodAmount, currentFoodText, initFoodValue);
         CurrentResourceValue(increasedWoodValue, combatResources.woodAmount, currentWoodText, initWoodValue);
 
-        if(battleLootUI.activeSelf)
+        if(updateResourceBool == false)
         {
-            //for(int i = 0; i < combatResources.doubloonAmount; i++)
-            //{
-            //    combatResources.doubloonAmount -= 1;
-            //    initDoubloonValue += 1;
-
-            //    initDoubloonText.text = initDoubloonValue.ToString();
-            //    CurrentResourceValue(increasedDoubloonValue, combatResources.doubloonAmount, currentDoubloonText, initDoubloonValue);
-            //}
-
-            //for(int i = 0; i < combatResources.woodAmount; i++)
-            //{
-            //    combatResources.woodAmount -= 1;
-            //    initWoodValue += 1;
-
-            //    initWoodText.text = initWoodValue.ToString();
-            //    CurrentResourceValue(increasedWoodValue, combatResources.woodAmount, currentWoodText, initWoodValue);
-            //}
             StartCoroutine(UpdateResourceValues());
-
         }
+
     }
 
     /// <summary>
@@ -96,46 +84,60 @@ public class BattleLootManager : MonoBehaviour
         CeneManager.LoadOutpostFromCombat();
     }
 
+    /// <summary>
+    /// Updates the resources in the battle loot ui by showing the increase in numbers
+    /// </summary>
+    /// <returns></returns>
     IEnumerator UpdateResourceValues()
     {
-        //https://discussions.unity.com/t/why-does-yield-waitforseconds-only-run-once/63290
-
-        float timer = 1f;
-
-        if(battleLootUI.activeSelf)
+        if (battleLootUI.activeSelf)
         {
+            updateResourceBool = true;
+
+            doubloonAmount = combatResources.doubloonAmount;
+            woodAmount = combatResources.woodAmount;
+            foodAmount = combatResources.foodAmount;
+
+            //Wait before updating the resource values
             yield return new WaitForSeconds(1f);
-            for (int i = 0; i < combatResources.doubloonAmount; i++)
+
+            //doubloons
+            for (int i = 0; i < doubloonAmount; i++)
             {
-          
-                if (combatResources.doubloonAmount == 0)
-                {
-                    break;
-                }
+                yield return new WaitForSeconds(0.05f);
+
                 combatResources.doubloonAmount -= 1;
                 initDoubloonValue += 1;
 
                 initDoubloonText.text = initDoubloonValue.ToString();
                 CurrentResourceValue(increasedDoubloonValue, combatResources.doubloonAmount, currentDoubloonText, initDoubloonValue);
-
-                yield return new WaitForSeconds(1.5f);
             }
 
-            for (int i = 0; i < combatResources.woodAmount; i++)
+            //wood
+            for (int i = 0; i < woodAmount; i++)
             {
-                //yield return new WaitForSeconds(1.5f);
-                if(combatResources.woodAmount == 0)
-                {
-                    break;
-                }
+                yield return new WaitForSeconds(0.05f);
+
                 combatResources.woodAmount -= 1;
                 initWoodValue += 1;
 
                 initWoodText.text = initWoodValue.ToString();
                 CurrentResourceValue(increasedWoodValue, combatResources.woodAmount, currentWoodText, initWoodValue);
-
-                yield return new WaitForSeconds(1.5f);
             }
+
+            //food
+            for (int i = 0; i < foodAmount; i++)
+            {
+                yield return new WaitForSeconds(0.05f);
+
+                combatResources.foodAmount -= 1;
+                initFoodValue += 1;
+
+                initFoodText.text = initFoodValue.ToString();
+                CurrentResourceValue(increasedFoodValue, combatResources.foodAmount, currentFoodText, initFoodValue);
+            }
+
+            updateResourceBool = false;
         }
     }
 }
