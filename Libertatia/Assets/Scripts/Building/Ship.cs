@@ -97,7 +97,7 @@ public class Ship : MonoBehaviour
                         CrewmateData crewmateData = new CrewmateData(mate);
                         shipUI.SetCrewmate(crewmates.Count, new ObjectData(crewmateData.id, crewmateData.icon));
                         crewmates.Add(crewmateData);
-                        mate.Assign(id, icon, GetDestination());
+                        mate.Assign(id, icon, GetDestination(), true);
                     }
                 }
                 else
