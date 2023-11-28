@@ -8,7 +8,7 @@ public class TutorialManager : MonoBehaviour
 {
     public List<DialogueTrigger> outpostDialogues;
     public List<DialogueTrigger> combatDialogues;
-    public Button btnAttack; // this will ideally be the button from the ship menu
+    public Button btnDepart; // this is overriden at the moment, should be checked in ship ui
     private bool secondVisit = false;
 
     int buildingsPlaced = 0;
@@ -24,7 +24,7 @@ public class TutorialManager : MonoBehaviour
             {
                 outpostDialogues[0].TriggerDialogue();
                 GameManager.outpostVisitNumber++;
-                btnAttack.interactable = false;
+                btnDepart.interactable = false;
             }
             else if(GameManager.outpostVisitNumber == 1)
             {
@@ -32,11 +32,11 @@ public class TutorialManager : MonoBehaviour
                 outpostDialogues[5].TriggerDialogue();
                 secondVisit = true;
                 GameManager.outpostVisitNumber++;
-                btnAttack.interactable = true;
+                btnDepart.interactable = true;
             }
             else
             {
-                btnAttack.interactable = true;
+                btnDepart.interactable = true;
             }
         }
         else if (SceneManager.GetSceneByName("Combat").isLoaded || SceneManager.GetSceneByName("Combat-Testing").isLoaded)
@@ -100,7 +100,7 @@ public class TutorialManager : MonoBehaviour
         if(crewmatesAssigned == 2 && !secondVisit)
         {
             outpostDialogues[3].TriggerDialogue();
-            btnAttack.interactable = true;
+            btnDepart.interactable = true;
         }
     }
 

@@ -131,30 +131,27 @@ public class Ship : MonoBehaviour
     }
     private void OnMouseEnter()
     {
-        if (!EventSystem.current.IsPointerOverGameObject())
-        {
-            isHovered = true;
-            foreach(MeshRenderer renderer in renderers)
-            {
-                foreach (Material mat in renderer.materials)
-                {
-                    mat.SetColor("_EmissionColor", hoveredEmission);
-                }
-            }
-        }
+        isHovered = true; //!EventSystem.current.IsPointerOverGameObject()
+        //foreach (MeshRenderer renderer in renderers)
+        //{
+        //    foreach (Material mat in renderer.materials)
+        //    {
+        //        mat.SetColor("_EmissionColor", hoveredEmission);
+        //    }
+        //}
     }
     private void OnMouseExit()
     {
         if (isHovered)
         {
             // should validate that renderers exists
-            foreach (MeshRenderer renderer in renderers)
-            {
-                foreach (Material mat in renderer.materials)
-                {
-                    mat.SetColor("_EmissionColor", normalEmission);
-                }
-            }
+            //foreach (MeshRenderer renderer in renderers)
+            //{
+            //    foreach (Material mat in renderer.materials)
+            //    {
+            //        mat.SetColor("_EmissionColor", normalEmission);
+            //    }
+            //}
         }
         isHovered = false;
     }
@@ -170,6 +167,11 @@ public class Ship : MonoBehaviour
             GameManager.UpdateCrewmateData(crewmates.ToArray());
             GameManager.SeparateCrew();
         }
+    }
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, detectionRange);
     }
 
     private Vector3 GetDestination()
@@ -212,11 +214,5 @@ public class Ship : MonoBehaviour
         }
         shipUI.ResetCard(crewmates.Count);
         cm.UnassignCrewmate(crewmateID);
-    }
-
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, detectionRange);
     }
 }
