@@ -24,7 +24,7 @@ public class GameManager : MonoBehaviour
     public static int combatVisitNumber = 0;
     public static PlayerData data;
     public static bool MainMenuTesting = false;
-    public static bool OutpostTesting = true;
+    public static bool OutpostTesting = false;
     public static bool CombatTesting = true;
 
     // UI
