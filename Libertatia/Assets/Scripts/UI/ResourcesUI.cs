@@ -1,6 +1,7 @@
 using DG.Tweening;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class ResourcesUI : MonoBehaviour
 {
@@ -19,11 +20,18 @@ public class ResourcesUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI tmpFoodCalculation;
     [SerializeField] private float animTimeHoverInterface = 0.1f;
 
+    [SerializeField] private Button btnMenu;
+    [SerializeField] private PauseMenu uiPause;
+
     private void Awake()
     {
         foodTab.onHover.AddListener(ResourceHoveredCallback);
         foodTab.onHoverExit.AddListener(ResourceHoveredExitCallback);
         foodPopupUI.GetComponent<CanvasGroup>().alpha = 0;
+    }
+    private void Start()
+    {
+        btnMenu.onClick.AddListener(uiPause.Open);
     }
 
     public void Init()
