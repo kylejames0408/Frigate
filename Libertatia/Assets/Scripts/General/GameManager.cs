@@ -143,7 +143,7 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        Debug.Log("GameManager initialized");
+        //Debug.Log("GameManager initialized");
         if(data.Equals(default(PlayerData))) // Prevents reinit when debugging
         {
             data = PlayerDataManager.CreateNewData();
