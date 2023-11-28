@@ -97,7 +97,7 @@ public class Crewmate : MonoBehaviour
     }
     public bool IsAssigned
     {
-        get { return state == CrewmateState.BUILDING; }
+        get { return state == CrewmateState.BUILDING || state == CrewmateState.ABOARD; }
     }
 
     private void Awake()

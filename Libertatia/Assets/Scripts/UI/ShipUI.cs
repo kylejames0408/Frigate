@@ -74,7 +74,6 @@ public class ShipUI : MonoBehaviour
             throw new Exception("Error: unmatching array sizes");
         }
     }
-
     internal void SetCrewmate(int index, ObjectData crewmate)
     {
         assigneeCards[index].Set(crewmate);
