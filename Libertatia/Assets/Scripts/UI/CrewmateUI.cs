@@ -130,7 +130,11 @@ public class CrewmateUI : MonoBehaviour
     }
     private void OnClickLocationCallback()
     {
-        onClickLocation.Invoke(crewmateID); // maybe have a listener from building manager instead of passing through crewmate manager
+        //if the location button is active
+        if(btnLocation.gameObject.activeSelf)
+        {
+            onClickLocation.Invoke(crewmateID); // maybe have a listener from building manager instead of passing through crewmate manager
+        }
     }
     private void CloseMenuCallback()
     {
@@ -144,7 +148,12 @@ public class CrewmateUI : MonoBehaviour
         transform.DOMoveX(690, animSpeedInterface);
         isOpen = true;
         shipUI.CloseMenu();
-        buildingUI.CloseMenu();
+
+        if(buildingUI != null)
+        {
+            buildingUI.CloseMenu();
+        }
+
     }
     internal void CloseMenu()
     {
