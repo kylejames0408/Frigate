@@ -85,8 +85,8 @@ public abstract class Character : MonoBehaviour
                         Crewmate crewmate = GetComponent<Crewmate>();
                         crewmate.State = CrewmateState.ATTACKING;
 
-                        OutpostManagementUI omui = omuiGameObject.GetComponent<OutpostManagementUI>();
-                        omui.UpdateCard(crewmate.ID, crewmate.StateIcon);
+                        CombatManagementUI cmui = omuiGameObject.GetComponent<CombatManagementUI>();
+                        cmui.UpdateCard(crewmate.ID, crewmate.StateIcon);
                     }
 
                     //attacks and decreases their health based on attack rate

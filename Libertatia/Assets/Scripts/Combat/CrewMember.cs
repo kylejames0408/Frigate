@@ -50,8 +50,8 @@ public class CrewMember : Character
             characterState = State.Idle;
             crewmate.State = CrewmateState.IDLE;
 
-            OutpostManagementUI omui = omuiGameObject.GetComponent<OutpostManagementUI>();
-            omui.UpdateCard(crewmate.ID, crewmate.StateIcon);
+            CombatManagementUI cmui = omuiGameObject.GetComponent<CombatManagementUI>();
+            cmui.UpdateCard(crewmate.ID, crewmate.StateIcon);
        
         }
 

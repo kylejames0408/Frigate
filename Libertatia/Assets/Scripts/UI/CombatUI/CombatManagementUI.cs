@@ -93,14 +93,14 @@ public class CombatManagementUI : MonoBehaviour
         crewmateCards.Add(card.ID, card);
 
         // Callbacks
-        card.GetComponent<Button>().onClick.AddListener(() => { ClickCrewmateCard(card.ID); }); // drag + drop func
+        card.GetComponentInChildren<Button>().onClick.AddListener(() => { ClickCrewmateCard(card.ID); }); // drag + drop func
         // Fill UI
         card.GetComponentsInChildren<Image>()[1].sprite = mate.Icon;
         card.GetComponentInChildren<TextMeshProUGUI>().text = mate.FirstName;
 
-        card.GetComponent<DragObj2D>().onBeginDrag.AddListener(delegate { ClickCrewmateCard(card.ID); });
-        card.GetComponent<DragObj2D>().onEndDrag.AddListener(delegate { zm.OnCrewmateDropAssign(); });
-        card.GetComponent<DragObj2D>().onEndDrag.AddListener(delegate { DeselectCrewmateCard(card.ID); });
+        card.GetComponentInChildren<DragObj2D>().onBeginDrag.AddListener(delegate { DragCrewmateCard(card.ID); });
+        card.GetComponentInChildren<DragObj2D>().onEndDrag.AddListener(delegate { zm.OnCrewmateDropAssign(); });
+        card.GetComponentInChildren<DragObj2D>().onEndDrag.AddListener(delegate { DeselectAllCrewmateCardsShare(); });
     }
     internal void RemoveCrewmateCard(int cardID)
     {
@@ -112,6 +112,11 @@ public class CombatManagementUI : MonoBehaviour
     {
         CrewmateCard card = crewmateCards[cardID];
         card.SetStatus(stateIcon);
+    }
+
+    private void DragCrewmateCard(int cardID)
+    {
+        SelectCrewmateCardShare(cardID);
     }
 
     // Clicking handler
