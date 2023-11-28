@@ -13765,6 +13765,8 @@ MonoBehaviour:
   tmpFoodConsumption: {fileID: 689631714}
   tmpFoodCalculation: {fileID: 1364087520}
   animTimeHoverInterface: 0.1
+  btnMenu: {fileID: 1994613440}
+  uiPause: {fileID: 380156887}
 --- !u!114 &1078224228
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15669,7 +15671,7 @@ MonoBehaviour:
   animTimeArrow: 0.5
   animTimeInterface: 0.6
   buildingCardPrefab: {fileID: 251873779958588848, guid: 91d0531e95f5c9b429617bb9f2593dba, type: 3}
-  crewmateCardPrefab: {fileID: 6335522714724666445, guid: 17bc90cb65cc5f4478efe6d2b2563f0a, type: 3}
+  crewmateCardPrefab: {fileID: 7274663092254128746, guid: 0e178bb3c7a9fc14a9b731fc07dd6cd2, type: 3}
   arrow: {fileID: 476263300966870331}
   tabUIParent: {fileID: 2584835497597247581}
   pagesUIParent: {fileID: 5893328723937594164}
