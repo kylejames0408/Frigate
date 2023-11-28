@@ -1,6 +1,5 @@
 // Namespaces
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
@@ -15,8 +14,12 @@ public class PlayerPathfind : MonoBehaviour
     private Vector3[] path;             // the path to follow
     private int targetIndex;            // the target in the path to move toward
 
-    public GameObject pathfindManager;
-    private Grid grid;
+    public GameObject pathfindManager;  // the pathfinding manager
+    private Grid grid;                  // the grid
+    private Pathfinding pathfinding;    // the pathfinding algorithms
+
+    private bool movingToIsland;        // whether the player is moving to an island
+    private bool movingToOutpost;       // whether the player is moving to the outpost
 
     public GameObject targetPrefab;
     private Transform currentTarget;
@@ -26,6 +29,7 @@ public class PlayerPathfind : MonoBehaviour
     private void Awake()
     {
         grid = pathfindManager.GetComponent<Grid>();
+        pathfinding = pathfindManager.GetComponent<Pathfinding>();
     }
 
     void Update()
@@ -68,15 +72,32 @@ public class PlayerPathfind : MonoBehaviour
             Physics.Raycast(ray, out hit);
             hit.point = new Vector3(hit.point.x, 0, hit.point.z);
 
+            // Only add a target if the ship is still
             if (currentTarget == null)
             {
-                currentTarget = Instantiate(targetPrefab, hit.point, Quaternion.identity).transform;
-
-                if (!grid.NodeFromWorldPoint(currentTarget.position).walkable)
+                // If the placement is invalid
+                if (!grid.NodeFromWorldPoint(hit.point).walkable)
                 {
-                    Destroy(currentTarget.gameObject);
+                    // If it's an island, find the nearest walkable point and change the hit point to that position
+                    if (Physics.CheckSphere(hit.point, grid.nodeRadius, LayerMask.GetMask("Terrain")))
+                    {
+                        // Find nearest walkable point & set island travel bool
+                        hit.point = pathfinding.FindNearestWalkable(hit.point).worldPosition;
+                        movingToIsland = true;
+                    }
+                    else if (Physics.CheckSphere(hit.point, grid.nodeRadius, LayerMask.GetMask("Building"))) // If it's the outpost...
+                    {
+                        // Find nearest walkable point & set island travel bool
+                        hit.point = pathfinding.FindNearestWalkable(hit.point).worldPosition;
+                        movingToOutpost = true;
+                    }
+                    else // Don't place the target
+                    {
+                        return;
+                    }
                 }
 
+                currentTarget = Instantiate(targetPrefab, hit.point, Quaternion.identity).transform;
                 PathRequestManager.RequestPath(transform.position, currentTarget.position, OnPathFound);
             }
         }
@@ -123,6 +144,18 @@ public class PlayerPathfind : MonoBehaviour
             if (transform.position == path[path.Length - 1])
             {
                 Destroy(currentTarget.gameObject);
+
+                // Check if it was moving toward an island or outpost & transition
+                if (movingToIsland)
+                {
+                    movingToIsland = false;
+                    CeneManager.LoadCombatFromOutpost();
+                }
+                else if (movingToOutpost)
+                {
+                    movingToOutpost = false;
+                    CeneManager.LoadOutpostFromCombat();
+                }
 
                 yield break;
             }

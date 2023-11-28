@@ -3,6 +3,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using System;
+using UnityEditor.Experimental.GraphView;
 
 /// <summary>
 /// Finds paths for agents.
@@ -93,6 +94,30 @@ public class Pathfinding : MonoBehaviour
         yield return null;
 
     }
+
+	public Node FindNearestWalkable(Vector3 targetPos)
+	{
+        Node targetNode = grid.NodeFromWorldPoint(targetPos);
+
+		int nearestDistance = int.MaxValue;
+        Node nearestNode = grid.NodeData[0,0];
+
+        foreach (Node currentNode in grid.NodeData)
+		{
+			if (currentNode.walkable)
+			{
+				int tempDist = GetDistance(currentNode, targetNode);
+
+				if (tempDist < nearestDistance)
+				{
+					nearestDistance = tempDist;
+					nearestNode = currentNode;
+				}
+			}
+		}
+
+		return nearestNode;
+	}
 	
 	/// <summary>
 	/// Retrace the path.

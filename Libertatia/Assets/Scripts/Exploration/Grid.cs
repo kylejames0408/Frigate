@@ -29,6 +29,14 @@ public class Grid : MonoBehaviour
             return gridSizeX * gridSizeY;
         }
     }
+
+    public Node[,] NodeData
+    {
+        get
+        {
+            return grid;
+        }
+    }
     #endregion
 
     #region Unity Methods
