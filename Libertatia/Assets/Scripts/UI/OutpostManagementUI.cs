@@ -36,12 +36,6 @@ public class OutpostManagementUI : MonoBehaviour
     private List<int> selectedCrewmateCardIDs; // Im thinking this could be a stack
     private bool isOpen;
 
-    //Tutorial stuff
-    [SerializeField] private GameObject ClickHereBuildingTab;
-    [SerializeField] private GameObject ClickHereBuildingCard;
-    [SerializeField] private GameObject ClickHereCrewmateTab;
-    [SerializeField] private GameObject DragHereCrewmateCard;
-
     private void Awake()
     {
         if (cm == null) { cm = FindObjectOfType<CrewmateManager>(); }
@@ -111,23 +105,6 @@ public class OutpostManagementUI : MonoBehaviour
             {
                 tabs[i].Select();
                 pages[i].gameObject.SetActive(true);
-                if (i == 0)
-                {
-                    if (GameManager.outpostVisitNumber == 1)
-                    {
-                        HideBuildingTabArrow();
-                        ShowBuildingCardArrow();
-                    }
-                }
-
-                if (i == 1)
-                {
-                    if (GameManager.outpostVisitNumber == 1)
-                    {
-                        HideCrewmateTabArrow();
-                        ShowCrewmateCardArrow();
-                    }
-                }
             }
             else
             {
@@ -176,7 +153,6 @@ public class OutpostManagementUI : MonoBehaviour
         }
         buildingCards[cardIndex].Select();
         bm.SelectBuilding(cardIndex);
-        HideBuildingCardArrow();
     }
     public void DeselectBuildingCard(int cardIndex)
     {
@@ -380,46 +356,5 @@ public class OutpostManagementUI : MonoBehaviour
         arrow.onClick.RemoveListener(CloseMenu);
         arrow.onClick.AddListener(OpenMenu);
         arrow.transform.GetChild(0).DORotate(new Vector3(0, 0, 0), animTimeArrow);
-    }
-
-    public void ShowBuildingTabArrow()
-    {
-        if (!ClickHereBuildingTab.activeSelf)
-            ClickHereBuildingTab.SetActive(true);
-    }
-    public void HideBuildingTabArrow()
-    {
-        if (ClickHereBuildingTab.activeSelf)
-            ClickHereBuildingTab.SetActive(false);
-    }
-    public void ShowBuildingCardArrow()
-    {
-        if (!ClickHereBuildingCard.activeSelf)
-            ClickHereBuildingCard.SetActive(true);
-    }
-    public void HideBuildingCardArrow()
-    {
-        if (ClickHereBuildingCard.activeSelf)
-            ClickHereBuildingCard.SetActive(false);
-    }
-    public void ShowCrewmateTabArrow()
-    {
-        if (!ClickHereCrewmateTab.activeSelf)
-            ClickHereCrewmateTab.SetActive(true);
-    }
-    public void HideCrewmateTabArrow()
-    {
-        if (ClickHereCrewmateTab.activeSelf)
-            ClickHereCrewmateTab.SetActive(false);
-    }
-    public void ShowCrewmateCardArrow()
-    {
-        if (!DragHereCrewmateCard.activeSelf)
-            DragHereCrewmateCard.SetActive(true);
-    }
-    public void HideCrewmateCardArrow()
-    {
-        if (DragHereCrewmateCard.activeSelf)
-            DragHereCrewmateCard.SetActive(false);
     }
 }

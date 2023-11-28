@@ -23,15 +23,24 @@ public class GameManager : MonoBehaviour
     public static int outpostVisitNumber = 0;
     public static int combatVisitNumber = 0;
     public static PlayerData data;
-    public static bool MainMenuTesting = false;
-    public static bool OutpostTesting = false;
-    public static bool CombatTesting = true;
 
     // UI
     [SerializeField] private PauseMenu pauseMenu;
 
     // Events
     public UnityEvent onAttack;
+
+    // Testing Toggles
+    [SerializeField] public bool MainMenuTesting;
+    [SerializeField] public bool OutpostTesting;
+    [SerializeField] public bool ExplorationTesting;
+    [SerializeField] public bool CombatTesting;
+
+    // Static Testing Toggles
+    public static bool mainMenuTesting;
+    public static bool outpostTesting;
+    public static bool explorationTesting;
+    public static bool combatTesting;
 
     // Player data management - maybe move to manager, if so, will storage persist?
     public static PlayerData Data
@@ -176,7 +185,12 @@ public class GameManager : MonoBehaviour
                 Unpause();
             }
         }
-    }
+
+        mainMenuTesting = MainMenuTesting;
+        outpostTesting = OutpostTesting;
+        explorationTesting = ExplorationTesting;
+        combatTesting = CombatTesting;
+}
     private void OnDestroy()
     {
         data.gameTimer = gameTimer;

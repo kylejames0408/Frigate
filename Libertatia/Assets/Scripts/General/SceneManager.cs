@@ -48,14 +48,14 @@ public class CeneManager : MonoBehaviour
     }
     public static void LoadMainMenu()
     {
-        if(GameManager.MainMenuTesting)
+        if(GameManager.mainMenuTesting)
             SceneManager.LoadScene("MainMenu-Testing", LoadSceneMode.Single);
         else
             SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
     }
     public static void LoadOutpostFromMainMenu()
     {
-        if(GameManager.OutpostTesting)
+        if(GameManager.outpostTesting)
             SceneManager.LoadScene("Outpost-Testing", LoadSceneMode.Single);
         else
             SceneManager.LoadScene("Outpost", LoadSceneMode.Single);
@@ -64,7 +64,7 @@ public class CeneManager : MonoBehaviour
     }
     public static void LoadCombatFromOutpost()
     {
-        if(GameManager.CombatTesting)
+        if(GameManager.combatTesting)
             SceneManager.LoadScene("Combat-Testing", LoadSceneMode.Single);
         else
             SceneManager.LoadScene("Combat", LoadSceneMode.Single);
@@ -72,7 +72,7 @@ public class CeneManager : MonoBehaviour
     }
     public static void LoadOutpostFromCombat()
     {
-        if (GameManager.OutpostTesting)
+        if (GameManager.outpostTesting)
             SceneManager.LoadScene("Outpost-Testing", LoadSceneMode.Single);
         else
             SceneManager.LoadScene("Outpost", LoadSceneMode.Single);
