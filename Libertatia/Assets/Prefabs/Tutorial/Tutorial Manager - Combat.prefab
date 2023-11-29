@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &4255074981979255140
+--- !u!1 &6505180538263704615
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,11 +8,12 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 7801007328611274310}
-  - component: {fileID: 54141620767406925}
-  - component: {fileID: 7605342723116434477}
-  - component: {fileID: 2804405630083182687}
-  - component: {fileID: 7128802964802688858}
+  - component: {fileID: 8072100456264765463}
+  - component: {fileID: 3007096559997292400}
+  - component: {fileID: 1397328450935813937}
+  - component: {fileID: 5041930272287006}
+  - component: {fileID: 880632968383080575}
+  - component: {fileID: 2712407168385065686}
   m_Layer: 0
   m_Name: Tutorial Manager - Combat
   m_TagString: Untagged
@@ -20,74 +21,76 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &7801007328611274310
+--- !u!4 &8072100456264765463
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4255074981979255140}
+  m_GameObject: {fileID: 6505180538263704615}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &54141620767406925
+--- !u!114 &3007096559997292400
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4255074981979255140}
+  m_GameObject: {fileID: 6505180538263704615}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 03b7424f76b818444b2e6deb52cb7654, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   combatDialogues:
-  - {fileID: 2804405630083182687}
-  - {fileID: 7128802964802688858}
+  - {fileID: 5041930272287006}
+  - {fileID: 880632968383080575}
+  - {fileID: 2712407168385065686}
   leaveIslandButton: {fileID: 0}
   cMUI: {fileID: 0}
   cm: {fileID: 0}
---- !u!114 &7605342723116434477
+  zm: {fileID: 0}
+--- !u!114 &1397328450935813937
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4255074981979255140}
+  m_GameObject: {fileID: 6505180538263704615}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9a31e198f64db7c41adcee9c90a2dded, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameEvent: {fileID: 11400000, guid: 652c65e12d9ed954ea0fb51627342b58, type: 2}
+  gameEvent: {fileID: 11400000, guid: 3484ec052b303a2489f9ce36d4de482f, type: 2}
   response:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
-        m_Mode: 0
+      - m_Target: {fileID: 3007096559997292400}
+        m_TargetAssemblyTypeName: CombatTutorialManager, Assembly-CSharp
+        m_MethodName: ZoneClaimedEvent
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &2804405630083182687
+--- !u!114 &5041930272287006
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4255074981979255140}
+  m_GameObject: {fileID: 6505180538263704615}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b44771653170d494ab52e19b50c4bfd7, type: 3}
@@ -101,26 +104,35 @@ MonoBehaviour:
     - That house on the right there seems to be free, lets go carve up some wood!
     callback:
       m_PersistentCalls:
-        m_Calls: []
+        m_Calls:
+        - m_Target: {fileID: 3007096559997292400}
+          m_TargetAssemblyTypeName: CombatTutorialManager, Assembly-CSharp
+          m_MethodName: ActivateFirstZone
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
     hasTasks: 1
   tasks:
     taskListName: Plunder the empty zone
     tasks:
-    - '- You can use the <b>WASD keys</b> to move the camera around the island
+    - '- Assign a crewmate to the <color=red>highlighted zone</color> to plunder
+      the structure there, the same way you assigned back at the outpost
 
       -
-      If you click on a zone, the camera will pan towards it
-
-      - Assign a crewmate
-      to the <color=blue>highlighted zone</color> to plunder the structure there,
-      the same way you assigned back at the outpost'
---- !u!114 &7128802964802688858
+      You can use the <b>WASD keys</b> to move the camera around the island'
+--- !u!114 &880632968383080575
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4255074981979255140}
+  m_GameObject: {fileID: 6505180538263704615}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b44771653170d494ab52e19b50c4bfd7, type: 3}
@@ -133,17 +145,43 @@ MonoBehaviour:
       of the loot.
     - You'd probably stand a better chance if ye sent your crew to zones in groups
       instead of one by one!
-    - Once we clear out the island we can head home with our spoils, so get swashbuckling!
+    - Try sendin yer crew to that group o' pirates to the left
     callback:
       m_PersistentCalls:
         m_Calls: []
     hasTasks: 1
   tasks:
-    taskListName: Charge!
+    taskListName: Take down those pirates
     tasks:
     - '- You can assign groups of crewmates by holding the <b>Control key</b> and
       clicking on multiple crewmate cards before dragging one onto a zone
 
       -
-      If a zone is <color=red>red</color>, it means there are still enemies to fight
-      or resources to gather'
+      If you <b>click on a zone</b>, the camera will pan to it and you can get information
+      on what is in that zone'
+--- !u!114 &2712407168385065686
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6505180538263704615}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b44771653170d494ab52e19b50c4bfd7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogue:
+    speakerName: First Mate Tuto Rial
+    sentences:
+    - Ye be a natural at plunderin and swashbucklin! The crew be feelin a tad greedy
+      so let's plunder the rest of the island!
+    callback:
+      m_PersistentCalls:
+        m_Calls: []
+    hasTasks: 1
+  tasks:
+    taskListName: Clear out the island
+    tasks:
+    - '- If a zone is <color=red>red</color>, it means there are still enemies to
+      fight or resources to gather'

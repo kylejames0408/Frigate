@@ -19,6 +19,8 @@ public class CombatTutorialManager : MonoBehaviour
 
     int zonesClaimed = 0;
 
+    bool zonesTurnedOff = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -33,18 +35,23 @@ public class CombatTutorialManager : MonoBehaviour
             leaveIslandButton.SetActive(false);
 
             //Set all zones to uninteractable except the first 2
-            for(int i = 0; i < zm.zones.Count; i++)
-            {
-                zm.zones[i].GetComponent<Zone>().isClickable = false;
-            }
-            zm.zones[4].GetComponent<Zone>().isClickable = true;
+            
+            
         }
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (!zonesTurnedOff && zm.zones.Count > 0 && GameManager.combatVisitNumber == 1)
+        {
+            for (int i = 0; i < zm.zones.Count; i++)
+            {
+                zm.zones[i].GetComponent<Zone>().isClickable = false;
+            }
+            zm.zones[4].GetComponent<Zone>().isClickable = true;
+            zonesTurnedOff = true;
+        }
     }
 
     public void ActivateFirstZone()
@@ -52,12 +59,16 @@ public class CombatTutorialManager : MonoBehaviour
         zm.zones[2].GetComponent<Zone>().isClickable = true;
     }
 
-    public void ZoneClaimedEvent()
+    public void ZoneClaimedEvent(Component sender, object data)
     {
         if (GameManager.combatVisitNumber != 1)
+        {
+            Debug.Log("Returned");
             return;
+        }
 
         zonesClaimed++;
+
         switch (zonesClaimed)
         {
             case 1:

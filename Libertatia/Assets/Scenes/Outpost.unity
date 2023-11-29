@@ -258,237 +258,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 35585149}
   m_CullTransparentMesh: 1
---- !u!1001 &36081936
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: -759242478486736209, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
-      propertyPath: dialogue.speakerName
-      value: Tuto Rial
-      objectReference: {fileID: 0}
-    - target: {fileID: -759242478486736209, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
-      propertyPath: tasks.tasks.Array.data[0]
-      value: Gather your crew and head for the ship above. You can use the WASD keys
-        to move the camera if you don't see it. Once everyone is at the ship, a promp
-        will appear letting you press the E key to depart.
-      objectReference: {fileID: 0}
-    - target: {fileID: -759242478486736209, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
-      propertyPath: dialogue.sentences.Array.data[0]
-      value: Yarr! Ye rallied yer crew splendidly! That enemy crew didnt know what
-        hit em!
-      objectReference: {fileID: 0}
-    - target: {fileID: -759242478486736209, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
-      propertyPath: dialogue.sentences.Array.data[2]
-      value: Gather yer crew and move em to the ship at the back. Once they get close
-        enough ye can hit the E key to sail back!
-      objectReference: {fileID: 0}
-    - target: {fileID: 834794479261776291, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
-      propertyPath: btnAttack
-      value: 
-      objectReference: {fileID: 811765206}
-    - target: {fileID: 834794479261776291, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
-      propertyPath: btnDepart
-      value: 
-      objectReference: {fileID: 811765206}
-    - target: {fileID: 834794479261776291, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
-      propertyPath: AttackButton
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 4051391971717010772, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
-      propertyPath: dialogue.speakerName
-      value: Tuto Rial
-      objectReference: {fileID: 0}
-    - target: {fileID: 4051391971717010772, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
-      propertyPath: tasks.tasks.Array.data[0]
-      value: Select individual crewmates by left clicking on them directly, or select
-        them in a group by holding the left click and dragging over them. You can
-        then right click a point on the map to command them to move towards it.
-      objectReference: {fileID: 0}
-    - target: {fileID: 4051391971717010772, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
-      propertyPath: dialogue.sentences.Array.data[2]
-      value: Select yer crewmates directly on the map and commad em! You can move
-        em one by one, or click and drag to select a group!
-      objectReference: {fileID: 0}
-    - target: {fileID: 4051391971717010772, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
-      propertyPath: dialogue.sentences.Array.data[3]
-      value: Move em to those red pirates and they'll cut em down!
-      objectReference: {fileID: 0}
-    - target: {fileID: 4137988272570579665, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
-      propertyPath: tasks.taskListName
-      value: Build the remaining structure
-      objectReference: {fileID: 0}
-    - target: {fileID: 4137988272570579665, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
-      propertyPath: dialogue.speakerName
-      value: Tuto Rial
-      objectReference: {fileID: 0}
-    - target: {fileID: 4829848524955143945, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
-      propertyPath: dialogue.speakerName
-      value: Tuto Rial
-      objectReference: {fileID: 0}
-    - target: {fileID: 4829848524955143945, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
-      propertyPath: tasks.tasks.Array.data[1]
-      value: '- Build a farm'
-      objectReference: {fileID: 0}
-    - target: {fileID: 4829848524955143945, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
-      propertyPath: tasks.tasks.Array.data[2]
-      value: '- Build a house'
-      objectReference: {fileID: 0}
-    - target: {fileID: 4829848524955143945, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
-      propertyPath: dialogue.sentences.Array.data[1]
-      value: 'Our crew needs a place to recover from our wounds.
-
-        All we
-        have are enough resources to build a farm and a house. If you''d help us
-        we''d be mighty grateful.'
-      objectReference: {fileID: 0}
-    - target: {fileID: 4829848524955143945, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
-      propertyPath: dialogue.callback.m_PersistentCalls.m_Calls.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4829848524955143945, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
-      propertyPath: dialogue.callback.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4829848524955143945, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
-      propertyPath: dialogue.callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 4829848524955143945, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
-      propertyPath: dialogue.callback.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4829848524955143945, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
-      propertyPath: dialogue.callback.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: ShowBuildingTabArrow
-      objectReference: {fileID: 0}
-    - target: {fileID: 4829848524955143945, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
-      propertyPath: dialogue.callback.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: OutpostManagementUI, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 4829848524955143945, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
-      propertyPath: dialogue.callback.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
-    - target: {fileID: 6231409215963263180, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
-      propertyPath: m_RootOrder
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 6231409215963263180, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6231409215963263180, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6231409215963263180, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6231409215963263180, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6231409215963263180, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6231409215963263180, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6231409215963263180, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6231409215963263180, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6231409215963263180, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6231409215963263180, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6483838458676575870, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
-      propertyPath: dialogue.speakerName
-      value: Tuto Rial
-      objectReference: {fileID: 0}
-    - target: {fileID: 6769618784424622894, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
-      propertyPath: dialogue.speakerName
-      value: Tuto Rial
-      objectReference: {fileID: 0}
-    - target: {fileID: 6769618784424622894, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
-      propertyPath: tasks.tasks.Array.data[0]
-      value: Select the Crewmate tab in the bottom menu. Drag a crewmates card onto
-        a structure to assign them to it, turning it green when you drop the card
-        on it.
-      objectReference: {fileID: 0}
-    - target: {fileID: 6769618784424622894, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
-      propertyPath: dialogue.sentences.Array.data[1]
-      value: Assign one of yer crew to each of the buildings to build em.
-      objectReference: {fileID: 0}
-    - target: {fileID: 6769618784424622894, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
-      propertyPath: dialogue.callback.m_PersistentCalls.m_Calls.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6769618784424622894, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
-      propertyPath: dialogue.callback.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6769618784424622894, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
-      propertyPath: dialogue.callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 6769618784424622894, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
-      propertyPath: dialogue.callback.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 6769618784424622894, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
-      propertyPath: dialogue.callback.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: ShowCrewmateTabArrow
-      objectReference: {fileID: 0}
-    - target: {fileID: 6769618784424622894, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
-      propertyPath: dialogue.callback.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: OutpostManagementUI, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 6769618784424622894, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
-      propertyPath: dialogue.callback.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
-    - target: {fileID: 6785737645530700138, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
-      propertyPath: dialogue.speakerName
-      value: Tuto Rial
-      objectReference: {fileID: 0}
-    - target: {fileID: 7317531967827180226, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
-      propertyPath: dialogue.speakerName
-      value: Tuto Rial
-      objectReference: {fileID: 0}
-    - target: {fileID: 7317531967827180226, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
-      propertyPath: tasks.tasks.Array.data[0]
-      value: Click the Go Explore! button in the bottom right to gather the remainer
-        of your crew and depart
-      objectReference: {fileID: 0}
-    - target: {fileID: 7845774388746979147, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
-      propertyPath: m_Name
-      value: Tutorial Manager
-      objectReference: {fileID: 0}
-    - target: {fileID: 7845774388746979147, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
 --- !u!1 &36166648
 GameObject:
   m_ObjectHideFlags: 0
@@ -1299,6 +1068,11 @@ PrefabInstance:
 --- !u!224 &69030890 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8307994700718187614, guid: 215357ea847fa4b41883fc49a57b4c11, type: 3}
+  m_PrefabInstance: {fileID: 69030889}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &69030891 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9128859519305386124, guid: 215357ea847fa4b41883fc49a57b4c11, type: 3}
   m_PrefabInstance: {fileID: 69030889}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &72960300
@@ -2586,6 +2360,11 @@ PrefabInstance:
 --- !u!224 &149214811 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8307994700718187614, guid: 215357ea847fa4b41883fc49a57b4c11, type: 3}
+  m_PrefabInstance: {fileID: 149214810}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &149214812 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9128859519305386124, guid: 215357ea847fa4b41883fc49a57b4c11, type: 3}
   m_PrefabInstance: {fileID: 149214810}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &150616549
@@ -12948,7 +12727,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &962263072
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12977,6 +12756,10 @@ MonoBehaviour:
   onAttack:
     m_PersistentCalls:
       m_Calls: []
+  MainMenuTesting: 0
+  OutpostTesting: 0
+  ExplorationTesting: 0
+  CombatTesting: 0
 --- !u!4 &962263074
 Transform:
   m_ObjectHideFlags: 0
@@ -15019,6 +14802,131 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1210681515}
   m_CullTransparentMesh: 1
+--- !u!1001 &1212314842
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2797826910927200585, guid: fc16ac2dd48fce44ba414da860de0ad5, type: 3}
+      propertyPath: m_Name
+      value: Tutorial Manager - Outpost
+      objectReference: {fileID: 0}
+    - target: {fileID: 2985819268609155380, guid: fc16ac2dd48fce44ba414da860de0ad5, type: 3}
+      propertyPath: bm
+      value: 
+      objectReference: {fileID: 745434448}
+    - target: {fileID: 2985819268609155380, guid: fc16ac2dd48fce44ba414da860de0ad5, type: 3}
+      propertyPath: cm
+      value: 
+      objectReference: {fileID: 314619652}
+    - target: {fileID: 2985819268609155380, guid: fc16ac2dd48fce44ba414da860de0ad5, type: 3}
+      propertyPath: oMUI
+      value: 
+      objectReference: {fileID: 1313257459}
+    - target: {fileID: 2985819268609155380, guid: fc16ac2dd48fce44ba414da860de0ad5, type: 3}
+      propertyPath: shipUI
+      value: 
+      objectReference: {fileID: 1795504960}
+    - target: {fileID: 2985819268609155380, guid: fc16ac2dd48fce44ba414da860de0ad5, type: 3}
+      propertyPath: departButton
+      value: 
+      objectReference: {fileID: 811765204}
+    - target: {fileID: 2985819268609155380, guid: fc16ac2dd48fce44ba414da860de0ad5, type: 3}
+      propertyPath: buildingDemolishButton
+      value: 
+      objectReference: {fileID: 491490349456580032}
+    - target: {fileID: 2985819268609155380, guid: fc16ac2dd48fce44ba414da860de0ad5, type: 3}
+      propertyPath: buildingUnassignButton
+      value: 
+      objectReference: {fileID: 3977914706294753090}
+    - target: {fileID: 2985819268609155380, guid: fc16ac2dd48fce44ba414da860de0ad5, type: 3}
+      propertyPath: shipUnassignButtons.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2985819268609155380, guid: fc16ac2dd48fce44ba414da860de0ad5, type: 3}
+      propertyPath: shipUnassignButtons.Array.data[0]
+      value: 
+      objectReference: {fileID: 1419714411}
+    - target: {fileID: 2985819268609155380, guid: fc16ac2dd48fce44ba414da860de0ad5, type: 3}
+      propertyPath: shipUnassignButtons.Array.data[1]
+      value: 
+      objectReference: {fileID: 69030891}
+    - target: {fileID: 2985819268609155380, guid: fc16ac2dd48fce44ba414da860de0ad5, type: 3}
+      propertyPath: shipUnassignButtons.Array.data[2]
+      value: 
+      objectReference: {fileID: 149214812}
+    - target: {fileID: 2985819268609155380, guid: fc16ac2dd48fce44ba414da860de0ad5, type: 3}
+      propertyPath: shipUnassignButtons.Array.data[3]
+      value: 
+      objectReference: {fileID: 1311605816}
+    - target: {fileID: 2985819268609155380, guid: fc16ac2dd48fce44ba414da860de0ad5, type: 3}
+      propertyPath: shipUnassignButtons.Array.data[4]
+      value: 
+      objectReference: {fileID: 1311605816}
+    - target: {fileID: 2985819268609155380, guid: fc16ac2dd48fce44ba414da860de0ad5, type: 3}
+      propertyPath: shipUnassignButtons.Array.data[5]
+      value: 
+      objectReference: {fileID: 1311605816}
+    - target: {fileID: 2985819268609155380, guid: fc16ac2dd48fce44ba414da860de0ad5, type: 3}
+      propertyPath: shipUnassignButtons.Array.data[6]
+      value: 
+      objectReference: {fileID: 1311605816}
+    - target: {fileID: 2985819268609155380, guid: fc16ac2dd48fce44ba414da860de0ad5, type: 3}
+      propertyPath: shipUnassignButtons.Array.data[7]
+      value: 
+      objectReference: {fileID: 1311605816}
+    - target: {fileID: 6664341872196379337, guid: fc16ac2dd48fce44ba414da860de0ad5, type: 3}
+      propertyPath: m_RootOrder
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 6664341872196379337, guid: fc16ac2dd48fce44ba414da860de0ad5, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6664341872196379337, guid: fc16ac2dd48fce44ba414da860de0ad5, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6664341872196379337, guid: fc16ac2dd48fce44ba414da860de0ad5, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6664341872196379337, guid: fc16ac2dd48fce44ba414da860de0ad5, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6664341872196379337, guid: fc16ac2dd48fce44ba414da860de0ad5, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6664341872196379337, guid: fc16ac2dd48fce44ba414da860de0ad5, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6664341872196379337, guid: fc16ac2dd48fce44ba414da860de0ad5, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6664341872196379337, guid: fc16ac2dd48fce44ba414da860de0ad5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6664341872196379337, guid: fc16ac2dd48fce44ba414da860de0ad5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6664341872196379337, guid: fc16ac2dd48fce44ba414da860de0ad5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: fc16ac2dd48fce44ba414da860de0ad5, type: 3}
 --- !u!1001 &1225797652
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15475,6 +15383,11 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 8307994700718187614, guid: 215357ea847fa4b41883fc49a57b4c11, type: 3}
   m_PrefabInstance: {fileID: 1311605814}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1311605816 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9128859519305386124, guid: 215357ea847fa4b41883fc49a57b4c11, type: 3}
+  m_PrefabInstance: {fileID: 1311605814}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1313257457
 GameObject:
   m_ObjectHideFlags: 0
@@ -15532,6 +15445,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cm: {fileID: 314619652}
   bm: {fileID: 745434448}
+  sm: {fileID: 7021428240441947983}
   popupUI: {fileID: 365225364}
   buildingResourceCost: {fileID: 1557529230}
   buildingAPCost: {fileID: 845936223}
@@ -15544,10 +15458,7 @@ MonoBehaviour:
   arrow: {fileID: 476263300966870331}
   tabUIParent: {fileID: 2584835497597247581}
   pagesUIParent: {fileID: 5893328723937594164}
-  ClickHereBuildingTab: {fileID: 1703268470}
-  ClickHereBuildingCard: {fileID: 638153188}
-  ClickHereCrewmateTab: {fileID: 1396546559}
-  DragHereCrewmateCard: {fileID: 1377776311}
+  buildingCards: []
 --- !u!1 &1317556779
 GameObject:
   m_ObjectHideFlags: 0
@@ -17107,6 +17018,11 @@ PrefabInstance:
 --- !u!224 &1419714410 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8307994700718187614, guid: 215357ea847fa4b41883fc49a57b4c11, type: 3}
+  m_PrefabInstance: {fileID: 1419714409}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1419714411 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9128859519305386124, guid: 215357ea847fa4b41883fc49a57b4c11, type: 3}
   m_PrefabInstance: {fileID: 1419714409}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1426634846
@@ -27179,6 +27095,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &3977914706294753090 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9128859519305386124, guid: 215357ea847fa4b41883fc49a57b4c11, type: 3}
+  m_PrefabInstance: {fileID: 3977914706294753088}
+  m_PrefabAsset: {fileID: 0}
 --- !u!33 &3980453250251457329
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -29903,6 +29824,7 @@ MonoBehaviour:
   isHovered: 0
   normalEmission: {r: 0, g: 0, b: 0, a: 1}
   hoveredEmission: {r: 0.3, g: 0.3, b: 0.3, a: 1}
+  onCrewmateAssignedGE: {fileID: 11400000, guid: 365ab5f0be2679b4eb754425b353b60b, type: 2}
 --- !u!222 &7025572297866437729
 CanvasRenderer:
   m_ObjectHideFlags: 0

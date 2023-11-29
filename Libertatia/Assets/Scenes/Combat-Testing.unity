@@ -40377,39 +40377,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5635535607744742456}
   m_Mesh: {fileID: -4517412117399791055, guid: 4fe7ec1d555ab494d836addf3c4b2c0f, type: 3}
---- !u!114 &1669960529758022354
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5678877369204526316}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b44771653170d494ab52e19b50c4bfd7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dialogue:
-    speakerName: First Mate Tuto Rial
-    sentences:
-    - That first structre might've been free, but we'll have to fight for the rest
-      of the loot.
-    - You'd probably stand a better chance if ye sent your crew to zones in groups
-      instead of one by one!
-    - Try sendin yer crew to that group o' pirates to the left
-    callback:
-      m_PersistentCalls:
-        m_Calls: []
-    hasTasks: 1
-  tasks:
-    taskListName: Take down those pirates
-    tasks:
-    - '- You can assign groups of crewmates by holding the <b>Control key</b> and
-      clicking on multiple crewmate cards before dragging one onto a zone
-
-      -
-      If you <b>click on a zone</b>, the camera will pan to it and you can get information
-      on what is in that zone'
 --- !u!23 &1680071646418406332
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -40555,21 +40522,6 @@ RectTransform:
   m_AnchoredPosition: {x: 231.6001, y: 104}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!4 &1837682033685345230
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5678877369204526316}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 8
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1843396832626486247
 GameObject:
   m_ObjectHideFlags: 0
@@ -40678,34 +40630,6 @@ Transform:
   m_Father: {fileID: 543450653589339061}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2038413394515835301
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5678877369204526316}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a31e198f64db7c41adcee9c90a2dded, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gameEvent: {fileID: 11400000, guid: 3484ec052b303a2489f9ce36d4de482f, type: 2}
-  response:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 8431342424945657541}
-        m_TargetAssemblyTypeName: CombatTutorialManager, Assembly-CSharp
-        m_MethodName: ZoneClaimedEvent
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!23 &2040696955996854421
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -41807,6 +41731,95 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6372110949548717620}
   m_CullTransparentMesh: 1
+--- !u!1001 &3757410633900328582
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1397328450935813937, guid: aaa68712aa313054c943d84d8d0fd677, type: 3}
+      propertyPath: response.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1397328450935813937, guid: aaa68712aa313054c943d84d8d0fd677, type: 3}
+      propertyPath: response.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ZoneClaimedEvent
+      objectReference: {fileID: 0}
+    - target: {fileID: 1397328450935813937, guid: aaa68712aa313054c943d84d8d0fd677, type: 3}
+      propertyPath: response.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: CombatTutorialManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 3007096559997292400, guid: aaa68712aa313054c943d84d8d0fd677, type: 3}
+      propertyPath: cm
+      value: 
+      objectReference: {fileID: 2009515019}
+    - target: {fileID: 3007096559997292400, guid: aaa68712aa313054c943d84d8d0fd677, type: 3}
+      propertyPath: zm
+      value: 
+      objectReference: {fileID: 1411551668}
+    - target: {fileID: 3007096559997292400, guid: aaa68712aa313054c943d84d8d0fd677, type: 3}
+      propertyPath: cMUI
+      value: 
+      objectReference: {fileID: 790469873}
+    - target: {fileID: 3007096559997292400, guid: aaa68712aa313054c943d84d8d0fd677, type: 3}
+      propertyPath: leaveIslandButton
+      value: 
+      objectReference: {fileID: 56911792}
+    - target: {fileID: 6505180538263704615, guid: aaa68712aa313054c943d84d8d0fd677, type: 3}
+      propertyPath: m_Name
+      value: Tutorial Manager - Combat
+      objectReference: {fileID: 0}
+    - target: {fileID: 8072100456264765463, guid: aaa68712aa313054c943d84d8d0fd677, type: 3}
+      propertyPath: m_RootOrder
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 8072100456264765463, guid: aaa68712aa313054c943d84d8d0fd677, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8072100456264765463, guid: aaa68712aa313054c943d84d8d0fd677, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8072100456264765463, guid: aaa68712aa313054c943d84d8d0fd677, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8072100456264765463, guid: aaa68712aa313054c943d84d8d0fd677, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8072100456264765463, guid: aaa68712aa313054c943d84d8d0fd677, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8072100456264765463, guid: aaa68712aa313054c943d84d8d0fd677, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8072100456264765463, guid: aaa68712aa313054c943d84d8d0fd677, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8072100456264765463, guid: aaa68712aa313054c943d84d8d0fd677, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8072100456264765463, guid: aaa68712aa313054c943d84d8d0fd677, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8072100456264765463, guid: aaa68712aa313054c943d84d8d0fd677, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: aaa68712aa313054c943d84d8d0fd677, type: 3}
 --- !u!23 &3870324714024478462
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -43337,27 +43350,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1 &5678877369204526316
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1837682033685345230}
-  - component: {fileID: 8431342424945657541}
-  - component: {fileID: 2038413394515835301}
-  - component: {fileID: 5992387609567956439}
-  - component: {fileID: 1669960529758022354}
-  - component: {fileID: 8431342424945657542}
-  m_Layer: 0
-  m_Name: Tutorial Manager - Combat
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
 --- !u!224 &5684620997769274287
 RectTransform:
   m_ObjectHideFlags: 0
@@ -43592,48 +43584,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 0
---- !u!114 &5992387609567956439
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5678877369204526316}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b44771653170d494ab52e19b50c4bfd7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dialogue:
-    speakerName: First Mate Tuto Rial
-    sentences:
-    - Yargh! Looks like this island be home to []. But who said plunderin' was supposed
-      to be easy?
-    - That house on the right there seems to be free, lets go carve up some wood!
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 8431342424945657541}
-          m_TargetAssemblyTypeName: CombatTutorialManager, Assembly-CSharp
-          m_MethodName: ActivateFirstZone
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-    hasTasks: 1
-  tasks:
-    taskListName: Plunder the empty zone
-    tasks:
-    - '- Assign a crewmate to the <color=red>highlighted zone</color> to plunder
-      the structure there, the same way you assigned back at the outpost
-
-      -
-      You can use the <b>WASD keys</b> to move the camera around the island'
 --- !u!1 &6008608301348527444
 GameObject:
   m_ObjectHideFlags: 0
@@ -45078,52 +45028,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &8431342424945657541
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5678877369204526316}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 03b7424f76b818444b2e6deb52cb7654, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  combatDialogues:
-  - {fileID: 5992387609567956439}
-  - {fileID: 1669960529758022354}
-  - {fileID: 8431342424945657542}
-  leaveIslandButton: {fileID: 56911792}
-  cMUI: {fileID: 790469873}
-  cm: {fileID: 2009515019}
-  zm: {fileID: 1411551668}
---- !u!114 &8431342424945657542
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5678877369204526316}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b44771653170d494ab52e19b50c4bfd7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dialogue:
-    speakerName: First Mate Tuto Rial
-    sentences:
-    - Ye be a natural at plunderin and swashbucklin! The crew be feelin a tad greedy
-      so let's plunder the rest of the island!
-    callback:
-      m_PersistentCalls:
-        m_Calls: []
-    hasTasks: 1
-  tasks:
-    taskListName: Clear out the island
-    tasks:
-    - '- If a zone is <color=red>red</color>, it means there are still enemies to
-      fight or resources to gather'
 --- !u!33 &8542916222939571179
 MeshFilter:
   m_ObjectHideFlags: 0

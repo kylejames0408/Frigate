@@ -5615,7 +5615,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   MainMenuTesting: 0
-  OutpostTesting: 1
+  OutpostTesting: 0
   ExplorationTesting: 0
   CombatTesting: 1
 --- !u!114 &1988140350

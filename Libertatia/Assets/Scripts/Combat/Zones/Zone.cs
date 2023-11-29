@@ -103,9 +103,9 @@ public class Zone : MonoBehaviour
             DrawOutline(redColorKey);
         }
 
-        if(zoneLootCollected && !zoneClaimTriggered)
+        if(zoneLootCollected && !zoneClaimTriggered && zoneName != "Safe Zone")
         {
-            zoneClaimed.Raise(this, zoneLootCollected);
+            zoneClaimed.Raise(this, this);
             zoneClaimTriggered = true;
         }
 

@@ -1,0 +1,353 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2797826910927200585
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6664341872196379337}
+  - component: {fileID: 2985819268609155380}
+  - component: {fileID: 9009866763937306396}
+  - component: {fileID: 2475481065160044799}
+  - component: {fileID: 9189567090174923718}
+  - component: {fileID: 8868381698024276530}
+  - component: {fileID: 4198999046747219984}
+  - component: {fileID: 7162538110527205525}
+  - component: {fileID: 3305362712426281207}
+  - component: {fileID: 5706939433792472386}
+  m_Layer: 0
+  m_Name: Tutorial Manager - Outpost
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6664341872196379337
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2797826910927200585}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2985819268609155380
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2797826910927200585}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5efb0eadcd001504895a0620c6bb10e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outpostDialogues:
+  - {fileID: 8868381698024276530}
+  - {fileID: 4198999046747219984}
+  - {fileID: 7162538110527205525}
+  - {fileID: 3305362712426281207}
+  - {fileID: 5706939433792472386}
+  departButton: {fileID: 0}
+  buildingUnassignButton: {fileID: 0}
+  buildingDemolishButton: {fileID: 0}
+  shipUnassignButtons:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  oMUI: {fileID: 0}
+  shipUI: {fileID: 0}
+  buildingCards: []
+  bm: {fileID: 0}
+  cm: {fileID: 0}
+--- !u!114 &9009866763937306396
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2797826910927200585}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a31e198f64db7c41adcee9c90a2dded, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: 4ae36f9fe3f9160488e2f40b8ca0c348, type: 2}
+  response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2985819268609155380}
+        m_TargetAssemblyTypeName: OutpostTutorialManager, Assembly-CSharp
+        m_MethodName: BuildingPlacedEvent
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &2475481065160044799
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2797826910927200585}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a31e198f64db7c41adcee9c90a2dded, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: 8c002ad9b29a8304d866301b28d5b0b9, type: 2}
+  response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2985819268609155380}
+        m_TargetAssemblyTypeName: OutpostTutorialManager, Assembly-CSharp
+        m_MethodName: CrewmateAssignedBuildingEvent
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &9189567090174923718
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2797826910927200585}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a31e198f64db7c41adcee9c90a2dded, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: 365ab5f0be2679b4eb754425b353b60b, type: 2}
+  response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2985819268609155380}
+        m_TargetAssemblyTypeName: OutpostTutorialManager, Assembly-CSharp
+        m_MethodName: CrewmateAssignedBoatEvent
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &8868381698024276530
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2797826910927200585}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b44771653170d494ab52e19b50c4bfd7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogue:
+    speakerName: First Mate Tuto Rial
+    sentences:
+    - 'Yargh! You''ve caught me crew at a bad time, we just escaped from a ghastly
+      battle and thought this island be deserted.
+
+'
+    - 'Our crew needs a place to recover from our wounds.
+
+      All we have are
+      enough resources to build a farm and a house. If you''d help us we''d be mighty
+      grateful.'
+    - Place a buildin on some empty land to set its build spot!
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 2985819268609155380}
+          m_TargetAssemblyTypeName: OutpostTutorialManager, Assembly-CSharp
+          m_MethodName: HighlightBuildings
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    hasTasks: 1
+  tasks:
+    taskListName: Build some structures
+    tasks:
+    - You can place building by <b>clicking and dragging a building card</b> onto
+      an empty plot of land!
+    - '- Build a farm'
+    - '- Build a house'
+--- !u!114 &4198999046747219984
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2797826910927200585}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b44771653170d494ab52e19b50c4bfd7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogue:
+    speakerName: First Mate Tuto Rial
+    sentences:
+    - These two structures best be good to support our crew now, but they won't be
+      built by themselves.
+    - Assign one of yer crew to each of the buildings to build em.
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 2985819268609155380}
+          m_TargetAssemblyTypeName: OutpostTutorialManager, Assembly-CSharp
+          m_MethodName: HighlightCrewmates
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    hasTasks: 1
+  tasks:
+    taskListName: Put your crew to work
+    tasks:
+    - '- Drag a crewmate card onto an <color=#FDE541><b>unassigned building</b></color>
+      to assign them to it'
+    - '- Assign a crew member to each structure. You''ll know it''s assigned when
+      it turns <color=#007200><b>green</b></color>'
+--- !u!114 &7162538110527205525
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2797826910927200585}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b44771653170d494ab52e19b50c4bfd7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogue:
+    speakerName: First Mate Tuto Rial
+    sentences:
+    - Resources are scarce on this island. We should take our remaining crew on a
+      trip to other islands to gather more for our outpost.
+    - Assign the remainder of the crew to the ship so we can go plunder!
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 2985819268609155380}
+          m_TargetAssemblyTypeName: OutpostTutorialManager, Assembly-CSharp
+          m_MethodName: PanCameraToBoat
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    hasTasks: 1
+  tasks:
+    taskListName: Head out for some resources
+    tasks:
+    - '- Assign the rest of your crew to the ship <b>the same way you did the buildings</b>'
+--- !u!114 &3305362712426281207
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2797826910927200585}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b44771653170d494ab52e19b50c4bfd7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogue:
+    speakerName: First Mate Tuto Rial
+    sentences:
+    - 'Looks like all yer crewmates are ready to set sail!
+
+      Click on the ship
+      and hit the "Map" button and let''s go explorin''!'
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 2985819268609155380}
+          m_TargetAssemblyTypeName: OutpostTutorialManager, Assembly-CSharp
+          m_MethodName: OpenShipUI
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    hasTasks: 1
+  tasks:
+    taskListName: Go explore!
+    tasks:
+    - '- Click the "Map" button in the ship details menu
+
+      - If the menu closes,
+      click on the ship to bring it back up.'
+--- !u!114 &5706939433792472386
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2797826910927200585}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b44771653170d494ab52e19b50c4bfd7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogue:
+    speakerName: First Mate Tuto Rial
+    sentences:
+    - Good job! You just finished the first cycle. See how the buildings you placed
+      before leaving got built while you were gone? When you travel, things get done
+      back at the outpost!
+    - That's all for now, but in the full game ye can keep building your outpost,
+      exploring new islands, and writing your own legend.
+    callback:
+      m_PersistentCalls:
+        m_Calls: []
+    hasTasks: 0
+  tasks:
+    taskListName: 
+    tasks: []
