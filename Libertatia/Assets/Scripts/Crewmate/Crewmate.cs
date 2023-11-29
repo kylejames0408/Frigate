@@ -10,6 +10,7 @@ public enum CrewmateState
     BUILDING,
     ATTACKING,
     MOVING,
+    ABOARD,
     COUNT
 }
 
@@ -96,7 +97,7 @@ public class Crewmate : MonoBehaviour
     }
     public bool IsAssigned
     {
-        get { return state == CrewmateState.BUILDING; }
+        get { return state == CrewmateState.BUILDING || state == CrewmateState.ABOARD; }
     }
 
     private void Awake()
@@ -163,17 +164,26 @@ public class Crewmate : MonoBehaviour
         transform.rotation = data.rotation;
     }
     // Make inputs into a ObjectData item?
-    public void Assign(int buildingID, Sprite buildingIcon, Vector3 destination)
+    public void Assign(int buildingID, Sprite buildingIcon, Vector3 destination, bool isShip = false)
     {
         // Checks if already assigned to the building
         if(building.id != buildingID)
         {
-            // Checks if is already assigned to a building
+            // Reassign if crewmate is already assigned to a building
             if (building.id != -1)
             {
                 onReassign.Invoke();
             }
-            state = CrewmateState.BUILDING;
+
+            // Determine crewmates new state
+            if (!isShip) //building.id == ship.ID
+            {
+                state = CrewmateState.BUILDING;
+            }
+            else
+            {
+                state = CrewmateState.ABOARD;
+            }
             building = new ObjectData(buildingID, buildingIcon); // Assign building
             agent.destination = destination; // Set destination
             onAssign.Invoke(); // Update UI

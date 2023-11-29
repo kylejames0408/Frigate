@@ -10,6 +10,8 @@ public class BattleLootManager : MonoBehaviour
     public int initWoodValue;
     public int initStoneValue;
 
+    [SerializeField] private GameObject battleLootUI;
+
     [SerializeField] private CombatResourcesUI combatResources;
 
     [SerializeField] private TextMeshProUGUI initDoubloonText;
@@ -30,6 +32,10 @@ public class BattleLootManager : MonoBehaviour
 
     PlayerData data = GameManager.Data;
 
+    private bool updateResourceBool;
+
+    private int doubloonAmount, foodAmount, woodAmount;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -42,6 +48,7 @@ public class BattleLootManager : MonoBehaviour
         initWoodValue = data.resources.wood;
         initWoodText.text = initWoodValue.ToString();
 
+        updateResourceBool = false;
     }
 
     // Update is called once per frame
@@ -51,6 +58,12 @@ public class BattleLootManager : MonoBehaviour
         CurrentResourceValue(increasedDoubloonValue, combatResources.doubloonAmount, currentDoubloonText, initDoubloonValue);
         CurrentResourceValue(increasedFoodValue, combatResources.foodAmount, currentFoodText, initFoodValue);
         CurrentResourceValue(increasedWoodValue, combatResources.woodAmount, currentWoodText, initWoodValue);
+
+        if(updateResourceBool == false)
+        {
+            StartCoroutine(UpdateResourceValues());
+        }
+
     }
 
     /// <summary>
@@ -69,5 +82,62 @@ public class BattleLootManager : MonoBehaviour
     public void ReturnToOutpost()
     {
         CeneManager.LoadOutpostFromCombat();
+    }
+
+    /// <summary>
+    /// Updates the resources in the battle loot ui by showing the increase in numbers
+    /// </summary>
+    /// <returns></returns>
+    IEnumerator UpdateResourceValues()
+    {
+        if (battleLootUI.activeSelf)
+        {
+            updateResourceBool = true;
+
+            doubloonAmount = combatResources.doubloonAmount;
+            woodAmount = combatResources.woodAmount;
+            foodAmount = combatResources.foodAmount;
+
+            //Wait before updating the resource values
+            yield return new WaitForSeconds(1f);
+
+            //doubloons
+            for (int i = 0; i < doubloonAmount; i++)
+            {
+                yield return new WaitForSeconds(0.05f);
+
+                combatResources.doubloonAmount -= 1;
+                initDoubloonValue += 1;
+
+                initDoubloonText.text = initDoubloonValue.ToString();
+                CurrentResourceValue(increasedDoubloonValue, combatResources.doubloonAmount, currentDoubloonText, initDoubloonValue);
+            }
+
+            //wood
+            for (int i = 0; i < woodAmount; i++)
+            {
+                yield return new WaitForSeconds(0.05f);
+
+                combatResources.woodAmount -= 1;
+                initWoodValue += 1;
+
+                initWoodText.text = initWoodValue.ToString();
+                CurrentResourceValue(increasedWoodValue, combatResources.woodAmount, currentWoodText, initWoodValue);
+            }
+
+            //food
+            for (int i = 0; i < foodAmount; i++)
+            {
+                yield return new WaitForSeconds(0.05f);
+
+                combatResources.foodAmount -= 1;
+                initFoodValue += 1;
+
+                initFoodText.text = initFoodValue.ToString();
+                CurrentResourceValue(increasedFoodValue, combatResources.foodAmount, currentFoodText, initFoodValue);
+            }
+
+            updateResourceBool = false;
+        }
     }
 }

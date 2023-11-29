@@ -37,6 +37,8 @@ public class ZoneManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI crewmateCountUI;
     [SerializeField] private TextMeshProUGUI enemyCountUI;
     [SerializeField] private TextMeshProUGUI resourceCountUI;
+    [SerializeField] private GameObject houseImage;
+    [SerializeField] private GameObject farmImage;
 
     //current zone that is displaying information
     private Zone selectedZone;
@@ -109,7 +111,29 @@ public class ZoneManager : MonoBehaviour
                 //continously updates the information
                 crewmateCountUI.text = selectedZone.crewMembersInZone.Count.ToString();
                 enemyCountUI.text = selectedZone.enemiesInZone.Count.ToString();
-                resourceCountUI.text = selectedZone.housesInZone.Count.ToString();
+
+                if(selectedZone.housesInZone.Count > 0)
+                {
+                    EnemyHouse enemyHouse = selectedZone.housesInZone[0].GetComponent<EnemyHouse>();
+
+                    if(enemyHouse.resourceType == "wood")
+                    {
+                        resourceCountUI.text = enemyHouse.lootValue + " wood";
+                    }
+
+                    if (enemyHouse.resourceType == "food")
+                    {
+                        resourceCountUI.text = enemyHouse.lootValue + " food";
+                    }
+
+                }
+                else
+                {
+                    HideZoneBuildingImages();
+
+                    resourceCountUI.text = "No Resources";
+                }
+          
             }
 
             //if there is a resource depot & the zone has at least 1 crew member & the zone has no enemies left
@@ -378,7 +402,42 @@ public class ZoneManager : MonoBehaviour
 
         crewmateCountUI.text = zone.crewMembersInZone.Count.ToString();
         enemyCountUI.text = zone.enemiesInZone.Count.ToString();
-        resourceCountUI.text = zone.housesInZone.Count.ToString();
+
+        //resourceCountUI.text = zone.housesInZone.Count.ToString();
+
+        if(zone.housesInZone.Count > 0)
+        {
+            //Assuming there is only one resource in each zone
+            EnemyHouse resourceBuilding = zone.housesInZone[0].GetComponent<EnemyHouse>();
+
+            //Shows the image of the resource building in the zone
+            if(resourceBuilding.resourceType == "wood")
+            {
+                ShowZoneBuildingImage(houseImage);
+
+                resourceCountUI.text = resourceBuilding.lootValue + " wood";
+
+            }
+            else if (resourceBuilding.resourceType == "food")
+            {
+                ShowZoneBuildingImage(farmImage);
+
+                resourceCountUI.text = resourceBuilding.lootValue + " food";
+            }
+        }
+    }
+
+    private void ShowZoneBuildingImage(GameObject buildingImage)
+    {
+        HideZoneBuildingImages();
+
+        buildingImage.SetActive(true);
+    }
+
+    private void HideZoneBuildingImages()
+    {
+        houseImage.SetActive(false);
+        farmImage.SetActive(false);
     }
 
     private void ShowLineRenderer(Vector3 targetPos, CrewMember crewMember)
