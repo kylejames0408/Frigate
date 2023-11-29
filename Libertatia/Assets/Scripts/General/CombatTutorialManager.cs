@@ -19,7 +19,7 @@ public class CombatTutorialManager : MonoBehaviour
 
     int zonesClaimed = 0;
 
-    bool zonesTurnedOff = false;
+    bool zonesTurnedOff = true;
 
     // Start is called before the first frame update
     void Start()
@@ -33,10 +33,8 @@ public class CombatTutorialManager : MonoBehaviour
             combatDialogues[0].TriggerDialogue();
             GameManager.combatVisitNumber++;
             leaveIslandButton.SetActive(false);
-
+            zonesTurnedOff = false;
             //Set all zones to uninteractable except the first 2
-            
-            
         }
     }
 

@@ -38,7 +38,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2985819268609155380
 MonoBehaviour:
@@ -320,10 +320,8 @@ MonoBehaviour:
   tasks:
     taskListName: Go explore!
     tasks:
-    - '- Click the "Map" button in the ship details menu
-
-      - If the menu closes,
-      click on the ship to bring it back up.'
+    - '- Click the "Map" button in the ship details menu'
+    - '- If the menu closes, click on the ship to bring it back up.'
 --- !u!114 &5706939433792472386
 MonoBehaviour:
   m_ObjectHideFlags: 0

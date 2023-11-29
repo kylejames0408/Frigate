@@ -105,7 +105,8 @@ public class Zone : MonoBehaviour
 
         if(zoneLootCollected && !zoneClaimTriggered && zoneName != "Safe Zone")
         {
-            zoneClaimed.Raise(this, this);
+            Debug.Log("Raised Zone Claim");
+            zoneClaimed.Raise(this, zoneClaimed);
             zoneClaimTriggered = true;
         }
 

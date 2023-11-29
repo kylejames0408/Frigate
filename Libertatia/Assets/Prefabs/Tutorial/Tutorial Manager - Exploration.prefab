@@ -1,0 +1,102 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1227846095658526980
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2798294132368145869}
+  - component: {fileID: 3891331386094522503}
+  - component: {fileID: 5138279943681738648}
+  - component: {fileID: 635174428101428771}
+  m_Layer: 0
+  m_Name: Tutorial Manager - Exploration
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2798294132368145869
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1227846095658526980}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3891331386094522503
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1227846095658526980}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36ac503be8a7bc549a48f30c9232321f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  explorationDialogues:
+  - {fileID: 5138279943681738648}
+  - {fileID: 635174428101428771}
+  islandDepartButton: {fileID: 0}
+  outpostDepartButton: {fileID: 0}
+--- !u!114 &5138279943681738648
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1227846095658526980}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b44771653170d494ab52e19b50c4bfd7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogue:
+    speakerName: First Mate Tuto Rial
+    sentences:
+    - I think I see an island worth plunderin in the distance there, let's head for
+      it!
+    callback:
+      m_PersistentCalls:
+        m_Calls: []
+    hasTasks: 1
+  tasks:
+    taskListName: Head for the neabry island
+    tasks:
+    - '- Click on the <color=red>nearby island</color> and hit the "Depart" button'
+--- !u!114 &635174428101428771
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1227846095658526980}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b44771653170d494ab52e19b50c4bfd7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogue:
+    speakerName: First Mate Tuto Rial
+    sentences:
+    - That was a good plunderin run! Let's head back to the outpost with our spoils.
+    callback:
+      m_PersistentCalls:
+        m_Calls: []
+    hasTasks: 1
+  tasks:
+    taskListName: Head for the neabry island
+    tasks:
+    - '- Click on the <color=green>outpost</color> and hit the "Depart" button'

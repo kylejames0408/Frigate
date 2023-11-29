@@ -34,7 +34,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3007096559997292400
 MonoBehaviour:
@@ -75,7 +75,7 @@ MonoBehaviour:
       - m_Target: {fileID: 3007096559997292400}
         m_TargetAssemblyTypeName: CombatTutorialManager, Assembly-CSharp
         m_MethodName: ZoneClaimedEvent
-        m_Mode: 1
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -99,8 +99,8 @@ MonoBehaviour:
   dialogue:
     speakerName: First Mate Tuto Rial
     sentences:
-    - Yargh! Looks like this island be home to []. But who said plunderin' was supposed
-      to be easy?
+    - Yargh! Looks like this island be home to some other pirates. But who said plunderin'
+      was supposed to be easy?
     - That house on the right there seems to be free, lets go carve up some wood!
     callback:
       m_PersistentCalls:
@@ -122,10 +122,8 @@ MonoBehaviour:
     taskListName: Plunder the empty zone
     tasks:
     - '- Assign a crewmate to the <color=red>highlighted zone</color> to plunder
-      the structure there, the same way you assigned back at the outpost
-
-      -
-      You can use the <b>WASD keys</b> to move the camera around the island'
+      the structure there, the same way you assigned back at the outpost'
+    - '- You can use the <b>WASD keys</b> to move the camera around the island'
 --- !u!114 &880632968383080575
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -151,14 +149,12 @@ MonoBehaviour:
         m_Calls: []
     hasTasks: 1
   tasks:
-    taskListName: Take down those pirates
+    taskListName: Take down the enemy pirates
     tasks:
     - '- You can assign groups of crewmates by holding the <b>Control key</b> and
-      clicking on multiple crewmate cards before dragging one onto a zone
-
-      -
-      If you <b>click on a zone</b>, the camera will pan to it and you can get information
-      on what is in that zone'
+      clicking on multiple crewmate cards before dragging one onto a zone'
+    - '- If you <b>click on a zone</b>, the camera will pan to it and you can get
+      information on what is in that zone'
 --- !u!114 &2712407168385065686
 MonoBehaviour:
   m_ObjectHideFlags: 0

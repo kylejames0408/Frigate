@@ -25,6 +25,7 @@ public class GameManager : MonoBehaviour
     private GameState state = GameState.PLAYING;
     public static int outpostVisitNumber = 0;
     public static int combatVisitNumber = 0;
+    public static int explorationVisitNumber = 0;
     public static PlayerData data;
 
     // UI
