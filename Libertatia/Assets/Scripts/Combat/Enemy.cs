@@ -38,7 +38,7 @@ public class Enemy : Character
         attackRate = 3;
         damage = 10;
         detectionRange = 10;
-        maxSpeed = 3.5f;
+        maxSpeed = 4.5f;
 
         lootValue = 5;
 

@@ -45,7 +45,7 @@ public abstract class Character : MonoBehaviour
         attackRange = 2;
         attackRate = 2;
         damage = 50;
-        maxSpeed = 3.5f;
+        maxSpeed = 4.5f;
 
         healthbar.UpdateHealthBar(maxHealth, currentHealth);
 

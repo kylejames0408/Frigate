@@ -18,7 +18,7 @@ public class CrewMember : Character
         attackRange = 3;
         attackRate = 2;
         damage = 25;
-        maxSpeed = 3.5f;
+        maxSpeed = 4.5f;
 
         charAgent = GetComponent<NavMeshAgent>();
 
