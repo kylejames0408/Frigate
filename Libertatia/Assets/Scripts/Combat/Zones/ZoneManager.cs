@@ -43,6 +43,8 @@ public class ZoneManager : MonoBehaviour
     //current zone that is displaying information
     private Zone selectedZone;
 
+    private bool IsIslandCompleted;
+
     private void Awake()
     {
         if (cm == null) { cm = FindObjectOfType<CrewmateManager>(); }
@@ -64,6 +66,8 @@ public class ZoneManager : MonoBehaviour
             }
         }
         finishedCombatBool = false;
+
+        IsIslandCompleted = false;
     }
 
     // Update is called once per frame
@@ -249,6 +253,18 @@ public class ZoneManager : MonoBehaviour
                 Zone zone = terrain.GetComponent<Zone>();
 
                 ClearZoneLoot(zone);
+            }
+
+            //Updates resources in gamemanager
+            if(IsIslandCompleted == false)
+            {
+                CombatResourcesUI combatResources = combatUI.GetComponent<CombatResourcesUI>();
+
+                GameManager.data.resources.doubloons += combatResources.doubloonAmount;
+                GameManager.data.resources.wood += combatResources.woodAmount;
+                GameManager.data.resources.food += combatResources.foodAmount;
+
+                IsIslandCompleted = true;
             }
 
             battleLootUI.SetActive(true);

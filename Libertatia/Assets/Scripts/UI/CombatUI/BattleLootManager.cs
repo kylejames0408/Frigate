@@ -59,7 +59,7 @@ public class BattleLootManager : MonoBehaviour
         CurrentResourceValue(increasedFoodValue, combatResources.foodAmount, currentFoodText, initFoodValue);
         CurrentResourceValue(increasedWoodValue, combatResources.woodAmount, currentWoodText, initWoodValue);
 
-        if(updateResourceBool == false)
+        if (updateResourceBool == false)
         {
             StartCoroutine(UpdateResourceValues());
         }
