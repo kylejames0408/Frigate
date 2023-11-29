@@ -10,6 +10,9 @@ public class OutpostTutorialManager : MonoBehaviour
     private bool secondVisit = false;
 
     public GameObject departButton;
+    public GameObject buildingUnassignButton;
+    public GameObject buildingDemolishButton;
+    public List<GameObject> shipUnassignButtons;
     public OutpostManagementUI oMUI;
     public ShipUI shipUI;
     [SerializeField] private Dictionary<int, CrewmateCard> crewmateCards;
@@ -34,8 +37,12 @@ public class OutpostTutorialManager : MonoBehaviour
         {
             outpostDialogues[0].TriggerDialogue();
             GameManager.outpostVisitNumber++;
+
             departButton.SetActive(false);
-            // Disable depart button in ship UI
+            buildingUnassignButton.SetActive(false);
+            buildingDemolishButton.SetActive(false);
+            foreach(GameObject unassignButton in shipUnassignButtons)
+                unassignButton.SetActive(false);
         }
         else if (GameManager.outpostVisitNumber == 1)
         {

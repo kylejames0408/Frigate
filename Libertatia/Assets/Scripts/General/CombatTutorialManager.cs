@@ -37,7 +37,6 @@ public class CombatTutorialManager : MonoBehaviour
             {
                 zm.zones[i].GetComponent<Zone>().isClickable = false;
             }
-            zm.zones[2].GetComponent<Zone>().isClickable = true;
             zm.zones[4].GetComponent<Zone>().isClickable = true;
         }
     }
@@ -48,8 +47,16 @@ public class CombatTutorialManager : MonoBehaviour
         
     }
 
+    public void ActivateFirstZone()
+    {
+        zm.zones[2].GetComponent<Zone>().isClickable = true;
+    }
+
     public void ZoneClaimedEvent()
     {
+        if (GameManager.combatVisitNumber != 1)
+            return;
+
         zonesClaimed++;
         switch (zonesClaimed)
         {

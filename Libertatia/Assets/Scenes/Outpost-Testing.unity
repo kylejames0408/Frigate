@@ -1070,6 +1070,11 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 8307994700718187614, guid: 215357ea847fa4b41883fc49a57b4c11, type: 3}
   m_PrefabInstance: {fileID: 69030889}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &69030891 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9128859519305386124, guid: 215357ea847fa4b41883fc49a57b4c11, type: 3}
+  m_PrefabInstance: {fileID: 69030889}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &72960300
 GameObject:
   m_ObjectHideFlags: 0
@@ -2355,6 +2360,11 @@ PrefabInstance:
 --- !u!224 &149214811 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8307994700718187614, guid: 215357ea847fa4b41883fc49a57b4c11, type: 3}
+  m_PrefabInstance: {fileID: 149214810}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &149214812 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9128859519305386124, guid: 215357ea847fa4b41883fc49a57b4c11, type: 3}
   m_PrefabInstance: {fileID: 149214810}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &150616549
@@ -14901,6 +14911,11 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 8307994700718187614, guid: 215357ea847fa4b41883fc49a57b4c11, type: 3}
   m_PrefabInstance: {fileID: 1311605814}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1311605816 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9128859519305386124, guid: 215357ea847fa4b41883fc49a57b4c11, type: 3}
+  m_PrefabInstance: {fileID: 1311605814}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1313257457
 GameObject:
   m_ObjectHideFlags: 0
@@ -16397,6 +16412,13 @@ MonoBehaviour:
   - {fileID: 1415094623}
   - {fileID: 1415094626}
   departButton: {fileID: 811765204}
+  buildingUnassignButton: {fileID: 3977914706294753090}
+  buildingDemolishButton: {fileID: 491490349456580032}
+  shipUnassignButtons:
+  - {fileID: 1419714411}
+  - {fileID: 69030891}
+  - {fileID: 149214812}
+  - {fileID: 1311605816}
   oMUI: {fileID: 1313257459}
   shipUI: {fileID: 0}
   buildingCards: []
@@ -16717,6 +16739,11 @@ PrefabInstance:
 --- !u!224 &1419714410 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8307994700718187614, guid: 215357ea847fa4b41883fc49a57b4c11, type: 3}
+  m_PrefabInstance: {fileID: 1419714409}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1419714411 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9128859519305386124, guid: 215357ea847fa4b41883fc49a57b4c11, type: 3}
   m_PrefabInstance: {fileID: 1419714409}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1426634846
@@ -19146,7 +19173,9 @@ MonoBehaviour:
   shipUI: {fileID: 1795504960}
   renderers: []
   isCombat: 0
+  isOutpost: 0
   id: -1
+  islandID: -1
   capacity: 12
   crewmates: []
   level: 0
@@ -19978,6 +20007,7 @@ MonoBehaviour:
   ship: {fileID: 1707051410}
   crewmateUI: {fileID: 234963690}
   buildingUI: {fileID: 9116816653009409157}
+  islandUI: {fileID: 0}
   animSpeedInterface: 0.6
   iconEmptyAssignment: {fileID: 21300000, guid: 352bd3b255cdb8540aa3455efeb7b45f, type: 3}
   rowAmt: 2
@@ -26166,6 +26196,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &3977914706294753090 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9128859519305386124, guid: 215357ea847fa4b41883fc49a57b4c11, type: 3}
+  m_PrefabInstance: {fileID: 3977914706294753088}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &3983320248345986418
 MonoBehaviour:
   m_ObjectHideFlags: 0
