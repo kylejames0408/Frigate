@@ -6,13 +6,16 @@ using UnityEngine.Events;
 public enum GameState
 {
     PLAYING,
-    PAUSED
+    PAUSED,
+    COUNT
 }
 public enum GamePhase
 {
     MAIN_MENU,
     OUTPOST,
-    ENEMY_TERRITORY
+    EXPLORATION,
+    ENEMY_TERRITORY,
+    COUNT
 }
 
 public class GameManager : MonoBehaviour

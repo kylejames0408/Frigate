@@ -194,20 +194,6 @@ public class CrewmateManager : MonoBehaviour
             }
         }
     }
-    private void OnDestroy()
-    {
-        // Moved to ship
-        //if(isCombat)
-        //{
-        //    GameManager.UpdateCombatCrew(crewmates.Values.ToArray());
-        //    GameManager.UpdateCrewmateData();
-        //}
-        //else
-        //{
-        //    GameManager.UpdateCrewmateData(crewmates.Values.ToArray());
-        //    GameManager.SeparateCrew();
-        //}
-    }
 
     // Handlers
     private void PressHandler()
@@ -599,7 +585,7 @@ public class CrewmateManager : MonoBehaviour
         {
             cmui.UpdateCard(crewmateID, mate.StateIcon);
         }
-        
+
     }
 
     // Callbacks

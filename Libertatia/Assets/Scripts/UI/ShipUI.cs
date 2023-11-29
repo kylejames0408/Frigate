@@ -15,6 +15,7 @@ public class ShipUI : MonoBehaviour
     [SerializeField] private Ship ship;
     [SerializeField] private CrewmateUI crewmateUI;
     [SerializeField] private BuildingUI buildingUI;
+    [SerializeField] private IslandUI islandUI;
 
     [Header("Static Data")]
     [SerializeField] private float animSpeedInterface = 0.6f;
@@ -41,7 +42,10 @@ public class ShipUI : MonoBehaviour
     }
     private void Start()
     {
-        btnDepart.onClick.AddListener(CeneManager.LoadCombatFromOutpost);
+        if(btnDepart != null)
+        {
+            btnDepart.onClick.AddListener(CeneManager.LoadExploration);
+        }
         btnClose.onClick.AddListener(CloseMenu);
         isOpen = false;
     }
@@ -52,13 +56,16 @@ public class ShipUI : MonoBehaviour
             HandleClicking();
 
             // Player must assign at least one crewmate to leave
-            if(ship.CrewmateData.Count > 0)
+            if(btnDepart)
             {
-                btnDepart.interactable = true;
-            }
-            else
-            {
-                btnDepart.interactable = false;
+                if (ship.CrewmateData.Count > 0)
+                {
+                    btnDepart.interactable = true;
+                }
+                else
+                {
+                    btnDepart.interactable = false;
+                }
             }
         }
     }
@@ -77,7 +84,10 @@ public class ShipUI : MonoBehaviour
     internal void SetCrewmate(int index, ObjectData crewmate)
     {
         assigneeCards[index].Set(crewmate);
-        assigneeCards[index].btnUnassign.onClick.AddListener(() => { UnassignCallback(index, crewmate.id); }); //assigneeCards[assigneeIndex].CrewmateID
+        if(assigneeCards[index].btnUnassign)
+        {
+            assigneeCards[index].btnUnassign.onClick.AddListener(() => { UnassignCallback(index, crewmate.id); }); //assigneeCards[assigneeIndex].CrewmateID
+        }
     }
     internal void AddRow()
     {
@@ -131,8 +141,18 @@ public class ShipUI : MonoBehaviour
     {
         transform.DOMoveX(690, animSpeedInterface);
         isOpen = true;
-        crewmateUI.CloseMenu();
-        buildingUI.CloseMenu();
+        if(crewmateUI)
+        {
+            crewmateUI.CloseMenu();
+        }
+        if(buildingUI)
+        {
+            buildingUI.CloseMenu();
+        }
+        if(islandUI)
+        {
+            islandUI.CloseInterface();
+        }
     }
     internal void CloseMenu()
     {

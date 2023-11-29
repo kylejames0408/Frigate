@@ -1,4 +1,5 @@
 // Namespaces
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -34,7 +35,7 @@ public class PlayerPathfind : MonoBehaviour
 
     void Update()
     {
-        AddTargets();
+        //AddTargets();
     }
 
     /// <summary>
@@ -144,19 +145,6 @@ public class PlayerPathfind : MonoBehaviour
             if (transform.position == path[path.Length - 1])
             {
                 Destroy(currentTarget.gameObject);
-
-                // Check if it was moving toward an island or outpost & transition
-                if (movingToIsland)
-                {
-                    movingToIsland = false;
-                    CeneManager.LoadCombatFromOutpost();
-                }
-                else if (movingToOutpost)
-                {
-                    movingToOutpost = false;
-                    CeneManager.LoadOutpostFromCombat();
-                }
-
                 yield break;
             }
 
@@ -182,6 +170,25 @@ public class PlayerPathfind : MonoBehaviour
             transform.rotation = Quaternion.LookRotation(dir);
         }
 
+    }
+
+    internal int GetDistance(Vector3 shipPos)
+    {
+        if(currentTarget)
+        {
+            Destroy(currentTarget.gameObject);
+        }
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        Physics.Raycast(ray, out RaycastHit hit);
+        hit.point = new Vector3(hit.point.x, 0, hit.point.z);
+        hit.point = pathfinding.FindNearestWalkable(hit.point).worldPosition;
+        movingToIsland = true;
+        currentTarget = Instantiate(targetPrefab, hit.point, Quaternion.identity).transform;
+        return pathfinding.CalculatePath(shipPos, currentTarget.position).Length;
+    }
+    internal void Depart(Vector3 shipPos)
+    {
+        PathRequestManager.RequestPath(shipPos, currentTarget.position, OnPathFound);
     }
     #endregion
 }

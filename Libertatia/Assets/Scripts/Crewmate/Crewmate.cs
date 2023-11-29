@@ -139,11 +139,6 @@ public class Crewmate : MonoBehaviour
     {
         isHovered = false;
     }
-    // Implement
-    private void OnDestroy()
-    {
-        //onDestroy.Invoke();
-    }
 
     // Actions
     public void Set(CrewmateData data)
