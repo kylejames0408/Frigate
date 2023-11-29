@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.Experimental.GraphView.Port;
 
 [Serializable]
 public struct ObjectData
@@ -107,6 +108,30 @@ public struct CrewmateData
 }
 
 [Serializable]
+public struct ShipData
+{
+    // Tracking / State
+    public int id;
+    public int islandID;
+    public int capacity;
+    // UI
+    public Sprite icon;
+    // Spacial
+    public Vector3 position;
+    public Quaternion rotation;
+
+    public ShipData(Ship ship)
+    {
+        id = ship.ID;
+        islandID = ship.IslandID;
+        capacity = ship.Capacity;
+        icon = ship.Icon;
+        position = ship.transform.position;
+        rotation = ship.transform.rotation;
+    }
+}
+
+[Serializable]
 public struct PlayerData
 {
     // Game data
@@ -115,10 +140,11 @@ public struct PlayerData
     // Player data
     public PlayerResourceData resources;
     public int outpostCrewCapacity;
-    public List<BuildingData> buildings; // Maybe make array
+    public List<BuildingData> buildings; // Maybe make array // move data to outpost object
     public List<CrewmateData> crewmates;
     public List<CrewmateData> outpostCrew;
-    public List<CrewmateData> combatCrew;
+    public List<CrewmateData> combatCrew; // move to ship
+    public ShipData ship;
 }
 
 // Manages player data - creating and converting the data
@@ -158,6 +184,7 @@ public static class PlayerDataManager
         data.outpostCrewCapacity = STARTING_CREW_CAPACITY;
         // Buildings
         data.buildings = new List<BuildingData>(0);
+        data.ship = new ShipData();
         return data;
     }
     // TODO:

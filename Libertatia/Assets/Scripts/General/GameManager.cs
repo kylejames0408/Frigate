@@ -6,13 +6,16 @@ using UnityEngine.Events;
 public enum GameState
 {
     PLAYING,
-    PAUSED
+    PAUSED,
+    COUNT
 }
 public enum GamePhase
 {
     MAIN_MENU,
     OUTPOST,
-    ENEMY_TERRITORY
+    EXPLORATION,
+    ENEMY_TERRITORY,
+    COUNT
 }
 
 public class GameManager : MonoBehaviour
@@ -95,25 +98,11 @@ public class GameManager : MonoBehaviour
     }
     internal static void UpdateCrewmateData(CrewmateData[] crewmates)
     {
-        data.crewmates.Clear();
+        data.outpostCrew.Clear();
         for (int i = 0; i < crewmates.Length; i++)
         {
-            Data.crewmates.Add(crewmates[i]);
-        }
-    }
-    internal static void SeparateCrew()
-    {
-        data.outpostCrew.Clear();
-        for (int i = 0; i < data.crewmates.Count; i++)
-        {
-            if (data.crewmates[i].building.id == -1)
-            {
-                data.combatCrew.Add(data.crewmates[i]);
-            }
-            else
-            {
-                data.outpostCrew.Add(data.crewmates[i]);
-            }
+            data.outpostCrew.Add(crewmates[i]);
+            RemoveCrewmateData(crewmates[i].id);
         }
     }
     // Update from Combat

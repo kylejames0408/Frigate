@@ -81,7 +81,7 @@ public class BattleLootManager : MonoBehaviour
 
     public void ReturnToOutpost()
     {
-        CeneManager.LoadOutpostFromCombat();
+        CeneManager.LoadExploration();
     }
 
     /// <summary>

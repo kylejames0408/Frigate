@@ -22,14 +22,20 @@ public class AssigneeCard : MonoBehaviour
 
     private void Start()
     {
-        btnUnassign.interactable = false;
+        if(btnUnassign)
+        {
+            btnUnassign.interactable = false;
+        }
     }
     internal void Set(ObjectData crewmate)
     {
         crewmateID = crewmate.id;
         icon.sprite = crewmate.icon;
-        btnUnassign.onClick.RemoveAllListeners();
-        btnUnassign.interactable = true;
+        if(btnUnassign)
+        {
+            btnUnassign.onClick.RemoveAllListeners();
+            btnUnassign.interactable = true;
+        }
     }
     internal bool IsEmpty()
     {
@@ -39,7 +45,10 @@ public class AssigneeCard : MonoBehaviour
     {
         crewmateID = -1;
         this.icon.sprite = icon;
-        btnUnassign.interactable = false;
+        if (btnUnassign)
+        {
+            btnUnassign.interactable = false;
+        }
     }
     internal void Enable()
     {

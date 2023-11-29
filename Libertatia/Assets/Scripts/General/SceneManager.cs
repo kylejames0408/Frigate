@@ -3,7 +3,7 @@ using UnityEngine.SceneManagement;
 
 public class CeneManager : MonoBehaviour
 {
-    // Gets usable build index by "clearning" it. Parses the index into our possible indexes.
+    // Gets usable build index by "clearing" it. Parses the index into our possible indexes.
     private static int GetBuildIndex(int buildIndex)
     {
         return buildIndex % SceneManager.sceneCountInBuildSettings;
@@ -62,13 +62,25 @@ public class CeneManager : MonoBehaviour
         //SceneManager.UnloadSceneAsync("MainMenu");
         //SceneManager.sceneLoaded += OnLoadCallback;
     }
+    public static void LoadExploration()
+    {
+        SceneManager.LoadScene("Exploration", LoadSceneMode.Single);
+    }
+    public static void LoadOutpost()
+    {
+        SceneManager.LoadScene("Outpost", LoadSceneMode.Single);
+    }
+    public static void LoadCombat()
+    {
+        SceneManager.LoadScene("Combat-Testing", LoadSceneMode.Single);
+    }
+
     public static void LoadCombatFromOutpost()
     {
         if(GameManager.combatTesting)
             SceneManager.LoadScene("Combat-Testing", LoadSceneMode.Single);
         else
             SceneManager.LoadScene("Combat", LoadSceneMode.Single);
-        //SceneManager.UnloadSceneAsync("Outpost");
     }
     public static void LoadOutpostFromCombat()
     {
@@ -76,7 +88,6 @@ public class CeneManager : MonoBehaviour
             SceneManager.LoadScene("Outpost-Testing", LoadSceneMode.Single);
         else
             SceneManager.LoadScene("Outpost", LoadSceneMode.Single);
-        //SceneManager.UnloadSceneAsync("CombatTest");
     }
     public static void OnLoadCallback(Scene scene, LoadSceneMode mode)
     {

@@ -11,8 +11,8 @@ public class Ship : MonoBehaviour
     public List<GameObject> enemyList = new List<GameObject>();
     public int enemyCount;
 
-    public int detectionRange;
-    private bool inRange;
+    public int detectionRange = 25;
+    private bool inRange = false;
 
     public CombatResourcesUI resourceUI;
     [SerializeField] private GameObject battleLootUI;
@@ -25,7 +25,9 @@ public class Ship : MonoBehaviour
     [SerializeField] private MeshRenderer[] renderers;
     // Tracking
     [SerializeField] private bool isCombat = false;
+    [SerializeField] private bool isOutpost = false;
     [SerializeField] private int id = -1;
+    [SerializeField] private int islandID = -1;
     [SerializeField] private int capacity = 12;
     [SerializeField] private List<CrewmateData> crewmates;
     [SerializeField] private int level = 0;
@@ -46,6 +48,18 @@ public class Ship : MonoBehaviour
     {
         get { return id; }
     }
+    public Sprite Icon
+    {
+        get { return icon; }
+    }
+    public int IslandID
+    {
+        get { return islandID; }
+    }
+    public int Capacity
+    {
+        get { return capacity; }
+    }
     public bool IsHovered
     {
         get { return isHovered; }
@@ -64,18 +78,41 @@ public class Ship : MonoBehaviour
         id = gameObject.GetInstanceID();
         level = 0;
         isHovered = false;
-    }
-    void Start()
-    {
-        crewmates = new List<CrewmateData>(capacity); // new ObjectData(-1, iconEmptyAsssignment)
-        shipUI.onUnassign.AddListener(UnassignCrewmateCallback);
-        shipUI.Set(capacity);
-
-        detectionRange = 25;
-        inRange = false;
 
         unitList.AddRange(GameObject.FindGameObjectsWithTag("PlayerCharacter"));
         enemyList.AddRange(GameObject.FindGameObjectsWithTag("Enemy"));
+    }
+    void Start()
+    {
+        if (GameManager.Data.ship.Equals(default(ShipData)))
+        {
+            crewmates = new List<CrewmateData>(capacity); // new ObjectData(-1, iconEmptyAsssignment)
+            shipUI.onUnassign.AddListener(UnassignCrewmateCallback);
+        }
+        else if(!isCombat && !isOutpost)
+        {
+            ShipData data = GameManager.Data.ship;
+            capacity = data.capacity;
+            id = data.id;
+            icon = data.icon;
+            islandID = data.islandID;
+            transform.position = data.position;
+            transform.rotation = data.rotation;
+        }
+
+        if (shipUI)
+        {
+            shipUI.Set(capacity);
+            if(GameManager.Data.combatCrew.Count > 0)
+            {
+                crewmates = GameManager.Data.combatCrew;
+
+                for (int i = 0; i < crewmates.Count; i++)
+                {
+                    shipUI.SetCrewmate(i, new ObjectData(crewmates[i].id, crewmates[i].icon));
+                }
+            }
+        }
     }
     // Update is called once per frame
     void Update()
@@ -168,10 +205,13 @@ public class Ship : MonoBehaviour
             GameManager.UpdateCombatCrew(crewmates.ToArray());
             GameManager.UpdateCrewmateData();
         }
-        else
+        else if(isOutpost)
         {
             GameManager.UpdateCrewmateData(crewmates.ToArray());
-            GameManager.SeparateCrew();
+        }
+        else
+        {
+            GameManager.data.ship = new ShipData(this);
         }
     }
 

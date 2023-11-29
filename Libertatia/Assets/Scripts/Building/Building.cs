@@ -256,7 +256,7 @@ public class Building : MonoBehaviour
                 value = "Placing";
                 break;
             case BuildingState.RECRUIT:
-                value = "Needs assignment";
+                value = "Recruit";
                 break;
             case BuildingState.CONSTRUCTING:
                 value = "Constructing";
