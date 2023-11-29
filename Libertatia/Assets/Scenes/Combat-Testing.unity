@@ -9906,8 +9906,8 @@ GameObject:
   - component: {fileID: 609972826}
   - component: {fileID: 609972825}
   - component: {fileID: 609972824}
-  - component: {fileID: 609972823}
   - component: {fileID: 609972827}
+  - component: {fileID: 609972823}
   m_Layer: 0
   m_Name: Tutorial Manager - Combat
   m_TagString: Untagged
@@ -9929,7 +9929,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialogue:
     speakerName: First Mate Tuto Rial
-    sentences: []
+    sentences:
+    - That first structre might've been free, but we'll have to fight for the rest
+      of the loot.
+    - You'd probably stand a better chance if ye sent your crew to zones in groups
+      instead of one by one!
+    - Once we clear out the island we can head home with our spoils, so get swashbuckling!
     callback:
       m_PersistentCalls:
         m_Calls: []
@@ -9937,13 +9942,12 @@ MonoBehaviour:
   tasks:
     taskListName: Charge!
     tasks:
-    - '- Assign crewmates to zones like you do structures to plunder loot and fight
-      enemies. If a zone is <color=red>red</color>, it means there are still enemies
-      to fight or resources to gather
+    - '- You can assign groups of crewmates by holding the <b>Control key</b> and
+      clicking on multiple crewmate cards before dragging one onto a zone
 
-      - You can assign groups of crewmates
-      by holding the <b>Control key</b> and clicking on multiple crewmate cards before
-      dragging one onto a zone'
+      -
+      If a zone is <color=red>red</color>, it means there are still enemies to fight
+      or resources to gather'
 --- !u!114 &609972824
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9984,10 +9988,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03b7424f76b818444b2e6deb52cb7654, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  combatDialogues: []
-  leaveIslandButton: {fileID: 0}
-  oMUI: {fileID: 0}
-  cm: {fileID: 0}
+  combatDialogues:
+  - {fileID: 609972827}
+  - {fileID: 609972823}
+  leaveIslandButton: {fileID: 56911792}
+  cMUI: {fileID: 790469873}
+  cm: {fileID: 2009515019}
 --- !u!4 &609972826
 Transform:
   m_ObjectHideFlags: 0
@@ -10017,18 +10023,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialogue:
     speakerName: First Mate Tuto Rial
-    sentences: []
+    sentences:
+    - Yargh! Looks like this island be home to []. But who said plunderin' was supposed
+      to be easy?
+    - That house on the right there seems to be free, lets go carve up some wood!
     callback:
       m_PersistentCalls:
         m_Calls: []
     hasTasks: 1
   tasks:
-    taskListName: 
+    taskListName: Plunder the empty zone
     tasks:
     - '- You can use the <b>WASD keys</b> to move the camera around the island
 
       -
-      If you click on a zone, the camera will pan towards it'
+      If you click on a zone, the camera will pan towards it
+
+      - Assign a crewmate
+      to the <color=blue>highlighted zone</color> to plunder the structure there,
+      the same way you assigned back at the outpost'
 --- !u!1 &614516755
 GameObject:
   m_ObjectHideFlags: 0
@@ -29723,7 +29736,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1688697427
 MonoBehaviour:
   m_ObjectHideFlags: 0

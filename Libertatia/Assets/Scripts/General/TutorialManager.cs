@@ -95,7 +95,6 @@ public class TutorialManager : MonoBehaviour
         {
             //Hide outpost drag card text
             OutpostManagementUI oMUI = GameObject.Find("INT-Outpost").GetComponentInChildren<OutpostManagementUI>();
-            oMUI.HideCrewmateCardArrow();
         }
         if(crewmatesAssigned == 2 && !secondVisit)
         {

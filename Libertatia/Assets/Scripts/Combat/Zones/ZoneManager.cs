@@ -425,6 +425,9 @@ public class ZoneManager : MonoBehaviour
                 resourceCountUI.text = resourceBuilding.lootValue + " food";
             }
         }
+
+        //Vector3 zoneCamPos = new Vector3(zone.centerObject.transform.position.x, Camera.main.transform.position.y, zone.centerObject.transform.localPosition.z);
+        //CameraManager.Instance.PanTo(zoneCamPos);
     }
 
     private void ShowZoneBuildingImage(GameObject buildingImage)

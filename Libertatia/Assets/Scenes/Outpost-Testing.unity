@@ -11630,10 +11630,10 @@ RectTransform:
   m_Father: {fileID: 1608288114}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 76.965004, y: -19}
-  m_SizeDelta: {x: 20.1, y: 38}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &877541726
 MonoBehaviour:
@@ -16534,10 +16534,10 @@ MonoBehaviour:
   tasks:
     taskListName: Put your crew to work
     tasks:
-    - '- Drag a crewmate card onto an <color=yellow><b>unassigned building</b></color>
+    - '- Drag a crewmate card onto an <color=#FDE541><b>unassigned building</b></color>
       to assign them to it'
     - '- Assign a crew member to each structure. You''ll know it''s assigned when
-      it turns <color=green><b>green</b></color>'
+      it turns <color=#007200><b>green</b></color>'
 --- !u!114 &1415094626
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21918,10 +21918,10 @@ RectTransform:
   m_Father: {fileID: 1608288114}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 108.55, y: -19}
-  m_SizeDelta: {x: 33.07, y: 38}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1933864645
 MonoBehaviour:

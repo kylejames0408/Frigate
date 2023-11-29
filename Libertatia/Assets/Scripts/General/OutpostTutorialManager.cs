@@ -53,7 +53,6 @@ public class OutpostTutorialManager : MonoBehaviour
 
     public void HighlightBuildings()
     {
-        GameObject.Find("PAGE-Construction").GetComponentsInChildren(true, buildingCards);
         buildingCards = oMUI.buildingCards;
         // Open the building tab
         oMUI.SelectTabCallback(0);

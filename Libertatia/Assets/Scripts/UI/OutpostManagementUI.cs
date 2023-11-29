@@ -148,10 +148,10 @@ public class OutpostManagementUI : MonoBehaviour
     }
     private void ClickBuildingCard(BuildingManager bm, int cardIndex)
     {
-        foreach (BuildingCard card in buildingCards)
-        {
-            card.Deselect();
-        }
+        //foreach (BuildingCard card in buildingCards)
+        //{
+        //    card.Deselect();
+        //}
         buildingCards[cardIndex].Select();
         bm.SelectBuilding(cardIndex);
     }
