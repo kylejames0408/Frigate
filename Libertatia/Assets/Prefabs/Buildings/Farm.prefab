@@ -1278,8 +1278,8 @@ MonoBehaviour:
     icon: {fileID: 0}
   state: 0
   resourceCost:
-    wood: 20
-    food: 0
+    wood: 0
+    food: 20
     ap: 2
     space: 0
   resourceProduction:
