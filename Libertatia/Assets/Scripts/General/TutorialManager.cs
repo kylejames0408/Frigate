@@ -9,6 +9,9 @@ public class TutorialManager : MonoBehaviour
     public List<DialogueTrigger> outpostDialogues;
     public List<DialogueTrigger> combatDialogues;
     public GameObject btnAttack; // this will ideally be the button from the ship menu
+    // Add references to the ship depart button, the outpostUI, and a list of the crewmate & building cards
+    private List<CrewmateCard> crewmateCards;
+    private List<BuildingCard> buildingCards;
     private bool secondVisit = false;
 
     int buildingsPlaced = 0;
@@ -25,6 +28,7 @@ public class TutorialManager : MonoBehaviour
                 outpostDialogues[0].TriggerDialogue();
                 GameManager.outpostVisitNumber++;
                 btnAttack.SetActive(false);
+                // Disable depart button in ship UI
             }
             else if(GameManager.outpostVisitNumber == 1)
             {
@@ -38,6 +42,10 @@ public class TutorialManager : MonoBehaviour
             {
                 btnAttack.SetActive(true);
             }
+        }
+        else if (SceneManager.GetSceneByName("Exploration").isLoaded || SceneManager.GetSceneByName("Exploration-Testing").isLoaded)
+        {
+
         }
         else if (SceneManager.GetSceneByName("Combat").isLoaded || SceneManager.GetSceneByName("Combat-Testing").isLoaded)
         {
@@ -67,11 +75,13 @@ public class TutorialManager : MonoBehaviour
                     {
                         outpostDialogues[1].dialogue.sentences[0] = "Yarr! Now place the house";
                         outpostDialogues[1].tasks.tasks[0] = "- Build the house";
+                        // Disable the farm card
                     }
                     if(recievedBuilding.Name == "House")
                     {
                         outpostDialogues[1].dialogue.sentences[0] = "Yarr! Now place the farm";
                         outpostDialogues[1].tasks.tasks[0] = "- Build the farm";
+                        // Disable the house card
                     }
                     outpostDialogues[1].TriggerDialogue();
                     break;
@@ -99,10 +109,28 @@ public class TutorialManager : MonoBehaviour
         }
     }
 
+    public void CrewmateAssignedBuildingEvent(Component sender, object data)
+    {
+        // Check to see if all remaining crewmates have been assigned to ship
+        // If so, enable the depart button on the ship UI
+    }
+
     public void AllEnemiesDeadEvent(Component sender, object data)
     {
         if (GameManager.combatVisitNumber == 1)
             combatDialogues[1].TriggerDialogue();
         GameObject.Find("Ship").GetComponent<Ship>().detectionRange = 30;
+    }
+
+    public void HighlightBuildings()
+    {
+        // Open the building tab
+        // Highlight the buildings
+    }
+
+    public void HighlightCrewmates()
+    {
+        // Open the crewmate tab
+        // Highlight the crewmates
     }
 }

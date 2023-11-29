@@ -697,7 +697,7 @@ MonoBehaviour:
   uiAsign1: {fileID: 1377085633627296012}
   uiAsign2: {fileID: 346282994129895875}
   iconEmptyAsssignment: {fileID: 0}
-  onCrewmateAssignedGE: {fileID: 0}
+  onCrewmateAssignedGE: {fileID: 11400000, guid: 8c002ad9b29a8304d866301b28d5b0b9, type: 2}
   onCrewmateAssigned:
     m_PersistentCalls:
       m_Calls: []

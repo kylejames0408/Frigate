@@ -9819,6 +9819,140 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 608516867}
   m_CullTransparentMesh: 1
+--- !u!1 &609972822
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 609972826}
+  - component: {fileID: 609972825}
+  - component: {fileID: 609972824}
+  - component: {fileID: 609972823}
+  - component: {fileID: 609972827}
+  m_Layer: 0
+  m_Name: Tutorial Manager - Combat
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &609972823
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 609972822}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b44771653170d494ab52e19b50c4bfd7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogue:
+    speakerName: First Mate Tuto Rial
+    sentences: []
+    callback:
+      m_PersistentCalls:
+        m_Calls: []
+    hasTasks: 1
+  tasks:
+    taskListName: Charge!
+    tasks:
+    - '- Assign crewmates to zones like you do structures to plunder loot and fight
+      enemies. If a zone is <color=red>red</color>, it means there are still enemies
+      to fight or resources to gather
+
+      - You can assign groups of crewmates
+      by holding the <b>Control key</b> and clicking on multiple crewmate cards before
+      dragging one onto a zone'
+--- !u!114 &609972824
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 609972822}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a31e198f64db7c41adcee9c90a2dded, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: 652c65e12d9ed954ea0fb51627342b58, type: 2}
+  response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &609972825
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 609972822}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03b7424f76b818444b2e6deb52cb7654, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  combatDialogues: []
+  leaveIslandButton: {fileID: 0}
+  oMUI: {fileID: 0}
+  cm: {fileID: 0}
+--- !u!4 &609972826
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 609972822}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &609972827
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 609972822}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b44771653170d494ab52e19b50c4bfd7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogue:
+    speakerName: First Mate Tuto Rial
+    sentences: []
+    callback:
+      m_PersistentCalls:
+        m_Calls: []
+    hasTasks: 1
+  tasks:
+    taskListName: 
+    tasks:
+    - '- You can use the <b>WASD keys</b> to move the camera around the island
+
+      -
+      If you click on a zone, the camera will pan towards it'
 --- !u!1 &614516755
 GameObject:
   m_ObjectHideFlags: 0
@@ -11519,6 +11653,7 @@ MonoBehaviour:
   isHovered: 0
   normalEmission: {r: 0, g: 0, b: 0, a: 1}
   hoveredEmission: {r: 0.3, g: 0.3, b: 0.3, a: 1}
+  onCrewmateAssignedGE: {fileID: 0}
 --- !u!4 &705486403 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 4fe7ec1d555ab494d836addf3c4b2c0f, type: 3}
@@ -13045,6 +13180,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cm: {fileID: 2009515019}
   bm: {fileID: 0}
+  sm: {fileID: 0}
   popupUI: {fileID: 1929977003}
   buildingResourceCost: {fileID: 9887584}
   buildingAPCost: {fileID: 1413111959}
@@ -13057,10 +13193,7 @@ MonoBehaviour:
   arrow: {fileID: 897757557}
   tabUIParent: {fileID: 1086482467}
   pagesUIParent: {fileID: 521419574}
-  ClickHereBuildingTab: {fileID: 1013686313}
-  ClickHereBuildingCard: {fileID: 1532808599}
-  ClickHereCrewmateTab: {fileID: 814547060}
-  DragHereCrewmateCard: {fileID: 714716642}
+  buildingCards: []
 --- !u!1 &792186769
 GameObject:
   m_ObjectHideFlags: 0
@@ -17492,6 +17625,10 @@ PrefabInstance:
     - target: {fileID: 7845774388746979147, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
       propertyPath: m_Name
       value: Tutorial Manager
+      objectReference: {fileID: 0}
+    - target: {fileID: 7845774388746979147, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -29407,6 +29544,10 @@ MonoBehaviour:
   onAttack:
     m_PersistentCalls:
       m_Calls: []
+  MainMenuTesting: 0
+  OutpostTesting: 0
+  ExplorationTesting: 0
+  CombatTesting: 0
 --- !u!114 &1688697428
 MonoBehaviour:
   m_ObjectHideFlags: 0

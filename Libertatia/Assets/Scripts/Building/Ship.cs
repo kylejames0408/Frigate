@@ -39,6 +39,9 @@ public class Ship : MonoBehaviour
     [SerializeField] private Color normalEmission = Color.black;
     [SerializeField] private Color hoveredEmission = new Color(0.3f, 0.3f, 0.3f);
 
+    // Events
+    public GameEvent onCrewmateAssignedGE;
+
     public int ID
     {
         get { return id; }
@@ -242,6 +245,7 @@ public class Ship : MonoBehaviour
                     shipUI.SetCrewmate(crewmates.Count, new ObjectData(crewmateData.id, crewmateData.icon));
                     crewmates.Add(crewmateData);
                     mate.Assign(id, icon, GetDestination());
+                    onCrewmateAssignedGE.Raise(this, mate);
                 }
                 
                 //onCrewmateShipAssigned.Invoke();

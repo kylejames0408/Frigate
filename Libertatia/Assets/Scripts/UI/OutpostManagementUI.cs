@@ -32,8 +32,8 @@ public class OutpostManagementUI : MonoBehaviour
     // Data tracking
     private Tab[] tabs;
     private Transform[] pages;
-    private List<BuildingCard> buildingCards; // make into dict
-    private Dictionary<int, CrewmateCard> crewmateCards;
+    public List<BuildingCard> buildingCards; // make into dict
+    public Dictionary<int, CrewmateCard> crewmateCards;
     private List<int> selectedCrewmateCardIDs; // Im thinking this could be a stack
     private bool isOpen;
 
@@ -331,7 +331,7 @@ public class OutpostManagementUI : MonoBehaviour
     }
 
     // Callbacks
-    private void SelectTabCallback(int tabIndex)
+    public void SelectTabCallback(int tabIndex)
     {
         SelectTab(tabIndex);
 

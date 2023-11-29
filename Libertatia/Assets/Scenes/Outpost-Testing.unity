@@ -258,233 +258,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 35585149}
   m_CullTransparentMesh: 1
---- !u!1001 &36081936
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: -759242478486736209, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
-      propertyPath: dialogue.speakerName
-      value: Tuto Rial
-      objectReference: {fileID: 0}
-    - target: {fileID: -759242478486736209, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
-      propertyPath: tasks.tasks.Array.data[0]
-      value: Gather your crew and head for the ship above. You can use the WASD keys
-        to move the camera if you don't see it. Once everyone is at the ship, a promp
-        will appear letting you press the E key to depart.
-      objectReference: {fileID: 0}
-    - target: {fileID: -759242478486736209, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
-      propertyPath: dialogue.sentences.Array.data[0]
-      value: Yarr! Ye rallied yer crew splendidly! That enemy crew didnt know what
-        hit em!
-      objectReference: {fileID: 0}
-    - target: {fileID: -759242478486736209, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
-      propertyPath: dialogue.sentences.Array.data[2]
-      value: Gather yer crew and move em to the ship at the back. Once they get close
-        enough ye can hit the E key to sail back!
-      objectReference: {fileID: 0}
-    - target: {fileID: 834794479261776291, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
-      propertyPath: btnAttack
-      value: 
-      objectReference: {fileID: 2004096424}
-    - target: {fileID: 834794479261776291, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
-      propertyPath: AttackButton
-      value: 
-      objectReference: {fileID: 2004096424}
-    - target: {fileID: 4051391971717010772, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
-      propertyPath: dialogue.speakerName
-      value: Tuto Rial
-      objectReference: {fileID: 0}
-    - target: {fileID: 4051391971717010772, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
-      propertyPath: tasks.tasks.Array.data[0]
-      value: Select individual crewmates by left clicking on them directly, or select
-        them in a group by holding the left click and dragging over them. You can
-        then right click a point on the map to command them to move towards it.
-      objectReference: {fileID: 0}
-    - target: {fileID: 4051391971717010772, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
-      propertyPath: dialogue.sentences.Array.data[2]
-      value: Select yer crewmates directly on the map and commad em! You can move
-        em one by one, or click and drag to select a group!
-      objectReference: {fileID: 0}
-    - target: {fileID: 4051391971717010772, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
-      propertyPath: dialogue.sentences.Array.data[3]
-      value: Move em to those red pirates and they'll cut em down!
-      objectReference: {fileID: 0}
-    - target: {fileID: 4137988272570579665, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
-      propertyPath: tasks.taskListName
-      value: Build the remaining structure
-      objectReference: {fileID: 0}
-    - target: {fileID: 4137988272570579665, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
-      propertyPath: dialogue.speakerName
-      value: Tuto Rial
-      objectReference: {fileID: 0}
-    - target: {fileID: 4829848524955143945, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
-      propertyPath: dialogue.speakerName
-      value: Tuto Rial
-      objectReference: {fileID: 0}
-    - target: {fileID: 4829848524955143945, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
-      propertyPath: tasks.tasks.Array.data[1]
-      value: '- Build a farm'
-      objectReference: {fileID: 0}
-    - target: {fileID: 4829848524955143945, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
-      propertyPath: tasks.tasks.Array.data[2]
-      value: '- Build a house'
-      objectReference: {fileID: 0}
-    - target: {fileID: 4829848524955143945, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
-      propertyPath: dialogue.sentences.Array.data[1]
-      value: 'Our crew needs a place to recover from our wounds.
-
-        All we
-        have are enough resources to build a farm and a house. If you''d help us
-        we''d be mighty grateful.'
-      objectReference: {fileID: 0}
-    - target: {fileID: 4829848524955143945, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
-      propertyPath: dialogue.callback.m_PersistentCalls.m_Calls.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4829848524955143945, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
-      propertyPath: dialogue.callback.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4829848524955143945, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
-      propertyPath: dialogue.callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 4829848524955143945, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
-      propertyPath: dialogue.callback.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4829848524955143945, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
-      propertyPath: dialogue.callback.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: ShowBuildingTabArrow
-      objectReference: {fileID: 0}
-    - target: {fileID: 4829848524955143945, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
-      propertyPath: dialogue.callback.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: OutpostManagementUI, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 4829848524955143945, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
-      propertyPath: dialogue.callback.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
-    - target: {fileID: 6231409215963263180, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
-      propertyPath: m_RootOrder
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 6231409215963263180, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6231409215963263180, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6231409215963263180, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6231409215963263180, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6231409215963263180, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6231409215963263180, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6231409215963263180, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6231409215963263180, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6231409215963263180, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6231409215963263180, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6483838458676575870, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
-      propertyPath: dialogue.speakerName
-      value: Tuto Rial
-      objectReference: {fileID: 0}
-    - target: {fileID: 6769618784424622894, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
-      propertyPath: dialogue.speakerName
-      value: Tuto Rial
-      objectReference: {fileID: 0}
-    - target: {fileID: 6769618784424622894, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
-      propertyPath: tasks.tasks.Array.data[0]
-      value: Select the Crewmate tab in the bottom menu. Drag a crewmates card onto
-        a structure to assign them to it, turning it green when you drop the card
-        on it.
-      objectReference: {fileID: 0}
-    - target: {fileID: 6769618784424622894, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
-      propertyPath: dialogue.sentences.Array.data[1]
-      value: Assign one of yer crew to each of the buildings to build em.
-      objectReference: {fileID: 0}
-    - target: {fileID: 6769618784424622894, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
-      propertyPath: dialogue.callback.m_PersistentCalls.m_Calls.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6769618784424622894, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
-      propertyPath: dialogue.callback.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6769618784424622894, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
-      propertyPath: dialogue.callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 6769618784424622894, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
-      propertyPath: dialogue.callback.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 6769618784424622894, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
-      propertyPath: dialogue.callback.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: ShowCrewmateTabArrow
-      objectReference: {fileID: 0}
-    - target: {fileID: 6769618784424622894, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
-      propertyPath: dialogue.callback.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: OutpostManagementUI, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 6769618784424622894, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
-      propertyPath: dialogue.callback.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
-    - target: {fileID: 6785737645530700138, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
-      propertyPath: dialogue.speakerName
-      value: Tuto Rial
-      objectReference: {fileID: 0}
-    - target: {fileID: 7317531967827180226, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
-      propertyPath: dialogue.speakerName
-      value: Tuto Rial
-      objectReference: {fileID: 0}
-    - target: {fileID: 7317531967827180226, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
-      propertyPath: tasks.tasks.Array.data[0]
-      value: Click the Go Explore! button in the bottom right to gather the remainer
-        of your crew and depart
-      objectReference: {fileID: 0}
-    - target: {fileID: 7845774388746979147, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
-      propertyPath: m_Name
-      value: Tutorial Manager
-      objectReference: {fileID: 0}
-    - target: {fileID: 7845774388746979147, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
 --- !u!1 &36166648
 GameObject:
   m_ObjectHideFlags: 0
@@ -11857,10 +11630,10 @@ RectTransform:
   m_Father: {fileID: 1608288114}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 76.965004, y: -19}
+  m_SizeDelta: {x: 20.1, y: 38}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &877541726
 MonoBehaviour:
@@ -11958,141 +11731,6 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 877541724}
-  m_CullTransparentMesh: 1
---- !u!1 &883439340
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 883439341}
-  - component: {fileID: 883439343}
-  - component: {fileID: 883439342}
-  m_Layer: 5
-  m_Name: Text (TMP)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &883439341
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 883439340}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 2004096425}
-  m_RootOrder: -1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &883439342
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 883439340}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_text: Go Explore!
-  m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_fontSharedMaterials: []
-  m_fontMaterial: {fileID: 0}
-  m_fontMaterials: []
-  m_fontColor32:
-    serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
-  m_enableVertexGradient: 0
-  m_colorMode: 3
-  m_fontColorGradient:
-    topLeft: {r: 1, g: 1, b: 1, a: 1}
-    topRight: {r: 1, g: 1, b: 1, a: 1}
-    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
-    bottomRight: {r: 1, g: 1, b: 1, a: 1}
-  m_fontColorGradientPreset: {fileID: 0}
-  m_spriteAsset: {fileID: 0}
-  m_tintAllSprites: 0
-  m_StyleSheet: {fileID: 0}
-  m_TextStyleHashCode: -1183493901
-  m_overrideHtmlColors: 0
-  m_faceColor:
-    serializedVersion: 2
-    rgba: 4294967295
-  m_fontSize: 40
-  m_fontSizeBase: 40
-  m_fontWeight: 400
-  m_enableAutoSizing: 0
-  m_fontSizeMin: 0
-  m_fontSizeMax: 0
-  m_fontStyle: 1
-  m_HorizontalAlignment: 2
-  m_VerticalAlignment: 512
-  m_textAlignment: 65535
-  m_characterSpacing: 0
-  m_wordSpacing: 0
-  m_lineSpacing: 0
-  m_lineSpacingMax: 0
-  m_paragraphSpacing: 0
-  m_charWidthMaxAdj: 0
-  m_enableWordWrapping: 0
-  m_wordWrappingRatios: 0.4
-  m_overflowMode: 0
-  m_linkedTextComponent: {fileID: 0}
-  parentLinkedComponent: {fileID: 0}
-  m_enableKerning: 0
-  m_enableExtraPadding: 0
-  checkPaddingRequired: 0
-  m_isRichText: 1
-  m_parseCtrlCharacters: 1
-  m_isOrthographic: 1
-  m_isCullingEnabled: 0
-  m_horizontalMapping: 0
-  m_verticalMapping: 0
-  m_uvLineOffset: 0
-  m_geometrySortingOrder: 0
-  m_IsTextObjectScaleStatic: 0
-  m_VertexBufferAutoSizeReduction: 0
-  m_useMaxVisibleDescender: 1
-  m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
-  m_isUsingLegacyAnimationComponent: 0
-  m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
-  m_baseMaterial: {fileID: 0}
-  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!222 &883439343
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 883439340}
   m_CullTransparentMesh: 1
 --- !u!1 &887099273
 GameObject:
@@ -12897,9 +12535,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   MainMenuTesting: 0
-  OutpostTesting: 0
+  OutpostTesting: 1
   ExplorationTesting: 0
-  CombatTesting: 0
+  CombatTesting: 1
 --- !u!4 &962263074
 Transform:
   m_ObjectHideFlags: 0
@@ -15329,6 +14967,7 @@ MonoBehaviour:
   arrow: {fileID: 476263300966870331}
   tabUIParent: {fileID: 2584835497597247581}
   pagesUIParent: {fileID: 5893328723937594164}
+  buildingCards: []
 --- !u!1 &1317556779
 GameObject:
   m_ObjectHideFlags: 0
@@ -16582,6 +16221,350 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
+--- !u!1 &1415094616
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1415094622}
+  - component: {fileID: 1415094621}
+  - component: {fileID: 1415094620}
+  - component: {fileID: 1415094619}
+  - component: {fileID: 1415094618}
+  - component: {fileID: 1415094617}
+  - component: {fileID: 1415094625}
+  - component: {fileID: 1415094624}
+  - component: {fileID: 1415094623}
+  - component: {fileID: 1415094626}
+  m_Layer: 0
+  m_Name: Tutorial Manager - Outpost
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1415094617
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1415094616}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b44771653170d494ab52e19b50c4bfd7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogue:
+    speakerName: First Mate Tuto Rial
+    sentences:
+    - 'Yargh! You''ve caught me crew at a bad time, we just escaped from a ghastly
+      battle and thought this island be deserted.
+
+'
+    - 'Our crew needs a place to recover from our wounds.
+
+      All we have are
+      enough resources to build a farm and a house. If you''d help us we''d be mighty
+      grateful.'
+    - Place a buildin on some empty land to set its build spot!
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1415094621}
+          m_TargetAssemblyTypeName: OutpostTutorialManager, Assembly-CSharp
+          m_MethodName: HighlightBuildings
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    hasTasks: 1
+  tasks:
+    taskListName: Build some structures
+    tasks:
+    - You can place building by <b>clicking and dragging a building card</b> onto
+      an empty plot of land!
+    - '- Build a farm'
+    - '- Build a house'
+--- !u!114 &1415094618
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1415094616}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a31e198f64db7c41adcee9c90a2dded, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: 365ab5f0be2679b4eb754425b353b60b, type: 2}
+  response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1415094621}
+        m_TargetAssemblyTypeName: OutpostTutorialManager, Assembly-CSharp
+        m_MethodName: CrewmateAssignedBoatEvent
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1415094619
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1415094616}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a31e198f64db7c41adcee9c90a2dded, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: 8c002ad9b29a8304d866301b28d5b0b9, type: 2}
+  response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1415094621}
+        m_TargetAssemblyTypeName: OutpostTutorialManager, Assembly-CSharp
+        m_MethodName: CrewmateAssignedBuildingEvent
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1415094620
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1415094616}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a31e198f64db7c41adcee9c90a2dded, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: 4ae36f9fe3f9160488e2f40b8ca0c348, type: 2}
+  response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1415094621}
+        m_TargetAssemblyTypeName: OutpostTutorialManager, Assembly-CSharp
+        m_MethodName: BuildingPlacedEvent
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1415094621
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1415094616}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5efb0eadcd001504895a0620c6bb10e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outpostDialogues:
+  - {fileID: 1415094617}
+  - {fileID: 1415094625}
+  - {fileID: 1415094624}
+  - {fileID: 1415094623}
+  - {fileID: 1415094626}
+  departButton: {fileID: 811765204}
+  oMUI: {fileID: 1313257459}
+  shipUI: {fileID: 0}
+  buildingCards: []
+  bm: {fileID: 745434448}
+  cm: {fileID: 314619652}
+--- !u!4 &1415094622
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1415094616}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1415094623
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1415094616}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b44771653170d494ab52e19b50c4bfd7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogue:
+    speakerName: First Mate Tuto Rial
+    sentences:
+    - 'Looks like all yer crewmates are ready to set sail!
+
+      Click on the ship
+      and hit the "Depart" button and let''s go explorin''!'
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1415094621}
+          m_TargetAssemblyTypeName: OutpostTutorialManager, Assembly-CSharp
+          m_MethodName: OpenShipUI
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    hasTasks: 1
+  tasks:
+    taskListName: Go explore!
+    tasks:
+    - '- Click the "Depart" button in the ship details menu
+
+      - If the menu
+      closes, click on the ship to bring it back up.'
+--- !u!114 &1415094624
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1415094616}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b44771653170d494ab52e19b50c4bfd7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogue:
+    speakerName: First Mate Tuto Rial
+    sentences:
+    - Resources are scarce on this island. We should take our remaining crew on a
+      trip to other islands to gather more for our outpost.
+    - Assign the remainder of the crew to the ship so we can go plunder!
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1415094621}
+          m_TargetAssemblyTypeName: OutpostTutorialManager, Assembly-CSharp
+          m_MethodName: PanCameraToBoat
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    hasTasks: 1
+  tasks:
+    taskListName: Head out for some resources
+    tasks:
+    - '- Assign the rest of your crew to the ship <b>the same way you did the buildings</b>'
+--- !u!114 &1415094625
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1415094616}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b44771653170d494ab52e19b50c4bfd7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogue:
+    speakerName: First Mate Tuto Rial
+    sentences:
+    - These two structures best be good to support our crew now, but they won't be
+      built by themselves.
+    - Assign one of yer crew to each of the buildings to build em.
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1415094621}
+          m_TargetAssemblyTypeName: OutpostTutorialManager, Assembly-CSharp
+          m_MethodName: HighlightCrewmates
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    hasTasks: 1
+  tasks:
+    taskListName: Put your crew to work
+    tasks:
+    - '- Drag a crewmate card onto an <color=yellow><b>unassigned building</b></color>
+      to assign them to it'
+    - '- Assign a crew member to each structure. You''ll know it''s assigned when
+      it turns <color=green><b>green</b></color>'
+--- !u!114 &1415094626
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1415094616}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b44771653170d494ab52e19b50c4bfd7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogue:
+    speakerName: First Mate Tuto Rial
+    sentences:
+    - Good job! You just finished the first cycle. See how the buildings you placed
+      before leaving got built while you were gone? When you travel, things get done
+      back at the outpost!
+    - That's all for now, but in the full game ye can keep building your outpost,
+      exploring new islands, and writing your own legend.
+    callback:
+      m_PersistentCalls:
+        m_Calls: []
+    hasTasks: 0
+  tasks:
+    taskListName: 
+    tasks: []
 --- !u!1001 &1419714409
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -17722,7 +17705,6 @@ RectTransform:
   - {fileID: 1795504954}
   - {fileID: 1313257458}
   - {fileID: 1724596630}
-  - {fileID: 2004096425}
   - {fileID: 746340826}
   - {fileID: 1492379092}
   - {fileID: 380156883}
@@ -19174,6 +19156,7 @@ MonoBehaviour:
   isHovered: 0
   normalEmission: {r: 0, g: 0, b: 0, a: 1}
   hoveredEmission: {r: 0.3, g: 0.3, b: 0.3, a: 1}
+  onCrewmateAssignedGE: {fileID: 11400000, guid: 365ab5f0be2679b4eb754425b353b60b, type: 2}
 --- !u!54 &1707051411
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -21935,10 +21918,10 @@ RectTransform:
   m_Father: {fileID: 1608288114}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 108.55, y: -19}
+  m_SizeDelta: {x: 33.07, y: 38}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1933864645
 MonoBehaviour:
@@ -22880,140 +22863,6 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
---- !u!1 &2004096424
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2004096425}
-  - component: {fileID: 2004096428}
-  - component: {fileID: 2004096427}
-  - component: {fileID: 2004096426}
-  m_Layer: 5
-  m_Name: BTN-Attack
-  m_TagString: Untagged
-  m_Icon: {fileID: 4162164826716764455, guid: 0000000000000000d000000000000000, type: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &2004096425
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2004096424}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 883439341}
-  m_Father: {fileID: 1542354889}
-  m_RootOrder: -1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0}
-  m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -40, y: 0}
-  m_SizeDelta: {x: 291, y: 100}
-  m_Pivot: {x: 1, y: 0}
---- !u!114 &2004096426
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2004096424}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Navigation:
-    m_Mode: 3
-    m_WrapAround: 0
-    m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
-  m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0, g: 0, b: 0, a: 0.8509804}
-    m_PressedColor: {r: 0, g: 0, b: 0, a: 0.9529412}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
-    m_ColorMultiplier: 1
-    m_FadeDuration: 0.1
-  m_SpriteState:
-    m_HighlightedSprite: {fileID: 0}
-    m_PressedSprite: {fileID: 0}
-    m_SelectedSprite: {fileID: 0}
-    m_DisabledSprite: {fileID: 0}
-  m_AnimationTriggers:
-    m_NormalTrigger: Normal
-    m_HighlightedTrigger: Highlighted
-    m_PressedTrigger: Pressed
-    m_SelectedTrigger: Selected
-    m_DisabledTrigger: Disabled
-  m_Interactable: 1
-  m_TargetGraphic: {fileID: 2004096427}
-  m_OnClick:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: CeneManager, Assembly-CSharp
-        m_MethodName: LoadCombatFromOutpost
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
---- !u!114 &2004096427
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2004096424}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 0.2627451, g: 0.2627451, b: 0.2627451, a: 0.6627451}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
---- !u!222 &2004096428
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2004096424}
-  m_CullTransparentMesh: 1
 --- !u!1001 &2020878818
 PrefabInstance:
   m_ObjectHideFlags: 0
