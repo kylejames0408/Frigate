@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657737, g: 0.4964143, b: 0.5748176, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657737, g: 0.49641442, b: 0.5748176, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -13506,6 +13506,10 @@ PrefabInstance:
     - target: {fileID: 5851869869286725693, guid: d49b5e950800f9f41af93a1c2015bc46, type: 3}
       propertyPath: m_Name
       value: Battle Loot Manager
+      objectReference: {fileID: 0}
+    - target: {fileID: 5851869869286725693, guid: d49b5e950800f9f41af93a1c2015bc46, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -31872,6 +31876,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 140
       objectReference: {fileID: 0}
+    - target: {fileID: 471140966879237084, guid: 2c837663184457542b4546cca07d973b, type: 3}
+      propertyPath: m_text
+      value: Map
+      objectReference: {fileID: 0}
     - target: {fileID: 544992161447186766, guid: 2c837663184457542b4546cca07d973b, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 95
@@ -41739,6 +41747,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5041930272287006, guid: aaa68712aa313054c943d84d8d0fd677, type: 3}
+      propertyPath: dialogue.sentences.Array.data[0]
+      value: Yargh! Looks like this island be home to another group. But who said
+        plunderin' was supposed to be easy?
+      objectReference: {fileID: 0}
     - target: {fileID: 1397328450935813937, guid: aaa68712aa313054c943d84d8d0fd677, type: 3}
       propertyPath: response.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
       value: 0
@@ -44281,7 +44294,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 37, y: 0}
+  m_AnchoredPosition: {x: 37, y: 749}
   m_SizeDelta: {x: 550, y: 260}
   m_Pivot: {x: 0, y: 0}
 --- !u!4 &7117766375158174709

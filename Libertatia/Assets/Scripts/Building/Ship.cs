@@ -174,15 +174,12 @@ public class Ship : MonoBehaviour
     }
     private void OnMouseEnter()
     {
-        if (!EventSystem.current.IsPointerOverGameObject())
+        isHovered = true;
+        foreach (MeshRenderer renderer in renderers)
         {
-            isHovered = true;
-            foreach(MeshRenderer renderer in renderers)
+            foreach (Material mat in renderer.materials)
             {
-                foreach (Material mat in renderer.materials)
-                {
-                    mat.SetColor("_EmissionColor", hoveredEmission);
-                }
+                mat.SetColor("_EmissionColor", hoveredEmission);
             }
         }
     }
