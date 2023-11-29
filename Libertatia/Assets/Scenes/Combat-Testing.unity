@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657737, g: 0.4964143, b: 0.5748176, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2201,7 +2201,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -10, y: 20}
+  m_AnchoredPosition: {x: -10, y: 0}
   m_SizeDelta: {x: 670, y: 300}
   m_Pivot: {x: 1, y: 0}
 --- !u!114 &111702245
@@ -11365,7 +11365,7 @@ MonoBehaviour:
   battleLootUI: {fileID: 433666660}
   leaveButton: {fileID: 56911792}
   rUI: {fileID: 0}
-  cm: {fileID: 0}
+  cm: {fileID: 2009515019}
   shipUI: {fileID: 950275272}
   renderers: []
   isCombat: 1
@@ -11381,6 +11381,7 @@ MonoBehaviour:
   isHovered: 0
   normalEmission: {r: 0, g: 0, b: 0, a: 1}
   hoveredEmission: {r: 0.3, g: 0.3, b: 0.3, a: 1}
+  onCrewmateAssignedGE: {fileID: 0}
 --- !u!1 &705968044
 GameObject:
   m_ObjectHideFlags: 0
@@ -12902,6 +12903,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cm: {fileID: 2009515019}
   bm: {fileID: 0}
+  sm: {fileID: 0}
   popupUI: {fileID: 1929977003}
   buildingResourceCost: {fileID: 9887584}
   buildingAPCost: {fileID: 1413111959}
@@ -12914,10 +12916,7 @@ MonoBehaviour:
   arrow: {fileID: 897757557}
   tabUIParent: {fileID: 1086482467}
   pagesUIParent: {fileID: 521419574}
-  ClickHereBuildingTab: {fileID: 1013686313}
-  ClickHereBuildingCard: {fileID: 1532808599}
-  ClickHereCrewmateTab: {fileID: 814547060}
-  DragHereCrewmateCard: {fileID: 714716642}
+  buildingCards: []
 --- !u!1 &792186769
 GameObject:
   m_ObjectHideFlags: 0
@@ -16795,7 +16794,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -10, y: 20}
+  m_AnchoredPosition: {x: -10, y: 0}
   m_SizeDelta: {x: 670, y: 300}
   m_Pivot: {x: 1, y: 0}
 --- !u!114 &950275272
@@ -17392,6 +17391,10 @@ PrefabInstance:
     - target: {fileID: 7845774388746979147, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
       propertyPath: m_Name
       value: Tutorial Manager
+      objectReference: {fileID: 0}
+    - target: {fileID: 7845774388746979147, guid: d5b399ea305e27846afd26b7f5c6e106, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -24817,10 +24820,10 @@ RectTransform:
   m_Father: {fileID: 614516756}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 76.965004, y: -19}
+  m_SizeDelta: {x: 20.1, y: 38}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1466720943
 MonoBehaviour:
@@ -29309,6 +29312,10 @@ MonoBehaviour:
   onAttack:
     m_PersistentCalls:
       m_Calls: []
+  MainMenuTesting: 0
+  OutpostTesting: 0
+  ExplorationTesting: 0
+  CombatTesting: 0
 --- !u!114 &1688697428
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -37020,10 +37027,10 @@ RectTransform:
   m_Father: {fileID: 614516756}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 108.55, y: -19}
+  m_SizeDelta: {x: 33.07, y: 38}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2037343215
 MonoBehaviour:
@@ -37669,7 +37676,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -10, y: 20}
+  m_AnchoredPosition: {x: -10, y: 0}
   m_SizeDelta: {x: 670, y: 300}
   m_Pivot: {x: 1, y: 0}
 --- !u!114 &2065645760
@@ -40283,6 +40290,39 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5635535607744742456}
   m_Mesh: {fileID: -4517412117399791055, guid: 4fe7ec1d555ab494d836addf3c4b2c0f, type: 3}
+--- !u!114 &1669960529758022354
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5678877369204526316}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b44771653170d494ab52e19b50c4bfd7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogue:
+    speakerName: First Mate Tuto Rial
+    sentences:
+    - That first structre might've been free, but we'll have to fight for the rest
+      of the loot.
+    - You'd probably stand a better chance if ye sent your crew to zones in groups
+      instead of one by one!
+    - Once we clear out the island we can head home with our spoils, so get swashbuckling!
+    callback:
+      m_PersistentCalls:
+        m_Calls: []
+    hasTasks: 1
+  tasks:
+    taskListName: Charge!
+    tasks:
+    - '- You can assign groups of crewmates by holding the <b>Control key</b> and
+      clicking on multiple crewmate cards before dragging one onto a zone
+
+      -
+      If a zone is <color=red>red</color>, it means there are still enemies to fight
+      or resources to gather'
 --- !u!23 &1680071646418406332
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -40428,6 +40468,21 @@ RectTransform:
   m_AnchoredPosition: {x: 231.6001, y: 104}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!4 &1837682033685345230
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5678877369204526316}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1843396832626486247
 GameObject:
   m_ObjectHideFlags: 0
@@ -40536,6 +40591,34 @@ Transform:
   m_Father: {fileID: 543450653589339061}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2038413394515835301
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5678877369204526316}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a31e198f64db7c41adcee9c90a2dded, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: 3484ec052b303a2489f9ce36d4de482f, type: 2}
+  response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8431342424945657541}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!23 &2040696955996854421
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -43167,6 +43250,26 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &5678877369204526316
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1837682033685345230}
+  - component: {fileID: 8431342424945657541}
+  - component: {fileID: 2038413394515835301}
+  - component: {fileID: 5992387609567956439}
+  - component: {fileID: 1669960529758022354}
+  m_Layer: 0
+  m_Name: Tutorial Manager - Combat
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!224 &5684620997769274287
 RectTransform:
   m_ObjectHideFlags: 0
@@ -43401,6 +43504,39 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 0
+--- !u!114 &5992387609567956439
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5678877369204526316}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b44771653170d494ab52e19b50c4bfd7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogue:
+    speakerName: First Mate Tuto Rial
+    sentences:
+    - Yargh! Looks like this island be home to []. But who said plunderin' was supposed
+      to be easy?
+    - That house on the right there seems to be free, lets go carve up some wood!
+    callback:
+      m_PersistentCalls:
+        m_Calls: []
+    hasTasks: 1
+  tasks:
+    taskListName: Plunder the empty zone
+    tasks:
+    - '- You can use the <b>WASD keys</b> to move the camera around the island
+
+      -
+      If you click on a zone, the camera will pan towards it
+
+      - Assign a crewmate
+      to the <color=blue>highlighted zone</color> to plunder the structure there,
+      the same way you assigned back at the outpost'
 --- !u!1 &6008608301348527444
 GameObject:
   m_ObjectHideFlags: 0
@@ -44098,7 +44234,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 37, y: 741}
+  m_AnchoredPosition: {x: 37, y: 0}
   m_SizeDelta: {x: 550, y: 260}
   m_Pivot: {x: 0, y: 0}
 --- !u!4 &7117766375158174709
@@ -44845,6 +44981,24 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &8431342424945657541
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5678877369204526316}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03b7424f76b818444b2e6deb52cb7654, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  combatDialogues:
+  - {fileID: 5992387609567956439}
+  - {fileID: 1669960529758022354}
+  leaveIslandButton: {fileID: 56911792}
+  cMUI: {fileID: 790469873}
+  cm: {fileID: 2009515019}
 --- !u!33 &8542916222939571179
 MeshFilter:
   m_ObjectHideFlags: 0

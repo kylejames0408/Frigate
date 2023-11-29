@@ -16,6 +16,8 @@ public class CombatTutorialManager : MonoBehaviour
 
     [SerializeField] private CrewmateManager cm;
 
+    int zonesClaimed = 0;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -27,6 +29,8 @@ public class CombatTutorialManager : MonoBehaviour
             combatDialogues[0].TriggerDialogue();
             GameManager.combatVisitNumber++;
             leaveIslandButton.SetActive(false);
+
+            //Set all zones to uninteractable except the first
         }
     }
 
@@ -34,5 +38,23 @@ public class CombatTutorialManager : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void ZoneClaimedEvent()
+    {
+        zonesClaimed++;
+        switch (zonesClaimed)
+        {
+            case 1:
+                // Trigger next dialogue [1]
+                combatDialogues[1].TriggerDialogue();
+                // Activate next zone
+                break;
+            case 2:
+                // Trigger next dialogue [2]
+                combatDialogues[2].TriggerDialogue();
+                // Activate all zones
+                break;
+        }
     }
 }
