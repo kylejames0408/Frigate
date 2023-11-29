@@ -20,4 +20,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Combat-Testing.unity
     guid: e1c6ef37d7a99e040b3644ec5ffe7563
+  - enabled: 1
+    path: Assets/Scenes/Exploration.unity
+    guid: 383c43bd9e71b7c4d9cb418986b07a97
   m_configObjects: {}
