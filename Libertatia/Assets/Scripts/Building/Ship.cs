@@ -83,7 +83,6 @@ public class Ship : MonoBehaviour
     {
         if (GameManager.Data.ship.Equals(default(ShipData)))
         {
-            crewmates = new List<CrewmateData>(capacity); // new ObjectData(-1, iconEmptyAsssignment)
             shipUI.onUnassign.AddListener(UnassignCrewmateCallback);
         }
         else if(!isCombat && !isOutpost)
@@ -108,6 +107,10 @@ public class Ship : MonoBehaviour
                 {
                     shipUI.SetCrewmate(i, new ObjectData(crewmates[i].id, crewmates[i].icon));
                 }
+            }
+            else
+            {
+                crewmates = new List<CrewmateData>(capacity); // new ObjectData(-1, iconEmptyAsssignment)
             }
         }
     }

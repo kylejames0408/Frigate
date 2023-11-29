@@ -92,8 +92,13 @@ public class GameManager : MonoBehaviour
         data.outpostCrew.Clear();
         for (int i = 0; i < crewmates.Length; i++)
         {
-            data.outpostCrew.Add(crewmates[i]);
+            data.combatCrew.Add(crewmates[i]);
             RemoveCrewmateData(crewmates[i].id);
+        }
+
+        for (int i = 0; i < data.crewmates.Count; i++)
+        {
+            data.outpostCrew.Add(data.crewmates[i]);
         }
     }
     // Update from Combat
