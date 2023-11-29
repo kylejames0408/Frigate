@@ -2,6 +2,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 
 /// <summary>
 /// Player that pathfinds to a target.
@@ -24,6 +25,8 @@ public class PlayerPathfind : MonoBehaviour
 
     public GameObject targetPrefab;
     private Transform currentTarget;
+
+    public UnityEvent onNavFinish;
     #endregion
 
     #region Unity Methods
@@ -145,6 +148,7 @@ public class PlayerPathfind : MonoBehaviour
             if (transform.position == path[path.Length - 1])
             {
                 Destroy(currentTarget.gameObject);
+                onNavFinish.Invoke();
                 yield break;
             }
 

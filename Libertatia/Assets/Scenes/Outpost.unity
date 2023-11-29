@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657737, g: 0.49641442, b: 0.5748176, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -20462,6 +20462,7 @@ MonoBehaviour:
   ship: {fileID: 7021428240441947983}
   crewmateUI: {fileID: 234963690}
   buildingUI: {fileID: 9116816653009409157}
+  islandUI: {fileID: 0}
   animSpeedInterface: 0.6
   iconEmptyAssignment: {fileID: 21300000, guid: 352bd3b255cdb8540aa3455efeb7b45f, type: 3}
   rowAmt: 2
@@ -29890,7 +29891,9 @@ MonoBehaviour:
   shipUI: {fileID: 1795504960}
   renderers: []
   isCombat: 0
+  isOutpost: 1
   id: -1
+  islandID: -1
   capacity: 12
   crewmates: []
   level: 0

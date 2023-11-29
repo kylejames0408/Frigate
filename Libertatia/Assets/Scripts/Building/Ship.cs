@@ -25,6 +25,7 @@ public class Ship : MonoBehaviour
     [SerializeField] private MeshRenderer[] renderers;
     // Tracking
     [SerializeField] private bool isCombat = false;
+    [SerializeField] private bool isOutpost = false;
     [SerializeField] private int id = -1;
     [SerializeField] private int islandID = -1;
     [SerializeField] private int capacity = 12;
@@ -80,13 +81,12 @@ public class Ship : MonoBehaviour
     }
     void Start()
     {
-        if(GameManager.Data.ship.Equals(default(ShipData)))
+        if (GameManager.Data.ship.Equals(default(ShipData)))
         {
             crewmates = new List<CrewmateData>(capacity); // new ObjectData(-1, iconEmptyAsssignment)
             shipUI.onUnassign.AddListener(UnassignCrewmateCallback);
-            shipUI.Set(capacity);
         }
-        else
+        else if(!isCombat && !isOutpost)
         {
             ShipData data = GameManager.Data.ship;
             capacity = data.capacity;
@@ -95,10 +95,15 @@ public class Ship : MonoBehaviour
             islandID = data.islandID;
             transform.position = data.position;
             transform.rotation = data.rotation;
-            crewmates = GameManager.Data.combatCrew;
-            if(shipUI)
+        }
+
+        if (shipUI)
+        {
+            shipUI.Set(capacity);
+            if(GameManager.Data.combatCrew.Count > 0)
             {
-                shipUI.Set(capacity);
+                crewmates = GameManager.Data.combatCrew;
+
                 for (int i = 0; i < crewmates.Count; i++)
                 {
                     shipUI.SetCrewmate(i, new ObjectData(crewmates[i].id, crewmates[i].icon));
@@ -193,12 +198,14 @@ public class Ship : MonoBehaviour
         {
             GameManager.UpdateCombatCrew(crewmates.ToArray());
             GameManager.UpdateCrewmateData();
-
+        }
+        else if(isOutpost)
+        {
+            GameManager.UpdateCrewmateData(crewmates.ToArray());
         }
         else
         {
-            GameManager.UpdateCrewmateData(crewmates.ToArray());
-            GameManager.SeparateCrew();
+            GameManager.data.ship = new ShipData(this);
         }
     }
     private void OnDrawGizmosSelected()

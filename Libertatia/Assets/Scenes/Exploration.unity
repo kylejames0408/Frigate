@@ -7909,7 +7909,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1096103324
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21889,6 +21889,7 @@ MonoBehaviour:
   shipUI: {fileID: 0}
   renderers: []
   isCombat: 0
+  isOutpost: 0
   id: -1
   islandID: -1
   capacity: 12

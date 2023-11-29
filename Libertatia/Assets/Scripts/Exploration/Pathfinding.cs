@@ -136,7 +136,6 @@ public class Pathfinding : MonoBehaviour
 		requestManager.FinishedProcessingPath(waypoints,pathSuccess);
 
         yield return null;
-
     }
 
 	public Node FindNearestWalkable(Vector3 targetPos)

@@ -102,22 +102,25 @@ public class IslandManager : MonoBehaviour
         uiIsland.CloseInterface();
 
         // Travel to the island
+        pathfinder.onNavFinish.AddListener(OnNavFinishCallback);
         pathfinder.Depart(ship.transform.position);
-
-        Island island = islands[selectedIslandID];
-        if(island.Type == IslandType.OUTPOST)
-        {
-            CeneManager.LoadOutpost();
-        }
-        else if(island.Type == IslandType.ENEMY)
-        {
-            CeneManager.LoadCombat();
-        }
     }
     private void OnDeclineDepartureCallback()
     {
         confirmationUI.btnApprove.onClick.RemoveListener(OnApproveDepartureCallback);
         confirmationUI.btnDecline.onClick.RemoveListener(OnDeclineDepartureCallback);
         confirmationUI.gameObject.SetActive(false);
+    }
+    private void OnNavFinishCallback()
+    {
+        Island island = islands[selectedIslandID];
+        if (island.Type == IslandType.OUTPOST)
+        {
+            CeneManager.LoadOutpost();
+        }
+        else if (island.Type == IslandType.ENEMY)
+        {
+            CeneManager.LoadCombat();
+        }
     }
 }

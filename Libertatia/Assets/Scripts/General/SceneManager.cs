@@ -72,7 +72,7 @@ public class CeneManager : MonoBehaviour
     }
     public static void LoadCombat()
     {
-        SceneManager.LoadScene("Combat", LoadSceneMode.Single);
+        SceneManager.LoadScene("Combat-Testing", LoadSceneMode.Single);
     }
 
     public static void LoadCombatFromOutpost()
