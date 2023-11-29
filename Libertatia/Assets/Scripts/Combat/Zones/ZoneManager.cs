@@ -335,24 +335,28 @@ public class ZoneManager : MonoBehaviour
             {
                 Zone zone = hit.transform.gameObject.GetComponent<Zone>();
 
-                for(int i = 0; i < selectedCrewmates.Length; i++)
+                if(zone.isClickable)
                 {
-                    NavMeshAgent myAgent = selectedCrewmates[i].GetComponent<NavMeshAgent>();
+                    for (int i = 0; i < selectedCrewmates.Length; i++)
+                    {
+                        NavMeshAgent myAgent = selectedCrewmates[i].GetComponent<NavMeshAgent>();
 
-                    //makes crewmates move to a random position within a sphere around the center of the zone
-                    myAgent.SetDestination(zone.zoneCenter + (Vector3)UnityEngine.Random.insideUnitSphere * 7f);
+                        //makes crewmates move to a random position within a sphere around the center of the zone
+                        myAgent.SetDestination(zone.zoneCenter + (Vector3)UnityEngine.Random.insideUnitSphere * 7f);
 
-                    CrewMember crewMember = selectedCrewmates[i].GetComponent<CrewMember>();
-                    crewMember.targetPos = zone.zoneCenter + (Vector3)UnityEngine.Random.insideUnitSphere * 7f;
-                    crewMember.characterState = Character.State.Moving;
+                        CrewMember crewMember = selectedCrewmates[i].GetComponent<CrewMember>();
+                        crewMember.targetPos = zone.zoneCenter + (Vector3)UnityEngine.Random.insideUnitSphere * 7f;
+                        crewMember.characterState = Character.State.Moving;
 
-                    Crewmate crewmate = crewMember.GetComponent<Crewmate>();
-                    crewmate.State = CrewmateState.MOVING;
+                        Crewmate crewmate = crewMember.GetComponent<Crewmate>();
+                        crewmate.State = CrewmateState.MOVING;
 
-                    cmui.UpdateCard(crewmate.ID, crewmate.StateIcon);
+                        cmui.UpdateCard(crewmate.ID, crewmate.StateIcon);
 
-                    ShowLineRenderer(zone.zoneCenter + (Vector3)UnityEngine.Random.insideUnitSphere * 7f, crewMember);
-                }   
+                        ShowLineRenderer(zone.zoneCenter + (Vector3)UnityEngine.Random.insideUnitSphere * 7f, crewMember);
+                    }
+                }
+  
             }
         }
     }
