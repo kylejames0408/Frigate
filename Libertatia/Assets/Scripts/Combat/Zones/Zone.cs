@@ -33,6 +33,9 @@ public class Zone : MonoBehaviour
 
     public bool mouseHoveringZone;
 
+    //Checks to see if you can move units to the zone
+    public bool isClickable;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -55,6 +58,8 @@ public class Zone : MonoBehaviour
         zoneLootCollected = false;
 
         zoneCenter = centerObject.transform.position;
+
+        isClickable = true;
     }
 
     private void Update()
