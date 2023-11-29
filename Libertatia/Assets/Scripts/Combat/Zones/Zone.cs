@@ -28,6 +28,7 @@ public class Zone : MonoBehaviour
     private GradientColorKey[] blueColorKey;
     private GradientColorKey[] greenColorKey;
     private GradientColorKey[] yellowColorKey;
+    private GradientColorKey[] grayColorKey;
 
     public bool zoneLootCollected;
 
@@ -35,6 +36,10 @@ public class Zone : MonoBehaviour
 
     //Checks to see if you can move units to the zone
     public bool isClickable;
+
+    // Used for raising zone claim events
+    public GameEvent zoneClaimed;
+    public bool zoneClaimTriggered;
 
     // Start is called before the first frame update
     void Start()
@@ -52,6 +57,7 @@ public class Zone : MonoBehaviour
         blueColorKey = new GradientColorKey[] { new GradientColorKey(Color.blue, 0.0f), new GradientColorKey(Color.blue, 1.0f) };
         greenColorKey = new GradientColorKey[] { new GradientColorKey(Color.green, 0.0f), new GradientColorKey(Color.green, 1.0f) };
         yellowColorKey = new GradientColorKey[] { new GradientColorKey(Color.yellow, 0.0f), new GradientColorKey(Color.yellow, 1.0f) };
+        grayColorKey = new GradientColorKey[] { new GradientColorKey(Color.gray, 0.0f), new GradientColorKey(Color.gray, 1.0f) };
 
         //zoneCenter = boxCollider.center;
 
@@ -60,6 +66,8 @@ public class Zone : MonoBehaviour
         zoneCenter = centerObject.transform.position;
 
         isClickable = true;
+
+        zoneClaimTriggered = false;
     }
 
     private void Update()
@@ -74,7 +82,11 @@ public class Zone : MonoBehaviour
             CheckUnitHealth(enemy);
         }
 
-        if (mouseHoveringZone)
+        if (!isClickable)
+        {
+            DrawOutline(grayColorKey);
+        }
+        else if (mouseHoveringZone)
         {
             DrawOutline(blueColorKey);
         }
@@ -89,6 +101,12 @@ public class Zone : MonoBehaviour
         else
         {
             DrawOutline(redColorKey);
+        }
+
+        if(zoneLootCollected && !zoneClaimTriggered)
+        {
+            zoneClaimed.Raise(this, zoneLootCollected);
+            zoneClaimTriggered = true;
         }
 
     }
