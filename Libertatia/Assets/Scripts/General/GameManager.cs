@@ -162,8 +162,10 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
+        if (pauseMenu == null) { pauseMenu = FindObjectOfType<PauseMenu>(); }
+
         //Debug.Log("GameManager initialized");
-        if(data.Equals(default(PlayerData))) // Prevents reinit when debugging
+        if (data.Equals(default(PlayerData))) // Prevents reinit when debugging
         {
             data = PlayerDataManager.CreateNewData();
             DontDestroyOnLoad(gameObject); // Required for persistance
@@ -173,7 +175,6 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
 
-        if(pauseMenu == null) { pauseMenu = FindObjectOfType<PauseMenu>(); }
 
 #if !UNITY_EDITOR
         Cursor.lockState = CursorLockMode.Confined;

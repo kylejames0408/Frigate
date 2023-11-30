@@ -20,6 +20,9 @@ public class DevUI : MonoBehaviour
 
     private void Awake()
     {
+#if !UNITY_EDITOR
+        gameObject.SetActive(false);
+#endif
         isOpen = false;
 
         if (bm == null) { bm = FindObjectOfType<BuildingManager>(); }

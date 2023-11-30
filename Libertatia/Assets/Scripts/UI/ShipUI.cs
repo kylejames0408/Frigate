@@ -1,6 +1,5 @@
 using DG.Tweening;
 using System;
-using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
@@ -161,6 +160,7 @@ public class ShipUI : MonoBehaviour
     }
 }
 
+#if UNITY_EDITOR
 [CustomEditor(typeof(ShipUI))]
 public class ShipUIEditor : Editor
 {
@@ -176,3 +176,4 @@ public class ShipUIEditor : Editor
         }
     }
 }
+#endif
