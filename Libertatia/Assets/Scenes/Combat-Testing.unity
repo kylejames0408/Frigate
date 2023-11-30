@@ -4788,9 +4788,10 @@ MonoBehaviour:
   zoomSensitivity: 40
   keyboardSensitivity: 50
   shiftSensitivity: 20
+  canEdgeScroll: 0
   edgeSize: 30
   edgeScrollingSensitivity: 30
-  useBounds: 1
+  usingBounds: 0
   maxWorldBounds: {x: 12, y: 15}
   minWorldBounds: {x: -40, y: -33}
   panSpeed: 1
@@ -12974,7 +12975,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cm: {fileID: 2009515019}
   bm: {fileID: 0}
-  sm: {fileID: 0}
+  ship: {fileID: 0}
   popupUI: {fileID: 1929977003}
   buildingResourceCost: {fileID: 9887584}
   buildingAPCost: {fileID: 1413111959}
@@ -12988,6 +12989,12 @@ MonoBehaviour:
   tabUIParent: {fileID: 1086482467}
   pagesUIParent: {fileID: 521419574}
   buildingCards: []
+  onBeginDraggingBuildingCard:
+    m_PersistentCalls:
+      m_Calls: []
+  onEndDraggingBuildingCard:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &792186769
 GameObject:
   m_ObjectHideFlags: 0

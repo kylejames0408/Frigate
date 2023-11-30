@@ -148,51 +148,51 @@ public class CrewmateManager : MonoBehaviour
         }
 
         // Move Crewmate - TODO: move to function
-        if(isCombat && Input.GetMouseButtonDown(1))
-        {
-            Ray ray = CameraManager.Instance.Camera.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out RaycastHit hit, 500f, mask, QueryTriggerInteraction.Ignore))
-            {
-                //Moves units to the center of zone when it is clicked on
-                if (hit.collider.tag == "Zone")
-                {
-                    Zone zone = hit.transform.gameObject.GetComponent<Zone>();
-                    foreach (int id in selectedCrewmateIDs)
-                    {
-                        Vector3 movePos = (zone.zoneCenter + (Vector3)UnityEngine.Random.insideUnitSphere * 7f);
-                        Vector3 updatedMovePos = new Vector3(movePos.x, 0, movePos.z);
-
-                        //makes crewmates move to a random position within a sphere around the center of the zone
-                        crewmates[id].SetDestination(updatedMovePos);
-
-                        //creates a line to indicate where the units are moving to
-                        CrewMember crewMember = crewmates[id].GetComponent<CrewMember>();
-                        crewMember.targetPos = updatedMovePos;
-                        ShowLineRenderer(updatedMovePos, id);
-
-                        //updates "BOTH" enum states and updates card status in combat
-                        crewMember.characterState = Character.State.Moving;
-                        crewmates[id].State = CrewmateState.MOVING;
-                        cmui.UpdateCard(id, crewmates[id].StateIcon);
-                    }
-                }
-                else
-                {
-                    foreach (int id in selectedCrewmateIDs)
-                    {
-                        crewmates[id].SetDestination(hit.point);
-
-                        CrewMember crewMember = crewmates[id].GetComponent<CrewMember>();
-                        crewMember.targetPos = hit.point;
-
-                        //updates "BOTH" enum states and updates card status in combat
-                        crewMember.characterState = Character.State.Moving;
-                        crewmates[id].State = CrewmateState.MOVING;
-                        cmui.UpdateCard(id, crewmates[id].StateIcon);
-                    }
-                }
-            }
-        }
+        //if(isCombat && Input.GetMouseButtonDown(1))
+        //{
+        //    Ray ray = CameraManager.Instance.Camera.ScreenPointToRay(Input.mousePosition);
+        //    if (Physics.Raycast(ray, out RaycastHit hit, 500f, mask, QueryTriggerInteraction.Ignore))
+        //    {
+        //        //Moves units to the center of zone when it is clicked on
+        //        if (hit.collider.tag == "Zone")
+        //        {
+        //            Zone zone = hit.transform.gameObject.GetComponent<Zone>();
+        //            foreach (int id in selectedCrewmateIDs)
+        //            {
+        //                Vector3 movePos = (zone.zoneCenter + (Vector3)UnityEngine.Random.insideUnitSphere * 7f);
+        //                Vector3 updatedMovePos = new Vector3(movePos.x, 0, movePos.z);
+        //
+        //                //makes crewmates move to a random position within a sphere around the center of the zone
+        //                crewmates[id].SetDestination(updatedMovePos);
+        //
+        //                //creates a line to indicate where the units are moving to
+        //                CrewMember crewMember = crewmates[id].GetComponent<CrewMember>();
+        //                crewMember.targetPos = updatedMovePos;
+        //                ShowLineRenderer(updatedMovePos, id);
+        //
+        //                //updates "BOTH" enum states and updates card status in combat
+        //                crewMember.characterState = Character.State.Moving;
+        //                crewmates[id].State = CrewmateState.MOVING;
+        //                cmui.UpdateCard(id, crewmates[id].StateIcon);
+        //            }
+        //        }
+        //        else
+        //        {
+        //            foreach (int id in selectedCrewmateIDs)
+        //            {
+        //                crewmates[id].SetDestination(hit.point);
+        //
+        //                CrewMember crewMember = crewmates[id].GetComponent<CrewMember>();
+        //                crewMember.targetPos = hit.point;
+        //
+        //                //updates "BOTH" enum states and updates card status in combat
+        //                crewMember.characterState = Character.State.Moving;
+        //                crewmates[id].State = CrewmateState.MOVING;
+        //                cmui.UpdateCard(id, crewmates[id].StateIcon);
+        //            }
+        //        }
+        //    }
+        //}
     }
     private void OnDestroy()
     {
