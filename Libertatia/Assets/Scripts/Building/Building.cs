@@ -173,7 +173,7 @@ public class Building : MonoBehaviour
         if (isHovered)
         {
             HandleSelection();
-            HandleAssignment();
+            //HandleAssignment();
         }
     }
 

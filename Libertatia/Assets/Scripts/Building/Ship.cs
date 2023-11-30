@@ -1,8 +1,5 @@
-using System;
 using System.Collections.Generic;
-using Unity.Mathematics;
 using UnityEngine;
-using UnityEngine.AI;
 using UnityEngine.EventSystems;
 
 public class Ship : MonoBehaviour
@@ -127,27 +124,6 @@ public class Ship : MonoBehaviour
             {
                 shipUI.OpenMenu();
             }
-            if (Input.GetMouseButtonDown(1) && !EventSystem.current.IsPointerOverGameObject())
-            {
-                if (cm.IsCrewmateSelected && crewmates.Count < crewmates.Capacity)
-                {
-                    // Get selected units
-                    Crewmate[] selectedCrewmates = cm.GetSelectedCrewmates();
-                    // Assign - move to function
-                    for (int i = 0; i < selectedCrewmates.Length; i++)
-                    {
-                        Crewmate mate = selectedCrewmates[i];
-                        CrewmateData crewmateData = new CrewmateData(mate);
-                        shipUI.SetCrewmate(crewmates.Count, new ObjectData(crewmateData.id, crewmateData.icon));
-                        crewmates.Add(crewmateData);
-                        mate.Assign(id, icon, GetDestination());
-                    }
-                }
-                else
-                {
-                    Debug.Log("Ship assignments are full");
-                }
-            }
         }
 
         foreach (GameObject unit in unitList)
@@ -263,27 +239,21 @@ public class Ship : MonoBehaviour
     {
         if (isHovered)
         {
-            if (crewmates.Count < capacity)
+            if (cm.IsCrewmateSelected && crewmates.Count < crewmates.Capacity)
             {
                 // Get selected units
                 Crewmate[] selectedCrewmates = cm.GetSelectedCrewmates();
                 // Assign - move to function
                 for (int i = 0; i < selectedCrewmates.Length; i++)
                 {
-                    if (crewmates.Count >= capacity)
-                    {
-                        Debug.Log("Ship is full");
-                        return;
-                    }
-                     
                     Crewmate mate = selectedCrewmates[i];
                     CrewmateData crewmateData = new CrewmateData(mate);
                     shipUI.SetCrewmate(crewmates.Count, new ObjectData(crewmateData.id, crewmateData.icon));
                     crewmates.Add(crewmateData);
-                    mate.Assign(id, icon, GetDestination());
+                    mate.Assign(id, icon, GetDestination(), true);
                     onCrewmateAssignedGE.Raise(this, mate);
                 }
-                
+
                 //onCrewmateShipAssigned.Invoke();
             }
             else

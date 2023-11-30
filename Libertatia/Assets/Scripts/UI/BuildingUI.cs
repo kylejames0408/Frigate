@@ -49,7 +49,7 @@ public class BuildingUI : MonoBehaviour
     }
     private void Start()
     {
-        btnClose.onClick.AddListener(CloseMenu);
+        btnClose.onClick.AddListener(CloseInterface);
         btnBuilding.onClick.AddListener(OnClickCrewmateCallback);
         btnAssignee1.onClick.AddListener(() =>{ OnClickAssigneeCallback(0); });
         btnAssignee2.onClick.AddListener(() =>{ OnClickAssigneeCallback(1); });
@@ -69,7 +69,7 @@ public class BuildingUI : MonoBehaviour
         }
     }
 
-    internal void FillUI(Building building)
+    internal void FillAndOpenInterface(Building building)
     {
         buildingID = building.ID;
         uiIcon.sprite = building.Icon;
@@ -111,6 +111,11 @@ public class BuildingUI : MonoBehaviour
         {
             btnDemolish.interactable = true;
         }
+
+        if (!isOpen)
+        {
+            OpenInterface();
+        }
     }
     internal void SetStatusUI(string status)
     {
@@ -126,7 +131,7 @@ public class BuildingUI : MonoBehaviour
             Input.mousePosition.y < bounds.offsetMin.y ||
             Input.mousePosition.y > bounds.offsetMax.y))
         {
-            CloseMenu();
+            CloseInterface();
         }
     }
 
@@ -161,14 +166,14 @@ public class BuildingUI : MonoBehaviour
     }
 
     // Open/close
-    internal void OpenMenu()
+    internal void OpenInterface()
     {
         transform.DOMoveX(690, animSpeedInterface);
         isOpen = true;
-        crewmateUI.CloseMenu();
+        crewmateUI.CloseInterface();
         shipUI.CloseMenu();
     }
-    internal void CloseMenu()
+    internal void CloseInterface()
     {
         transform.DOMoveX(-10, animSpeedInterface); // make relative
         isOpen = false;

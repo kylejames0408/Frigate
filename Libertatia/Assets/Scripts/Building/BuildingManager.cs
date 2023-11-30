@@ -254,8 +254,7 @@ public class BuildingManager : MonoBehaviour
     {
         Building building = buildings[buildingID];
         selectedBuildingID = buildingID;
-        buildingUI.FillUI(building);
-        buildingUI.OpenMenu();
+        buildingUI.FillAndOpenInterface(building);
     }
     private void OnCollisionCallback(int buildingID)
     {
@@ -310,7 +309,7 @@ public class BuildingManager : MonoBehaviour
         confirmationUI.btnDecline.onClick.RemoveListener(OnDeclineDemolishCallback);
         confirmationUI.gameObject.SetActive(false);
         DemolishBuilding(selectedBuildingID);
-        buildingUI.CloseMenu();
+        buildingUI.CloseInterface();
         selectedBuildingID = -1;
     }
     private void OnDeclineDemolishCallback()

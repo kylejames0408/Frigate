@@ -143,11 +143,11 @@ public class ShipUI : MonoBehaviour
         isOpen = true;
         if(crewmateUI)
         {
-            crewmateUI.CloseMenu();
+            crewmateUI.CloseInterface();
         }
         if(buildingUI)
         {
-            buildingUI.CloseMenu();
+            buildingUI.CloseInterface();
         }
         if(islandUI)
         {

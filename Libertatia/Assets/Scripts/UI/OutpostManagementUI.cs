@@ -237,8 +237,11 @@ public class OutpostManagementUI : MonoBehaviour
     }
     private void SelectCrewmateCardShare(int cardID)
     {
-        SelectCrewmateCard(cardID);
-        cm.SelectCrewmate(cardID);
+        if (!selectedCrewmateCardIDs.Contains(cardID))
+        {
+            SelectCrewmateCard(cardID);
+            cm.SelectCrewmate(cardID);
+        }
     }
     internal void DeselectCrewmateCard(int cardID)
     {
@@ -340,6 +343,10 @@ public class OutpostManagementUI : MonoBehaviour
         if (card.resourceProduction.food > 0)
         {
             buildingProduction.text = "Food";
+        }
+        else if (card.resourceProduction.wood > 0)
+        {
+            buildingProduction.text = "Wood";
         }
         else
         {

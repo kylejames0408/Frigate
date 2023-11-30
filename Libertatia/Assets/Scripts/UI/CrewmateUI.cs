@@ -80,7 +80,7 @@ public class CrewmateUI : MonoBehaviour
         }
     }
 
-    internal void FillUI(Crewmate mate)
+    internal void FillAndOpenInterface(Crewmate mate)
     {
         crewmateID = mate.ID;
         uiCrewmateIcon.sprite = mate.Icon;
@@ -117,9 +117,15 @@ public class CrewmateUI : MonoBehaviour
             }
         }
         uiBuildingIcon.sprite = mate.Building.icon;
+
+        if(!isOpen)
+        {
+            OpenInterface();
+        }
     }
 
     // Handlers
+    // Closes when crewmate is clicked on in world space - would need some checking mechanism
     private void HandleClicking()
     {
         if(Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject() && (
@@ -147,12 +153,12 @@ public class CrewmateUI : MonoBehaviour
     }
     private void CloseMenuCallback()
     {
-        CloseMenu();
+        CloseInterface();
         onClose.Invoke(); // Deselects
     }
 
     // Open/close
-    internal void OpenMenu()
+    internal void OpenInterface()
     {
         transform.DOMoveX(690, animSpeedInterface);
         isOpen = true;
@@ -160,11 +166,11 @@ public class CrewmateUI : MonoBehaviour
 
         if(buildingUI != null)
         {
-            buildingUI.CloseMenu();
+            buildingUI.CloseInterface();
         }
 
     }
-    internal void CloseMenu()
+    internal void CloseInterface()
     {
         transform.DOMoveX(-10, animSpeedInterface); // make relative
         isOpen = false;

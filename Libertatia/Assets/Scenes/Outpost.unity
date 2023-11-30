@@ -3035,6 +3035,7 @@ MonoBehaviour:
   - {fileID: 1608439493}
   - {fileID: 318881204}
   uiBuildingIcon: {fileID: 1192102748}
+  zoneSprite: {fileID: 0}
   btnCrewmate: {fileID: 1646260749}
   btnLocation: {fileID: 650018767}
   btnClose: {fileID: 2020924265}
@@ -3721,6 +3722,7 @@ MonoBehaviour:
   mask:
     serializedVersion: 2
     m_Bits: 0
+  zones: []
   selectionBoxTrans: {fileID: 1492379092}
 --- !u!1 &318881202
 GameObject:
@@ -8494,8 +8496,8 @@ MonoBehaviour:
   confirmationUI: {fileID: 888449053}
   cm: {fileID: 314619652}
   ship: {fileID: 7021428240441947983}
-  isPlacing: 0
-  droppedBuilding: 0
+  isDragging: 0
+  canPlace: 0
   prospectiveBuilding: {fileID: 0}
   totalProduction:
     wood: 0
@@ -12917,7 +12919,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cm: {fileID: 314619652}
   bm: {fileID: 745434448}
-  sm: {fileID: 7021428240441947983}
+  ship: {fileID: 7021428240441947983}
   popupUI: {fileID: 365225364}
   buildingResourceCost: {fileID: 1557529230}
   buildingAPCost: {fileID: 845936223}
@@ -12931,6 +12933,12 @@ MonoBehaviour:
   tabUIParent: {fileID: 2584835497597247581}
   pagesUIParent: {fileID: 5893328723937594164}
   buildingCards: []
+  onBeginDraggingBuildingCard:
+    m_PersistentCalls:
+      m_Calls: []
+  onEndDraggingBuildingCard:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1317556779
 GameObject:
   m_ObjectHideFlags: 0

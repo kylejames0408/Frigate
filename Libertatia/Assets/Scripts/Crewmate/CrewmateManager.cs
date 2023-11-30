@@ -451,23 +451,24 @@ public class CrewmateManager : MonoBehaviour
     }
     internal void SelectCrewmate(int crewmateID)
     {
-        crewmates[crewmateID].GetComponent<Renderer>().sharedMaterial = materials[1];
         //crewmates[crewmateID].transform.GetChild(0).gameObject.SetActive(true);
-        selectedCrewmateIDs.Add(crewmateID);
 
-        //if (!isCombat)
-        //{
+        if (!selectedCrewmateIDs.Contains(crewmateID))
+        {
+            crewmates[crewmateID].GetComponent<Renderer>().sharedMaterial = materials[1];
+            selectedCrewmateIDs.Add(crewmateID);
+        }
+
         if (selectedCrewmateIDs.Count > 1)
         {
-            crewmateUI.CloseMenu();
+            crewmateUI.CloseInterface(); // maybe check if is already closed
         }
         else
         {
-            OpenSlider(crewmates[crewmateID]);
+            crewmateUI.FillAndOpenInterface(crewmates[crewmateID]);
         }
-        //}
-        //else
-        if(isCombat)
+
+        if (isCombat)
         {
             //unit line renderer
             CrewMember crewMember = crewmates[crewmateID].GetComponent<CrewMember>();
@@ -568,12 +569,6 @@ public class CrewmateManager : MonoBehaviour
             cmui.RemoveCrewmateCard(cardID);
         }
     }
-    // Slide
-    private void OpenSlider(Crewmate mate)
-    {
-        crewmateUI.FillUI(mate);
-        crewmateUI.OpenMenu();
-    }
     internal void UnassignCrewmate(int crewmateID)
     {
         Crewmate mate = crewmates[crewmateID];
@@ -593,7 +588,7 @@ public class CrewmateManager : MonoBehaviour
     private void OnAssignCallback(int crewmateID)
     {
         Crewmate mate = crewmates[crewmateID];
-        OpenSlider(mate);
+        crewmateUI.FillAndOpenInterface(mate);
         if (cmui == null)
         {
             omui.UpdateCrewmateCard(crewmateID, mate.StateIcon);
