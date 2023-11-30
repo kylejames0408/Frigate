@@ -30,7 +30,7 @@ public struct BuildingResources
         }
         else if (food > 0)
         {
-            return food + " wood";
+            return food + " food";
         }
         else
         {

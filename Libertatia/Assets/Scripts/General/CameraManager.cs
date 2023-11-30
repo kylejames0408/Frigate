@@ -59,12 +59,18 @@ public class CameraManager : MonoBehaviour
         canEdgeScroll = false;
     }
     // TODO: separate calculations with time into fixed while others stay in update
+    private void Update()
+    {
+        if (!EventSystem.current.IsPointerOverGameObject())
+        {
+            HandleMouseInput();
+        }
+    }
     private void FixedUpdate()
     {
         if(!EventSystem.current.IsPointerOverGameObject())
         {
             HandleZoom();
-            HandleMouseInput();
         }
 
         HandleKeyboardInput();
