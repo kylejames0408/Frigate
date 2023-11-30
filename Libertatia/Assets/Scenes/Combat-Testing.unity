@@ -2268,6 +2268,7 @@ MonoBehaviour:
   - {fileID: 188291313}
   - {fileID: 1700541169}
   uiBuildingIcon: {fileID: 1339329441}
+  zoneSprite: {fileID: 21300000, guid: cc456ce223ad9dc4abe76e84aa5b63b3, type: 3}
   btnCrewmate: {fileID: 1419702643}
   btnLocation: {fileID: 1834295560}
   btnClose: {fileID: 1476132703}
