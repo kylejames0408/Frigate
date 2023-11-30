@@ -56,7 +56,7 @@ public class ZoneManager : MonoBehaviour
         enemies = GameObject.FindGameObjectsWithTag("Enemy").ToList<GameObject>();
         enemyHouses = GameObject.FindGameObjectsWithTag("EnemyHouse").ToList<GameObject>();
         combatUI = GameObject.FindGameObjectWithTag("CombatUI");
-        zones = Terrain.activeTerrains.ToList();
+        //zones = Terrain.activeTerrains.ToList();
         for(int i = 0; i < zones.Count; i++)
         {
             if (zones[i].tag != "Zone")

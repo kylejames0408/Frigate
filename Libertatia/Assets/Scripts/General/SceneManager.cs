@@ -48,6 +48,11 @@ public class CeneManager : MonoBehaviour
     }
     public static void LoadMainMenu()
     {
+        GameManager.outpostVisitNumber = 0;
+        GameManager.explorationVisitNumber = 0;
+        GameManager.combatVisitNumber = 0;
+        //GameManager.ResetPlayerData();
+
         if(GameManager.mainMenuTesting)
             SceneManager.LoadScene("MainMenu-Testing", LoadSceneMode.Single);
         else

@@ -218,5 +218,10 @@ public class GameManager : MonoBehaviour
         pauseMenu.Close();
     }
 
+    public static void ResetPlayerData()
+    {
+        data = PlayerDataManager.CreateNewData();
+    }
+
 
 }

@@ -2584,6 +2584,11 @@ MonoBehaviour:
   m_FlexibleWidth: 4
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
+--- !u!218 &148364146 stripped
+Terrain:
+  m_CorrespondingSourceObject: {fileID: 5747260758148624900, guid: adbabd5f1c29eb244b5124c4c1d23282, type: 3}
+  m_PrefabInstance: {fileID: 1549228871}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &167413217
 GameObject:
   m_ObjectHideFlags: 0
@@ -5920,6 +5925,11 @@ MonoBehaviour:
   mask:
     serializedVersion: 2
     m_Bits: 136
+--- !u!218 &359408188 stripped
+Terrain:
+  m_CorrespondingSourceObject: {fileID: 5692360713431692110, guid: adbabd5f1c29eb244b5124c4c1d23282, type: 3}
+  m_PrefabInstance: {fileID: 1549228871}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &362412283
 GameObject:
   m_ObjectHideFlags: 0
@@ -21851,6 +21861,11 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!218 &1253989655 stripped
+Terrain:
+  m_CorrespondingSourceObject: {fileID: 6678370099408735472, guid: adbabd5f1c29eb244b5124c4c1d23282, type: 3}
+  m_PrefabInstance: {fileID: 1549228871}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1255271291
 GameObject:
   m_ObjectHideFlags: 0
@@ -24014,7 +24029,12 @@ MonoBehaviour:
   crewMembers: []
   enemies: []
   enemyHouses: []
-  zones: []
+  zones:
+  - {fileID: 1549228891}
+  - {fileID: 148364146}
+  - {fileID: 1549228894}
+  - {fileID: 1253989655}
+  - {fileID: 359408188}
   shipWaypoint: {fileID: 894041250}
   combatUI: {fileID: 790469871}
   finishedCombat: {fileID: 11400000, guid: 652c65e12d9ed954ea0fb51627342b58, type: 2}
@@ -24707,10 +24727,10 @@ RectTransform:
   m_Father: {fileID: 614516756}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 76.965004, y: -19}
+  m_SizeDelta: {x: 20.1, y: 38}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1466720943
 MonoBehaviour:
@@ -27260,6 +27280,11 @@ LineRenderer:
   m_UseWorldSpace: 0
   m_Loop: 1
   m_ApplyActiveColorSpace: 1
+--- !u!218 &1549228891 stripped
+Terrain:
+  m_CorrespondingSourceObject: {fileID: 4837545366431029779, guid: adbabd5f1c29eb244b5124c4c1d23282, type: 3}
+  m_PrefabInstance: {fileID: 1549228871}
+  m_PrefabAsset: {fileID: 0}
 --- !u!120 &1549228892
 LineRenderer:
   serializedVersion: 2
@@ -27366,6 +27391,11 @@ LineRenderer:
   m_UseWorldSpace: 0
   m_Loop: 1
   m_ApplyActiveColorSpace: 1
+--- !u!218 &1549228894 stripped
+Terrain:
+  m_CorrespondingSourceObject: {fileID: 8495718212426914295, guid: adbabd5f1c29eb244b5124c4c1d23282, type: 3}
+  m_PrefabInstance: {fileID: 1549228871}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1556475740
 GameObject:
   m_ObjectHideFlags: 0
@@ -37136,10 +37166,10 @@ RectTransform:
   m_Father: {fileID: 614516756}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 108.55, y: -19}
+  m_SizeDelta: {x: 33.07, y: 38}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2037343215
 MonoBehaviour:

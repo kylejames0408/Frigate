@@ -71,7 +71,7 @@ public class IslandManager : MonoBehaviour
     }
     private void OnDestroy()
     {
-        GameManager.data.ship = new ShipData(ship);
+        //GameManager.data.ship = new ShipData(ship);
     }
 
     private void OnIslandSelectedCallback(int islandID)
@@ -121,6 +121,7 @@ public class IslandManager : MonoBehaviour
     {
         isShipMoving = false;
         Island island = islands[selectedIslandID];
+        GameManager.data.ship = new ShipData(ship);
         if (island.Type == IslandType.OUTPOST)
         {
             GameManager.UpdateCombatCrew(ship.Crewmates.ToArray());
