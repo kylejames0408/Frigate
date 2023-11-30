@@ -579,7 +579,7 @@ public class CrewmateManager : MonoBehaviour
         mate.Unassign(); // will UI need to be updated as well?
         if (cmui == null)
         {
-            omui.UpdateCard(crewmateID, mate.StateIcon);
+            omui.UpdateCrewmateCard(crewmateID, mate.StateIcon);
         }
         else
         {
@@ -595,7 +595,7 @@ public class CrewmateManager : MonoBehaviour
         OpenSlider(mate);
         if (cmui == null)
         {
-            omui.UpdateCard(crewmateID, mate.StateIcon);
+            omui.UpdateCrewmateCard(crewmateID, mate.StateIcon);
         }
         else
         {

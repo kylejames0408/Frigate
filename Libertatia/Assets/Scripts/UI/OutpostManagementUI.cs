@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class OutpostManagementUI : MonoBehaviour
@@ -11,7 +12,7 @@ public class OutpostManagementUI : MonoBehaviour
     // Components
     [SerializeField] private CrewmateManager cm;
     [SerializeField] private BuildingManager bm;
-    [SerializeField] private Ship sm;
+    [SerializeField] private Ship ship;
     // popup UI - maybe separate
     [SerializeField] private GameObject popupUI;
     [SerializeField] private TextMeshProUGUI buildingResourceCost;
@@ -36,6 +37,9 @@ public class OutpostManagementUI : MonoBehaviour
     public Dictionary<int, CrewmateCard> crewmateCards;
     private List<int> selectedCrewmateCardIDs; // Im thinking this could be a stack
     private bool isOpen;
+    // Events
+    public UnityEvent<int> onBeginDraggingBuildingCard;
+    public UnityEvent<int> onEndDraggingBuildingCard;
 
     private void Awake()
     {
@@ -68,37 +72,17 @@ public class OutpostManagementUI : MonoBehaviour
         SelectTab(0);
         // Sets arrow initial onclick callback
         if (isOpen)
-            arrow.onClick.AddListener(CloseMenu);
+            arrow.onClick.AddListener(CloseInterface);
         else
-            arrow.onClick.AddListener(OpenMenu);
+            arrow.onClick.AddListener(OpenInterface);
     }
     private void Update()
     {
-        UpdateBuildingCardAvailability();
+        BuildingCardAvailabilityHandler();
     }
 
-    // this should probably be in building manager
-    private void UpdateBuildingCardAvailability()
-    {
-        for (int i = 0; i < buildingCards.Count; i++)
-        {
-            if (bm.CanConstructBuilding(i))
-            {
-                buildingCards[i].GetComponentInChildren<Button>().interactable = true;
-
-                buildingCards[i].GetComponent<DragObj2D>().currentlyDragable = true;
-            }
-            else
-            {
-                buildingCards[i].GetComponentInChildren<Button>().interactable = false;
-
-                buildingCards[i].GetComponent<DragObj2D>().currentlyDragable = false;
-            }
-        }
-    }
-
-    // Select tab callback - changes tab interface and adds interface content
-    public void SelectTab(int tabIndex)
+    // Interactions- General
+    private void SelectTab(int tabIndex)
     {
         for (int i = 0; i < tabs.Length; i++) // assumes tabs and pages length are equal
         {
@@ -114,79 +98,38 @@ public class OutpostManagementUI : MonoBehaviour
             }
         }
     }
-
-    // Fills building construction UI page
-    public void FillConstructionUI(BuildingManager bm, Building[] buildings)
+    internal void FillConstructionUI(Building[] buildings)
     {
         buildingCards = new List<BuildingCard>(buildings.Length);
         for (int i = 0; i < buildings.Length; i++)
         {
-            AddBuildingCard(bm, i, buildings[i]);
+            AddBuildingCard(i, buildings[i]);
         }
     }
-
-    // Building (construction) cards
-    public void AddBuildingCard(BuildingManager bm, int index, Building building)
+    // Interactions - Building Cards
+    private void AddBuildingCard(int index, Building building)
     {
         GameObject cardObj = Instantiate(buildingCardPrefab, pages[0]);
 
         BuildingCard card = cardObj.GetComponentInChildren<BuildingCard>();
-        card.Set(building.Cost, building.Production);
-        card.onHover.AddListener(() => { BuildingCardHoveredCallback(index); });
-        card.onHoverExit.AddListener(BuildingCardHoveredExitCallback);
+        card.Set(index, building.Cost, building.Production);
+        card.onHover.AddListener(OnBeginHoverBuildingCardCallback);
+        card.onHoverExit.AddListener(OnEndHoverBuildingCardCallback);
         buildingCards.Add(card);
 
-        // Callbacks
-        //cardObj.GetComponentInChildren<Button>().onClick.AddListener(() => { ClickBuildingCard(bm, index); });
         // Fill UI
         cardObj.GetComponentsInChildren<Image>()[2].sprite = building.Icon;
         cardObj.GetComponentInChildren<TextMeshProUGUI>().text = building.Name;
 
-        cardObj.GetComponentInChildren<DragObj2D>().onBeginDrag.AddListener(delegate { ClickBuildingCard(bm, index); });
-        cardObj.GetComponentInChildren<DragObj2D>().onEndDrag.AddListener(delegate { bm.HandlePlacingDragDrop(); });
-        cardObj.GetComponentInChildren<DragObj2D>().onEndDrag.AddListener(delegate { DeselectBuildingCard(index); });
+        cardObj.GetComponentInChildren<DragObj2D>().onBeginDrag.AddListener(OnBeginDraggingBuildingCardCallback);
+        cardObj.GetComponentInChildren<DragObj2D>().onEndDrag.AddListener(OnEndDraggingBuildingCardCallback);
     }
-    private void ClickBuildingCard(BuildingManager bm, int cardIndex)
-    {
-        //foreach (BuildingCard card in buildingCards)
-        //{
-        //    card.Deselect();
-        //}
-        buildingCards[cardIndex].Select();
-        bm.SelectBuilding(cardIndex);
-    }
-    public void DeselectBuildingCard(int cardIndex)
+    internal void DeselectBuildingCard(int cardIndex)
     {
         buildingCards[cardIndex].Deselect();
     }
-    private void BuildingCardHoveredCallback(int cardIndex)
-    {
-        BuildingCard card = buildingCards[cardIndex];
-        // Move to be above/aligned with the card
-        Vector3 aboveCard = popupUI.transform.position;
-        aboveCard.x = card.transform.position.x;
-        popupUI.transform.position = aboveCard;
-        popupUI.GetComponent<CanvasGroup>().DOFade(1, animTimeHoverInterface);
 
-        // Populate UI
-        buildingResourceCost.text = card.resourceCost.wood.ToString(); // cost
-        buildingAPCost.text = card.resourceCost.ap.ToString(); // AP
-        // Production
-        if (card.resourceProduction.food > 0)
-        {
-            buildingProduction.text = "Food";
-        }
-        else
-        {
-            buildingProduction.text = "None";
-        }
-    }
-    private void BuildingCardHoveredExitCallback()
-    {
-        popupUI.GetComponent<CanvasGroup>().DOFade(0, animTimeHoverInterface);
-    }
-
-    // Crewmate card interactions
+    // Interactions - Crewmate Cards
     internal void AddCrewmateCard(Crewmate mate)
     {
         GameObject cardObj = Instantiate(crewmateCardPrefab, pages[1]);
@@ -201,10 +144,8 @@ public class OutpostManagementUI : MonoBehaviour
         card.GetComponentsInChildren<Image>()[2].sprite = mate.Icon;
         card.GetComponentInChildren<TextMeshProUGUI>().text = mate.FirstName;
 
-        cardObj.GetComponentInChildren<DragObj2D>().onBeginDrag.AddListener(delegate { DragCrewmateCard(card.ID); });
-        cardObj.GetComponentInChildren<DragObj2D>().onEndDrag.AddListener(delegate { bm.OnCrewmateDropAssign(); });
-        cardObj.GetComponentInChildren<DragObj2D>().onEndDrag.AddListener(delegate { sm.OnCrewmateDropAssign(); });
-        cardObj.GetComponentInChildren<DragObj2D>().onEndDrag.AddListener(delegate { DeselectAllCrewmateCardsShare(); });
+        cardObj.GetComponentInChildren<DragObj2D>().onBeginDrag.AddListener(OnBeginDraggingCrewmateCardCallback);
+        cardObj.GetComponentInChildren<DragObj2D>().onEndDrag.AddListener(OnEndDraggingCrewmateCardCallback);
     }
     internal void RemoveCrewmateCard(int cardID)
     {
@@ -212,20 +153,13 @@ public class OutpostManagementUI : MonoBehaviour
         Destroy(crewmateCards[cardID].gameObject);
         crewmateCards.Remove(cardID);
     }
-    internal void UpdateCard(int cardID, Sprite stateIcon)
+    internal void UpdateCrewmateCard(int cardID, Sprite stateIcon)
     {
         CrewmateCard card = crewmateCards[cardID];
         card.SetStatus(stateIcon);
     }
 
-    private void DragCrewmateCard(int cardID)
-    {
-        //DeselectAllCrewmateCardsShare();
-        SelectCrewmateCardShare(cardID);
-        
-    }
-
-    // Clicking handler
+    // Handlers - Crewmate Cards
     private void ClickCrewmateCard(int cardID) // share
     {
         // Ctrl: select & deselect
@@ -330,7 +264,27 @@ public class OutpostManagementUI : MonoBehaviour
         cm.DeselectAllCrewmates();
     }
 
-    // Callbacks
+    // Handlers - Building Card
+    // this should probably be in building manager
+    private void BuildingCardAvailabilityHandler()
+    {
+        for (int i = 0; i < buildingCards.Count; i++)
+        {
+            if (bm.CanConstructBuilding(i))
+            {
+                buildingCards[i].GetComponentInChildren<Button>().interactable = true;
+                buildingCards[i].GetComponent<DragObj2D>().currentlyDragable = true;
+            }
+            else
+            {
+                buildingCards[i].GetComponentInChildren<Button>().interactable = false;
+                buildingCards[i].GetComponent<DragObj2D>().currentlyDragable = false;
+            }
+        }
+    }
+
+
+    // Callbacks - General
     public void SelectTabCallback(int tabIndex)
     {
         SelectTab(tabIndex);
@@ -338,25 +292,80 @@ public class OutpostManagementUI : MonoBehaviour
         // Separate menu opening
         if (!isOpen)
         {
-            OpenMenu();
+            OpenInterface();
         }
+    }
+    // Callbacks - Crewmate Cards
+    private void OnBeginDraggingCrewmateCardCallback(DragObj2D card)
+    {
+        CrewmateCard crewmateCard = card.GetComponent<CrewmateCard>();
+        SelectCrewmateCardShare(crewmateCard.ID);
+        CameraManager.SetEdgeScrolling(true);
+    }
+    private void OnEndDraggingCrewmateCardCallback(DragObj2D card)
+    {
+        CameraManager.SetEdgeScrolling(false);
+        bm.OnCrewmateDropAssign();
+        ship.OnCrewmateDropAssign();
+        DeselectAllCrewmateCardsShare();
+    }
+    // Callbacks - Building Cards
+    private void OnBeginDraggingBuildingCardCallback(DragObj2D card)
+    {
+        BuildingCard buildingCard = card.GetComponent<BuildingCard>();
+        buildingCard.Select(); // UI
+        CameraManager.SetEdgeScrolling(true);
+        onBeginDraggingBuildingCard.Invoke(buildingCard.Index);
+    }
+    private void OnEndDraggingBuildingCardCallback(DragObj2D card)
+    {
+        CameraManager.SetEdgeScrolling(false);
+        BuildingCard buildingCard = card.GetComponent<BuildingCard>();
+        DeselectBuildingCard(buildingCard.Index);
+        onEndDraggingBuildingCard.Invoke(buildingCard.Index);
+    }
+    private void OnBeginHoverBuildingCardCallback(int cardIndex)
+    {
+        BuildingCard card = buildingCards[cardIndex];
+        // Move to be above/aligned with the card
+        Vector3 aboveCard = popupUI.transform.position;
+        aboveCard.x = card.transform.position.x;
+        popupUI.transform.position = aboveCard;
+        popupUI.GetComponent<CanvasGroup>().DOFade(1, animTimeHoverInterface);
+
+        // Populate UI
+        buildingResourceCost.text = card.resourceCost.wood.ToString(); // cost
+        buildingAPCost.text = card.resourceCost.ap.ToString(); // AP
+        // Production
+        if (card.resourceProduction.food > 0)
+        {
+            buildingProduction.text = "Food";
+        }
+        else
+        {
+            buildingProduction.text = "None";
+        }
+    }
+    private void OnEndHoverBuildingCardCallback()
+    {
+        popupUI.GetComponent<CanvasGroup>().DOFade(0, animTimeHoverInterface);
     }
 
     // Menu Functions
-    private void OpenMenu()
+    private void OpenInterface()
     {
         isOpen = true;
         transform.DOMoveY(transform.position.y + pagesUIParent.GetComponent<RectTransform>().rect.height, animTimeInterface);
-        arrow.onClick.RemoveListener(OpenMenu);
-        arrow.onClick.AddListener(CloseMenu);
+        arrow.onClick.RemoveListener(OpenInterface);
+        arrow.onClick.AddListener(CloseInterface);
         arrow.transform.GetChild(0).DORotate(new Vector3(0, 0, 180), animTimeArrow);
     }
-    private void CloseMenu()
+    private void CloseInterface()
     {
         isOpen = false;
         transform.DOMoveY(transform.position.y - pagesUIParent.GetComponent<RectTransform>().rect.height, animTimeInterface); // cant get height in start
-        arrow.onClick.RemoveListener(CloseMenu);
-        arrow.onClick.AddListener(OpenMenu);
+        arrow.onClick.RemoveListener(CloseInterface);
+        arrow.onClick.AddListener(OpenInterface);
         arrow.transform.GetChild(0).DORotate(new Vector3(0, 0, 0), animTimeArrow);
     }
 }

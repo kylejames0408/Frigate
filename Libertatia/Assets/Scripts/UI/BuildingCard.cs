@@ -5,11 +5,17 @@ using UnityEngine.UI;
 
 public class BuildingCard : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
+    private int index = -1;
     private Outline outline;
-    public UnityEvent onHover;
+    public UnityEvent<int> onHover;
     public UnityEvent onHoverExit;
     public BuildingResources resourceCost;
     public BuildingResources resourceProduction;
+
+    public int Index
+    {
+        get { return index; }
+    }
 
     private void Awake()
     {
@@ -17,8 +23,9 @@ public class BuildingCard : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         Deselect();
     }
 
-    public void Set(BuildingResources buildingCost, BuildingResources buildingProduction)
+    public void Set(int index, BuildingResources buildingCost, BuildingResources buildingProduction)
     {
+        this.index = index;
         resourceCost = buildingCost;
         resourceProduction = buildingProduction;
     }
@@ -33,7 +40,7 @@ public class BuildingCard : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     }
     public void OnPointerEnter(PointerEventData eventData)
     {
-        onHover.Invoke();
+        onHover.Invoke(index);
     }
 
     public void OnPointerExit(PointerEventData eventData)

@@ -53,8 +53,8 @@ public class BuildingManager : MonoBehaviour
     [SerializeField] private CrewmateManager cm; // need this for selection data
     [SerializeField] private Ship ship; // need this for selection data
     [Header("Tracking")]
-    [SerializeField] private bool isPlacing = false;
-    [SerializeField] private bool droppedBuilding = false;
+    [SerializeField] private bool isDragging = false;
+    [SerializeField] private bool canPlace = false;
     [SerializeField] private Building prospectiveBuilding;
     [SerializeField] private Dictionary<int, Building> buildings;
     [SerializeField] private BuildingResources totalProduction;
@@ -95,11 +95,16 @@ public class BuildingManager : MonoBehaviour
         }
 
         // Fill UI - probably combine?
-        omui.FillConstructionUI(this, buildingPrefabs);
+        omui.onBeginDraggingBuildingCard.AddListener(OnBeginDraggingBuildingCardCallback);
+        omui.onEndDraggingBuildingCard.AddListener(OnEndDraggingBuildingCardCallback);
+        omui.FillConstructionUI(buildingPrefabs);
     }
     private void Update()
     {
-        HandlePlacing();
+        if(isDragging)
+        {
+            HandleDragging();
+        }
     }
     private void OnDestroy()
     {
@@ -111,7 +116,7 @@ public class BuildingManager : MonoBehaviour
     // Actions
     private void SpawnNewBuilding(Building prospectiveBuilding)
     {
-        isPlacing = false;
+        isDragging = false;
         omui.DeselectBuildingCard(prospectiveBuilding.Type);
 
         // TODO: Compile functions into one if possible
@@ -168,19 +173,6 @@ public class BuildingManager : MonoBehaviour
         building.CompleteConstruction(); // dont keep, but is used to complete for now, will be using AP
 
         building.onCrewmateAssignedGE = onCrewmateAssigned;
-    }
-    internal void SelectBuilding(int buildingIndex)
-    {
-        if (isPlacing)
-        {
-            Destroy(prospectiveBuilding.gameObject);
-        }
-        isPlacing = true;
-
-        Building prefab = buildingPrefabs[buildingIndex];
-        prospectiveBuilding = Instantiate(prefab, Vector3.zero, prefab.transform.rotation, transform);
-        prospectiveBuilding.SetType(buildingIndex); // stores type
-        prospectiveBuilding.SetMaterial(stateData.matPlacing);
     }
     private void UpgradeBuilding(int buildingID)
     {
@@ -353,6 +345,29 @@ public class BuildingManager : MonoBehaviour
         Building building = buildings[buildingID];
         cm.OnClickCrewmateIconCallback(building.Assignees[assigneeIndex].id);
     }
+    private void OnBeginDraggingBuildingCardCallback(int buildingIndex)
+    {
+        isDragging = true;
+        canPlace = false;
+        // Creates building to follow cursor
+        Building prefab = buildingPrefabs[buildingIndex];
+        prospectiveBuilding = Instantiate(prefab, Vector3.zero, prefab.transform.rotation, transform);
+        prospectiveBuilding.SetType(buildingIndex);
+        prospectiveBuilding.SetMaterial(stateData.matPlacing);
+    }
+    private void OnEndDraggingBuildingCardCallback(int buildingIndex)
+    {
+        isDragging = false;
+        // Checks building placement validity
+        if (!EventSystem.current.IsPointerOverGameObject() && canPlace)
+        {
+            SpawnNewBuilding(prospectiveBuilding);
+        }
+        else
+        {
+            Destroy(prospectiveBuilding.gameObject);
+        }
+    }
     // Utils
     internal Building GetBuilding(int buildingID)
     {
@@ -371,53 +386,25 @@ public class BuildingManager : MonoBehaviour
     }
 
     // Handlers
-    private void HandlePlacing()
+    private void HandleDragging()
     {
-        // move functionallity outside of monobehavior
-        if (isPlacing)
+        // Camera.main or Camera.current?
+        Physics.Raycast(CameraManager.Instance.Camera.ScreenPointToRay(Input.mousePosition),
+            out RaycastHit info, 300, LayerMask.GetMask("Terrain"));
+
+        prospectiveBuilding.transform.position = info.point;
+
+        // angle of incline check
+        if (prospectiveBuilding.IsColliding || info.normal.y < .9f)
         {
-            // Camera.main or Camera.current?
-            Physics.Raycast(CameraManager.Instance.Camera.ScreenPointToRay(Input.mousePosition),
-                out RaycastHit info, 300, LayerMask.GetMask("Terrain"));
-
-            prospectiveBuilding.transform.position = info.point;
-
-            // angle of incline check
-            if (info.normal.y < .9f)
-            {
-                prospectiveBuilding.SetMaterial(stateData.matColliding);
-            }
-            else
-            {
-                if (prospectiveBuilding.IsColliding)
-                {
-                    prospectiveBuilding.SetMaterial(stateData.matColliding);
-                }
-                else
-                {
-                    prospectiveBuilding.SetMaterial(stateData.matPlacing);
-                }
-
-                // check collision
-                if ((Input.GetMouseButtonDown(0) || droppedBuilding) && !EventSystem.current.IsPointerOverGameObject() && !prospectiveBuilding.IsColliding)
-                {
-                    SpawnNewBuilding(prospectiveBuilding);
-                    droppedBuilding = false;
-                }
-                if (Input.GetMouseButtonDown(1) || (droppedBuilding && prospectiveBuilding.IsColliding))
-                {
-                    isPlacing = false;
-                    omui.DeselectBuildingCard(prospectiveBuilding.Type);
-                    Destroy(prospectiveBuilding.gameObject);
-                    droppedBuilding = false;
-                }
-            }
+            prospectiveBuilding.SetMaterial(stateData.matColliding);
+            canPlace = false;
         }
-    }
-
-    public void HandlePlacingDragDrop()
-    {
-        droppedBuilding = true;
+        else
+        {
+            prospectiveBuilding.SetMaterial(stateData.matPlacing);
+            canPlace = true;
+        }
     }
 
     // UI
