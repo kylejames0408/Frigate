@@ -356,12 +356,9 @@ public class ZoneManager : MonoBehaviour
                     for (int i = 0; i < selectedCrewmates.Length; i++)
                     {
                         NavMeshAgent myAgent = selectedCrewmates[i].GetComponent<NavMeshAgent>();
-
-                        //makes crewmates move to a random position within a sphere around the center of the zone
-                        myAgent.SetDestination(zone.zoneCenter + (Vector3)UnityEngine.Random.insideUnitSphere * 7f);
-
+    
                         CrewMember crewMember = selectedCrewmates[i].GetComponent<CrewMember>();
-                        crewMember.targetPos = zone.zoneCenter + (Vector3)UnityEngine.Random.insideUnitSphere * 7f;
+                  
                         crewMember.characterState = Character.State.Moving;
 
                         Crewmate crewmate = crewMember.GetComponent<Crewmate>();
@@ -369,7 +366,15 @@ public class ZoneManager : MonoBehaviour
 
                         cmui.UpdateCard(crewmate.ID, crewmate.StateIcon);
 
-                        ShowLineRenderer(zone.zoneCenter + (Vector3)UnityEngine.Random.insideUnitSphere * 7f, crewMember);
+                        Vector3 movePos = (zone.zoneCenter + (Vector3)UnityEngine.Random.insideUnitSphere * 7f);
+                        Vector3 updatedMovePos = new Vector3(movePos.x, 0, movePos.z);
+
+                        crewMember.targetPos = updatedMovePos;
+
+                        //makes crewmates move to a random position within a sphere around the center of the zone
+                        myAgent.SetDestination(updatedMovePos);
+
+                        ShowLineRenderer(updatedMovePos, crewMember);
                     }
                 }
   
