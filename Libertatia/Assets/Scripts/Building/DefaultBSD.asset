@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   matPlacing: {fileID: 2100000, guid: d3e5e1b3c116ea947b4250ca7c8746b2, type: 2}
   matColliding: {fileID: 2100000, guid: 233ebadc30a9dc04180a21274295cfeb, type: 2}
-  iconRecruiting: {fileID: 21300000, guid: d33235cdde3e21b4ead39dbca527db09, type: 3}
+  iconRecruiting: {fileID: 21300000, guid: 352bd3b255cdb8540aa3455efeb7b45f, type: 3}
   matRecruiting: {fileID: 2100000, guid: 171a96962a807aa41bbf86e9608f92a2, type: 2}
   iconConstructing: {fileID: 21300000, guid: 372098ab424017844ae4380856d8c0fc, type: 3}
   matConstructing: {fileID: 2100000, guid: 9b6c03d6f347f544fae42a85b3d0e502, type: 2}

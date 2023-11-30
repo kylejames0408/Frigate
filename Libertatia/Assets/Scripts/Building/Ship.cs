@@ -61,7 +61,7 @@ public class Ship : MonoBehaviour
     {
         get { return isHovered; }
     }
-    public List<CrewmateData> CrewmateData
+    public List<CrewmateData> Crewmates
     { get { return crewmates; } }
 
     private void Awake()
@@ -176,18 +176,9 @@ public class Ship : MonoBehaviour
     }
     private void OnDestroy()
     {
-        if (isCombat)
-        {
-            GameManager.UpdateCombatCrew(crewmates.ToArray());
-            GameManager.UpdateCrewmateData();
-        }
-        else if(isOutpost)
+        if (isOutpost)
         {
             GameManager.UpdateCrewmateData(crewmates.ToArray());
-        }
-        else
-        {
-            GameManager.data.ship = new ShipData(this);
         }
     }
 

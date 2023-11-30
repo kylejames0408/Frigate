@@ -1270,7 +1270,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57faedece60f9884ea5265c1efe82d3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id: 0
+  id: -1
   assignees:
   - id: 0
     icon: {fileID: 0}
@@ -1297,8 +1297,8 @@ MonoBehaviour:
   numOfCollisions: 0
   buildingRenderer: {fileID: 0}
   navObsticle: {fileID: 5583911580005570526}
-  collider: {fileID: 0}
-  lineRenderer: {fileID: 0}
+  collider: {fileID: 3350751048444177607}
+  lineRenderer: {fileID: -535447570948868298}
   normalEmission: {r: 0, g: 0, b: 0, a: 1}
   hoveredEmission: {r: 0.3, g: 0.3, b: 0.3, a: 1}
   matBuilt: {fileID: 2100000, guid: 2ed85a5525951e145ab57bc5eb35b5ba, type: 2}

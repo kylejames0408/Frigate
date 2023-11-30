@@ -30,7 +30,7 @@ public class Building : MonoBehaviour
     // Components
     [SerializeField] private MeshRenderer buildingRenderer;
     [SerializeField] private NavMeshObstacle navObsticle;
-    [SerializeField] private BoxCollider collider;
+    [SerializeField] private BoxCollider boxCollider;
     [SerializeField] private LineRenderer lineRenderer;
     // Emissions - move to manager or set from manager
     [SerializeField] private Color normalEmission = Color.black;
@@ -123,7 +123,7 @@ public class Building : MonoBehaviour
         // Get/set components
         buildingRenderer = GetComponentInChildren<MeshRenderer>();
         navObsticle = GetComponentInChildren<NavMeshObstacle>();
-        collider = GetComponent<BoxCollider>();
+        boxCollider = GetComponent<BoxCollider>();
         lineRenderer = GetComponent<LineRenderer>();
         navObsticle.enabled = false; // prevents moving crewmates
         canvasGroup = canvasTrans.GetComponent<CanvasGroup>();
@@ -147,13 +147,13 @@ public class Building : MonoBehaviour
         canvasGroup.alpha = 0;
 
         // Render line - bounds.extent calculations are off?
-        float halfWidth = collider.size.x/2.0f;
-        float halfHeight = collider.size.y/2.0f;
-        float halfDepth = collider.size.z/2.0f;
-        Vector3 topRight = new Vector3(halfWidth + collider.center.x, halfHeight + collider.center.y, halfDepth + collider.center.z);
-        Vector3 topLeft = new Vector3(-halfWidth + collider.center.x, halfHeight + collider.center.y, halfDepth + collider.center.z);
-        Vector3 bottomLeft = new Vector3(-halfWidth + collider.center.x, halfHeight + collider.center.y, -halfDepth + collider.center.z);
-        Vector3 bottomRight = new Vector3(halfWidth + collider.center.x, halfHeight + collider.center.y, -halfDepth + collider.center.z);
+        float halfWidth = boxCollider.size.x/2.0f;
+        float halfHeight = boxCollider.size.y/2.0f;
+        float halfDepth = boxCollider.size.z/2.0f;
+        Vector3 topRight = new Vector3(halfWidth + boxCollider.center.x, halfHeight + boxCollider.center.y, halfDepth + boxCollider.center.z);
+        Vector3 topLeft = new Vector3(-halfWidth + boxCollider.center.x, halfHeight + boxCollider.center.y, halfDepth + boxCollider.center.z);
+        Vector3 bottomLeft = new Vector3(-halfWidth + boxCollider.center.x, halfHeight + boxCollider.center.y, -halfDepth + boxCollider.center.z);
+        Vector3 bottomRight = new Vector3(halfWidth + boxCollider.center.x, halfHeight + boxCollider.center.y, -halfDepth + boxCollider.center.z);
         Vector3[] boarderPositions =
         {
             topRight, topLeft, bottomLeft, bottomRight

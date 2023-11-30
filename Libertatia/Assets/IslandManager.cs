@@ -116,6 +116,8 @@ public class IslandManager : MonoBehaviour
         Island island = islands[selectedIslandID];
         if (island.Type == IslandType.OUTPOST)
         {
+            GameManager.UpdateCombatCrew(ship.Crewmates.ToArray());
+            GameManager.UpdateCrewmateData();
             CeneManager.LoadOutpost();
         }
         else if (island.Type == IslandType.ENEMY)
