@@ -3553,10 +3553,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2a9007cb2639bd4a8e80415c710546a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buildingBuilt: Do you really want to travel to this location? It will cost you
-    resources.
-  buildingUnbuilt: Do you really want to travel to this location? It will cost you
-    resources.
+  buildingBuilt: Do you really want to travel to this location?
+  buildingUnbuilt: Do you really want to travel to this location?.
   tmpContent: {fileID: 1960260472}
   btnApprove: {fileID: 2015410441}
   btnDecline: {fileID: 1027683201}
