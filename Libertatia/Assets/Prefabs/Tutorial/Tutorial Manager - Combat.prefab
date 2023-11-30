@@ -121,7 +121,7 @@ MonoBehaviour:
   tasks:
     taskListName: Plunder the empty zone
     tasks:
-    - '- Assign a crewmate to the <color=red>highlighted zone</color> to plunder
+    - '- Assign a crewmate to the <color=#8d0a0a>highlighted zone</color> to plunder
       the structure there, the same way you assigned back at the outpost'
     - '- You can use the <b>WASD keys</b> to move the camera around the island'
 --- !u!114 &880632968383080575
@@ -139,7 +139,7 @@ MonoBehaviour:
   dialogue:
     speakerName: First Mate Tuto Rial
     sentences:
-    - That first structre might've been free, but we'll have to fight for the rest
+    - That first structure might've been free, but we'll have to fight for the rest
       of the loot.
     - You'd probably stand a better chance if ye sent your crew to zones in groups
       instead of one by one!
@@ -179,5 +179,5 @@ MonoBehaviour:
   tasks:
     taskListName: Clear out the island
     tasks:
-    - '- If a zone is <color=red>red</color>, it means there are still enemies to
-      fight or resources to gather'
+    - '- If a zone is <color=#8d0a0a>red</color>, it means there are still enemies
+      to fight or resources to gather'

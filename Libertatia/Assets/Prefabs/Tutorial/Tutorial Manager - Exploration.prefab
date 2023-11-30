@@ -75,7 +75,8 @@ MonoBehaviour:
   tasks:
     taskListName: Head for the neabry island
     tasks:
-    - '- Click on the <color=red>nearby island</color> and hit the "Depart" button'
+    - '- Click on the <color=#8d0a0a><b>nearby island</b></color> and hit the "Depart"
+      button'
 --- !u!114 &635174428101428771
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -99,4 +100,5 @@ MonoBehaviour:
   tasks:
     taskListName: Head for the neabry island
     tasks:
-    - '- Click on the <color=green>outpost</color> and hit the "Depart" button'
+    - '- Click on the <color=#23551b><b>outpost</b></color> and hit the "Depart"
+      button'

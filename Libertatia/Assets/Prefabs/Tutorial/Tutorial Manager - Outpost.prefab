@@ -199,8 +199,8 @@ MonoBehaviour:
   tasks:
     taskListName: Build some structures
     tasks:
-    - You can place building by <b>clicking and dragging a building card</b> onto
-      an empty plot of land!
+    - You can place building by <color=#009393><b>clicking and dragging a building
+      card</b></color> onto an empty plot of land!
     - '- Build a farm'
     - '- Build a house'
 --- !u!114 &4198999046747219984
@@ -240,10 +240,10 @@ MonoBehaviour:
   tasks:
     taskListName: Put your crew to work
     tasks:
-    - '- Drag a crewmate card onto an <color=#FDE541><b>unassigned building</b></color>
+    - '- Drag a crewmate card onto an <color=#cac501><b>unassigned building</b></color>
       to assign them to it'
     - '- Assign a crew member to each structure. You''ll know it''s assigned when
-      it turns <color=#007200><b>green</b></color>'
+      it turns <color=#23551b><b>green</b></color>'
 --- !u!114 &7162538110527205525
 MonoBehaviour:
   m_ObjectHideFlags: 0
