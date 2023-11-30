@@ -114,15 +114,16 @@ public class Crewmate : MonoBehaviour
         {
             firstName = "Joe";
         }
-    }
-    private void Start()
-    {
-        agent.Warp(transform.position);
+
         building = new ObjectData(-1, iconDefaultBuilding); // Is there a need for a default icon?
         // Update once values are set
         strength = UnityEngine.Random.Range(1, 6);
         agility = UnityEngine.Random.Range(1, 6);
         stamina = UnityEngine.Random.Range(1, 6);
+    }
+    private void Start()
+    {
+        agent.Warp(transform.position);
     }
     private void Update()
     {
@@ -146,6 +147,7 @@ public class Crewmate : MonoBehaviour
         // Tracking
         id = data.id;
         building = data.building;
+        state = data.state;
         // Characteristics
         fullName = data.name;
         health = data.health;
@@ -158,6 +160,7 @@ public class Crewmate : MonoBehaviour
         transform.position = data.position;
         transform.rotation = data.rotation;
     }
+
     // Make inputs into a ObjectData item?
     public void Assign(int buildingID, Sprite buildingIcon, Vector3 destination, bool isShip = false)
     {

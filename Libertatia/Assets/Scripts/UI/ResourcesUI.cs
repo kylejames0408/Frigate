@@ -37,7 +37,7 @@ public class ResourcesUI : MonoBehaviour
     public void Init()
     {
         PlayerData data = GameManager.Data;
-        tmpCrewmateAmt.text = data.crewmates.Count.ToString();
+        tmpCrewmateAmt.text = data.outpostCrew.Count.ToString();
         tmpCrewmateCapacity.text = data.outpostCrewCapacity.ToString();
         tmpFoodAmt.text = data.resources.food.ToString();
         UpdateFoodUI(data.resources);

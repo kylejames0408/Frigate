@@ -45,6 +45,7 @@ public class IslandManager : MonoBehaviour
     [SerializeField] private Ship ship;
     [SerializeField] private ConfirmationUI confirmationUI;
     [SerializeField] private PlayerPathfind pathfinder;
+    [SerializeField] private bool isShipMoving = false;
 
     private void Awake()
     {
@@ -66,6 +67,7 @@ public class IslandManager : MonoBehaviour
             islands.Add(island.ID, island);
         }
         uiIsland.onDepart.AddListener(OnDepartCallback);
+        isShipMoving = false;
     }
     private void OnDestroy()
     {
@@ -74,18 +76,21 @@ public class IslandManager : MonoBehaviour
 
     private void OnIslandSelectedCallback(int islandID)
     {
-        //if(islandID != GameManager.Data.IslandID)
-        //{
+        if(!isShipMoving)
+        {
+            //if(islandID != GameManager.Data.IslandID)
+            //{
 
-        //}
+            //}
 
-        selectedIslandID = islandID;
-        Island island = islands[islandID];
-        // Calculate distance and AP
-        int ap = pathfinder.GetDistance(ship.transform.position);
-        // Open Island Interface
-        uiIsland.Fill(island, ap);
-        uiIsland.OpenInterface();
+            selectedIslandID = islandID;
+            Island island = islands[islandID];
+            // Calculate distance and AP
+            int ap = pathfinder.GetDistance(ship.transform.position);
+            // Open Island Interface
+            uiIsland.Fill(island, ap);
+            uiIsland.OpenInterface();
+        }
     }
     private void OnDepartCallback()
     {
@@ -103,6 +108,7 @@ public class IslandManager : MonoBehaviour
 
         // Travel to the island
         pathfinder.onNavFinish.AddListener(OnNavFinishCallback);
+        isShipMoving = true;
         pathfinder.Depart(ship.transform.position);
     }
     private void OnDeclineDepartureCallback()
@@ -113,6 +119,7 @@ public class IslandManager : MonoBehaviour
     }
     private void OnNavFinishCallback()
     {
+        isShipMoving = false;
         Island island = islands[selectedIslandID];
         if (island.Type == IslandType.OUTPOST)
         {

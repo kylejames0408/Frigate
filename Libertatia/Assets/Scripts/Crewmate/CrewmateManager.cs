@@ -195,7 +195,13 @@ public class CrewmateManager : MonoBehaviour
             }
         }
     }
-
+    private void OnDestroy()
+    {
+        if(!isCombat)
+        {
+            GameManager.UpdateOutpostCrewData(crewmates.Values.ToArray());
+        }
+    }
     // Handlers
     private void PressHandler()
     {
@@ -431,10 +437,22 @@ public class CrewmateManager : MonoBehaviour
         }
 
         // Tracking
-        crewmates.Add(mate.ID, mate);
+        if(!crewmates.ContainsKey(mate.ID))
+        {
+            crewmates.Add(mate.ID, mate);
+        }
 
         // Add card
         AddCard(mate);
+
+        //if (cmui == null)
+        //{
+        //    omui.UpdateCrewmateCard(mate.ID, mate.StateIcon);
+        //}
+        //else
+        //{
+        //    cmui.UpdateCard(mate.ID, mate.StateIcon);
+        //}
     }
     internal void RemoveCrewmate(int crewmateID)
     {

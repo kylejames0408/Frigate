@@ -671,7 +671,7 @@ MonoBehaviour:
     wood: 0
     food: 0
     ap: 0
-    space: 0
+    space: 8
   buildingName: House
   uiIndex: 0
   level: 0
@@ -682,7 +682,7 @@ MonoBehaviour:
   numOfCollisions: 0
   buildingRenderer: {fileID: 0}
   navObsticle: {fileID: 0}
-  collider: {fileID: 0}
+  boxCollider: {fileID: 0}
   lineRenderer: {fileID: 0}
   normalEmission: {r: 0, g: 0, b: 0, a: 1}
   hoveredEmission: {r: 0.3, g: 0.3, b: 0.3, a: 1}

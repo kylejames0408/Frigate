@@ -80,6 +80,7 @@ public struct CrewmateData
     // Tracking / State
     public int id;
     public ObjectData building;
+    public CrewmateState state;
     // Characteristics
     public string name;
     public int health;
@@ -96,6 +97,7 @@ public struct CrewmateData
     {
         id = mate.ID;
         building = mate.Building;
+        state = mate.State;
         name = mate.FirstName;
         health = mate.Health;
         strength = mate.Strength;

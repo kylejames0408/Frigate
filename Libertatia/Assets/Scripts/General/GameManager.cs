@@ -133,6 +133,7 @@ public class GameManager : MonoBehaviour
         for (int i = 0; i < data.combatCrew.Count; i++)
         {
             data.outpostCrew.Add(data.combatCrew[i]);
+            data.crewmates.Add(data.combatCrew[i]);
         }
         data.combatCrew.Clear();
     }
@@ -142,6 +143,20 @@ public class GameManager : MonoBehaviour
         for (int i = 0; i < buildings.Length; i++)
         {
             data.buildings.Add(new BuildingData(buildings[i]));
+        }
+    }
+    internal static void UpdateOutpostCrewData(Crewmate[] crewmates)
+    {
+        for (int i = 0; i < crewmates.Length; i++)
+        {
+            for (int j = 0; j < data.outpostCrew.Count; j++)
+            {
+                if (crewmates[i].ID == data.outpostCrew[j].id)
+                {
+                    data.outpostCrew.RemoveAt(j);
+                    data.outpostCrew.Add(new CrewmateData(crewmates[i]));
+                }
+            }
         }
     }
 
@@ -201,4 +216,6 @@ public class GameManager : MonoBehaviour
         state = GameState.PLAYING;
         pauseMenu.Close();
     }
+
+
 }

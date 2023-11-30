@@ -110,7 +110,7 @@ public class BuildingManager : MonoBehaviour
     {
         // Update player data when scene is unloaded
         //realtimeData.resources = resources; // disable for now
-        //GameManager.UpdateBuildingData(buildings.Values.ToArray());
+        GameManager.UpdateBuildingData(buildings.Values.ToArray());
     }
 
     // Actions
@@ -158,7 +158,18 @@ public class BuildingManager : MonoBehaviour
         building.Init(data);// if building, should check with resources
 
         // Maybe distro to completing construction?
-        building.SetUI(stateData.iconRecruiting, stateData.iconEmptyAsssignment);
+        if (building.IsBuilt)
+        {
+            building.SetUI(stateData.iconBuilt, stateData.iconEmptyAsssignment);
+        }
+        else if(building.State == BuildingState.RECRUIT)
+        {
+            building.SetUI(stateData.iconRecruiting, stateData.iconEmptyAsssignment);
+        }
+        else if (building.State == BuildingState.CONSTRUCTING)
+        {
+            building.SetUI(stateData.iconConstructing, stateData.iconEmptyAsssignment);
+        }
 
         // Set callbacks
         building.onCrewmateAssigned.AddListener(() => { OnCrewmateAssignedCallback(building.ID); });
@@ -170,7 +181,10 @@ public class BuildingManager : MonoBehaviour
         buildings.Add(building.ID, building);
 
         // Will be checking for AP consumption
-        building.CompleteConstruction(); // dont keep, but is used to complete for now, will be using AP
+        if(!building.IsBuilt)
+        {
+            building.CompleteConstruction(); // dont keep, but is used to complete for now, will be using AP
+        }
 
         building.onCrewmateAssignedGE = onCrewmateAssigned;
     }

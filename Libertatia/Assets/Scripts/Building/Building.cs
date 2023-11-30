@@ -212,14 +212,22 @@ public class Building : MonoBehaviour
         iconEmptyAsssignment = emptyAssignmentIcon;
         uiLevel.text = "Lv. " + level.ToString();
         uiName.text = buildingName;
-        uiStatus.sprite = stateIcon;
-        uiAsign1.sprite = iconEmptyAsssignment;
-        uiAsign2.sprite = iconEmptyAsssignment;
-        uiAsign2.transform.parent.gameObject.SetActive(false);
+        uiStatus.sprite = stateIcon; // might not need if Init is done before
 
         // Should be moved somewhere else
-        assignees[0].Reset(iconEmptyAsssignment);
-        assignees[1].Reset(iconEmptyAsssignment);
+        if(state == BuildingState.BUILT || state == BuildingState.CONSTRUCTING)
+        {
+            uiAsign1.sprite = assignees[0].icon;
+            uiAsign2.sprite = assignees[1].icon;
+        }
+        else if (state == BuildingState.RECRUIT)
+        {
+            uiAsign1.sprite = iconEmptyAsssignment;
+            uiAsign2.sprite = iconEmptyAsssignment;
+            uiAsign2.transform.parent.gameObject.SetActive(false);
+            assignees[0].Reset(iconEmptyAsssignment);
+            assignees[1].Reset(iconEmptyAsssignment);
+        }
     }
     private void SetLevelUI(int level)
     {
@@ -388,21 +396,6 @@ public class Building : MonoBehaviour
             onSelection.Invoke();
         }
     }
-    private void HandleAssignment()
-    {
-        if (Input.GetMouseButtonDown(1) && !EventSystem.current.IsPointerOverGameObject())
-        {
-            if (CanAssign())
-            {
-                onCrewmateAssigned.Invoke();
-            }
-            else
-            {
-                Debug.Log("Building assignments are full");
-            }
-        }
-    }
-
     public void HandleAssignmentDragDrop()
     {
         if (isHovered)
