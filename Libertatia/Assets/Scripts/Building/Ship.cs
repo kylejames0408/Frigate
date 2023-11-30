@@ -224,10 +224,6 @@ public class Ship : MonoBehaviour
     }
     public void OpenBattleLootUI()
     {
-        //GameManager.data.resources.wood += 50;
-        //GameManager.data.resources.doubloons += 10;
-        //GameManager.data.resources.food += 100;
-
         GameManager.data.resources.wood += resourceUI.woodAmount;
         GameManager.data.resources.doubloons += resourceUI.doubloonAmount;
         GameManager.data.resources.food += resourceUI.foodAmount;

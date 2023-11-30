@@ -24,6 +24,8 @@ public class CrewmateUI : MonoBehaviour
     [SerializeField] private Image[] dotsStamina;
     [SerializeField] private Image uiBuildingIcon;
 
+    [SerializeField] private Sprite zoneSprite;
+
     [Header("Buttons")]
     [SerializeField] private Button btnCrewmate;
     [SerializeField] private Button btnLocation;
@@ -68,6 +70,13 @@ public class CrewmateUI : MonoBehaviour
         if (isOpen)
         {
             HandleClicking();
+        }
+
+        //Temporary solution for fixing icon in combat
+        if (uiBuildingIcon.sprite == null)
+        {
+            //Debug.Log("NO SPRITE");
+            uiBuildingIcon.sprite = zoneSprite;
         }
     }
 

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657737, g: 0.49641442, b: 0.5748176, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657737, g: 0.4964143, b: 0.5748176, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2268,6 +2268,7 @@ MonoBehaviour:
   - {fileID: 188291313}
   - {fileID: 1700541169}
   uiBuildingIcon: {fileID: 1339329441}
+  zoneSprite: {fileID: 21300000, guid: cc456ce223ad9dc4abe76e84aa5b63b3, type: 3}
   btnCrewmate: {fileID: 1419702643}
   btnLocation: {fileID: 1834295560}
   btnClose: {fileID: 1476132703}
@@ -33004,7 +33005,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1834295559
 RectTransform:
   m_ObjectHideFlags: 0
@@ -33021,10 +33022,10 @@ RectTransform:
   m_Father: {fileID: 1733232005}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 539.375, y: -130}
-  m_SizeDelta: {x: 141.25, y: 220}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1834295560
 MonoBehaviour:
@@ -36235,6 +36236,12 @@ MonoBehaviour:
   mask:
     serializedVersion: 2
     m_Bits: 136
+  zones:
+  - {fileID: 1549228885}
+  - {fileID: 1480405656}
+  - {fileID: 1549228883}
+  - {fileID: 690195036}
+  - {fileID: 1549228881}
   selectionBoxTrans: {fileID: 447492983}
 --- !u!4 &2009515020
 Transform:

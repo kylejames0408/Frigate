@@ -31,6 +31,7 @@ public class CrewmateManager : MonoBehaviour
     [SerializeField] private Material[] materials;
     [SerializeField] private List<Enemy> enemies;
     [SerializeField] private LayerMask mask;
+    [SerializeField] private Zone[] zones;
     // Selection
     [SerializeField] private RectTransform selectionBoxTrans; // I am 99% sure we can just use the rectTrans. I dont know why it is not working however
     private Rect selectionBoxRect;
@@ -628,6 +629,18 @@ public class CrewmateManager : MonoBehaviour
             else
             {
                 bm.PanToShip();
+            }
+        }
+
+        if(isCombat)
+        {
+            //Pans the camera to the zone that the crewmate is currently in
+            foreach(Zone zone in zones)
+            {
+                if(zone.crewMembersInZone.Contains(mate.gameObject))
+                {
+                    CameraManager.Instance.PanTo(zone.centerObject.transform.position);
+                }
             }
         }
     }
