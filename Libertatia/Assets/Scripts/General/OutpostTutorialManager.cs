@@ -6,9 +6,9 @@ using UnityEngine.UI;
 
 public class OutpostTutorialManager : MonoBehaviour
 {
+    public bool tutorial = true;
     public List<DialogueTrigger> outpostDialogues;
     private bool secondVisit = false;
-
     public GameObject departButton;
     public GameObject buildingUnassignButton;
     public GameObject buildingDemolishButton;
@@ -27,34 +27,37 @@ public class OutpostTutorialManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (cm == null) { cm = FindObjectOfType<CrewmateManager>(); }
-        if (bm == null) { bm = FindObjectOfType<BuildingManager>(); }
-        if (oMUI == null) { oMUI = GameObject.Find("INT-Outpost").GetComponentInChildren<OutpostManagementUI>(); }
-        if (shipUI == null) { shipUI = FindObjectOfType<ShipUI>(); }
+        if(tutorial)
+        {
+            if (cm == null) { cm = FindObjectOfType<CrewmateManager>(); }
+            if (bm == null) { bm = FindObjectOfType<BuildingManager>(); }
+            if (oMUI == null) { oMUI = GameObject.Find("INT-Outpost").GetComponentInChildren<OutpostManagementUI>(); }
+            if (shipUI == null) { shipUI = FindObjectOfType<ShipUI>(); }
 
-        //check to see if this is the first time, or if its when they're coming back from combat
-        if (GameManager.outpostVisitNumber == 0)
-        {
-            outpostDialogues[0].TriggerDialogue();
-            GameManager.outpostVisitNumber++;
+            //check to see if this is the first time, or if its when they're coming back from combat
+            if (GameManager.outpostVisitNumber == 0)
+            {
+                outpostDialogues[0].TriggerDialogue();
+                GameManager.outpostVisitNumber++;
 
-            departButton.SetActive(false);
-            buildingUnassignButton.SetActive(false);
-            buildingDemolishButton.SetActive(false);
-            foreach(GameObject unassignButton in shipUnassignButtons)
-                unassignButton.SetActive(false);
-        }
-        else if (GameManager.outpostVisitNumber == 1)
-        {
-            GameManager.data.isTutorial = false;
-            outpostDialogues[4].TriggerDialogue();
-            secondVisit = true;
-            GameManager.outpostVisitNumber++;
-            departButton.SetActive(true);
-        }
-        else
-        {
-            departButton.SetActive(true);
+                departButton.SetActive(false);
+                buildingUnassignButton.SetActive(false);
+                buildingDemolishButton.SetActive(false);
+                foreach (GameObject unassignButton in shipUnassignButtons)
+                    unassignButton.SetActive(false);
+            }
+            else if (GameManager.outpostVisitNumber == 1)
+            {
+                GameManager.data.isTutorial = false;
+                outpostDialogues[4].TriggerDialogue();
+                secondVisit = true;
+                GameManager.outpostVisitNumber++;
+                departButton.SetActive(true);
+            }
+            else
+            {
+                departButton.SetActive(true);
+            }
         }
     }
 
