@@ -62,7 +62,7 @@ public class ResourcesUI : MonoBehaviour
         tmpFoodProduction.text = data.foodProduction > 0 ? "+ " + data.foodProduction.ToString() : data.foodProduction.ToString();
         tmpFoodConsumption.text = (-data.foodConsumption).ToString();
         int foodCalculation = data.foodProduction - data.foodConsumption;
-        tmpFoodCalculation.text = foodCalculation > 0 ? "+ " + foodCalculation.ToString() + " Per AP" : foodCalculation.ToString() + " Per AP";
+        tmpFoodCalculation.text = foodCalculation > 0 ? "+ " + foodCalculation.ToString() + " Per EP" : foodCalculation.ToString() + " Per EP";
         if (foodCalculation > 0)
         {
             tmpFoodTrend.text = "+";

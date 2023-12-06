@@ -9750,7 +9750,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Travel AP
+  m_text: Travel EP
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -14446,6 +14446,7 @@ MonoBehaviour:
   ship: {fileID: 9036149286236463089}
   confirmationUI: {fileID: 451441906}
   pathfinder: {fileID: 89894619}
+  isShipMoving: 0
 --- !u!1001 &1696755739
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -17099,7 +17100,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Combat AP
+  m_text: Combat EP
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
