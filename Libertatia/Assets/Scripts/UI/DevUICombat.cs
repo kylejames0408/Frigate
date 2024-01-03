@@ -8,7 +8,7 @@ public class DevUICombat : MonoBehaviour
     private float interfaceAnimSpeed = 0.6f;
 
     [SerializeField] private CrewmateManager cm;
-    [SerializeField] private ResourcesUI rui;
+    [SerializeField] private OutpostResourcesUI rui;
 
     [SerializeField] private Button btnArrow;
     [SerializeField] private Button btnNewMate;
@@ -18,7 +18,7 @@ public class DevUICombat : MonoBehaviour
         isOpen = false;
 
         if (cm == null) { cm = FindObjectOfType<CrewmateManager>(); }
-        if (rui == null) { rui = FindObjectOfType<ResourcesUI>(); }
+        if (rui == null) { rui = FindObjectOfType<OutpostResourcesUI>(); }
 
         btnArrow.onClick.AddListener(OpenCloseMenu);
         btnNewMate.onClick.AddListener(NewMate);

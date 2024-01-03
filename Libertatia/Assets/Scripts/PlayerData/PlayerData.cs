@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
@@ -25,19 +24,6 @@ public struct ObjectData
         return id == -1;
     }
 }
-
-[Serializable]
-public struct PlayerResourceData
-{
-    public int wood;
-    public int doubloons;
-    public int food;
-    public int loyalty;
-
-    public int foodProduction;
-    public int foodConsumption;
-}
-
 [Serializable]
 public struct BuildingData
 {
@@ -72,7 +58,6 @@ public struct BuildingData
         rotation = building.transform.rotation;
     }
 }
-
 [Serializable]
 public struct CrewmateData
 {
@@ -107,25 +92,86 @@ public struct CrewmateData
         rotation = mate.transform.rotation;
     }
 }
+[Serializable]
+public struct ResourceProduction
+{
+    public int wood;
+    public int food;
+}
+[Serializable]
+public struct ResourceConsumption
+{
+    public int wood;
+    public int food;
+}
+[Serializable]
+public struct ResourceData
+{
+    // Misc
+    public int loyalty;
+    // Storage
+    public int wood;
+    public int doubloons;
+    public int food; // how much the player owns
+    // Production per AP
+    public ResourceProduction production;
+    // Cost per AP
+    public ResourceConsumption consumption;
 
+    public ResourceData(int wood, int doubloons, int food, int loyalty)
+    {
+        this.wood = wood;
+        this.doubloons = doubloons;
+        this.food = food;
+        this.loyalty = loyalty;
+        production = new ResourceProduction();
+        consumption = new ResourceConsumption();
+    }
+}
+[Serializable]
+public struct OutpostData
+{
+    public int crewCapacity; // housing space
+    public CrewmateData[] crew;
+    public BuildingData[] buildings;
+
+    public OutpostData(int crewCount)
+    {
+        crewCapacity = 0;
+        crew = new CrewmateData[crewCount];
+        buildings = new BuildingData[0];
+    }
+}
 [Serializable]
 public struct ShipData
 {
     // Tracking / State
     public int id;
     public int islandID;
-    public int capacity;
+    public int crewCcapacity;
+    public CrewmateData[] crew;
     // UI
     public Sprite icon;
     // Spacial
     public Vector3 position;
     public Quaternion rotation;
 
+    public ShipData(int crewCcapacity)
+    {
+        id = -1;
+        islandID = -1;
+        this.crewCcapacity = crewCcapacity;
+        crew = new CrewmateData[0];
+        icon = null;
+        position = Vector3.zero;
+        rotation = Quaternion.identity;
+    }
     public ShipData(Ship ship)
     {
         id = ship.ID;
         islandID = ship.IslandID;
-        capacity = ship.Capacity;
+        crewCcapacity = ship.Capacity;
+        crew = ship.Crewmates;
         icon = ship.Icon;
         position = ship.transform.position;
         rotation = ship.transform.rotation;
@@ -136,58 +182,10 @@ public struct ShipData
 public struct PlayerData
 {
     // Game data
-    public float gameTimer;
-    public bool isTutorial;
+    public float elapsedTime;
+    public bool hasCompletedTutorial;
     // Player data
-    public PlayerResourceData resources;
-    public int outpostCrewCapacity;
-    public List<BuildingData> buildings; // Maybe make array // move data to outpost object
-    public List<CrewmateData> crewmates;
-    public List<CrewmateData> outpostCrew;
-    public List<CrewmateData> combatCrew; // move to ship
+    public ResourceData resources;
+    public OutpostData outpost;
     public ShipData ship;
-}
-
-// Manages player data - creating and converting the data
-public static class PlayerDataManager
-{
-    private const string DIR_PATH = "Assets\\Scripts\\ScriptableObjects\\";
-    private const string FILE_EXT = ".asset";
-    private const string SAVED_FILE_NAME = "PlayerData";
-    private const string SAVED_REL_PATH = DIR_PATH + SAVED_FILE_NAME + FILE_EXT;
-    private const int STARTING_WOOD_AMOUNT = 50;
-    private const int STARTING_DOUBLOON_AMOUNT = 10;
-    private const int STARTING_FOOD_AMOUNT = 100;
-    private const int STARTING_FOOD_PER_AP = 5;
-    private const int STARTING_LOYALTY_AMOUNT = 0;
-    private const int STARTING_CREW_AMOUNT = 6;
-    private const int STARTING_CREW_CAPACITY = 0;
-
-    // Creates new player data file and fills starting information
-    public static PlayerData CreateNewData()
-    {
-        PlayerData data;
-        // Research difference b/w instance and default contructor
-        data.isTutorial = true;
-        data.gameTimer = 0.0f;
-        // Resources
-        data.resources.wood = STARTING_WOOD_AMOUNT;
-        data.resources.doubloons = STARTING_DOUBLOON_AMOUNT;
-        data.resources.food = STARTING_FOOD_AMOUNT;
-        data.resources.foodProduction = 0;
-        data.resources.foodConsumption = 0;
-        data.resources.food = STARTING_FOOD_AMOUNT;
-        data.resources.loyalty = STARTING_LOYALTY_AMOUNT;
-        // Crewmates
-        data.crewmates = new List<CrewmateData>();
-        data.outpostCrew = new List<CrewmateData>(STARTING_CREW_AMOUNT);
-        data.combatCrew = new List<CrewmateData>();
-        data.outpostCrewCapacity = STARTING_CREW_CAPACITY;
-        // Buildings
-        data.buildings = new List<BuildingData>(0);
-        data.ship = new ShipData();
-        return data;
-    }
-    // TODO:
-    // - Save data to a file
 }

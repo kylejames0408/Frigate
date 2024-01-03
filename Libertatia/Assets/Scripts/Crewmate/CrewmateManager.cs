@@ -8,14 +8,13 @@ public class CrewmateManager : MonoBehaviour
     // Will likely have crewmate state data
     [SerializeField] private Sprite iconEmptyAsssignment;
     [SerializeField] private Sprite[] crewmateIcons;
-    // Components
+    // UI
     [SerializeField] private OutpostManagementUI omui;
     [SerializeField] private CombatManagementUI cmui;
-    [SerializeField] private ResourcesUI orui;
-    [SerializeField] private CombatResourcesUI crui;
     [SerializeField] private CrewmateUI crewmateUI;
-    [SerializeField] private BuildingManager bm; // replace with events
-    [SerializeField] private Ship ship;
+    // Components
+    [SerializeField] private ResourceManager rm;
+    [SerializeField] private BuildingManager bm;
     // Crewmate Data
     [SerializeField] private GameObject crewmatePrefab;
     [SerializeField] private Transform crewmateSpawn;
@@ -24,8 +23,8 @@ public class CrewmateManager : MonoBehaviour
     // Tracking
     [SerializeField] private Dictionary<int, Crewmate> crewmates;
     [SerializeField] private List<int> selectedCrewmateIDs;
+    private int shipID;
     // Combat
-    [SerializeField] private bool isCombat = false;
     [SerializeField] private bool eventTriggered = false;
     [SerializeField] private Material[] materials;
     [SerializeField] private List<Enemy> enemies;
@@ -56,14 +55,14 @@ public class CrewmateManager : MonoBehaviour
     {
         if (omui == null) { omui = FindObjectOfType<OutpostManagementUI>(); }
         if (cmui == null) { cmui = FindObjectOfType<CombatManagementUI>(); }
-        if (orui == null) { orui = FindObjectOfType<ResourcesUI>(); }
         if (crewmateUI == null) { crewmateUI = FindObjectOfType<CrewmateUI>(); }
+        if (rm == null) { rm = FindObjectOfType<ResourceManager>(); }
         if (bm == null) { bm = FindObjectOfType<BuildingManager>(); }
 
         // Init Crewmates (make own function)
         crewmateSpawn = transform.GetChild(0);
         crewmates = new Dictionary<int, Crewmate>();
-        if(isCombat)
+        if(GameManager.Phase == GamePhase.PLUNDERING)
         {
             enemies = FindObjectsOfType<Enemy>().ToList();
         }
@@ -75,46 +74,25 @@ public class CrewmateManager : MonoBehaviour
         crewmateUI.onClickCrewmate.AddListener(OnClickCrewmateIconCallback);
         crewmateUI.onClickLocation.AddListener(OnClickBuildingIconCallback);
 
-        if (GameManager.Data.crewmates == null)
-        {
-            Debug.Log("You might need to add the game manager to the scene; likely through PlayerData scene");
-            return;
-        }
+        ShipData shipData = PlayerDataManager.LoadShipData(); // maybe just get crew for combat
+        SpawnExistingCrewmates(shipData.crew);
 
-        if (isCombat)
+        if(GameManager.Phase == GamePhase.BUILDING)
         {
-            // Spawn existing crewmates
-            for (int i = 0; i < GameManager.Data.combatCrew.Count; i++)
+            OutpostData outpostData = PlayerDataManager.LoadOutpostData();
+            if (outpostData.crew.Length == 0)
             {
-                SpawnExistingCrewmate(GameManager.Data.combatCrew[i]);
-            }
-        }
-        else
-        {
-            if (GameManager.Data.outpostCrew.Count == 0)
-            {
-                for (int i = 0; i < GameManager.Data.outpostCrew.Capacity; i++)
-                {
-                    SpawnNewCrewmate();
-                }
+                SpawnNewCrewmates(outpostData.crewCapacity);
             }
             else
             {
-                // Spawn existing crewmates
-                for (int i = 0; i < GameManager.Data.outpostCrew.Count; i++)
-                {
-                    SpawnExistingCrewmate(GameManager.Data.outpostCrew[i]);
-                }
+                SpawnExistingCrewmates(outpostData.crew);
             }
         }
 
-        // Update UI
-        if (orui != null)
-        {
-            orui.Init(); // inits here since crewmate manager inits in both outpost and combat scene
-            orui.UpdateFoodUI(GameManager.Data.resources);
-        }
+        shipID = FindObjectOfType<Ship>().ID;
     }
+
     private void Update()
     {
         // TODO: make ifs into handler functions?
@@ -196,9 +174,9 @@ public class CrewmateManager : MonoBehaviour
     }
     private void OnDestroy()
     {
-        if(!isCombat)
+        if (GameManager.Phase == GamePhase.BUILDING)
         {
-            GameManager.UpdateOutpostCrewData(crewmates.Values.ToArray());
+            PlayerDataManager.SaveOutpostCrewmates(crewmates.Values.ToArray());
         }
     }
     // Handlers
@@ -381,6 +359,49 @@ public class CrewmateManager : MonoBehaviour
     }
 
     // Interactions
+    private void SpawnExistingCrewmates(CrewmateData[] crewmateData)
+    {
+        // Spawn existing crewmates
+        for (int i = 0; i < crewmateData.Length; i++)
+        {
+            GameObject crewmateObj = Instantiate(crewmatePrefab, transform);
+            Crewmate mate = crewmateObj.GetComponent<Crewmate>();
+            mate.Set(crewmateData[i]);
+
+            // Set callbacks
+            mate.onSelect.AddListener(() => { ClickCrewmate(mate.ID); });
+            mate.onAssign.AddListener(() => { OnAssignCallback(mate.ID); });
+            mate.onReassign.AddListener(() => { OnReassignCallback(mate.ID); });
+            mate.onDestroy.AddListener(() => { DeselectCard(mate.ID); });
+
+            // If they are not assigned - move to random pos around spawn
+            if (crewmateData[i].building.id == -1)
+            {
+                Vector2 circleLocation = Random.insideUnitCircle;
+                Vector3 spawnPosition = new Vector3(circleLocation.x * crewmateSpawnRadius, 0, circleLocation.y * crewmateSpawnRadius);
+                crewmateObj.transform.position = crewmateSpawn.position + spawnPosition;
+            }
+
+            // Tracking
+            if (!crewmates.ContainsKey(mate.ID))
+            {
+                crewmates.Add(mate.ID, mate);
+            }
+
+            // Add card
+            AddCard(mate);
+
+            //if (cmui == null)
+            //{
+            //    omui.UpdateCrewmateCard(mate.ID, mate.StateIcon);
+            //}
+            //else
+            //{
+            //    cmui.UpdateCard(mate.ID, mate.StateIcon);
+            //}
+        }
+    }
+    // used for dev
     internal void SpawnNewCrewmate()
     {
         GameObject crewmateObj = Instantiate(crewmatePrefab, transform);
@@ -395,9 +416,6 @@ public class CrewmateManager : MonoBehaviour
 
         mate.SetUI(crewmateIcons[Random.Range(0, crewmateIcons.Length)], iconEmptyAsssignment);
 
-        // Save Data
-        GameManager.AddCrewmate(mate);
-
         // Set callbacks
         mate.onSelect.AddListener(() => { ClickCrewmate(mate.ID); });
         mate.onAssign.AddListener(() => { OnAssignCallback(mate.ID); }); // dont need for combat
@@ -409,54 +427,19 @@ public class CrewmateManager : MonoBehaviour
 
         // Update UI
         AddCard(mate);
-        if (!isCombat)
-        {
-            GameManager.data.resources.foodConsumption += CREWMATE_FOOD_CONSUMPTION; // will need to make functions for this sometime
-            orui.UpdateFoodUI(GameManager.Data.resources); // including this
-        }
+
+        rm.SpawnCrewmate(CREWMATE_FOOD_CONSUMPTION);
     }
-    private void SpawnExistingCrewmate(CrewmateData data)
+    private void SpawnNewCrewmates(int crewcapacity)
     {
-        GameObject crewmateObj = Instantiate(crewmatePrefab, transform);
-        Crewmate mate = crewmateObj.GetComponent<Crewmate>();
-        mate.Set(data);
-
-        // Set callbacks
-        mate.onSelect.AddListener(() => { ClickCrewmate(mate.ID); });
-        mate.onAssign.AddListener(() => { OnAssignCallback(mate.ID); });
-        mate.onReassign.AddListener(() => { OnReassignCallback(mate.ID); });
-        mate.onDestroy.AddListener(() => { DeselectCard(mate.ID); });
-
-        // If they are not assigned - move to random pos around spawn
-        if (data.building.id == -1)
+        for (int i = 0; i < crewcapacity; i++)
         {
-            Vector2 circleLocation = Random.insideUnitCircle;
-            Vector3 spawnPosition = new Vector3(circleLocation.x * crewmateSpawnRadius, 0, circleLocation.y * crewmateSpawnRadius);
-            crewmateObj.transform.position = crewmateSpawn.position + spawnPosition;
+            SpawnNewCrewmate();
         }
-
-        // Tracking
-        if(!crewmates.ContainsKey(mate.ID))
-        {
-            crewmates.Add(mate.ID, mate);
-        }
-
-        // Add card
-        AddCard(mate);
-
-        //if (cmui == null)
-        //{
-        //    omui.UpdateCrewmateCard(mate.ID, mate.StateIcon);
-        //}
-        //else
-        //{
-        //    cmui.UpdateCard(mate.ID, mate.StateIcon);
-        //}
     }
     internal void RemoveCrewmate(int crewmateID)
     {
         DeselectCrewmateShare(crewmateID);
-        GameManager.RemoveCrewmateData(crewmateID);
         crewmates.Remove(crewmateID);
         RemoveCard(crewmateID);
     }
@@ -485,7 +468,7 @@ public class CrewmateManager : MonoBehaviour
             crewmateUI.FillAndOpenInterface(crewmates[crewmateID]);
         }
 
-        if (isCombat)
+        if (GameManager.Phase == GamePhase.PLUNDERING)
         {
             //unit line renderer
             CrewMember crewMember = crewmates[crewmateID].GetComponent<CrewMember>();
@@ -634,7 +617,7 @@ public class CrewmateManager : MonoBehaviour
         Crewmate mate = crewmates[crewmateID];
         if(mate.IsAssigned)
         {
-            if(mate.Building.id != ship.ID)
+            if(mate.Building.id != shipID)
             {
                 bm.OnClickBuildingIconCallback(mate.Building.id);
             }
@@ -644,7 +627,7 @@ public class CrewmateManager : MonoBehaviour
             }
         }
 
-        if(isCombat)
+        if(GameManager.Phase == GamePhase.PLUNDERING)
         {
             //Pans the camera to the zone that the crewmate is currently in
             foreach(Zone zone in zones)

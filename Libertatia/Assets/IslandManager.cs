@@ -1,22 +1,24 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 // Might need to separate into cost and production
 [Serializable]
 public struct IslandResources
 {
-    public bool wood;
-    public bool food;
+    public int wood;
+    public int food;
+    public int doubloons;
 
     public override string ToString()
     {
         string resources = string.Empty;
-        if(wood)
+        if(wood > 0)
         {
             resources += "Wood";
         }
-        else if(food)
+        else if(food > 0)
         {
             resources += "Food";
         }
@@ -39,16 +41,24 @@ public enum IslandType
 
 public class IslandManager : MonoBehaviour
 {
+    // Components
+    [SerializeField] private ResourceManager rm;
+    [SerializeField] private Ship ship;
+    [SerializeField] private PlayerPathfind pathfinder;
+    // UI
+    [SerializeField] private IslandUI uiIsland;
+    [SerializeField] private ConfirmationUI confirmationUI;
+    // Data
     [SerializeField] private Dictionary<int, Island> islands;
     [SerializeField] private int selectedIslandID = -1;
-    [SerializeField] private IslandUI uiIsland;
-    [SerializeField] private Ship ship;
-    [SerializeField] private ConfirmationUI confirmationUI;
-    [SerializeField] private PlayerPathfind pathfinder;
     [SerializeField] private bool isShipMoving = false;
+    // Events
+    public UnityEvent<IslandResources> onIslandCompleted;
 
     private void Awake()
     {
+        if (rm == null) { rm = FindObjectOfType<ResourceManager>(); }
+        if (ship == null) { ship = FindObjectOfType<Ship>(); }
         if (uiIsland == null) { uiIsland = FindObjectOfType<IslandUI>(); }
         if (confirmationUI == null) { confirmationUI = FindObjectOfType<ConfirmationUI>(); }
 
@@ -68,10 +78,8 @@ public class IslandManager : MonoBehaviour
         }
         uiIsland.onDepart.AddListener(OnDepartCallback);
         isShipMoving = false;
-    }
-    private void OnDestroy()
-    {
-        //GameManager.data.ship = new ShipData(ship);
+
+        onIslandCompleted.AddListener(OnIslandCompletedCallback);
     }
 
     private void OnIslandSelectedCallback(int islandID)
@@ -91,6 +99,10 @@ public class IslandManager : MonoBehaviour
             uiIsland.Fill(island, ap);
             uiIsland.OpenInterface();
         }
+    }
+    private void OnIslandCompletedCallback(IslandResources islandResources)
+    {
+        rm.CompleteIsland(islandResources);
     }
     private void OnDepartCallback()
     {
@@ -121,11 +133,9 @@ public class IslandManager : MonoBehaviour
     {
         isShipMoving = false;
         Island island = islands[selectedIslandID];
-        GameManager.data.ship = new ShipData(ship);
+        PlayerDataManager.SaveShipData(ship);
         if (island.Type == IslandType.OUTPOST)
         {
-            GameManager.UpdateCombatCrew(ship.Crewmates.ToArray());
-            GameManager.UpdateCrewmateData();
             CeneManager.LoadOutpost();
         }
         else if (island.Type == IslandType.ENEMY)

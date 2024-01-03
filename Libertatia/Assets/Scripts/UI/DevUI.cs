@@ -10,13 +10,14 @@ public class DevUI : MonoBehaviour
 
     [SerializeField] private BuildingManager bm;
     [SerializeField] private CrewmateManager cm;
-    [SerializeField] private ResourcesUI rui;
+    [SerializeField] private ResourceManager rm;
 
     [SerializeField] private Button btnArrow;
     [SerializeField] private Button btnBuildAll;
     [SerializeField] private Button btnAddWood;
     [SerializeField] private Button btnAddGold;
     [SerializeField] private Button btnNewMate;
+    [SerializeField] private Button btnEndTutorial;
 
     private void Awake()
     {
@@ -27,13 +28,14 @@ public class DevUI : MonoBehaviour
 
         if (bm == null) { bm = FindObjectOfType<BuildingManager>(); }
         if (cm == null) { cm = FindObjectOfType<CrewmateManager>(); }
-        if (rui == null) { rui = FindObjectOfType<ResourcesUI>(); }
+        if (rm == null) { rm = FindObjectOfType<ResourceManager>(); }
 
         btnArrow.onClick.AddListener(OpenCloseMenu);
         btnBuildAll.onClick.AddListener(CompleteAllBuildings);
         btnAddWood.onClick.AddListener(AddWood);
         btnAddGold.onClick.AddListener(AddGold);
         btnNewMate.onClick.AddListener(NewMate);
+        btnEndTutorial.onClick.AddListener(EndTutorial);
     }
 
     private void OpenCloseMenu()
@@ -53,7 +55,6 @@ public class DevUI : MonoBehaviour
     private void CompleteAllBuildings()
     {
         bm.BuildAll();
-        GameManager.data.isTutorial = false;
     }
     private void NewMate()
     {
@@ -62,13 +63,15 @@ public class DevUI : MonoBehaviour
     // UI
     private void AddWood()
     {
-        GameManager.data.resources.wood += 100;
-        rui.UpdateWoodUI(GameManager.data.resources.wood);
+        rm.AddWood(100);
     }
     private void AddGold()
     {
-        GameManager.data.resources.doubloons += 100;
-        rui.UpdateDubloonUI(GameManager.data.resources.doubloons);
+        rm.AddDoubloons(100);
+    }
+    private void EndTutorial()
+    {
+        GameManager.EndTutorial();
     }
 
 }

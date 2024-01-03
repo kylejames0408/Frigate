@@ -54,7 +54,7 @@ public class BuildingUI : MonoBehaviour
         btnAssignee1.onClick.AddListener(() =>{ OnClickAssigneeCallback(0); });
         btnAssignee2.onClick.AddListener(() =>{ OnClickAssigneeCallback(1); });
 
-        if (GameManager.Data.isTutorial)
+        if (GameManager.IsTutorial)
         {
             btnUpgrade.interactable = false;
             btnDemolish.interactable = false;
@@ -107,7 +107,7 @@ public class BuildingUI : MonoBehaviour
             assigneeCards[1].Disable();
         }
 
-        if (!GameManager.Data.isTutorial)
+        if (!GameManager.IsTutorial)
         {
             btnDemolish.interactable = true;
         }

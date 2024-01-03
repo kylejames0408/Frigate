@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-using static UnityEngine.UI.CanvasScaler;
 
 public abstract class Character : MonoBehaviour
 {

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -18,11 +16,6 @@ public class HealthBar : MonoBehaviour
         cam = Camera.main;
     }
 
-    /// <summary>
-    /// Updates health bar based on the unit's current and maximum health
-    /// </summary>
-    /// <param name="maxHealth"></param>
-    /// <param name="currentHealth"></param>
     public void UpdateHealthBar(float maxHealth, float currentHealth)
     {
         target = currentHealth/maxHealth;

@@ -17,11 +17,19 @@ public enum BuildingState
 [Serializable]
 public struct BuildingResources
 {
-    public int wood;
-    public int food;
-    public int ap;
-    public int space;
+    public int ap; // required
+    public int wood; // boost in production
+    public int food; // boost in production
+    public int space; // boost in housing 1x
 
+    public static BuildingResources operator /(BuildingResources resources, int divisor)
+    {
+        resources.wood /= divisor;
+        resources.food /= divisor;
+        resources.space /= divisor;
+        resources.ap /= divisor;
+        return resources;
+    }
     public override string ToString()
     {
         if (wood > 0)
@@ -42,27 +50,28 @@ public struct BuildingResources
 public class BuildingManager : MonoBehaviour
 {
     [Header("Building State Data")]
-    [SerializeField] private BuildingStateData stateData;
+    [SerializeField] private BuildingStateData stateData; // Remove if not used elsewhere or copies are not needed
     [Header("Building Types")]
     [SerializeField] private Building[] buildingPrefabs;
-    [Header("Components")]
-    [SerializeField] private OutpostManagementUI omui;
-    [SerializeField] private ResourcesUI rui;
+    [Header("UI")]
+    [SerializeField] private OutpostManagementUI omUI;
     [SerializeField] private BuildingUI buildingUI;
     [SerializeField] private ConfirmationUI confirmationUI;
-    [SerializeField] private CrewmateManager cm; // need this for selection data
-    [SerializeField] private Ship ship; // need this for selection data
-    [Header("Tracking")]
+    [Header("Components")] // need this for selection data
+    [SerializeField] private CrewmateManager cm;
+    [SerializeField] private ResourceManager rm;
+    [SerializeField] private Ship ship;
+    [Header("Placing")]
     [SerializeField] private bool isDragging = false;
     [SerializeField] private bool canPlace = false;
     [SerializeField] private Building prospectiveBuilding;
+    [Header("Tracking")]
     [SerializeField] private Dictionary<int, Building> buildings;
-    [SerializeField] private BuildingResources totalProduction;
+    [SerializeField] private int housingSpace;
     [SerializeField] private int selectedBuildingID;
     [Header("Events")]
     public GameEvent onBuildingPlaced;
     public GameEvent onCrewmateAssigned;
-
     public Building[] Buildings
     {
         get { return buildings.Values.ToArray(); }
@@ -70,11 +79,11 @@ public class BuildingManager : MonoBehaviour
 
     private void Awake()
     {
-        if (omui == null) { omui = FindObjectOfType<OutpostManagementUI>(); }
-        if (rui == null) { rui = FindObjectOfType<ResourcesUI>(); }
-        if (cm == null) { cm = FindObjectOfType<CrewmateManager>(); }
+        if (omUI == null) { omUI = FindObjectOfType<OutpostManagementUI>(); }
         if (buildingUI == null) { buildingUI = FindObjectOfType<BuildingUI>(); }
         if (confirmationUI == null) { confirmationUI = FindObjectOfType<ConfirmationUI>(); }
+        if (cm == null) { cm = FindObjectOfType<CrewmateManager>(); }
+        if (rm == null) { rm = FindObjectOfType<ResourceManager>(); }
 
         confirmationUI.gameObject.SetActive(false);
         buildings = new Dictionary<int, Building>();
@@ -87,17 +96,14 @@ public class BuildingManager : MonoBehaviour
         buildingUI.onClickBuilding.AddListener(OnClickBuildingIconCallback);
         buildingUI.onClickAssignee.AddListener(OnClickAssigneeIconCallback);
 
-        //Debug.Log("Bldg Ct: " + GameManager.Data.buildings.Count);
-        // Init Building (make own function)
-        for (int i = 0; i < GameManager.Data.buildings.Count; i++) // cache buildings list?
-        {
-            SpawnExistingBuilding(GameManager.Data.buildings[i]);
-        }
+        // Combine - check if default? dont think so since player data inits it
+        SpawnExistingBuildings(PlayerDataManager.LoadOutpostBuildings());
+        housingSpace = PlayerDataManager.LoadOutpostCrewCapacity();
 
         // Fill UI - probably combine?
-        omui.onBeginDraggingBuildingCard.AddListener(OnBeginDraggingBuildingCardCallback);
-        omui.onEndDraggingBuildingCard.AddListener(OnEndDraggingBuildingCardCallback);
-        omui.FillConstructionUI(buildingPrefabs);
+        omUI.onBeginDraggingBuildingCard.AddListener(OnBeginDraggingBuildingCardCallback);
+        omUI.onEndDraggingBuildingCard.AddListener(OnEndDraggingBuildingCardCallback);
+        omUI.FillConstructionUI(buildingPrefabs);
     }
     private void Update()
     {
@@ -108,25 +114,59 @@ public class BuildingManager : MonoBehaviour
     }
     private void OnDestroy()
     {
-        // Update player data when scene is unloaded
-        //realtimeData.resources = resources; // disable for now
-        GameManager.UpdateBuildingData(buildings.Values.ToArray());
+        PlayerDataManager.SaveOutpostData(buildings.Values.ToArray(), housingSpace);
     }
 
     // Actions
+    private void SpawnExistingBuildings(BuildingData[] buildingData)
+    {
+        for (int i = 0; i < buildingData.Length; i++)
+        {
+            BuildingData data = buildingData[i];
+            Building building = Instantiate(buildingPrefabs[data.uiIndex], transform);
+            building.Init(data);// if building, should check with resources
+
+            // Maybe distro to completing construction?
+            if (building.IsBuilt)
+            {
+                building.SetUI(stateData.iconBuilt, stateData.iconEmptyAsssignment);
+            }
+            else if (building.State == BuildingState.RECRUIT)
+            {
+                building.SetUI(stateData.iconRecruiting, stateData.iconEmptyAsssignment);
+            }
+            else if (building.State == BuildingState.CONSTRUCTING)
+            {
+                building.SetUI(stateData.iconConstructing, stateData.iconEmptyAsssignment);
+            }
+
+            // Set callbacks
+            building.onCrewmateAssigned.AddListener(() => { OnCrewmateAssignedCallback(building.ID); });
+            building.onConstructionCompleted.AddListener(() => { OnConstructionCompletedCallback(building.ID); });
+            building.onSelection.AddListener(() => { OnSelectionCallback(building.ID); });
+            building.onFreeAssignees.AddListener(() => { OnUnassignCrewmatesCallback(building.ID); });
+
+            // Tracking
+            buildings.Add(building.ID, building);
+
+            // Will be checking for AP consumption
+            if (!building.IsBuilt)
+            {
+                building.CompleteConstruction(); // dont keep, but is used to complete for now, will be using AP
+            }
+
+            building.onCrewmateAssignedGE = onCrewmateAssigned;
+        }
+    }
     private void SpawnNewBuilding(Building prospectiveBuilding)
     {
         isDragging = false;
-        omui.DeselectBuildingCard(prospectiveBuilding.Type);
+        omUI.DeselectBuildingCard(prospectiveBuilding.Type);
 
         // TODO: Compile functions into one if possible
         prospectiveBuilding.Place();
         prospectiveBuilding.SetMaterial(stateData.matRecruiting);
         prospectiveBuilding.SetUI(stateData.iconRecruiting, stateData.iconEmptyAsssignment);
-
-        // Save Data
-        GameManager.AddBuilding(new BuildingData(prospectiveBuilding));
-        //Debug.Log("Ct Incr: "+ GameManager.Data.buildings.Count);
 
         // Set callbacks
         prospectiveBuilding.onFirstAssignment.AddListener(() => { OnFirstAssignmentCallback(prospectiveBuilding.ID); });
@@ -142,51 +182,11 @@ public class BuildingManager : MonoBehaviour
         buildings.Add(prospectiveBuilding.ID, prospectiveBuilding);
 
         // Update Data
-        GameManager.data.resources.wood -= buildingPrefabs[prospectiveBuilding.Type].Cost.wood; // Subtract resources
-        GameManager.data.resources.foodProduction += buildingPrefabs[prospectiveBuilding.Type].Production.food; // will likely chance with level
-        GameManager.data.outpostCrewCapacity += buildingPrefabs[prospectiveBuilding.Type].Production.space; // will be 8
+        rm.AddBuilding(buildingPrefabs[prospectiveBuilding.Type].Cost, buildingPrefabs[prospectiveBuilding.Type].Production);
+        housingSpace += buildingPrefabs[prospectiveBuilding.Type].Production.space;
+        rm.UpdateHousingSpace(housingSpace);
 
-        // Update UI - also make this one call
-        rui.UpdateWoodUI(GameManager.Data.resources.wood);
-        rui.UpdateFoodUI(GameManager.Data.resources);
-        rui.UpdateCrewCapacityUI(GameManager.Data.outpostCrewCapacity);
         onBuildingPlaced.Raise(this, prospectiveBuilding);
-    }
-    private void SpawnExistingBuilding(BuildingData data)
-    {
-        Building building = Instantiate(buildingPrefabs[data.uiIndex], transform);
-        building.Init(data);// if building, should check with resources
-
-        // Maybe distro to completing construction?
-        if (building.IsBuilt)
-        {
-            building.SetUI(stateData.iconBuilt, stateData.iconEmptyAsssignment);
-        }
-        else if(building.State == BuildingState.RECRUIT)
-        {
-            building.SetUI(stateData.iconRecruiting, stateData.iconEmptyAsssignment);
-        }
-        else if (building.State == BuildingState.CONSTRUCTING)
-        {
-            building.SetUI(stateData.iconConstructing, stateData.iconEmptyAsssignment);
-        }
-
-        // Set callbacks
-        building.onCrewmateAssigned.AddListener(() => { OnCrewmateAssignedCallback(building.ID); });
-        building.onConstructionCompleted.AddListener(() => { OnConstructionCompletedCallback(building.ID); });
-        building.onSelection.AddListener(() => { OnSelectionCallback(building.ID); });
-        building.onFreeAssignees.AddListener(() => { OnUnassignCrewmatesCallback(building.ID); });
-
-        // Tracking
-        buildings.Add(building.ID, building);
-
-        // Will be checking for AP consumption
-        if(!building.IsBuilt)
-        {
-            building.CompleteConstruction(); // dont keep, but is used to complete for now, will be using AP
-        }
-
-        building.onCrewmateAssignedGE = onCrewmateAssigned;
     }
     private void UpgradeBuilding(int buildingID)
     {
@@ -201,22 +201,16 @@ public class BuildingManager : MonoBehaviour
         BuildingResources cost = buildingPrefabs[building.Type].Cost; // will eventially change with level
         if (building.IsBuilt)
         {
-            GameManager.data.resources.wood += (cost.wood / 2);
+            rm.RemoveBuilding(cost / 2, buildingPrefabs[building.Type].Production); // check if this works
         }
         else
         {
-            GameManager.data.resources.wood += cost.wood;
+            rm.RemoveBuilding(cost, buildingPrefabs[building.Type].Production);
         }
-        GameManager.data.resources.foodProduction -= buildingPrefabs[building.Type].Production.food;
-        GameManager.data.outpostCrewCapacity -= buildingPrefabs[building.Type].Production.space;
-
-        // Update UI
-        rui.UpdateWoodUI(GameManager.Data.resources.wood);
-        rui.UpdateFoodUI(GameManager.Data.resources);
-        rui.UpdateCrewCapacityUI(GameManager.Data.outpostCrewCapacity);
+        housingSpace -= buildingPrefabs[building.Type].Production.space;
+        rm.UpdateHousingSpace(housingSpace);
 
         // Delete building
-        GameManager.RemoveBuilding(buildingID);
         buildings[buildingID].Demolish();
         buildings.Remove(buildingID);
     }
@@ -423,7 +417,7 @@ public class BuildingManager : MonoBehaviour
     // UI
     internal bool CanConstructBuilding(int buildingIndex)
     {
-        return GameManager.Data.resources.wood >= buildingPrefabs[buildingIndex].Cost.wood;
+        return rm.CanConstruct(buildingPrefabs[buildingIndex].Cost);
     }
 
     // Dev

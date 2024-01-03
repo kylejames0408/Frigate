@@ -1,6 +1,4 @@
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
@@ -18,16 +16,16 @@ public class Enemy : Character
 
     public GameObject combatUI;
     public GameObject resourceText;
-    public CombatResourcesUI resourceUI;
+    public ResourceManager rm;
 
     public bool lootDropped;
     public int lootValue;
 
     private void Awake()
     {
-        if (cm == null) { cm = FindObjectOfType<CrewmateManager>(); }
-        if (resourceUI == null) { resourceUI = FindObjectOfType<CombatResourcesUI>(); }
         if (combatUI == null) { combatUI = GameObject.FindGameObjectWithTag("CombatUI"); };
+        if (cm == null) { cm = FindObjectOfType<CrewmateManager>(); }
+        if (rm == null) { rm = FindObjectOfType<ResourceManager>(); }
     }
     // Start is called before the first frame update
     void Start()
@@ -132,8 +130,7 @@ public class Enemy : Character
             if(lootDropped == false)
             {
                 //increase doubloon amount upon killing an enemy
-                resourceUI.doubloonAmount += lootValue;
-                resourceUI.UpdateDubloonUI(resourceUI.doubloonAmount);
+                rm.EnemyKilled(lootValue);
 
                 //Create a pop up message for resources gained
                 Vector3 messagePos = transform.position + new Vector3(0, 1.5f, 0);

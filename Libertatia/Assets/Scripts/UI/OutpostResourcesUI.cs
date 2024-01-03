@@ -3,7 +3,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 
-public class ResourcesUI : MonoBehaviour
+public class OutpostResourcesUI : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI tmpCrewmateAmt;
     [SerializeField] private TextMeshProUGUI tmpCrewmateCapacity;
@@ -34,15 +34,14 @@ public class ResourcesUI : MonoBehaviour
         btnMenu.onClick.AddListener(uiPause.Open);
     }
 
-    public void Init()
+    public void Init(ResourceData resourceData, OutpostData outpostData)
     {
-        PlayerData data = GameManager.Data;
-        tmpCrewmateAmt.text = data.outpostCrew.Count.ToString();
-        tmpCrewmateCapacity.text = data.outpostCrewCapacity.ToString();
-        tmpFoodAmt.text = data.resources.food.ToString();
-        UpdateFoodUI(data.resources);
-        tmpDubloonAmt.text = data.resources.doubloons.ToString();
-        tmpWoodAmt.text = data.resources.wood.ToString();
+        tmpCrewmateAmt.text = outpostData.crew.Length.ToString();
+        tmpCrewmateCapacity.text = outpostData.crewCapacity.ToString();
+        tmpFoodAmt.text = resourceData.food.ToString();
+        UpdateFoodUI(resourceData);
+        tmpDubloonAmt.text = resourceData.doubloons.ToString();
+        tmpWoodAmt.text = resourceData.wood.ToString();
     }
 
     public void UpdateCrewAmountUI(int crewAmt)
@@ -57,11 +56,11 @@ public class ResourcesUI : MonoBehaviour
     {
         tmpFoodAmt.text = foodAmt.ToString();
     }
-    public void UpdateFoodUI(PlayerResourceData data)
+    public void UpdateFoodUI(ResourceData data)
     {
-        tmpFoodProduction.text = data.foodProduction > 0 ? "+ " + data.foodProduction.ToString() : data.foodProduction.ToString();
-        tmpFoodConsumption.text = (-data.foodConsumption).ToString();
-        int foodCalculation = data.foodProduction - data.foodConsumption;
+        tmpFoodProduction.text = data.production.food > 0 ? "+ " + data.production.food.ToString() : data.production.food.ToString();
+        tmpFoodConsumption.text = (-data.consumption.food).ToString();
+        int foodCalculation = data.production.food - data.consumption.food;
         tmpFoodCalculation.text = foodCalculation > 0 ? "+ " + foodCalculation.ToString() + " Per EP" : foodCalculation.ToString() + " Per EP";
         if (foodCalculation > 0)
         {

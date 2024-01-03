@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -52,7 +51,7 @@ public class CrewMember : Character
 
             CombatManagementUI cmui = omuiGameObject.GetComponent<CombatManagementUI>();
             cmui.UpdateCard(crewmate.ID, crewmate.StateIcon);
-       
+
         }
 
 

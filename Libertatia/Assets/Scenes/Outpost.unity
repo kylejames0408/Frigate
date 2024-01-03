@@ -2694,7 +2694,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &218099234
 GameObject:
@@ -2956,7 +2956,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -10, y: 20}
+  m_AnchoredPosition: {x: -10, y: 0}
   m_SizeDelta: {x: 670, y: 300}
   m_Pivot: {x: 1, y: 0}
 --- !u!114 &234963688
@@ -3704,16 +3704,13 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 8cbe3d56d910df744a64e054dd9e58cf, type: 3}
   omui: {fileID: 1313257459}
   cmui: {fileID: 0}
-  orui: {fileID: 1078224227}
-  crui: {fileID: 0}
   crewmateUI: {fileID: 234963690}
+  rm: {fileID: 0}
   bm: {fileID: 745434448}
-  ship: {fileID: 7021428240441947983}
   crewmatePrefab: {fileID: 4279940650134947149, guid: 8f1e684d0ce15c240a73f35a690f910e, type: 3}
   crewmateSpawn: {fileID: 1943279233}
   crewmateSpawnRadius: 10
   selectedCrewmateIDs: 
-  isCombat: 0
   eventTriggered: 0
   materials:
   - {fileID: 2100000, guid: 8e58b6f3119697b429f7ad7281411480, type: 2}
@@ -6277,37 +6274,6 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: 3
   m_LayoutPriority: 1
---- !u!1 &616914318
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 616914320}
-  m_Layer: 0
-  m_Name: Post Process Volume
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &616914320
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 616914318}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 10, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &619307941
 GameObject:
   m_ObjectHideFlags: 0
@@ -8490,20 +8456,16 @@ MonoBehaviour:
   - {fileID: 3911053399067746306, guid: 464be573e97f0c84a9d1788bb444d936, type: 3}
   - {fileID: 7528525253285437895, guid: c1d10c38b808bca439ce275a3fe76d58, type: 3}
   - {fileID: 4471357269373654606, guid: 96f8b8e50d2808943afa86abb3c98f10, type: 3}
-  omui: {fileID: 1313257459}
-  rui: {fileID: 1078224227}
+  omUI: {fileID: 0}
   buildingUI: {fileID: 9116816653009409157}
   confirmationUI: {fileID: 888449053}
   cm: {fileID: 314619652}
+  rm: {fileID: 0}
   ship: {fileID: 7021428240441947983}
   isDragging: 0
   canPlace: 0
   prospectiveBuilding: {fileID: 0}
-  totalProduction:
-    wood: 0
-    food: 0
-    ap: 0
-    space: 0
+  housingSpace: 0
   selectedBuildingID: 0
   onBuildingPlaced: {fileID: 11400000, guid: 4ae36f9fe3f9160488e2f40b8ca0c348, type: 2}
   onCrewmateAssigned: {fileID: 11400000, guid: 8c002ad9b29a8304d866301b28d5b0b9, type: 2}
@@ -8587,12 +8549,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bm: {fileID: 745434448}
   cm: {fileID: 314619652}
-  rui: {fileID: 1078224227}
+  rm: {fileID: 0}
   btnArrow: {fileID: 47649196}
   btnBuildAll: {fileID: 138746107}
   btnAddWood: {fileID: 717431541}
   btnAddGold: {fileID: 2064926211}
   btnNewMate: {fileID: 2038346249}
+  btnEndTutorial: {fileID: 0}
 --- !u!1 &748315366
 GameObject:
   m_ObjectHideFlags: 0
@@ -10607,6 +10570,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b27be63f5bc5ded48b9b50bd9e06dc23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  UseMainMenuTestingScene: 0
+  UseOutpostTestingScene: 0
+  UseCombatTestingScene: 0
 --- !u!114 &962263073
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10619,14 +10585,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6a9faac7fc866d4583c9654a2f48cdf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  state: 0
+  elapsedTime: 0
   pauseMenu: {fileID: 380156887}
   onAttack:
     m_PersistentCalls:
       m_Calls: []
-  MainMenuTesting: 0
-  OutpostTesting: 0
-  ExplorationTesting: 0
-  CombatTesting: 0
 --- !u!4 &962263074
 Transform:
   m_ObjectHideFlags: 0
@@ -12434,7 +12398,7 @@ PrefabInstance:
       objectReference: {fileID: 1311605816}
     - target: {fileID: 6664341872196379337, guid: fc16ac2dd48fce44ba414da860de0ad5, type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 6664341872196379337, guid: fc16ac2dd48fce44ba414da860de0ad5, type: 3}
       propertyPath: m_LocalPosition.x
@@ -12906,7 +12870,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 50, y: -139}
+  m_AnchoredPosition: {x: 50, y: 0}
   m_SizeDelta: {x: 600, y: 200}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &1313257459
@@ -17281,7 +17245,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -10, y: 20}
+  m_AnchoredPosition: {x: -10, y: 0}
   m_SizeDelta: {x: 670, y: 300}
   m_Pivot: {x: 1, y: 0}
 --- !u!114 &1795504955
@@ -21250,7 +21214,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -10, y: 20}
+  m_AnchoredPosition: {x: -10, y: 0}
   m_SizeDelta: {x: 670, y: 300}
   m_Pivot: {x: 1, y: 0}
 --- !u!114 &1246156709462096786
@@ -26550,7 +26514,6 @@ MonoBehaviour:
   islandID: -1
   capacity: 12
   crewmates: []
-  level: 0
   buildingName: Ship
   radius: 10
   icon: {fileID: 21300000, guid: a0a3be2d917e17442bcd2c0632f44a88, type: 3}

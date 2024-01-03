@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -28,7 +27,7 @@ public class TutorialManager : MonoBehaviour
             }
             else if(GameManager.outpostVisitNumber == 1)
             {
-                GameManager.data.isTutorial = false;
+                GameManager.EndTutorial();
                 outpostDialogues[5].TriggerDialogue();
                 secondVisit = true;
                 GameManager.outpostVisitNumber++;

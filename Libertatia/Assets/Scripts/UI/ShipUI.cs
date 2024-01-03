@@ -57,7 +57,7 @@ public class ShipUI : MonoBehaviour
             // Player must assign at least one crewmate to leave
             if(btnDepart)
             {
-                if (ship.Crewmates.Count > 0)
+                if (ship.Crewmates.Length > 0)
                 {
                     btnDepart.interactable = true;
                 }

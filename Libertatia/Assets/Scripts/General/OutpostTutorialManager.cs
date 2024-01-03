@@ -48,7 +48,7 @@ public class OutpostTutorialManager : MonoBehaviour
             }
             else if (GameManager.outpostVisitNumber == 1)
             {
-                GameManager.data.isTutorial = false;
+                GameManager.EndTutorial();
                 outpostDialogues[4].TriggerDialogue();
                 secondVisit = true;
                 GameManager.outpostVisitNumber++;
@@ -90,7 +90,7 @@ public class OutpostTutorialManager : MonoBehaviour
 
     public void PanCameraToBoat()
     {
-        
+
         // Lerp camera transform to the boat x = -22, z = -160
         Vector3 shipCamPos = new Vector3(-22, Camera.main.transform.position.y, -160);
         CameraManager.Instance.PanTo(shipCamPos);

@@ -1,18 +1,17 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.UI;
-using UnityEngine.UIElements;
 using TMPro;
 
 public class ZoneManager : MonoBehaviour
 {
     // Components
     [SerializeField] private CrewmateManager cm;
-    [SerializeField] private OutpostManagementUI omui;
-    [SerializeField] private CombatManagementUI cmui;
+    [SerializeField] private ResourceManager rm;
+    // UI
+    [SerializeField] private OutpostManagementUI outpostMUI;
+    [SerializeField] private CombatManagementUI combatMUI;
 
     public List<GameObject> crewMembers;
     public List<GameObject> enemies;
@@ -21,10 +20,6 @@ public class ZoneManager : MonoBehaviour
     public List<Terrain> zones;
 
     public GameObject shipWaypoint;
-
-    //public ResourcesUI resourceUI;
-
-    public GameObject combatUI;
 
     [SerializeField]
     public GameEvent finishedCombat;
@@ -48,14 +43,14 @@ public class ZoneManager : MonoBehaviour
     private void Awake()
     {
         if (cm == null) { cm = FindObjectOfType<CrewmateManager>(); }
+        if (rm == null) { rm = FindObjectOfType<ResourceManager>(); }
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        enemies = GameObject.FindGameObjectsWithTag("Enemy").ToList<GameObject>();
-        enemyHouses = GameObject.FindGameObjectsWithTag("EnemyHouse").ToList<GameObject>();
-        combatUI = GameObject.FindGameObjectWithTag("CombatUI");
+        enemies = GameObject.FindGameObjectsWithTag("Enemy").ToList();
+        enemyHouses = GameObject.FindGameObjectsWithTag("EnemyHouse").ToList();
         //zones = Terrain.activeTerrains.ToList();
         for(int i = 0; i < zones.Count; i++)
         {
@@ -76,7 +71,7 @@ public class ZoneManager : MonoBehaviour
         //Initializes crew members
         if (crewMembers.Count == 0)
         {
-            crewMembers = GameObject.FindGameObjectsWithTag("PlayerCharacter").ToList<GameObject>();
+            crewMembers = GameObject.FindGameObjectsWithTag("PlayerCharacter").ToList();
 
             //start by having each crew member's target position point to themselves
             foreach (GameObject cm in crewMembers)
@@ -96,8 +91,7 @@ public class ZoneManager : MonoBehaviour
             if(crewMember.currentHealth <= 0)
             {
                 //resourceUI.UpdateCrewAmountUI(crewMembers.Count - 1);
-                CombatResourcesUI combatResourcesUI = combatUI.GetComponent<CombatResourcesUI>();
-                combatResourcesUI.UpdateCrewAmountUI(crewMembers.Count - 1);
+                rm.CrewmateDied(crewMembers.Count - 1);
             }
         }
 
@@ -137,7 +131,7 @@ public class ZoneManager : MonoBehaviour
 
                     resourceCountUI.text = "No Resources";
                 }
-          
+
             }
 
             //if there is a resource depot & the zone has at least 1 crew member & the zone has no enemies left
@@ -200,7 +194,7 @@ public class ZoneManager : MonoBehaviour
                             crewmate.State = CrewmateState.MOVING;
 
                             //updates state on cards
-                            cmui.UpdateCard(crewmate.ID, crewmate.StateIcon);
+                            combatMUI.UpdateCard(crewmate.ID, crewmate.StateIcon);
                         }
                     }
                 }
@@ -230,7 +224,7 @@ public class ZoneManager : MonoBehaviour
                 return;
             }
         }
-        
+
         if (!finishedCombatBool)
         {
             Debug.Log("You triggered the finished combat state!");
@@ -246,7 +240,7 @@ public class ZoneManager : MonoBehaviour
     /// </summary>
     public void CompleteIsland()
     {
-        if (GameObject.FindGameObjectsWithTag("Enemy").ToList<GameObject>().Count <= 0)
+        if (GameObject.FindGameObjectsWithTag("Enemy").ToList().Count <= 0)
         {
             foreach (Terrain terrain in zones)
             {
@@ -258,12 +252,7 @@ public class ZoneManager : MonoBehaviour
             //Updates resources in gamemanager
             if(IsIslandCompleted == false)
             {
-                CombatResourcesUI combatResources = combatUI.GetComponent<CombatResourcesUI>();
-
-                GameManager.data.resources.doubloons += combatResources.doubloonAmount;
-                GameManager.data.resources.wood += combatResources.woodAmount;
-                GameManager.data.resources.food += combatResources.foodAmount;
-
+                // invoke island completion event for island manager
                 IsIslandCompleted = true;
             }
 
@@ -279,8 +268,6 @@ public class ZoneManager : MonoBehaviour
     {
         if (zone.zoneLootCollected == false)
         {
-            CombatResourcesUI combatResources = combatUI.GetComponent<CombatResourcesUI>();
-
             foreach (GameObject enemyHouse in zone.housesInZone)
             {
                 EnemyHouse house = enemyHouse.GetComponent<EnemyHouse>();
@@ -289,12 +276,10 @@ public class ZoneManager : MonoBehaviour
                 switch (house.resourceType)
                 {
                     case "wood":
-                        combatResources.woodAmount += house.lootValue;
-                        combatResources.UpdateWoodUI(combatResources.woodAmount);
+                        rm.ClearedZone(house.lootValue, 0);
                         break;
                     case "food":
-                        combatResources.foodAmount += house.lootValue;
-                        combatResources.UpdateFoodAmountUI(combatResources.foodAmount);
+                        rm.ClearedZone(0, house.lootValue);
                         break;
                     default:
                         break;
@@ -326,7 +311,7 @@ public class ZoneManager : MonoBehaviour
             Crewmate crewmate = crewMember.GetComponent<Crewmate>();
             crewmate.State = CrewmateState.MOVING;
 
-            cmui.UpdateCard(crewmate.ID, crewmate.StateIcon);
+            combatMUI.UpdateCard(crewmate.ID, crewmate.StateIcon);
         }
 
         //Makes marker disappear when retreating to ship
@@ -356,15 +341,15 @@ public class ZoneManager : MonoBehaviour
                     for (int i = 0; i < selectedCrewmates.Length; i++)
                     {
                         NavMeshAgent myAgent = selectedCrewmates[i].GetComponent<NavMeshAgent>();
-    
+
                         CrewMember crewMember = selectedCrewmates[i].GetComponent<CrewMember>();
-                  
+
                         crewMember.characterState = Character.State.Moving;
 
                         Crewmate crewmate = crewMember.GetComponent<Crewmate>();
                         crewmate.State = CrewmateState.MOVING;
 
-                        cmui.UpdateCard(crewmate.ID, crewmate.StateIcon);
+                        combatMUI.UpdateCard(crewmate.ID, crewmate.StateIcon);
 
                         Vector3 movePos = (zone.zoneCenter + (Vector3)UnityEngine.Random.insideUnitSphere * 7f);
                         Vector3 updatedMovePos = new Vector3(movePos.x, 0, movePos.z);
@@ -377,7 +362,7 @@ public class ZoneManager : MonoBehaviour
                         ShowLineRenderer(updatedMovePos, crewMember);
                     }
                 }
-  
+
             }
         }
     }

@@ -1,63 +1,23 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using UnityEngine.UI;
 
 public class CombatResourcesUI : MonoBehaviour
 {
-    public TextMeshProUGUI tmpCrewmateAmt;
-    public TextMeshProUGUI tmpCrewmateCapacity;
-    public TextMeshProUGUI tmpFoodAmt;
-    public TextMeshProUGUI tmpFoodConsumption;
-    public TextMeshProUGUI tmpDubloonAmt;
-    public TextMeshProUGUI tmpWoodAmt;
-    //public TextMeshProUGUI tmpStoneAmt;
+    [SerializeField] private TextMeshProUGUI tmpCrewmateAmt;
+    [SerializeField] private TextMeshProUGUI tmpCrewmateCapacity;
+    [SerializeField] private TextMeshProUGUI tmpFoodAmt;
+    [SerializeField] private TextMeshProUGUI tmpFoodTrend;
+    [SerializeField] private TextMeshProUGUI tmpDubloonAmt;
+    [SerializeField] private TextMeshProUGUI tmpWoodAmt;
 
-    public int doubloonAmount;
-    public int woodAmount;
-    public int foodAmount;
-
-    private void Start()
+    public void Init(ResourceData resourceData, OutpostData outpostData)
     {
-        PlayerData data = GameManager.Data;
-        //tmpCrewmateAmt.text = data.crewmates.Count.ToString();
-        //tmpCrewmateCapacity.text = data.crewmates.Count.ToString();
-
-        doubloonAmount = 0;
-        woodAmount = 0;
-        foodAmount = 0;
-
-        //Test values - TO BE REMOVED OR COMMENTED OUT
-        tmpCrewmateAmt.text = data.crewmates.Count.ToString();
-        tmpCrewmateCapacity.text = data.crewmates.Count.ToString();
-
-        tmpFoodAmt.text = foodAmount.ToString();
-        tmpFoodConsumption.text = 0.ToString();
-        tmpDubloonAmt.text = doubloonAmount.ToString();
-        tmpWoodAmt.text = woodAmount.ToString();
-    }
-
-    private void Update()
-    {
-        if(Input.GetKeyUp(KeyCode.Alpha0))
-        {
-            doubloonAmount += 5;
-            UpdateDubloonUI(doubloonAmount);
-        }
-    }
-
-    public void Init()
-    {
-        //PlayerData data = GameManager.Data;
-        //tmpCrewmateAmt.text = data.crewmates.Count.ToString();
-        //tmpCrewmateCapacity.text = data.outpostCrewCapacity.ToString();
-        //tmpFoodAmt.text = data.resources.food.ToString();
-        //tmpFoodConsumption.text = data.resources.foodPerAP.ToString();
-        //tmpDubloonAmt.text = data.resources.doubloons.ToString();
-        //tmpWoodAmt.text = data.resources.wood.ToString();
-
-
+        tmpCrewmateAmt.text = outpostData.crew.Length.ToString();
+        tmpCrewmateCapacity.text = outpostData.crewCapacity.ToString();
+        tmpFoodAmt.text = resourceData.food.ToString();
+        UpdateFoodUI(resourceData);
+        tmpDubloonAmt.text = resourceData.doubloons.ToString();
+        tmpWoodAmt.text = resourceData.wood.ToString();
     }
 
     public void UpdateCrewAmountUI(int crewAmt)
@@ -72,9 +32,16 @@ public class CombatResourcesUI : MonoBehaviour
     {
         tmpFoodAmt.text = foodAmt.ToString();
     }
-    public void UpdateFoodConsumptionUI(int consumption)
+    public void UpdateFoodUI(ResourceData data)
     {
-        tmpFoodConsumption.text = consumption.ToString();
+        if (data.production.food - data.consumption.food > 0)
+        {
+            tmpFoodTrend.text = "+";
+        }
+        else
+        {
+            tmpFoodTrend.text = "-";
+        }
     }
     public void UpdateDubloonUI(int dubloonAmt)
     {
