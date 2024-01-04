@@ -2,7 +2,14 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
+// Notes
+// Probably just have a local ShipData struct at some point - remove accessors
 
+public enum ShipState
+{
+    ONBOARDING,
+    OFFBOARDING
+}
 public class Ship : MonoBehaviour
 {
     public List<GameObject> unitList = new List<GameObject>();
@@ -22,12 +29,11 @@ public class Ship : MonoBehaviour
     [SerializeField] private ShipUI shipUI;
     [SerializeField] private MeshRenderer[] renderers;
     // Tracking
-    [SerializeField] private bool isCombat = false;
-    [SerializeField] private bool isOutpost = false;
     [SerializeField] private int id;
     [SerializeField] private int islandID;
     [SerializeField] private int capacity;
     [SerializeField] private List<CrewmateData> crewmates;
+    [SerializeField] private ShipState state;
     //[SerializeField] private int level; // I dont think the ship has a level itself?
     // Characteristics
     [SerializeField] private string buildingName = "Ship";
@@ -63,7 +69,13 @@ public class Ship : MonoBehaviour
         get { return isHovered; }
     }
     public CrewmateData[] Crewmates
-    { get { return crewmates.ToArray(); } }
+    {
+        get { return crewmates.ToArray(); }
+    }
+    public ShipState State
+    {
+        get { return state; }
+    }
 
     private void Awake()
     {
@@ -82,20 +94,21 @@ public class Ship : MonoBehaviour
     {
         ShipData shipData = PlayerDataManager.LoadShipData();
         capacity = shipData.crewCcapacity;
-        icon = shipData.icon;
-        crewmates = shipData.crew.ToList(); // does crewmates need to be cached?
 
-        if (shipData.id == -1)
-        {
-            id = gameObject.GetInstanceID();
-            shipUI.onUnassign.AddListener(UnassignCrewmateCallback);
-        }
-        else
+        if (shipData.isInitialized)
         {
             id = shipData.id;
             islandID = shipData.islandID;
+            crewmates = shipData.crew.ToList();
+            state = shipData.state;
+            icon = shipData.icon;
             transform.position = shipData.position;
             transform.rotation = shipData.rotation;
+        }
+        else
+        {
+            id = gameObject.GetInstanceID();
+            shipUI.onUnassign.AddListener(UnassignCrewmateCallback);
         }
 
         // Set UI
@@ -167,7 +180,7 @@ public class Ship : MonoBehaviour
     }
     private void OnDestroy()
     {
-        if (isOutpost)
+        if (GameManager.Phase == GamePhase.BUILDING)
         {
             PlayerDataManager.SaveShipData(this);
         }

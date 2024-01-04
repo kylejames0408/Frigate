@@ -74,23 +74,30 @@ public class CrewmateManager : MonoBehaviour
         crewmateUI.onClickCrewmate.AddListener(OnClickCrewmateIconCallback);
         crewmateUI.onClickLocation.AddListener(OnClickBuildingIconCallback);
 
-        ShipData shipData = PlayerDataManager.LoadShipData(); // maybe just get crew for combat
-        SpawnExistingCrewmates(shipData.crew);
-
-        if(GameManager.Phase == GamePhase.BUILDING)
+        if (GameManager.Phase == GamePhase.BUILDING)
         {
-            OutpostData outpostData = PlayerDataManager.LoadOutpostData();
-            if (outpostData.crew.Length == 0)
+            ShipData shipData = PlayerDataManager.LoadShipData();
+            if (shipData.isInitialized) // First appearance
             {
-                SpawnNewCrewmates(outpostData.crewCapacity);
+                shipID = shipData.id;
+                SpawnExistingCrewmates(shipData.crew);
+
+                OutpostData outpostData = PlayerDataManager.LoadOutpostData();
+                if (outpostData.crew.Length == 0)
+                {
+                    SpawnNewCrewmates(outpostData.crewCapacity);
+                }
+                else
+                {
+                    SpawnExistingCrewmates(outpostData.crew);
+                }
             }
             else
             {
-                SpawnExistingCrewmates(outpostData.crew);
+                shipID = FindObjectOfType<Ship>().ID;
+                SpawnNewCrewmates(PlayerDataManager.STARTING_CREW_AMOUNT);
             }
         }
-
-        shipID = FindObjectOfType<Ship>().ID;
     }
 
     private void Update()

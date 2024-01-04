@@ -131,14 +131,16 @@ public struct ResourceData
 [Serializable]
 public struct OutpostData
 {
+    public bool isInitialized;
     public int crewCapacity; // housing space
     public CrewmateData[] crew;
     public BuildingData[] buildings;
 
-    public OutpostData(int crewCount)
+    public OutpostData(int startingCrewCapacity)
     {
-        crewCapacity = 0;
-        crew = new CrewmateData[crewCount];
+        isInitialized = false;
+        crewCapacity = startingCrewCapacity;
+        crew = new CrewmateData[0];
         buildings = new BuildingData[0];
     }
 }
@@ -146,35 +148,42 @@ public struct OutpostData
 public struct ShipData
 {
     // Tracking / State
+    public bool isInitialized; // will likely be turned into # of islands traveled to
     public int id;
     public int islandID;
     public int crewCcapacity;
     public CrewmateData[] crew;
+    public ShipState state; // might turn into bigger enum
     // UI
     public Sprite icon;
     // Spacial
     public Vector3 position;
     public Quaternion rotation;
 
-    public ShipData(int crewCcapacity)
+    public ShipData(int startingCrewCapacity)
     {
+        isInitialized=false;
         id = -1;
         islandID = -1;
-        this.crewCcapacity = crewCcapacity;
+        crewCcapacity = startingCrewCapacity;
         crew = new CrewmateData[0];
-        icon = null;
+        state = ShipState.OFFBOARDING;
+        icon = null; // probably init
         position = Vector3.zero;
         rotation = Quaternion.identity;
     }
+
     public ShipData(Ship ship)
     {
         id = ship.ID;
         islandID = ship.IslandID;
         crewCcapacity = ship.Capacity;
         crew = ship.Crewmates;
+        state = ship.State;
         icon = ship.Icon;
         position = ship.transform.position;
         rotation = ship.transform.rotation;
+        isInitialized = true;
     }
 }
 

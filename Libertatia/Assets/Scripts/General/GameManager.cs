@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -20,10 +19,12 @@ public enum GamePhase
 public class GameManager : MonoBehaviour
 {
     // Game Data
+    private float elapsedTime = 0.0f;
     [SerializeField] private GameState state = GameState.PLAYING;
-    private static GamePhase phase = GamePhase.MAIN_MENU;
-    [SerializeField] private float elapsedTime = 0.0f;
-    private static bool isTutorial = true;
+    [SerializeField] private GamePhase initPhase = GamePhase.MAIN_MENU;
+    [SerializeField] private bool initTutorial = true;
+    private static GamePhase phase;
+    private static bool isTutorial;
     // UI
     [SerializeField] private PauseMenu pauseMenu;
 
@@ -48,11 +49,13 @@ public class GameManager : MonoBehaviour
         if(!PlayerDataManager.IsInitialized)
         {
             PlayerDataManager.NewGame();
+            phase = initPhase;
+            isTutorial = initTutorial;
         }
         else
         {
-            Debug.Log("player data is already initialized - confirm");
-            Destroy(gameObject); // if player data exists, this manager is a duplicate
+            Debug.Log("Deleting duplicate global Manager");
+            Destroy(gameObject);
             return;
         }
 
@@ -78,6 +81,11 @@ public class GameManager : MonoBehaviour
                 Unpause();
             }
         }
+    }
+    private void OnDestroy()
+    {
+        //PlayerDataManager.SaveTutorialProgress(isTutorial);
+        //PlayerDataManager.SaveTimestamp(elapsedTime);
     }
 
     private void Pause()

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using TMPro;
 // Notes
 // Could probably have a refresh rate dropdown if there are different options
+// Might be worth having a tutorial checkbox incase someone wanted to do it again or skip it
 // Might make sense to set the slider max and min, but I hard coded it to -80 to 20 based on mixer
 // Could probably save these settings with the rest of the data
 

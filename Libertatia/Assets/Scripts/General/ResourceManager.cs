@@ -10,6 +10,7 @@ public class ResourceManager : MonoBehaviour
     private void Awake()
     {
         if (outpostRUI == null) { outpostRUI = FindObjectOfType<OutpostResourcesUI>(); }
+        if (combatRUI == null) { combatRUI = FindObjectOfType<CombatResourcesUI>(); }
     }
     private void Start()
     {

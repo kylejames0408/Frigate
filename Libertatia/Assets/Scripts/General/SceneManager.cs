@@ -8,6 +8,14 @@ public class CeneManager : MonoBehaviour
     [SerializeField] private bool UseOutpostTestingScene = false;
     [SerializeField] private bool UseCombatTestingScene = false;
 
+    private void Awake()
+    {
+        if(instance == null)
+        {
+            instance = this;
+        }
+    }
+
     public static void LoadMainMenu()
     {
         GameManager.outpostVisitNumber = 0;

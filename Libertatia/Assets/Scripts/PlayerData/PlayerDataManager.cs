@@ -13,8 +13,9 @@ public static class PlayerDataManager
     private const int STARTING_FOOD_AMOUNT = 100;
     private const int STARTING_FOOD_PER_AP = 5;
     private const int STARTING_LOYALTY_AMOUNT = 0;
-    private const int STARTING_CREW_AMOUNT = 6;
+    private const int STARTING_OUTPOST_CREW_AMOUNT = 0;
     private const int STARTING_SHIP_CREW_CAPACITY = 12;
+    public const int STARTING_CREW_AMOUNT = 6;
 
     private static PlayerData data;
     private static bool isInitialized = false;
@@ -35,8 +36,8 @@ public static class PlayerDataManager
             STARTING_DOUBLOON_AMOUNT,
             STARTING_FOOD_AMOUNT,
             STARTING_LOYALTY_AMOUNT);
-        data.outpost = new OutpostData(STARTING_CREW_AMOUNT); // not really necessary until data is pulled from file to init
-        data.ship = new ShipData(STARTING_SHIP_CREW_CAPACITY); // same here
+        data.outpost = new OutpostData(STARTING_OUTPOST_CREW_AMOUNT);
+        data.ship = new ShipData(STARTING_SHIP_CREW_CAPACITY);
         isInitialized = true;
     }
     internal static void LoadGame()
@@ -133,5 +134,15 @@ public static class PlayerDataManager
     internal static void SaveShipData(Ship ship)
     {
         data.ship = new ShipData(ship);
+    }
+
+    // General
+    internal static void SaveTutorialProgress(bool isTutorialComplete)
+    {
+        data.hasCompletedTutorial = isTutorialComplete;
+    }
+    internal static void SaveTimestamp(float elapsedTime)
+    {
+        data.elapsedTime = elapsedTime;
     }
 }
