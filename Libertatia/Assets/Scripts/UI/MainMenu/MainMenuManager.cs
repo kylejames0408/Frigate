@@ -37,6 +37,12 @@ public class MainMenuManager : MonoBehaviour
     [SerializeField] private AudioMixer masterMixer;
     [Header("Credits")]
     [SerializeField] private Button creditsToMainButton;
+    //[SerializeField] private Button fanPortfolioButton;
+    //[SerializeField] private Button jamesPortfolioButton;
+    //[SerializeField] private Button jaradatPortfolioButton;
+    //[SerializeField] private Button wengPortfolioButton;
+    //[SerializeField] private Button zafframPortfolioButton;
+
 
     private void Awake()
     {
@@ -182,5 +188,9 @@ public class MainMenuManager : MonoBehaviour
     {
         Resolution newResolution = Screen.resolutions[resolutionIndex];
         Screen.SetResolution(newResolution.width, newResolution.height, Screen.fullScreen);
+    }
+    public void OpenPortfolioCallback(string url)
+    {
+        Application.OpenURL(url);
     }
 }
