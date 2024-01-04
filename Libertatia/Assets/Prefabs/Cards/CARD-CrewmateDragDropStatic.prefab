@@ -255,7 +255,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5c5a67a86006eb4db4571d5cda7bf85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainCanvasName: Interface
+  mainCanvasName: Interfaces
   isReturnPosition: 1
   isDropSwap: 0
   dropAsFirstSibling: 0

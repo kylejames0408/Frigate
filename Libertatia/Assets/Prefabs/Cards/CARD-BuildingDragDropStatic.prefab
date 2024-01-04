@@ -238,14 +238,14 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   resourceCost:
+    ap: 0
     wood: 0
     food: 0
-    ap: 0
     space: 0
   resourceProduction:
+    ap: 0
     wood: 0
     food: 0
-    ap: 0
     space: 0
 --- !u!114 &3512928552577619484
 MonoBehaviour:
@@ -259,7 +259,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5c5a67a86006eb4db4571d5cda7bf85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainCanvasName: Interface
+  mainCanvasName: Interfaces
   isReturnPosition: 1
   isDropSwap: 0
   dropAsFirstSibling: 0
