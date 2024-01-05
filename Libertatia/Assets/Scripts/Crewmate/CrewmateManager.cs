@@ -72,6 +72,7 @@ public class CrewmateManager : MonoBehaviour
         crewmateUI.onClose.AddListener(OnCloseIbterfaceCallback);
         crewmateUI.onClickCrewmate.AddListener(OnClickCrewmateIconCallback);
         crewmateUI.onClickLocation.AddListener(OnClickBuildingIconCallback);
+        crewmateUI.onRenameCrewmate.AddListener(OnRenameCrewmateCallback);
 
         if (GameManager.Phase == GamePhase.BUILDING)
         {
@@ -574,13 +575,12 @@ public class CrewmateManager : MonoBehaviour
         mate.Unassign(); // will UI need to be updated as well?
         if (cmui == null)
         {
-            omui.UpdateCrewmateCard(crewmateID, mate.StateIcon);
+            omui.UpdateCrewmateCardIcon(crewmateID, mate.StateIcon);
         }
         else
         {
             cmui.UpdateCard(crewmateID, mate.StateIcon);
         }
-
     }
 
     // Callbacks
@@ -590,7 +590,7 @@ public class CrewmateManager : MonoBehaviour
         crewmateUI.FillAndOpenInterface(mate);
         if (cmui == null)
         {
-            omui.UpdateCrewmateCard(crewmateID, mate.StateIcon);
+            omui.UpdateCrewmateCardIcon(crewmateID, mate.StateIcon);
         }
         else
         {
@@ -638,7 +638,12 @@ public class CrewmateManager : MonoBehaviour
             }
         }
     }
-
+    private void OnRenameCrewmateCallback(int crewmateID, string name)
+    {
+        Crewmate mate = crewmates[crewmateID];
+        mate.Rename(name);
+        omui.UpdateCrewmateCardFirstName(crewmateID, mate.FirstName);
+    }
     // Hides the crewmate's line renderer
     private void HideLineRenderer()
     {

@@ -47,6 +47,10 @@ public class CrewmateCard : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     {
         iconsStatus.sprite = statusIcon;
     }
+    internal void SetFirstName(string firstName)
+    {
+        this.firstName.text = firstName;
+    }
 
     public void Select()
     {

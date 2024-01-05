@@ -158,10 +158,15 @@ public class OutpostManagementUI : MonoBehaviour
         Destroy(crewmateCards[cardID].transform.parent.gameObject); // needs to delete the parent object
         crewmateCards.Remove(cardID);
     }
-    internal void UpdateCrewmateCard(int cardID, Sprite stateIcon)
+    internal void UpdateCrewmateCardIcon(int cardID, Sprite stateIcon)
     {
         CrewmateCard card = crewmateCards[cardID];
         card.SetStatus(stateIcon);
+    }
+    internal void UpdateCrewmateCardFirstName(int cardID, string firstName)
+    {
+        CrewmateCard card = crewmateCards[cardID];
+        card.SetFirstName(firstName);
     }
 
     // Handlers - Crewmate Cards

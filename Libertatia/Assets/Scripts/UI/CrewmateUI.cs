@@ -17,7 +17,7 @@ public class CrewmateUI : MonoBehaviour
 
     [Header("Interface")] // Crewmate information objects
     [SerializeField] private Image uiCrewmateIcon;
-    [SerializeField] private TextMeshProUGUI uiName;
+    [SerializeField] private TMP_InputField uiNameInput;
     [SerializeField] private TextMeshProUGUI uiHealth;
     [SerializeField] private Image[] dotsStrength;
     [SerializeField] private Image[] dotsAgility;
@@ -40,6 +40,8 @@ public class CrewmateUI : MonoBehaviour
     public UnityEvent onClose;
     public UnityEvent<int> onClickCrewmate;
     public UnityEvent<int> onClickLocation;
+    public UnityEvent<int, string> onRenameCrewmate;
+
 
     private void Awake()
     {
@@ -60,6 +62,7 @@ public class CrewmateUI : MonoBehaviour
     }
     private void Start()
     {
+        uiNameInput.onValueChanged.AddListener(ChangedNameCallback);
         btnClose.onClick.AddListener(CloseMenuCallback);
         btnCrewmate.onClick.AddListener(OnClickCrewmateCallback);
         btnLocation.onClick.AddListener(OnClickLocationCallback);
@@ -84,7 +87,7 @@ public class CrewmateUI : MonoBehaviour
     {
         crewmateID = mate.ID;
         uiCrewmateIcon.sprite = mate.Icon;
-        uiName.text = mate.FullName;
+        uiNameInput.text = mate.FullName;
         uiHealth.text = mate.Health.ToString();
 
         for (int i = 0; i < 5; i++)
@@ -155,6 +158,10 @@ public class CrewmateUI : MonoBehaviour
     {
         CloseInterface();
         onClose.Invoke(); // Deselects
+    }
+    private void ChangedNameCallback(string name)
+    {
+        onRenameCrewmate.Invoke(crewmateID, name);
     }
 
     // Open/close

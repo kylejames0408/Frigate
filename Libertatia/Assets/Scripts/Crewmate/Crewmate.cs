@@ -105,15 +105,7 @@ public class Crewmate : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         id = gameObject.GetInstanceID();
 
-        if (fullName.Length > 0)
-        {
-            string[] name = fullName.Split(' ');
-            firstName = name[0];
-        }
-        else
-        {
-            firstName = "Joe";
-        }
+        FormatName();
 
         building = new ObjectData(-1, iconDefaultBuilding); // Is there a need for a default icon?
         // Update once values are set
@@ -142,7 +134,7 @@ public class Crewmate : MonoBehaviour
     }
 
     // Actions
-    public void Set(CrewmateData data)
+    internal void Set(CrewmateData data)
     {
         // Tracking
         id = data.id;
@@ -162,7 +154,7 @@ public class Crewmate : MonoBehaviour
     }
 
     // Make inputs into a ObjectData item?
-    public void Assign(int buildingID, Sprite buildingIcon, Vector3 destination, bool isShip = false)
+    internal void Assign(int buildingID, Sprite buildingIcon, Vector3 destination, bool isShip = false)
     {
         // Checks if already assigned to the building
         if(building.id != buildingID)
@@ -191,20 +183,36 @@ public class Crewmate : MonoBehaviour
             Debug.Log("assigned to same building");
         }
     }
-    public void Unassign()
+    internal void Unassign()
     {
         state = CrewmateState.IDLE;
         building.Reset(iconDefaultBuilding);
     }
-
+    internal void Rename(string name)
+    {
+        fullName = name.Trim();
+        FormatName();
+    }
     // Util
-    public void SetDestination(Vector3 destination)
+    internal void SetDestination(Vector3 destination)
     {
         agent.SetDestination(destination);
     }
+    private void FormatName()
+    {
+        if (fullName.Length > 0)
+        {
+            string[] name = fullName.Split(' ');
+            firstName = name[0];
+        }
+        else
+        {
+            firstName = "Joe";
+        }
+    }
 
     // UI
-    public void SetUI(Sprite crewmateIcon, Sprite emptyBuildingAssignmentIcon) // will likely have state in future, similar to building
+    internal void SetUI(Sprite crewmateIcon, Sprite emptyBuildingAssignmentIcon) // will likely have state in future, similar to building
     {
         iconCrewmate = crewmateIcon;
         iconDefaultBuilding = emptyBuildingAssignmentIcon;
