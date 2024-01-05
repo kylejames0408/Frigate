@@ -131,14 +131,12 @@ public struct ResourceData
 [Serializable]
 public struct OutpostData
 {
-    public bool isInitialized;
     public int crewCapacity; // housing space
     public CrewmateData[] crew;
     public BuildingData[] buildings;
 
     public OutpostData(int startingCrewCapacity)
     {
-        isInitialized = false;
         crewCapacity = startingCrewCapacity;
         crew = new CrewmateData[0];
         buildings = new BuildingData[0];

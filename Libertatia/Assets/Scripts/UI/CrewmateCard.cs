@@ -3,6 +3,8 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+// Note
+// I had outline logic (now in set) in awake, but awake does not run when GO's are instantiated to an inactive parent
 
 public class CrewmateCard : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
@@ -29,14 +31,11 @@ public class CrewmateCard : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         }
     }
 
-    private void Awake()
+    internal void Set(Crewmate mate)
     {
         outline = GetComponent<Outline>();
         Deselect();
-    }
 
-    internal void Set(Crewmate mate)
-    {
         crewmateID = mate.ID;
         icon.sprite = mate.Icon;
         firstName.text = mate.FirstName;

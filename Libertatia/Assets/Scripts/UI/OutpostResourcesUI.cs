@@ -36,15 +36,6 @@ public class OutpostResourcesUI : MonoBehaviour
 
     public void Init(ResourceData resourceData, OutpostData outpostData)
     {
-        if(outpostData.isInitialized)
-        {
-            tmpCrewmateAmt.text = outpostData.crew.Length.ToString();
-        }
-        else
-        {
-            tmpCrewmateAmt.text = PlayerDataManager.STARTING_CREW_AMOUNT.ToString();
-        }
-
         tmpCrewmateCapacity.text = outpostData.crewCapacity.ToString();
         tmpFoodAmt.text = resourceData.food.ToString();
         UpdateFoodUI(resourceData);

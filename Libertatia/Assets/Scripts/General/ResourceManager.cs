@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class ResourceManager : MonoBehaviour
 {
+    private const int CREWMATE_FOOD_CONSUMPTION = 10; // maybe move to PlayerData
     [SerializeField] private OutpostResourcesUI outpostRUI;
     [SerializeField] private CombatResourcesUI combatRUI;
     [SerializeField] private ResourceData resources;
@@ -64,10 +65,17 @@ public class ResourceManager : MonoBehaviour
             resources.food >= cost.food;
     }
 
-    internal void SpawnCrewmate(int foodConsumption)
+    internal void SpawnCrewmate(int crewmateCount)
     {
-        resources.consumption.food += foodConsumption;
+        resources.consumption.food += CREWMATE_FOOD_CONSUMPTION;
         outpostRUI.UpdateFoodUI(resources);
+        outpostRUI.UpdateCrewAmountUI(crewmateCount);
+    }
+    internal void RemoveCrewmate(int crewmateCount)
+    {
+        resources.consumption.food -= CREWMATE_FOOD_CONSUMPTION;
+        outpostRUI.UpdateFoodUI(resources);
+        outpostRUI.UpdateCrewAmountUI(crewmateCount);
     }
     internal void CrewmateDied(int crewmateCount)
     {
@@ -96,19 +104,22 @@ public class ResourceManager : MonoBehaviour
         combatRUI.UpdateFoodAmountUI(resources.food);
     }
 
-    internal void AddWood(int woodAmount)
-    {
-        resources.wood += woodAmount;
-        outpostRUI.UpdateWoodUI(resources.wood);
-    }
     internal void AddFood(int foodAmount)
     {
         resources.food += foodAmount;
+        if (resources.food < 0) { resources.food = 0; }
         outpostRUI.UpdateFoodAmountUI(resources.food);
+    }
+    internal void AddWood(int woodAmount)
+    {
+        resources.wood += woodAmount;
+        if (resources.wood < 0) { resources.wood = 0; }
+        outpostRUI.UpdateWoodUI(resources.wood);
     }
     internal void AddDoubloons(int doubloonAmount)
     {
         resources.doubloons += doubloonAmount;
+        if (resources.doubloons < 0) { resources.doubloons = 0; }
         outpostRUI.UpdateDubloonUI(resources.doubloons);
     }
 }

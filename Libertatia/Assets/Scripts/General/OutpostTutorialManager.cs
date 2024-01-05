@@ -110,7 +110,6 @@ public class OutpostTutorialManager : MonoBehaviour
 
     public void CrewmateAssignedBuildingEvent(Component sender, object data)
     {
-        Debug.Log("Shit yourself from the start");
         // Make sure both buildings have been placed
         if (bm.Buildings.Length < 2)
             return;
@@ -143,7 +142,7 @@ public class OutpostTutorialManager : MonoBehaviour
         }
 
         // Check if all remaining crewmates have been assigned (the only thing they can be assigned to is the boat), if not return
-        for (int i = 0; i < cm.Crewmates.Count; i++)
+        for (int i = 0; i < cm.Crewmates.Length; i++)
         {
             Debug.Log(cm.Crewmates[i].FullName + " can be assigned? " + cm.Crewmates[i].IsAssigned);
             if (!cm.Crewmates[i].IsAssigned)

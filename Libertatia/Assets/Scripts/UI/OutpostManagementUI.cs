@@ -36,7 +36,7 @@ public class OutpostManagementUI : MonoBehaviour
     public List<BuildingCard> buildingCards; // make into dict
     public Dictionary<int, CrewmateCard> crewmateCards;
     private List<int> selectedCrewmateCardIDs; // Im thinking this could be a stack
-    private bool isOpen;
+    [SerializeField] private bool isOpen;
     // Events
     public UnityEvent<int> onBeginDraggingBuildingCard;
     public UnityEvent<int> onEndDraggingBuildingCard;
@@ -61,20 +61,25 @@ public class OutpostManagementUI : MonoBehaviour
     }
     private void Start()
     {
-        isOpen = false;
         // Sets tab triggers
         for (int i = 0; i < tabs.Length; i++)
         {
             int tabIndex = i; // needs to be destroyed after setting listener
             tabs[i].GetComponent<Button>().onClick.AddListener(() => { SelectTabCallback(tabIndex); });
         }
+
         // Init building UI as start tab
         SelectTab(0);
+
         // Sets arrow initial onclick callback
         if (isOpen)
+        {
             arrow.onClick.AddListener(CloseInterface);
+        }
         else
+        {
             arrow.onClick.AddListener(OpenInterface);
+        }
     }
     private void Update()
     {
@@ -150,7 +155,7 @@ public class OutpostManagementUI : MonoBehaviour
     internal void RemoveCrewmateCard(int cardID)
     {
         DeselectCrewmateCard(cardID);
-        Destroy(crewmateCards[cardID].gameObject);
+        Destroy(crewmateCards[cardID].transform.parent.gameObject); // needs to delete the parent object
         crewmateCards.Remove(cardID);
     }
     internal void UpdateCrewmateCard(int cardID, Sprite stateIcon)

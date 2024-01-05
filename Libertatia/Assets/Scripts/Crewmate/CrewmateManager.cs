@@ -19,7 +19,6 @@ public class CrewmateManager : MonoBehaviour
     [SerializeField] private GameObject crewmatePrefab;
     [SerializeField] private Transform crewmateSpawn;
     [SerializeField] private int crewmateSpawnRadius = 10;
-    [SerializeField] private const int CREWMATE_FOOD_CONSUMPTION = 10;
     // Tracking
     [SerializeField] private Dictionary<int, Crewmate> crewmates;
     [SerializeField] private List<int> selectedCrewmateIDs;
@@ -46,9 +45,9 @@ public class CrewmateManager : MonoBehaviour
     {
         get { return enemies; }
     }
-    public List<Crewmate> Crewmates
+    public Crewmate[] Crewmates
     {
-        get { return crewmates.Values.ToList(); }
+        get { return crewmates.Values.ToArray(); }
     }
 
     private void Awake()
@@ -397,15 +396,6 @@ public class CrewmateManager : MonoBehaviour
 
             // Add card
             AddCard(mate);
-
-            //if (cmui == null)
-            //{
-            //    omui.UpdateCrewmateCard(mate.ID, mate.StateIcon);
-            //}
-            //else
-            //{
-            //    cmui.UpdateCard(mate.ID, mate.StateIcon);
-            //}
         }
     }
     // used for dev
@@ -431,23 +421,25 @@ public class CrewmateManager : MonoBehaviour
 
         // Tracking
         crewmates.Add(mate.ID, mate);
+        rm.SpawnCrewmate(crewmates.Count);
 
         // Update UI
         AddCard(mate);
 
-        rm.SpawnCrewmate(CREWMATE_FOOD_CONSUMPTION);
     }
-    private void SpawnNewCrewmates(int crewcapacity)
+    private void SpawnNewCrewmates(int count)
     {
-        for (int i = 0; i < crewcapacity; i++)
+        for (int i = 0; i < count; i++)
         {
             SpawnNewCrewmate();
         }
     }
-    internal void RemoveCrewmate(int crewmateID)
+    private void RemoveCrewmate(int crewmateID)
     {
         DeselectCrewmateShare(crewmateID);
+        Destroy(crewmates[crewmateID].gameObject);
         crewmates.Remove(crewmateID);
+        rm.RemoveCrewmate(crewmates.Count);
         RemoveCard(crewmateID);
     }
     // Select the crewmate and update UI (share) // rename or create wrapper for callback
@@ -674,5 +666,18 @@ public class CrewmateManager : MonoBehaviour
         crewMember.lineRenderer.SetPosition(0, crewMember.transform.position);
         crewMember.lineRenderer.SetPosition(1, targetPos);
 
+    }
+
+    internal void EditCrewmates(int amount)
+    {
+        if(amount > 0)
+        {
+            SpawnNewCrewmates(amount);
+        }
+        else
+        {
+            int lastKey = crewmates.Keys.ElementAt(crewmates.Keys.Count - 1);
+            RemoveCrewmate(lastKey);
+        }
     }
 }
