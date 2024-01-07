@@ -51,7 +51,6 @@ public class Building : MonoBehaviour
     [SerializeField] private Sprite iconEmptyAsssignment;
 
     [Header("Events")]
-    public GameEvent onCrewmateAssignedGE;
     public UnityEvent onCrewmateAssigned;
     public UnityEvent onDemolish;
     public UnityEvent onFreeAssignees;
@@ -284,8 +283,6 @@ public class Building : MonoBehaviour
     }
     public void AssignCrewmate(Crewmate mate)
     {
-        onCrewmateAssignedGE.Raise(this, mate);
-        // Assign
         if (assignees[0].id == -1)
         {
             assignees[0].id = mate.ID;

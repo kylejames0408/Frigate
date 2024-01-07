@@ -31,7 +31,7 @@ public class OutpostResourcesUI : MonoBehaviour
     }
     private void Start()
     {
-        btnMenu.onClick.AddListener(uiPause.Open);
+        btnMenu.onClick.AddListener(uiPause.OpenInterface);
     }
 
     public void Init(ResourceData resourceData, OutpostData outpostData)

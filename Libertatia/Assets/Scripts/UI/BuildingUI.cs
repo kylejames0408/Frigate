@@ -53,12 +53,6 @@ public class BuildingUI : MonoBehaviour
         btnBuilding.onClick.AddListener(OnClickCrewmateCallback);
         btnAssignee1.onClick.AddListener(() =>{ OnClickAssigneeCallback(0); });
         btnAssignee2.onClick.AddListener(() =>{ OnClickAssigneeCallback(1); });
-
-        if (GameManager.IsTutorial)
-        {
-            btnUpgrade.interactable = false;
-            btnDemolish.interactable = false;
-        }
         isOpen = false;
     }
     private void Update()
@@ -105,11 +99,6 @@ public class BuildingUI : MonoBehaviour
         else
         {
             assigneeCards[1].Disable();
-        }
-
-        if (!GameManager.IsTutorial)
-        {
-            btnDemolish.interactable = true;
         }
 
         if (!isOpen)
@@ -171,11 +160,27 @@ public class BuildingUI : MonoBehaviour
         transform.DOMoveX(690, animSpeedInterface);
         isOpen = true;
         crewmateUI.CloseInterface();
-        shipUI.CloseMenu();
+        shipUI.CloseInterface();
     }
     internal void CloseInterface()
     {
         transform.DOMoveX(-10, animSpeedInterface); // make relative
         isOpen = false;
+    }
+
+    internal void TutorialMode(bool isTutorial)
+    {
+        if(isTutorial)
+        {
+            btnUpgrade.interactable = false;
+            btnDemolish.interactable = false;
+            assigneeCards[0].UnassignButton.interactable = false;
+        }
+        else
+        {
+            btnUpgrade.interactable = true;
+            btnDemolish.interactable = true;
+            assigneeCards[0].UnassignButton.interactable = true;
+        }
     }
 }

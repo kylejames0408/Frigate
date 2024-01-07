@@ -144,11 +144,11 @@ public class MainMenuManager : MonoBehaviour
     // Core Actions
     private void Play()
     {
-        CeneManager.LoadOutpost();
+        GameManager.MainMenuToBuildingPhase();
     }
     private void Quit()
     {
-        CeneManager.Quit();
+        GameManager.Quit();
     }
     // Menu Actions
     private void ShowMainMenu()

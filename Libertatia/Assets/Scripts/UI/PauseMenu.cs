@@ -9,25 +9,18 @@ public class PauseMenu : MonoBehaviour
 
     private void Start()
     {
-        // Set Callbacks
-        resumeBtn.onClick.AddListener(Close);
-        mainMenuBtn.onClick.AddListener(ToMainMenu);
+        resumeBtn.onClick.AddListener(CloseInterface);
+        mainMenuBtn.onClick.AddListener(GameManager.ToMainMenu);
 
-        Close();
+        CloseInterface();
     }
 
-    public void Open()
+    public void OpenInterface()
     {
         gameObject.SetActive(true);
     }
-    public void Close()
+    public void CloseInterface()
     {
         gameObject.SetActive(false);
-    }
-    private void ToMainMenu()
-    {
-        GameManager.outpostVisitNumber = 0;
-        GameManager.combatVisitNumber = 0;
-        CeneManager.LoadMainMenu();
     }
 }

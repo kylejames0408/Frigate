@@ -6,6 +6,7 @@ using UnityEngine.UI;
 // Couldnt figure out how to use dotween in unity editor
 // Extend tutorial funcationallity to remove dialogue
 // Remove all buildings (clear)
+// Add ship controls such as depart
 
 public class DevUI : MonoBehaviour
 {

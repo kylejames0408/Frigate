@@ -22,7 +22,6 @@ public class ZoneManager : MonoBehaviour
     public GameObject shipWaypoint;
 
     [SerializeField]
-    public GameEvent finishedCombat;
     private bool finishedCombatBool;
 
     [SerializeField] private GameObject battleLootUI;
@@ -229,7 +228,6 @@ public class ZoneManager : MonoBehaviour
         {
             Debug.Log("You triggered the finished combat state!");
             finishedCombatBool = true;
-            finishedCombat.Raise(this, 0);
         }
     }
 

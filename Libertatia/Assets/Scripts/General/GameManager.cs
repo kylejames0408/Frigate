@@ -1,5 +1,7 @@
+using System;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public enum GameState
 {
@@ -18,39 +20,29 @@ public enum GamePhase
 
 public class GameManager : MonoBehaviour
 {
+    private static GameManager instance;
     // Game Data
     private float elapsedTime = 0.0f;
     [SerializeField] private GameState state = GameState.PLAYING;
     [SerializeField] private GamePhase initPhase = GamePhase.MAIN_MENU;
-    [SerializeField] private bool initTutorial = true;
     private static GamePhase phase;
-    private static bool isTutorial;
-    // UI
-    [SerializeField] private PauseMenu pauseMenu;
-
-    // Tutorial
-    public static int outpostVisitNumber = 0;
-    public static int combatVisitNumber = 0;
-    public static int explorationVisitNumber = 0;
-    // - Events
-    public UnityEvent onAttack;
+    // Components
+    [SerializeField] private InterfaceManager interfaceManager; // will need different method for obtaining
 
     public static GamePhase Phase
     {
         get { return phase; }
     }
-    public static bool IsTutorial
-    {
-        get { return isTutorial; }
-    }
 
     private void Awake()
     {
-        if(!PlayerDataManager.IsInitialized)
+        if(instance == null) { instance = this;}
+        if (interfaceManager == null) { interfaceManager = FindObjectOfType<InterfaceManager>(); }
+
+        if (!PlayerDataManager.IsInitialized)
         {
             PlayerDataManager.NewGame();
             phase = initPhase;
-            isTutorial = initTutorial;
         }
         else
         {
@@ -59,7 +51,6 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        if (pauseMenu == null) { pauseMenu = FindObjectOfType<PauseMenu>(); }
         DontDestroyOnLoad(gameObject); // Required for persistance
 
 #if !UNITY_EDITOR
@@ -88,19 +79,47 @@ public class GameManager : MonoBehaviour
         //PlayerDataManager.SaveTimestamp(elapsedTime);
     }
 
+    // Gameplay actions
     private void Pause()
     {
+        interfaceManager.PauseGame();
         state = GameState.PAUSED;
-        pauseMenu.Open();
     }
     private void Unpause()
     {
+        interfaceManager.UnpauseGame();
         state = GameState.PLAYING;
-        pauseMenu.Close();
     }
-
+    internal static void Quit()
+    {
+        CeneManager.Quit();
+    }
+    // Scene shifting
+    internal static void ToMainMenu()
+    {
+        CeneManager.LoadMainMenu();
+        phase = GamePhase.MAIN_MENU;
+    }
+    internal static void MainMenuToBuildingPhase()
+    {
+        CeneManager.LoadOutpost();
+        phase = GamePhase.BUILDING;
+    }
+    internal static void ToBuildingPhase()
+    {
+        CeneManager.LoadOutpost();
+        TutorialManager.LoadOutpost();
+        phase = GamePhase.BUILDING;
+    }
+    internal static void ToExplorationPhase()
+    {
+        CeneManager.LoadExploration();
+        phase = GamePhase.EXPLORATION;
+    }
+    // Dev Actions
     internal static void EndTutorial()
     {
-        isTutorial = false;
+        instance.interfaceManager.EndTutorial();
+        TutorialManager.EndTutorial();
     }
 }

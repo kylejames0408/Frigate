@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class AssigneeCard : MonoBehaviour
@@ -19,6 +18,8 @@ public class AssigneeCard : MonoBehaviour
             return new ObjectData(crewmateID, icon.sprite);
         }
     }
+    public Button UnassignButton
+    { get { return btnUnassign; } }
 
     private void Start()
     {
@@ -31,7 +32,7 @@ public class AssigneeCard : MonoBehaviour
     {
         crewmateID = crewmate.id;
         icon.sprite = crewmate.icon;
-        if(btnUnassign)
+        if(btnUnassign && TutorialManager.HasCompletedTutorial)
         {
             btnUnassign.onClick.RemoveAllListeners();
             btnUnassign.interactable = true;

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
 public enum BuildingState
@@ -70,8 +71,9 @@ public class BuildingManager : MonoBehaviour
     [SerializeField] private int housingSpace;
     [SerializeField] private int selectedBuildingID;
     [Header("Events")]
-    public GameEvent onBuildingPlaced;
-    public GameEvent onCrewmateAssigned;
+    public UnityEvent<int, string> onBuildingPlaced;
+    public UnityEvent<int> onCrewmateAssigned;
+
     public Building[] Buildings
     {
         get { return buildings.Values.ToArray(); }
@@ -154,8 +156,6 @@ public class BuildingManager : MonoBehaviour
             {
                 building.CompleteConstruction(); // dont keep, but is used to complete for now, will be using AP
             }
-
-            building.onCrewmateAssignedGE = onCrewmateAssigned;
         }
     }
     private void SpawnNewBuilding(Building prospectiveBuilding)
@@ -177,16 +177,16 @@ public class BuildingManager : MonoBehaviour
         prospectiveBuilding.onNoCollisions.AddListener(() => { OnNoCollisionsCallback(prospectiveBuilding.ID); });
         prospectiveBuilding.onFreeAssignees.AddListener(() => { OnUnassignCrewmatesCallback(prospectiveBuilding.ID); });
 
-        // Set Game Event
-        prospectiveBuilding.onCrewmateAssignedGE = onCrewmateAssigned;
+        // Log building locally
         buildings.Add(prospectiveBuilding.ID, prospectiveBuilding);
 
-        // Update Data
+        // Update outpost and resource data
         rm.AddBuilding(buildingPrefabs[prospectiveBuilding.Type].Cost, buildingPrefabs[prospectiveBuilding.Type].Production);
         housingSpace += buildingPrefabs[prospectiveBuilding.Type].Production.space;
         rm.UpdateHousingSpace(housingSpace);
 
-        onBuildingPlaced.Raise(this, prospectiveBuilding);
+        // Trigger events
+        onBuildingPlaced.Invoke(prospectiveBuilding.Type, prospectiveBuilding.Name);
     }
     private void UpgradeBuilding(int buildingID)
     {
@@ -245,6 +245,7 @@ public class BuildingManager : MonoBehaviour
 
                 // Assign them to the building
                 building.AssignCrewmate(selectedCrewmates[i]); // assigns building to player too
+                onCrewmateAssigned.Invoke(selectedCrewmates[i].ID);
             }
         }
         else
@@ -328,9 +329,9 @@ public class BuildingManager : MonoBehaviour
     }
     public void OnCrewmateDropAssign()
     {
-        foreach (KeyValuePair<int, Building> kvp in buildings)
+        foreach (Building building in buildings.Values)
         {
-            kvp.Value.HandleAssignmentDragDrop();
+            building.HandleAssignmentDragDrop();
         }
     }
     private void OnUnassignCrewmate(int crewmateID)

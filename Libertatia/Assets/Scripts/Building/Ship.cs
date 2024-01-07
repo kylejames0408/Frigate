@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 // Notes
 // Probably just have a local ShipData struct at some point - remove accessors
@@ -44,9 +45,8 @@ public class Ship : MonoBehaviour
     // Emissions
     [SerializeField] private Color normalEmission = Color.black;
     [SerializeField] private Color hoveredEmission = new Color(0.3f, 0.3f, 0.3f);
-
-    // Events
-    public GameEvent onCrewmateAssignedGE; // what is the point of this
+    // Event
+    public UnityEvent<int> onCrewmateAssigned;
 
     public int ID
     {
@@ -108,6 +108,7 @@ public class Ship : MonoBehaviour
         else
         {
             id = gameObject.GetInstanceID();
+            crewmates = new List<CrewmateData>(capacity);
             shipUI.onUnassign.AddListener(UnassignCrewmateCallback);
         }
 
@@ -126,7 +127,7 @@ public class Ship : MonoBehaviour
             // move to handlers
             if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
             {
-                shipUI.OpenMenu();
+                shipUI.OpenInterface();
             }
         }
 
@@ -211,15 +212,19 @@ public class Ship : MonoBehaviour
                 {
                     Crewmate mate = selectedCrewmates[i];
                     CrewmateData crewmateData = new CrewmateData(mate);
-                    shipUI.SetCrewmate(crewmates.Count, new ObjectData(crewmateData.id, crewmateData.icon));
-                    crewmates.Add(crewmateData);
-                    mate.Assign(id, icon, GetDestination(), true);
-                    onCrewmateAssignedGE.Raise(this, mate);
+
+                    if (!CrewmateAlreadyBoarded(crewmateData))
+                    {
+                        if (!TutorialManager.HasCompletedTutorial && crewmateData.building.id != -1)
+                        {
+                            continue;
+                        }
+                        shipUI.SetCrewmate(crewmates.Count, new ObjectData(crewmateData.id, crewmateData.icon));
+                        crewmates.Add(crewmateData);
+                        mate.Assign(id, icon, GetDestination(), true);
+                        onCrewmateAssigned.Invoke(crewmateData.id);
+                    }
                 }
-            }
-            else
-            {
-                Debug.Log("Ship assignments are full");
             }
         }
     }
@@ -242,5 +247,16 @@ public class Ship : MonoBehaviour
         shipUI.ResetCard(crewmates.Count);
         cm.UnassignCrewmate(crewmateID);
     }
-
+    // Utility
+    private bool CrewmateAlreadyBoarded(CrewmateData newCrewmate)
+    {
+        foreach(CrewmateData crewmate in crewmates)
+        {
+            if(newCrewmate.id == crewmate.id)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
 }

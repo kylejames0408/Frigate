@@ -1,4 +1,5 @@
 using DG.Tweening;
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -169,7 +170,7 @@ public class CrewmateUI : MonoBehaviour
     {
         transform.DOMoveX(690, animSpeedInterface);
         isOpen = true;
-        shipUI.CloseMenu();
+        shipUI.CloseInterface();
 
         if(buildingUI != null)
         {

@@ -93,7 +93,7 @@ public class IslandUI : MonoBehaviour
     internal void OpenInterface()
     {
         transform.DOMoveX(690, animSpeedInterface);
-        shipUI.CloseMenu();
+        shipUI.CloseInterface();
         isOpen = true;
     }
     internal void CloseInterface()

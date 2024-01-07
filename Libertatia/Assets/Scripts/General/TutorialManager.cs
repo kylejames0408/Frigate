@@ -1,111 +1,199 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using UnityEngine.UI;
+using UnityEngine.Events;
+
+[System.Serializable]
+public struct Dialogue
+{
+    public string speakerName;
+    [TextArea(3, 10)] public string[] sentences;
+    public Tasks tasks;
+    public UnityEvent dialogueEndCallback;
+}
+[System.Serializable]
+public struct Tasks
+{
+    public string title;
+    [TextArea(3, 10)] public string[] descriptions;
+}
 
 public class TutorialManager : MonoBehaviour
 {
-    public List<DialogueTrigger> outpostDialogues;
-    public List<DialogueTrigger> combatDialogues;
-    public Button btnDepart; // this is overriden at the moment, should be checked in ship ui
-    private bool secondVisit = false;
+#if UNITY_EDITOR
+    [Header("Editor")]
+    [SerializeField] private bool skipTutorial = false;
+#endif
+    [Header("Data")]
+    [SerializeField] private static TutorialProgress tutorialProgress;
+    [Header("Dialogue")]
+    [SerializeField] private List<Dialogue> outpostDialogues;
+    [Header("References")]
+    [SerializeField] private BuildingManager bm;
+    [SerializeField] private Ship ship;
+    [Header("UI")]
+    [SerializeField] private BuildingUI buildingUI;
+    [SerializeField] private DialogueUI dialogueUI;
+    [SerializeField] private ShipUI shipUI;
+    [SerializeField] private OutpostManagementUI outpostMUI;
 
-    int buildingsPlaced = 0;
-    int crewmatesAssigned = 0;
+    int shipCrewCount = 0;
 
-    // Start is called before the first frame update
-    void Start()
+    public static bool HasCompletedTutorial
     {
-        if(SceneManager.GetSceneByName("Outpost").isLoaded || SceneManager.GetSceneByName("Outpost-Testing").isLoaded) // SceneManager.GetActiveScene().name == "PlayerData"
-        {
-            //check to see if this is the first time, or if its when they're coming back from combat
-            if (GameManager.outpostVisitNumber == 0)
-            {
-                outpostDialogues[0].TriggerDialogue();
-                GameManager.outpostVisitNumber++;
-                btnDepart.interactable = false;
-            }
-            else if(GameManager.outpostVisitNumber == 1)
-            {
-                GameManager.EndTutorial();
-                outpostDialogues[5].TriggerDialogue();
-                secondVisit = true;
-                GameManager.outpostVisitNumber++;
-                btnDepart.interactable = true;
-            }
-            else
-            {
-                btnDepart.interactable = true;
-            }
-        }
-        else if (SceneManager.GetSceneByName("Combat").isLoaded || SceneManager.GetSceneByName("Combat-Testing").isLoaded)
-        {
-            if(GameManager.combatVisitNumber == 0)
-            {
-                combatDialogues[0].TriggerDialogue();
-                GameManager.combatVisitNumber++;
-            }
-        }
-        else
-        {
-            Debug.Log("Something went wrong");
-        }
+        get { return tutorialProgress.hasCompletedTutorial; }
+    }
+    private bool HasNotMadeFirstDeparture
+    {
+        get { return tutorialProgress.outpostVisitCount == 0; }
+    }
+    private bool IsFirstReturn
+    {
+        get { return tutorialProgress.outpostVisitCount == 1; }
     }
 
-    public void BuildingPlacedEvent(Component sender, object data)
+    private void Start()
     {
-        if(sender is BuildingManager && data is Building && !secondVisit)
+        tutorialProgress = PlayerDataManager.LoadProgress();
+#if UNITY_EDITOR
+        tutorialProgress.hasCompletedTutorial = tutorialProgress.hasCompletedTutorial || skipTutorial;
+#endif
+        if (!tutorialProgress.hasCompletedTutorial)
         {
-            Building recievedBuilding = (Building)data;
-            buildingsPlaced++;
+            bm.onBuildingPlaced.AddListener(OnBuildingPlacedCallback); // dont want to be called more than once
+            bm.onCrewmateAssigned.AddListener(OnCrewmateAssignedCallback);
+            ship.onCrewmateAssigned.AddListener(OnCrewmateAssignedToBoatCallback);
+            if (GameManager.Phase == GamePhase.BUILDING)
+            {
+                if (HasNotMadeFirstDeparture)
+                {
+                    dialogueUI.StartDialogue(outpostDialogues[0]);
+                    shipUI.TutorialMode(true);
+                    buildingUI.TutorialMode(true);
+                }
+                else if (IsFirstReturn)
+                {
+                    EndTutorial(); // maybe add all this crap
+                    dialogueUI.StartDialogue(outpostDialogues[5]);
+                    shipUI.TutorialMode(false);
+                    buildingUI.TutorialMode(false);
+                }
+            }
+        }
+    }
+    private void OnDestroy()
+    {
+        PlayerDataManager.SaveTutorialProgress(tutorialProgress);
+    }
 
-            switch (buildingsPlaced)
+    internal static void EndTutorial()
+    {
+        tutorialProgress.hasCompletedTutorial = true;
+    }
+    internal static void LoadOutpost()
+    {
+        tutorialProgress.outpostVisitCount++;
+    }
+
+    // Callbacks
+    internal void OnBuildingPlacedCallback(int buildingCardID, string buildingName)
+    {
+        if (!IsFirstReturn)
+        {
+            switch (++tutorialProgress.buildingsPlaced)
             {
                 case 1:
-                    if (recievedBuilding.Name == "Farm")
+                    Dialogue nextBuilding = new Dialogue();
+                    nextBuilding.speakerName = outpostDialogues[0].speakerName;
+                    nextBuilding.tasks.title = outpostDialogues[0].tasks.title;
+                    nextBuilding.dialogueEndCallback = new UnityEvent();
+                    if (buildingName == "Farm")
                     {
-                        outpostDialogues[1].dialogue.sentences[0] = "Yarr! Now place the house";
-                        outpostDialogues[1].tasks.tasks[0] = "- Build the house";
+                        nextBuilding.sentences = new string[]
+                        {
+                            "Yarr! Now place the house"
+                        };
+                        nextBuilding.tasks.descriptions = new string[]
+                        {
+                            "- Build the house"
+                        };
                     }
-                    if(recievedBuilding.Name == "House")
+                    if (buildingName == "House")
                     {
-                        outpostDialogues[1].dialogue.sentences[0] = "Yarr! Now place the farm";
-                        outpostDialogues[1].tasks.tasks[0] = "- Build the farm";
+                        nextBuilding.sentences = new string[]
+                        {
+                            "Yarr! Now place the farm"
+                        };
+                        nextBuilding.tasks.descriptions = new string[]
+                        {
+                            "- Build the farm"
+                        };
                     }
-                    outpostDialogues[1].TriggerDialogue();
+                    outpostMUI.DisableBuildingCard(buildingCardID);
+                    dialogueUI.StartDialogue(nextBuilding);
                     break;
                 case 2:
-                    outpostDialogues[2].TriggerDialogue();
+                    outpostMUI.DisableBuildingCard(buildingCardID);
+                    bm.onBuildingPlaced.RemoveListener(OnBuildingPlacedCallback);
+                    dialogueUI.StartDialogue(outpostDialogues[1]);
                     break;
-                default:
-                    return;
+            }
+        }
+    }
+    internal void OnCrewmateAssignedCallback(int crewmateCardID)
+    {
+        outpostMUI.DisableDraggingCrewmateCard(crewmateCardID);
+        bool allHousesFilled = true;
+        for (int i = 0; i < bm.Buildings.Length; i++)
+        {
+            if (bm.Buildings[i].CanAssign())
+            {
+                allHousesFilled = false;
             }
         }
 
-
-
-
-    }
-
-    public void CrewmateAssignedEvent(Component sender, object data)
-    {
-        crewmatesAssigned++;
-        if(crewmatesAssigned == 1 && !secondVisit)
+        if (allHousesFilled)
         {
-            //Hide outpost drag card text
-            OutpostManagementUI oMUI = GameObject.Find("INT-Outpost").GetComponentInChildren<OutpostManagementUI>();
-        }
-        if(crewmatesAssigned == 2 && !secondVisit)
-        {
-            outpostDialogues[3].TriggerDialogue();
-            btnDepart.interactable = true;
+            dialogueUI.StartDialogue(outpostDialogues[2]);
+            bm.onCrewmateAssigned.RemoveListener(OnCrewmateAssignedCallback);
         }
     }
-
-    public void AllEnemiesDeadEvent(Component sender, object data)
+    internal void OnCrewmateAssignedToBoatCallback(int crewmateCardID)
     {
-        if (GameManager.combatVisitNumber == 1)
-            combatDialogues[1].TriggerDialogue();
-        GameObject.Find("Ship").GetComponent<Ship>().detectionRange = 30;
+        outpostMUI.DisableDraggingCrewmateCard(crewmateCardID);
+        if(++shipCrewCount == 4)
+        {
+            dialogueUI.StartDialogue(outpostDialogues[3]);
+            ship.onCrewmateAssigned.RemoveListener(OnCrewmateAssignedToBoatCallback);
+        }
+    }
+    internal void OnAllEnemiesEliminatedCallback()
+    {
+        //if (!tutorialProgress.hasCompletedTutorial)
+        //{
+        //    if (tutorialProgress.combatVisitCount == 1)
+        //    {
+        //        dialogueUI.StartDialogue(combatDialogues[1]);
+        //    }
+        //    GameObject.Find("Ship").GetComponent<Ship>().detectionRange = 30;
+        //}
+    }
+    // Public Callbacks - available in insspector
+    public void HighlightBuildingCardsCallback()
+    {
+        outpostMUI.HighlightBuildingCards();
+    }
+    public void HighlightCrewmateCardsCallback()
+    {
+        outpostMUI.HighlightCrewmateCards();
+    }
+    public void OpenShipUICallback()
+    {
+        shipUI.OpenInterface();
+    }
+    public void PanCameraToBoatCallback()
+    {
+        // Lerp camera transform to the boat x = -22, z = -160
+        Vector3 shipCamPos = new Vector3(-22, Camera.main.transform.position.y, -160);
+        CameraManager.Instance.PanTo(shipCamPos);
     }
 }

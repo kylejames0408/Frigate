@@ -38,7 +38,6 @@ public class Zone : MonoBehaviour
     public bool isClickable;
 
     // Used for raising zone claim events
-    public GameEvent zoneClaimed;
     public bool zoneClaimTriggered;
 
     // Start is called before the first frame update
@@ -106,7 +105,7 @@ public class Zone : MonoBehaviour
         if(zoneLootCollected && !zoneClaimTriggered && zoneName != "Safe Zone")
         {
             Debug.Log("Raised Zone Claim");
-            zoneClaimed.Raise(this, zoneClaimed);
+            //zoneClaimed.Raise(this, zoneClaimed);
             zoneClaimTriggered = true;
         }
 

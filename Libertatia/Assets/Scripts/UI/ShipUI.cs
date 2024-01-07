@@ -41,11 +41,8 @@ public class ShipUI : MonoBehaviour
     }
     private void Start()
     {
-        if(btnDepart != null)
-        {
-            btnDepart.onClick.AddListener(CeneManager.LoadExploration);
-        }
-        btnClose.onClick.AddListener(CloseMenu);
+        btnDepart.onClick.AddListener(GameManager.ToExplorationPhase);
+        btnClose.onClick.AddListener(CloseInterface);
         isOpen = false;
     }
     private void Update()
@@ -68,7 +65,7 @@ public class ShipUI : MonoBehaviour
             }
         }
     }
-
+    // Utility
     internal void Set(int crewSize)
     {
         rowAmt = crewSize/colAmt;
@@ -83,10 +80,7 @@ public class ShipUI : MonoBehaviour
     internal void SetCrewmate(int index, ObjectData crewmate)
     {
         assigneeCards[index].Set(crewmate);
-        if(assigneeCards[index].btnUnassign)
-        {
-            assigneeCards[index].btnUnassign.onClick.AddListener(() => { UnassignCallback(index, crewmate.id); }); //assigneeCards[assigneeIndex].CrewmateID
-        }
+        assigneeCards[index].btnUnassign.onClick.AddListener(() => { UnassignCallback(index, crewmate.id); }); //assigneeCards[assigneeIndex].CrewmateID
     }
     internal void AddRow()
     {
@@ -106,7 +100,11 @@ public class ShipUI : MonoBehaviour
             Instantiate(prefabAssigneeCard, row.transform);
         }
     }
-
+    internal void ResetCard(int assigneeIndex)
+    {
+        assigneeCards[assigneeIndex].ResetCard(iconEmptyAssignment);
+        assigneeCards[assigneeIndex].btnUnassign.onClick.RemoveAllListeners();
+    }
     // Callbacks
     private void UnassignCallback(int assigneeIndex, int crewmateID)
     {
@@ -115,13 +113,7 @@ public class ShipUI : MonoBehaviour
         assigneeCards[assigneeIndex].btnUnassign.onClick.RemoveAllListeners();
         onUnassign.Invoke(crewmateID);
     }
-    internal void ResetCard(int assigneeIndex)
-    {
-        assigneeCards[assigneeIndex].ResetCard(iconEmptyAssignment);
-        assigneeCards[assigneeIndex].btnUnassign.onClick.RemoveAllListeners();
-    }
-
-    // Callbacks
+    // Handlers
     private void HandleClicking()
     {
         if (Input.GetMouseButtonDown(0) &&
@@ -132,11 +124,11 @@ public class ShipUI : MonoBehaviour
             Input.mousePosition.y < bounds.offsetMin.y ||
             Input.mousePosition.y > bounds.offsetMax.y))
         {
-            CloseMenu();
+            CloseInterface();
         }
     }
-
-    internal void OpenMenu()
+    // Interface Actions
+    internal void OpenInterface()
     {
         transform.DOMoveX(690, animSpeedInterface);
         isOpen = true;
@@ -153,10 +145,31 @@ public class ShipUI : MonoBehaviour
             islandUI.CloseInterface();
         }
     }
-    internal void CloseMenu()
+    internal void CloseInterface()
     {
         transform.DOMoveX(-10, animSpeedInterface);
         isOpen = false;
+    }
+
+    // Might trigger on start and access istutorial
+    internal void TutorialMode(bool isTutorial)
+    {
+        if(isTutorial)
+        {
+            btnDepart.interactable = false;
+            foreach(AssigneeCard card in assigneeCards)
+            {
+                card.UnassignButton.interactable = false;
+            }
+        }
+        else
+        {
+            btnDepart.interactable = true;
+            foreach (AssigneeCard card in assigneeCards)
+            {
+                card.UnassignButton.interactable = true;
+            }
+        }
     }
 }
 

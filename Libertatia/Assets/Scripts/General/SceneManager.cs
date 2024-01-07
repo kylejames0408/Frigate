@@ -6,6 +6,7 @@ public class CeneManager : MonoBehaviour
     private static CeneManager instance;
     [SerializeField] private bool UseMainMenuTestingScene = false;
     [SerializeField] private bool UseOutpostTestingScene = false;
+    [SerializeField] private bool UseExplorationTestingScene = false;
     [SerializeField] private bool UseCombatTestingScene = false;
 
     private void Awake()
@@ -18,19 +19,25 @@ public class CeneManager : MonoBehaviour
 
     public static void LoadMainMenu()
     {
-        GameManager.outpostVisitNumber = 0;
-        GameManager.explorationVisitNumber = 0;
-        GameManager.combatVisitNumber = 0;
-        //GameManager.ResetPlayerData();
-
         if(instance.UseMainMenuTestingScene)
+        {
             SceneManager.LoadScene("MainMenu-Testing", LoadSceneMode.Single);
+        }
         else
+        {
             SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
+        }
     }
     public static void LoadExploration()
     {
-        SceneManager.LoadScene("Exploration", LoadSceneMode.Single);
+        if(instance.UseExplorationTestingScene)
+        {
+            SceneManager.LoadScene("Exploration-Testing", LoadSceneMode.Single);
+        }
+        else
+        {
+            SceneManager.LoadScene("Exploration", LoadSceneMode.Single);
+        }
     }
     public static void LoadOutpost()
     {

@@ -80,10 +80,15 @@ public class OutpostManagementUI : MonoBehaviour
         {
             arrow.onClick.AddListener(OpenInterface);
         }
+
+        BuildingCardAvailabilityHandler();
     }
     private void Update()
     {
-        BuildingCardAvailabilityHandler();
+        if(TutorialManager.HasCompletedTutorial)
+        {
+            BuildingCardAvailabilityHandler();
+        }
     }
 
     // Interactions- General
@@ -285,17 +290,33 @@ public class OutpostManagementUI : MonoBehaviour
         {
             if (bm.CanConstructBuilding(i))
             {
-                buildingCards[i].GetComponentInChildren<Button>().interactable = true;
-                buildingCards[i].GetComponent<DragObj2D>().currentlyDragable = true;
+                EnableBuildingCard(i);
             }
             else
             {
-                buildingCards[i].GetComponentInChildren<Button>().interactable = false;
-                buildingCards[i].GetComponent<DragObj2D>().currentlyDragable = false;
+                DisableBuildingCard(i);
             }
         }
     }
-
+    // Utility
+    internal void EnableBuildingCard(int cardID)
+    {
+        buildingCards[cardID].GetComponentInChildren<Button>().interactable = true;
+        buildingCards[cardID].GetComponent<DragObj2D>().currentlyDragable = true;
+    }
+    internal void DisableBuildingCard(int cardID)
+    {
+        buildingCards[cardID].GetComponentInChildren<Button>().interactable = false;
+        buildingCards[cardID].GetComponent<DragObj2D>().currentlyDragable = false;
+    }
+    internal void EnableDraggingCrewmateCard(int cardID)
+    {
+        crewmateCards[cardID].GetComponent<DragObj2D>().currentlyDragable = true;
+    }
+    internal void DisableDraggingCrewmateCard(int cardID)
+    {
+        crewmateCards[cardID].GetComponent<DragObj2D>().currentlyDragable = false;
+    }
 
     // Callbacks - General
     public void SelectTabCallback(int tabIndex)
@@ -384,5 +405,20 @@ public class OutpostManagementUI : MonoBehaviour
         arrow.onClick.RemoveListener(CloseInterface);
         arrow.onClick.AddListener(OpenInterface);
         arrow.transform.GetChild(0).DORotate(new Vector3(0, 0, 0), animTimeArrow);
+    }
+
+    internal void HighlightBuildingCards()
+    {
+        SelectTabCallback(0);
+        buildingCards[0].Highlight();
+        buildingCards[1].Highlight();
+    }
+    internal void HighlightCrewmateCards()
+    {
+        SelectTabCallback(1);
+        foreach (CrewmateCard crewmateCard in crewmateCards.Values)
+        {
+            crewmateCard.Highlight();
+        }
     }
 }

@@ -184,15 +184,24 @@ public struct ShipData
         isInitialized = true;
     }
 }
-
+[Serializable]
+public struct TutorialProgress // More like tutorial progress
+{
+    public bool hasCompletedTutorial;
+    public int outpostVisitCount;
+    public int combatVisitCount;
+    public int explorationVisitCount;
+    public int buildingsPlaced;
+    public int crewmatesAssigned;
+}
 [Serializable]
 public struct PlayerData
 {
     // Game data
     public float elapsedTime;
-    public bool hasCompletedTutorial;
     // Player data
     public ResourceData resources;
     public OutpostData outpost;
     public ShipData ship;
+    public TutorialProgress tutorialProgress;
 }

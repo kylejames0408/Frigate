@@ -30,7 +30,6 @@ public static class PlayerDataManager
     {
         // Init PlayerData
         data.elapsedTime = 0.0f;
-        data.hasCompletedTutorial = false;
         data.resources = new ResourceData(
             STARTING_WOOD_AMOUNT,
             STARTING_DOUBLOON_AMOUNT,
@@ -38,6 +37,7 @@ public static class PlayerDataManager
             STARTING_LOYALTY_AMOUNT);
         data.outpost = new OutpostData(STARTING_OUTPOST_CREW_AMOUNT);
         data.ship = new ShipData(STARTING_SHIP_CREW_CAPACITY);
+        data.tutorialProgress = new TutorialProgress();
         isInitialized = true;
     }
     internal static void LoadGame()
@@ -80,6 +80,11 @@ public static class PlayerDataManager
     internal static ShipData LoadShipData()
     {
         return data.ship;
+    }
+
+    internal static TutorialProgress LoadProgress()
+    {
+        return data.tutorialProgress;
     }
 
     // Saving
@@ -136,11 +141,11 @@ public static class PlayerDataManager
         data.ship = new ShipData(ship);
     }
 
-    // General
-    internal static void SaveTutorialProgress(bool isTutorialComplete)
+    internal static void SaveTutorialProgress(TutorialProgress tutorialProgress)
     {
-        data.hasCompletedTutorial = isTutorialComplete;
+        data.tutorialProgress = tutorialProgress;
     }
+
     internal static void SaveTimestamp(float elapsedTime)
     {
         data.elapsedTime = elapsedTime;
