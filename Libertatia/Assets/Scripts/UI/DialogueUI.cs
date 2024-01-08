@@ -6,6 +6,16 @@ using DG.Tweening;
 using UnityEngine.UI;
 using UnityEngine.Events;
 
+[System.Serializable]
+public struct DialogueSegment
+{
+    public string speakerName;
+    [TextArea(3, 10)] public string[] dialogueSentences;
+    public string taskTitle;
+    [TextArea(3, 10)] public string taskDescription;
+    public UnityEvent taskStartedCallback;
+    //public UnityEvent<int> taskEndedCallback;
+}
 public class DialogueUI : MonoBehaviour
 {
     [Header("Dials")]

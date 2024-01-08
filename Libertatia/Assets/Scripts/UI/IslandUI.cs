@@ -1,4 +1,5 @@
 using DG.Tweening;
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -6,13 +7,14 @@ using UnityEngine.UI;
 
 public class IslandUI : MonoBehaviour
 {
+    [Header("Characteristics")]
     [SerializeField] private int islandID = -1;
     [SerializeField] private float animSpeedInterface = 0.6f;
     [SerializeField] private bool isOpen = false;
     [SerializeField] private RectTransform bounds;
-    // References
+    [Header("References")]
     [SerializeField] private ShipUI shipUI;
-    // Interface
+    [Header("UI")]
     [SerializeField] private Image uiIslandIcon;
     [SerializeField] private TextMeshProUGUI uiName;
     [SerializeField] private TextMeshProUGUI uiResources;
@@ -21,7 +23,7 @@ public class IslandUI : MonoBehaviour
     [SerializeField] private Image[] dotsCombatAP;
     [SerializeField] private Button btnClose;
     [SerializeField] private Button btnDepart;
-
+    [Header("UI")]
     public UnityEvent onDepart;
 
     private void Awake()
@@ -86,10 +88,13 @@ public class IslandUI : MonoBehaviour
             }
         }
     }
+
+    // Callbacks
     private void DepartCallback()
     {
         onDepart.Invoke();
     }
+
     internal void OpenInterface()
     {
         transform.DOMoveX(690, animSpeedInterface);

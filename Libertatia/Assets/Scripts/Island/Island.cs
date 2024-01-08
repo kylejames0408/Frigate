@@ -3,6 +3,7 @@ using UnityEngine.Events;
 
 public class Island : MonoBehaviour
 {
+    [Header("Characteristics")]
     [SerializeField] private int id = -1;
     [SerializeField] private string islandName = "Island";
     [SerializeField] private Sprite icon;
@@ -11,11 +12,10 @@ public class Island : MonoBehaviour
     [SerializeField] private IslandType type = IslandType.DEFAULT;
     [SerializeField] private int difficulty = 0;
     [SerializeField] private IslandResources resources;
-
-    // Colors
+    [Header("Emmissions")]
     [SerializeField] private Color normalEmission = Color.black;
     [SerializeField] private Color hoveredEmission = new Color(0.3f, 0.3f, 0.3f);
-    // Events
+    [Header("Events")]
     public UnityEvent<int> onSelect; // trying this vs saving through manager
 
     public int ID

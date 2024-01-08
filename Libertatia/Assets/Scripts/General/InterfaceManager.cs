@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class InterfaceManager : MonoBehaviour
 {
+    [Header("References")]
     [SerializeField] private GameObject intResources;
     [SerializeField] private GameObject intBuilding;
     [SerializeField] private GameObject intCrewmate;
@@ -11,6 +12,7 @@ public class InterfaceManager : MonoBehaviour
     [SerializeField] private GameObject intDev;
     [SerializeField] private PauseMenu intPause;
     [SerializeField] private GameObject intConfirmation;
+    [SerializeField] private GameObject intIsland;
 
     private void Awake()
     {

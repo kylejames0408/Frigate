@@ -1,50 +1,43 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-[System.Serializable]
-public struct DialogueSegment
-{
-    public string speakerName;
-    [TextArea(3, 10)] public string[] dialogueSentences;
-    public string taskTitle;
-    [TextArea(3, 10)] public string taskDescription;
-    public UnityEvent taskStartedCallback;
-    //public UnityEvent<int> taskEndedCallback;
-}
-
 public class OutpostTutorialManager : MonoBehaviour
 {
-    private static OutpostTutorialManager instance;
 #if UNITY_EDITOR
     [Header("Editor")]
     [SerializeField] private bool skipTutorial = false;
 #endif
     [Header("Data")]
-    [SerializeField] private Progress tutorialProgress;
-    //[SerializeField] private TutorialSegment startTS;
-    //[SerializeField] private TutorialSegment endTS;
+    private static Progress tutorialProgress; // can't see progress in inspector if static
     [SerializeField] private DialogueSegment[] startDS;
     [SerializeField] private DialogueSegment[] endDS;
     [Header("References")]
     [SerializeField] private BuildingManager bm;
     [SerializeField] private Ship ship;
     [Header("UI")]
-    [SerializeField] private BuildingUI buildingUI;
     [SerializeField] private DialogueUI dialogueUI;
+    [SerializeField] private BuildingUI buildingUI;
     [SerializeField] private ShipUI shipUI;
     [SerializeField] private OutpostManagementUI outpostMUI;
-    // misc temp variables
+    // Outpost tutorial progress
     private int shipCrewCount = 0;
     private int buildingCount = 0;
 
     public static bool HasCompletedTutorial
     {
-        get { return instance.tutorialProgress.hasCompletedTutorial; }
+        get { return tutorialProgress.hasCompletedTutorial; }
+    }
+
+    private void Awake()
+    {
+        if(dialogueUI == null) { dialogueUI = FindAnyObjectByType<DialogueUI>(); }
+        if(buildingUI == null) { buildingUI = FindAnyObjectByType<BuildingUI>(); }
+        if(shipUI == null) { shipUI = FindAnyObjectByType<ShipUI>(); }
+        if(outpostMUI == null) { outpostMUI = FindAnyObjectByType<OutpostManagementUI>(); }
     }
 
     private void Start()
     {
-        if(instance == null) { instance = this; }
         tutorialProgress = PlayerDataManager.LoadProgress();
 #if UNITY_EDITOR
         tutorialProgress.hasCompletedTutorial = tutorialProgress.hasCompletedTutorial || skipTutorial;
@@ -79,11 +72,11 @@ public class OutpostTutorialManager : MonoBehaviour
 
     internal static void EndTutorial()
     {
-        instance.tutorialProgress.hasCompletedTutorial = true;
+        tutorialProgress.hasCompletedTutorial = true;
     }
     internal static void LoadOutpost()
     {
-        instance.tutorialProgress.outpostVisitCount++;
+        tutorialProgress.outpostVisitCount++;
     }
 
     // Callbacks

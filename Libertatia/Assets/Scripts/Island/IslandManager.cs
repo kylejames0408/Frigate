@@ -41,63 +41,61 @@ public enum IslandType
 
 public class IslandManager : MonoBehaviour
 {
-    // Components
+    [Header("References")]
     [SerializeField] private ResourceManager rm;
     [SerializeField] private Ship ship;
     [SerializeField] private PlayerPathfind pathfinder;
-    // UI
-    [SerializeField] private IslandUI uiIsland;
-    [SerializeField] private ConfirmationUI confirmationUI;
-    // Data
+    [Header("UI")]
+    [SerializeField] private IslandUI intIsland;
+    [SerializeField] private ConfirmationUI intConfirmation;
+    [Header("Tracking")]
     [SerializeField] private Dictionary<int, Island> islands;
     [SerializeField] private int selectedIslandID = -1;
+    [SerializeField] private int dockedIslandID = -1;
     [SerializeField] private bool isShipMoving = false;
-    // Events
+    [Header("Events")]
     public UnityEvent<IslandResources> onIslandCompleted;
 
     private void Awake()
     {
         if (rm == null) { rm = FindObjectOfType<ResourceManager>(); }
         if (ship == null) { ship = FindObjectOfType<Ship>(); }
-        if (uiIsland == null) { uiIsland = FindObjectOfType<IslandUI>(); }
-        if (confirmationUI == null) { confirmationUI = FindObjectOfType<ConfirmationUI>(); }
+        if (intIsland == null) { intIsland = FindObjectOfType<IslandUI>(); }
+        if (intConfirmation == null) { intConfirmation = FindObjectOfType<ConfirmationUI>(); }
 
-        confirmationUI.gameObject.SetActive(false);
+        intConfirmation.gameObject.SetActive(false);
     }
     private void Start()
     {
+        // load island data
+        // - has current islandID
+        //dockedIslandID
+        isShipMoving = false;
+
         // Get all islands
         Island[] allIslands = GetComponentsInChildren<Island>();
         islands = new Dictionary<int, Island>(allIslands.Length);
         foreach (Island island in allIslands)
         {
-            // Add callbacks
             island.onSelect.AddListener(OnIslandSelectedCallback);
-
             islands.Add(island.ID, island);
         }
-        uiIsland.onDepart.AddListener(OnDepartCallback);
-        isShipMoving = false;
-
+        intIsland.onDepart.AddListener(OnDepartCallback);
         onIslandCompleted.AddListener(OnIslandCompletedCallback);
     }
 
+    // Callbacks
     private void OnIslandSelectedCallback(int islandID)
     {
         if(!isShipMoving)
         {
-            //if(islandID != GameManager.Data.IslandID)
-            //{
-
-            //}
-
             selectedIslandID = islandID;
             Island island = islands[islandID];
             // Calculate distance and AP
             int ap = pathfinder.GetDistance(ship.transform.position);
             // Open Island Interface
-            uiIsland.Fill(island, ap);
-            uiIsland.OpenInterface();
+            intIsland.Fill(island, ap);
+            intIsland.OpenInterface();
         }
     }
     private void OnIslandCompletedCallback(IslandResources islandResources)
@@ -106,17 +104,17 @@ public class IslandManager : MonoBehaviour
     }
     private void OnDepartCallback()
     {
-        confirmationUI.btnApprove.onClick.AddListener(OnApproveDepartureCallback);
-        confirmationUI.btnDecline.onClick.AddListener(OnDeclineDepartureCallback);
-        confirmationUI.gameObject.SetActive(true);
+        intConfirmation.btnApprove.onClick.AddListener(OnApproveDepartureCallback);
+        intConfirmation.btnDecline.onClick.AddListener(OnDeclineDepartureCallback);
+        intConfirmation.gameObject.SetActive(true);
     }
     private void OnApproveDepartureCallback()
     {
-        confirmationUI.btnApprove.onClick.RemoveListener(OnApproveDepartureCallback);
-        confirmationUI.btnDecline.onClick.RemoveListener(OnDeclineDepartureCallback);
-        confirmationUI.gameObject.SetActive(false);
+        intConfirmation.btnApprove.onClick.RemoveListener(OnApproveDepartureCallback);
+        intConfirmation.btnDecline.onClick.RemoveListener(OnDeclineDepartureCallback);
+        intConfirmation.gameObject.SetActive(false);
 
-        uiIsland.CloseInterface();
+        intIsland.CloseInterface();
 
         // Travel to the island
         pathfinder.onNavFinish.AddListener(OnNavFinishCallback);
@@ -125,9 +123,9 @@ public class IslandManager : MonoBehaviour
     }
     private void OnDeclineDepartureCallback()
     {
-        confirmationUI.btnApprove.onClick.RemoveListener(OnApproveDepartureCallback);
-        confirmationUI.btnDecline.onClick.RemoveListener(OnDeclineDepartureCallback);
-        confirmationUI.gameObject.SetActive(false);
+        intConfirmation.btnApprove.onClick.RemoveListener(OnApproveDepartureCallback);
+        intConfirmation.btnDecline.onClick.RemoveListener(OnDeclineDepartureCallback);
+        intConfirmation.gameObject.SetActive(false);
     }
     private void OnNavFinishCallback()
     {
