@@ -37,7 +37,7 @@ public static class PlayerDataManager
             STARTING_LOYALTY_AMOUNT);
         data.outpost = new OutpostData(STARTING_OUTPOST_CREW_AMOUNT);
         data.ship = new ShipData(STARTING_SHIP_CREW_CAPACITY);
-        data.tutorialProgress = new TutorialProgress();
+        data.progress = new Progress();
         isInitialized = true;
     }
     internal static void LoadGame()
@@ -82,9 +82,9 @@ public static class PlayerDataManager
         return data.ship;
     }
 
-    internal static TutorialProgress LoadProgress()
+    internal static Progress LoadProgress()
     {
-        return data.tutorialProgress;
+        return data.progress;
     }
 
     // Saving
@@ -141,9 +141,9 @@ public static class PlayerDataManager
         data.ship = new ShipData(ship);
     }
 
-    internal static void SaveTutorialProgress(TutorialProgress tutorialProgress)
+    internal static void SaveTutorialProgress(Progress tutorialProgress)
     {
-        data.tutorialProgress = tutorialProgress;
+        data.progress = tutorialProgress;
     }
 
     internal static void SaveTimestamp(float elapsedTime)

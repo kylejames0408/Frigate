@@ -108,7 +108,7 @@ public class GameManager : MonoBehaviour
     internal static void ToBuildingPhase()
     {
         CeneManager.LoadOutpost();
-        TutorialManager.LoadOutpost();
+        OutpostTutorialManager.LoadOutpost();
         phase = GamePhase.BUILDING;
     }
     internal static void ToExplorationPhase()
@@ -120,6 +120,6 @@ public class GameManager : MonoBehaviour
     internal static void EndTutorial()
     {
         instance.interfaceManager.EndTutorial();
-        TutorialManager.EndTutorial();
+        OutpostTutorialManager.EndTutorial();
     }
 }

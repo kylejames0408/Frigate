@@ -29,7 +29,7 @@ public class ShipUI : MonoBehaviour
 
     // UI
     [SerializeField] private Button btnClose;
-    [SerializeField] private Button btnDepart;
+    [SerializeField] private Button btnMap;
 
     // Events
     public UnityEvent<int> onUnassign;
@@ -41,7 +41,7 @@ public class ShipUI : MonoBehaviour
     }
     private void Start()
     {
-        btnDepart.onClick.AddListener(GameManager.ToExplorationPhase);
+        if (btnMap) { btnMap.onClick.AddListener(GameManager.ToExplorationPhase); }
         btnClose.onClick.AddListener(CloseInterface);
         isOpen = false;
     }
@@ -52,15 +52,15 @@ public class ShipUI : MonoBehaviour
             HandleClicking();
 
             // Player must assign at least one crewmate to leave
-            if(btnDepart)
+            if(btnMap)
             {
                 if (ship.Crewmates.Length > 0)
                 {
-                    btnDepart.interactable = true;
+                    btnMap.interactable = true;
                 }
                 else
                 {
-                    btnDepart.interactable = false;
+                    btnMap.interactable = false;
                 }
             }
         }
@@ -156,7 +156,7 @@ public class ShipUI : MonoBehaviour
     {
         if(isTutorial)
         {
-            btnDepart.interactable = false;
+            btnMap.interactable = false;
             foreach(AssigneeCard card in assigneeCards)
             {
                 card.UnassignButton.interactable = false;
@@ -164,7 +164,7 @@ public class ShipUI : MonoBehaviour
         }
         else
         {
-            btnDepart.interactable = true;
+            btnMap.interactable = true;
             foreach (AssigneeCard card in assigneeCards)
             {
                 card.UnassignButton.interactable = true;

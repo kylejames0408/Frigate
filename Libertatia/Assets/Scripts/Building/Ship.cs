@@ -215,7 +215,7 @@ public class Ship : MonoBehaviour
 
                     if (!CrewmateAlreadyBoarded(crewmateData))
                     {
-                        if (!TutorialManager.HasCompletedTutorial && crewmateData.building.id != -1)
+                        if (!OutpostTutorialManager.HasCompletedTutorial && crewmateData.building.id != -1)
                         {
                             continue;
                         }

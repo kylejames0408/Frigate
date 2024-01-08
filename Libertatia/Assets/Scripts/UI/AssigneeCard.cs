@@ -32,7 +32,7 @@ public class AssigneeCard : MonoBehaviour
     {
         crewmateID = crewmate.id;
         icon.sprite = crewmate.icon;
-        if(btnUnassign && TutorialManager.HasCompletedTutorial)
+        if(btnUnassign && OutpostTutorialManager.HasCompletedTutorial)
         {
             btnUnassign.onClick.RemoveAllListeners();
             btnUnassign.interactable = true;

@@ -185,14 +185,12 @@ public struct ShipData
     }
 }
 [Serializable]
-public struct TutorialProgress // More like tutorial progress
+public struct Progress
 {
     public bool hasCompletedTutorial;
     public int outpostVisitCount;
     public int combatVisitCount;
     public int explorationVisitCount;
-    public int buildingsPlaced;
-    public int crewmatesAssigned;
 }
 [Serializable]
 public struct PlayerData
@@ -203,5 +201,5 @@ public struct PlayerData
     public ResourceData resources;
     public OutpostData outpost;
     public ShipData ship;
-    public TutorialProgress tutorialProgress;
+    public Progress progress;
 }

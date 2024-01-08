@@ -85,7 +85,7 @@ public class OutpostManagementUI : MonoBehaviour
     }
     private void Update()
     {
-        if(TutorialManager.HasCompletedTutorial)
+        if(OutpostTutorialManager.HasCompletedTutorial)
         {
             BuildingCardAvailabilityHandler();
         }

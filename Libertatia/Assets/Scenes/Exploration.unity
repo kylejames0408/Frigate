@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &4
 LightmapSettings:
@@ -8046,7 +8046,7 @@ MonoBehaviour:
   isOpen: 0
   assigneeCards: []
   btnClose: {fileID: 129817152}
-  btnDepart: {fileID: 0}
+  btnMap: {fileID: 0}
   onUnassign:
     m_PersistentCalls:
       m_Calls: []
@@ -10725,14 +10725,24 @@ MonoBehaviour:
   textWriteSpeed: 0.03
   interfacePadding: 20
   animTimeDialogue: 0.5
-  dialogueCardRectTransform: {fileID: 0}
-  tmpSpeakerName: {fileID: 0}
-  tmpDialogue: {fileID: 0}
-  tmpContinueButtonText: {fileID: 0}
-  btnContinue: {fileID: 0}
-  taskCardRectTransform: {fileID: 0}
-  tmpTaskTitle: {fileID: 0}
-  tmpTaskDescription: {fileID: 0}
+  dialogueCardRectTransform: {fileID: 1669862100}
+  tmpSpeakerName: {fileID: 1618617729}
+  tmpDialogue: {fileID: 848235469}
+  tmpContinueButtonText: {fileID: 862323435}
+  btnContinue: {fileID: 351430201}
+  taskCardRectTransform: {fileID: 341364731}
+  tmpTaskTitle: {fileID: 1325204696}
+  tmpTaskDescription: {fileID: 1107089909}
+  currentDialogueSegment:
+    speakerName: 
+    dialogueSentences: []
+    taskTitle: 
+    taskDescription: 
+    taskStartedCallback:
+      m_PersistentCalls:
+        m_Calls: []
+  currentDialogueIndex: 0
+  currentTaskDescriptionIndex: 0
 --- !u!1 &1588750443
 GameObject:
   m_ObjectHideFlags: 0
