@@ -106,4 +106,13 @@ public class IslandUI : MonoBehaviour
         transform.DOMoveX(-10, animSpeedInterface);
         isOpen = false;
     }
+
+    internal void EnableDepartButton()
+    {
+        btnDepart.interactable = true;
+    }
+    internal void DisableDepartButton()
+    {
+        btnDepart.interactable = false;
+    }
 }

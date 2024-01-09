@@ -1,5 +1,6 @@
 
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public static class PlayerDataManager
@@ -38,6 +39,7 @@ public static class PlayerDataManager
         data.outpost = new OutpostData(STARTING_OUTPOST_CREW_AMOUNT);
         data.ship = new ShipData(STARTING_SHIP_CREW_CAPACITY);
         data.progress = new Progress();
+        data.exploration = new ExplorationData(0);
         isInitialized = true;
     }
     internal static void LoadGame()
@@ -85,6 +87,11 @@ public static class PlayerDataManager
     internal static Progress LoadProgress()
     {
         return data.progress;
+    }
+
+    internal static ExplorationData LoadExplorationData()
+    {
+        return data.exploration;
     }
 
     // Saving
@@ -149,5 +156,15 @@ public static class PlayerDataManager
     internal static void SaveTimestamp(float elapsedTime)
     {
         data.elapsedTime = elapsedTime;
+    }
+
+    internal static void SaveExplorationData(Island[] islands, int dockedIslandID)
+    {
+        data.exploration.dockedIslandID = dockedIslandID;
+        //data.exploration.islands = new IslandMapData[islands.Length];
+        //for (int i = 0; i < islands.Length; i++)
+        //{
+        //    data.exploration.islands[i] = new IslandMapData(islands[i]);
+        //}
     }
 }

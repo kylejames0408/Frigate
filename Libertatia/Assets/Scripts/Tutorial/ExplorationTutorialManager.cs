@@ -44,19 +44,41 @@ public class ExplorationTutorialManager : MonoBehaviour
             {
                 dialogueUI.StartDialogueSegment(dialogueSegments[0]);
                 tutorialProgress.explorationVisitCount++;
-                //shipUI.Disable
-                //shipUI.SetActive(false);
+                im.onIslandSelected.AddListener(OnOutpostIslandSelectedCallback1);
             }
             else if (tutorialProgress.explorationVisitCount == 1)
             {
                 dialogueUI.StartDialogueSegment(dialogueSegments[1]);
                 tutorialProgress.explorationVisitCount++;
-                //islandDepartButton.SetActive(false);
+                im.onIslandSelected.AddListener(OnEnemyIslandSelectedCallback);
             }
         }
     }
     private void OnDestroy()
     {
         PlayerDataManager.SaveTutorialProgress(tutorialProgress);
+    }
+
+    private void OnOutpostIslandSelectedCallback1(IslandType islandType)
+    {
+        if(islandType == IslandType.OUTPOST)
+        {
+            islandUI.DisableDepartButton();
+        }
+        else
+        {
+            islandUI.EnableDepartButton();
+        }
+    }
+    private void OnEnemyIslandSelectedCallback(IslandType islandType)
+    {
+        if (islandType == IslandType.ENEMY)
+        {
+            islandUI.DisableDepartButton();
+        }
+        else
+        {
+            islandUI.EnableDepartButton();
+        }
     }
 }

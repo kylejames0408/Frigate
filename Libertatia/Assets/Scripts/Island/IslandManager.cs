@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -41,6 +42,8 @@ public enum IslandType
 
 public class IslandManager : MonoBehaviour
 {
+    [Header("Data")]
+    [SerializeField] private Sprite iconDefaultIsland;
     [Header("References")]
     [SerializeField] private ResourceManager rm;
     [SerializeField] private Ship ship;
@@ -55,6 +58,7 @@ public class IslandManager : MonoBehaviour
     [SerializeField] private bool isShipMoving = false;
     [Header("Events")]
     public UnityEvent<IslandResources> onIslandCompleted;
+    public UnityEvent<IslandType> onIslandSelected;
 
     private void Awake()
     {
@@ -67,21 +71,36 @@ public class IslandManager : MonoBehaviour
     }
     private void Start()
     {
-        // load island data
-        // - has current islandID
-        //dockedIslandID
+        ExplorationData explorationData = PlayerDataManager.LoadExplorationData();
+        dockedIslandID = explorationData.dockedIslandID;
+        if(explorationData.islands.Length > 0)
+        {
+            // Regenerate map
+            //explorationData.islands
+        }
+        else
+        {
+            // generate map
+            // - generate islands - to-be proc gen
+            // - place on map
+            Island[] allIslands = GetComponentsInChildren<Island>();
+            islands = new Dictionary<int, Island>(allIslands.Length);
+            foreach (Island island in allIslands)
+            {
+                island.SetIcon(iconDefaultIsland);
+                island.onSelect.AddListener(OnIslandSelectedCallback);
+                islands.Add(island.ID, island);
+            }
+        }
+
         isShipMoving = false;
 
-        // Get all islands
-        Island[] allIslands = GetComponentsInChildren<Island>();
-        islands = new Dictionary<int, Island>(allIslands.Length);
-        foreach (Island island in allIslands)
-        {
-            island.onSelect.AddListener(OnIslandSelectedCallback);
-            islands.Add(island.ID, island);
-        }
         intIsland.onDepart.AddListener(OnDepartCallback);
         onIslandCompleted.AddListener(OnIslandCompletedCallback);
+    }
+    private void OnDestroy()
+    {
+        PlayerDataManager.SaveExplorationData(islands.Values.ToArray(), dockedIslandID);
     }
 
     // Callbacks
@@ -92,10 +111,11 @@ public class IslandManager : MonoBehaviour
             selectedIslandID = islandID;
             Island island = islands[islandID];
             // Calculate distance and AP
-            int ap = pathfinder.GetDistance(ship.transform.position);
+            int ap = pathfinder.GetDistance(ship.transform.position); // distance needs better calc
             // Open Island Interface
             intIsland.Fill(island, ap);
             intIsland.OpenInterface();
+            onIslandSelected.Invoke(island.Type);
         }
     }
     private void OnIslandCompletedCallback(IslandResources islandResources)
@@ -131,7 +151,10 @@ public class IslandManager : MonoBehaviour
     {
         isShipMoving = false;
         Island island = islands[selectedIslandID];
+        dockedIslandID = island.ID;
         PlayerDataManager.SaveShipData(ship);
+
+        // Do we want it to Enter imediately? I think we decided yes but still should be discussed
         if (island.Type == IslandType.OUTPOST)
         {
             CeneManager.LoadOutpost();

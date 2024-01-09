@@ -160,7 +160,7 @@ public struct ShipData
 
     public ShipData(int startingCrewCapacity)
     {
-        isInitialized=false;
+        isInitialized = false;
         id = -1;
         islandID = -1;
         crewCcapacity = startingCrewCapacity;
@@ -193,6 +193,39 @@ public struct Progress
     public int explorationVisitCount;
 }
 [Serializable]
+public struct IslandMapData // maybe map data - we will need island data for combat saving (zones, enemies, etc)
+{
+    public int id;
+    public string name;
+    public Sprite icon;
+    public IslandType type;
+    public int difficulty;
+    public string resources;
+    // Will probably want a position, rotation, and mesh/island mesh generation id when map is proc gen
+
+    public IslandMapData(Island island)
+    {
+        id = island.ID;
+        name = island.Name;
+        icon = island.Icon;
+        type = island.Type;
+        difficulty = island.Difficulty;
+        resources = island.Resources;
+    }
+}
+[Serializable]
+public struct ExplorationData // MapData
+{
+    public IslandMapData[] islands;
+    public int dockedIslandID;
+
+    public ExplorationData(int islandCount) // dont really need to pass anything through. Might be worth a init method instead
+    {
+        islands = new IslandMapData[0];
+        dockedIslandID = -1;
+    }
+}
+[Serializable]
 public struct PlayerData
 {
     // Game data
@@ -202,4 +235,5 @@ public struct PlayerData
     public OutpostData outpost;
     public ShipData ship;
     public Progress progress;
+    public ExplorationData exploration;
 }

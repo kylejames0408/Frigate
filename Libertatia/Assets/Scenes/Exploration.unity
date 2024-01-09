@@ -242,12 +242,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: -1
-  islandName: Island
+  islandName: Enemy Island
   icon: {fileID: 0}
   isHovered: 0
   meshRenderer: {fileID: 0}
-  type: 2
-  difficulty: 0
+  type: 1
+  difficulty: 3
   resources:
     wood: 0
     food: 0
@@ -3817,7 +3817,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: -1
-  islandName: Island
+  islandName: Outpost
   icon: {fileID: 0}
   isHovered: 0
   meshRenderer: {fileID: 0}
@@ -10198,6 +10198,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1671852229}
+  - component: {fileID: 1671852233}
   - component: {fileID: 1671852232}
   - component: {fileID: 1671852228}
   - component: {fileID: 1671852230}
@@ -10299,10 +10300,35 @@ MonoBehaviour:
     taskStartedCallback:
       m_PersistentCalls:
         m_Calls: []
-  im: {fileID: 0}
+  im: {fileID: 1696024633}
   dialogueUI: {fileID: 1748079000}
   shipUI: {fileID: 1178054426}
   islandUI: {fileID: 1957504819}
+--- !u!114 &1671852233
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1671852227}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53fb1d473bfed404bb8dd6c04f343db8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outpostRUI: {fileID: 0}
+  combatRUI: {fileID: 0}
+  resources:
+    loyalty: 0
+    wood: 0
+    doubloons: 0
+    food: 0
+    production:
+      wood: 0
+      food: 0
+    consumption:
+      wood: 0
+      food: 0
 --- !u!1 &1674325045
 GameObject:
   m_ObjectHideFlags: 0
@@ -10569,7 +10595,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b6272b643f2eca46921bfe92e0944e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rm: {fileID: 0}
+  iconDefaultIsland: {fileID: 21300000, guid: 5f2220aa8dbefaa478a801add607aeed, type: 3}
+  rm: {fileID: 1671852233}
   ship: {fileID: 9036149286236463089}
   pathfinder: {fileID: 89894619}
   intIsland: {fileID: 1957504819}
@@ -10578,6 +10605,9 @@ MonoBehaviour:
   dockedIslandID: -1
   isShipMoving: 0
   onIslandCompleted:
+    m_PersistentCalls:
+      m_Calls: []
+  onIslandSelected:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1001 &1696755739

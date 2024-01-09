@@ -46,7 +46,17 @@ public class Island : MonoBehaviour
     private void Awake()
     {
         if(meshRenderer == null) { meshRenderer = GetComponent<MeshRenderer>(); }
-        id = gameObject.GetInstanceID();
+
+        // This id code will be replced when map is generated
+        if(type == IslandType.OUTPOST)
+        {
+            id = 0;
+        }
+        else
+        {
+            id = gameObject.GetInstanceID();
+        }
+
         isHovered = false;
     }
     private void Update()
@@ -73,5 +83,13 @@ public class Island : MonoBehaviour
     private void HandleSelection()
     {
         onSelect.Invoke(id);
+    }
+
+    internal void SetIcon(Sprite iconDefaultIsland)
+    {
+        if(icon==null)
+        {
+            icon = iconDefaultIsland;
+        }
     }
 }
